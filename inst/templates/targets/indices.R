@@ -35,5 +35,7 @@ tar_pipeline(
     read_csv(file_game_info, col_types = cols()) %>%
       semi_join(game_indices, by = "game_id") %>%
       select(-prep_fun_str)
-  )
+  ),
+  targets_indices,
+  tar_combine(game_indices, targets_indices, format = "fst_tbl")
 )
