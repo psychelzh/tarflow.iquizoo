@@ -24,10 +24,11 @@ targets_indices <- tar_map(
 )
 # add more jobs in the following plans
 tar_pipeline(
+  tar_file(file_config, "config.yml"),
   tar_file(file_game_info, "settings/game_info.csv"),
   tar_file(query_tmpl_data, "sql/data.tmpl.sql"),
   tar_file(query_tmpl_users, "sql/users.tmpl.sql"),
-  tar_target(config_where, config::get("where")),
+  tar_target(config_where, config::get("where", file = file_config)),
   tar_fst_tbl(data, fetch_from_v3(query_tmpl_data, config_where)),
   tar_fst_tbl(users, fetch_from_v3(query_tmpl_users, config_where)),
   tar_fst_tbl(
