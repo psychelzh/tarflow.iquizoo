@@ -14,7 +14,21 @@ Description: For "iquizoo" data processing, there is already a
     mimicking the logic of "make", automating the building processes.
 License: MIT + file LICENSE
 URL: https://github.com/psychelzh/tarflow.iquizoo
+Depends: 
+    R (>= 2.10)
 Imports: 
+    config,
+    DBI,
+    dplyr,
+    jsonlite,
+    magrittr,
+    odbc,
+    purrr,
+    readr,
+    rlang,
+    stringr,
+    tibble,
+    tidyr,
     usethis
 Suggests: 
     dataproc.iquizoo (>= 0.2.0)
