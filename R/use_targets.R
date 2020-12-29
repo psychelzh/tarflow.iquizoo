@@ -25,4 +25,19 @@ use_targets <- function(schema = c("indices", "scores")) {
     # ignore targets internal files
     usethis::use_git_ignore("_targets")
   }
+  if ("scores" == schema) {
+    # add required query files
+    usethis::use_directory("sql")
+    usethis::use_template("sql/scores.tmpl.sql", package = "tarflow.iquizoo")
+    usethis::use_template("sql/users.tmpl.sql", package = "tarflow.iquizoo")
+    usethis::ui_done("Added query files for scores and users fetching.")
+    # add configuration files
+    usethis::use_template("config.yml", package = "tarflow.iquizoo")
+    usethis::ui_done("Added basic config file.")
+    usethis::ui_todo("You probably need to edit the config file {usethis::ui_value('config.yml')}.")
+    # add targets file
+    usethis::use_template("_targets_scores.R", save_as = "_targets.R", package = "tarflow.iquizoo")
+    # ignore targets internal files
+    usethis::use_git_ignore("_targets")
+  }
 }
