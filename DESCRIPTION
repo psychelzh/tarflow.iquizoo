@@ -30,12 +30,14 @@ Imports:
     tibble,
     tidyr,
     usethis,
-    targets (>= 0.0.0.9003)
+    targets (>= 0.0.0.9003),
+    tarchetypes (>= 0.0.0.9001)
 Suggests:
     dataproc.iquizoo (>= 0.2.0)
-Remotes: 
+Remotes:  
     psychelzh/dataproc.iquizoo,
-    wlandau/targets
+    wlandau/targets,
+    wlandau/tarchetypes
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
