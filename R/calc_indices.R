@@ -5,22 +5,26 @@
 #'
 #' @param data The raw data.
 #' @param prep_fun The name (symbol) of the calculation function
-#' @param game_id The id of the game to be calculated
 #' @return A `tibble` with the calculated indices.
 #' @author Liang Zhang
-#' @importFrom rlang .data .env
+#' @importFrom rlang .data
 #' @export
-calc_indices <- function(data, prep_fun, game_id) {
-  # extract all the valid of current game
-  cur_game_data <- data %>%
-    dplyr::filter(.data$game_id == .env$game_id) %>%
+calc_indices <- function(data, prep_fun) {
+  # get the name of the preprocessing function
+  prep_fun_name <- deparse1(substitute(prep_fun))
+  # extract all the data that can be preprocessed by this function
+  valid_game_ids <- gameconfig %>%
+    dplyr::filter(.data$prep_fun == prep_fun_name) %>%
+    dplyr::pull("game_id")
+  cur_fun_data <- data %>%
+    dplyr::filter(.data$game_id %in% valid_game_ids) %>%
     dplyr::filter(purrr::map_lgl(.data$game_data, jsonlite::validate))
   # if no data found, no further processing is needed
-  if (nrow(cur_game_data) == 0) {
+  if (nrow(cur_fun_data) == 0) {
     return(NULL)
   }
   # use `prep_fun` to calculate
-  cur_game_data %>%
+  cur_fun_data %>%
     dplyr::group_by(.data$user_id) %>%
     dplyr::mutate(occasion = dplyr::row_number(.data$game_time)) %>%
     dplyr::ungroup() %>%
@@ -28,7 +32,11 @@ calc_indices <- function(data, prep_fun, game_id) {
       indices = purrr::map(
         .data$game_data,
         ~ prep_fun(jsonlite::fromJSON(.x)) %>%
-          tidyr::pivot_longer(-.data$is_normal, names_to = "index", values_to = "score")
+          tidyr::pivot_longer(
+            -.data$is_normal,
+            names_to = "index",
+            values_to = "score"
+          )
       )
     ) %>%
     tidyr::unnest(.data$indices) %>%

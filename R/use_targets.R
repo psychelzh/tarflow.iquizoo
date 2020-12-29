@@ -21,7 +21,7 @@ use_targets <- function(schema = c("indices", "scores")) {
     usethis::ui_done("Added basic config file.")
     usethis::ui_todo("You probably need to edit the config file {usethis::ui_value('config.yml')}.")
     # add targets file
-    usethis::use_template("targets/indices.R", save_as = "_targets.R", package = "tarflow.iquizoo")
+    usethis::use_template("_targets_indices.R", save_as = "_targets.R", package = "tarflow.iquizoo")
     # ignore targets internal files
     usethis::use_git_ignore("_targets")
   }

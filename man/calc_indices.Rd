@@ -4,14 +4,12 @@
 \alias{calc_indices}
 \title{Calculate indices for a single game}
 \usage{
-calc_indices(data, prep_fun, game_id)
+calc_indices(data, prep_fun)
 }
 \arguments{
 \item{data}{The raw data.}
 
 \item{prep_fun}{The name (symbol) of the calculation function}
-
-\item{game_id}{The id of the game to be calculated}
 }
 \value{
 A \code{tibble} with the calculated indices.

@@ -29,11 +29,13 @@ Imports:
     stringr,
     tibble,
     tidyr,
-    usethis
+    usethis,
+    targets (>= 0.0.0.9003)
 Suggests:
     dataproc.iquizoo (>= 0.2.0)
-Remotes:
-    psychelzh/dataproc.iquizoo
+Remotes: 
+    psychelzh/dataproc.iquizoo,
+    wlandau/targets
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
