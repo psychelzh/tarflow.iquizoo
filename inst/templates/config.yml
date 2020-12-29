@@ -1,0 +1,8 @@
+default:
+  # put all the required where filters here
+  where:
+    # examples (you should make sure these filters are valid):
+    # content:
+    #   Name: 萤火虫
+    # course:
+    #   Name: 学习力快速测试
