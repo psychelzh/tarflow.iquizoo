@@ -8,10 +8,12 @@
 #' @importFrom rlang %||%
 #' @export
 get_game_names <- function(use_db = FALSE) {
-  config_where <- config::get("where")
   tryCatch(
-    purrr::chuck(config_where, "content", "Name"),
+    purrr::chuck(config::get("where"), "content", "Name"),
     error = function(err) {
+      if (stringr::str_detect(err$message, "config.yml")) {
+        warning(err$message)
+      }
       if (use_db) warning("`use_db` is not implemented yet.")
       return(NULL)
     }
