@@ -11,10 +11,6 @@
 use_targets <- function(schema = c("indices", "scores")) {
   schema <- match.arg(schema)
   if ("indices" == schema) {
-    # add game information file
-    usethis::use_directory("settings")
-    usethis::use_template("settings/game_info.csv", package = "tarflow.iquizoo")
-    usethis::ui_done("Added game information file {usethis::ui_value('settings/game_info.csv')}.")
     # add required query files
     usethis::use_directory("sql")
     usethis::use_template("sql/data.tmpl.sql", package = "tarflow.iquizoo")

@@ -11,32 +11,23 @@ tar_option_set(packages = c("tidyverse", "dataproc.iquizoo", "tarflow.iquizoo"))
 tar_option_set(imports = c("dataproc.iquizoo", "tarflow.iquizoo"))
 # create all the static targets of indices
 targets_indices <- tar_map(
-  values = read_csv("settings/game_info.csv", col_types = cols()) %>%
-    filter(!is.na(prep_fun_str)) %>%
+  values = tarflow.iquizoo::gameinfo %>%
     filter(game_name %in% get_game_names()) %>%
-    mutate(prep_fun = rlang::syms(prep_fun_str)) %>%
-    select(game_id, prep_fun, game_name_short),
+    transmute(game_id, game_name_abbr, prep_fun = syms(prep_fun)),
   tar_target(
     indices,
     calc_indices(data, prep_fun, game_id)
   ),
-  names = game_name_short
+  names = game_name_abbr
 )
 # add more jobs in the following plans
 tar_pipeline(
   tar_file(file_config, "config.yml"),
-  tar_file(file_game_info, "settings/game_info.csv"),
   tar_file(query_tmpl_data, "sql/data.tmpl.sql"),
   tar_file(query_tmpl_users, "sql/users.tmpl.sql"),
   tar_target(config_where, config::get("where", file = file_config)),
   tar_fst_tbl(data, fetch_from_v3(query_tmpl_data, config_where)),
   tar_fst_tbl(users, fetch_from_v3(query_tmpl_users, config_where)),
-  tar_fst_tbl(
-    game_info,
-    read_csv(file_game_info, col_types = cols()) %>%
-      semi_join(game_indices, by = "game_id") %>%
-      select(-prep_fun_str)
-  ),
   targets_indices,
   tar_combine(game_indices, targets_indices, format = "fst_tbl")
 )

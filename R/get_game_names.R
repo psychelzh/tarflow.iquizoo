@@ -16,5 +16,5 @@ get_game_names <- function(use_db = FALSE) {
       return(NULL)
     }
   ) %||%
-    dplyr::pull(readr::read_csv("settings/game_info.csv"), "game_name")
+    dplyr::pull(gameconfig, "game_name")
 }
