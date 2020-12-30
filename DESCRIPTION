@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R:
     person(given = "Liang",
            family = "Zhang",
@@ -34,7 +34,7 @@ Imports:
     tarchetypes (>= 0.0.0.9001)
 Suggests:
     dataproc.iquizoo (>= 0.2.0)
-Remotes:  
+Remotes: 
     psychelzh/dataproc.iquizoo,
     wlandau/targets,
     wlandau/tarchetypes
