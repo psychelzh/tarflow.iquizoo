@@ -11,8 +11,9 @@
 #' @importFrom rlang .data
 #' @export
 fetch_from_v3 <- function(query_file, config_where = NULL) {
+  enc <- ifelse(.Platform$OS.type == "windows", "gbk", "utf-8")
   # connect to given database which is pre-configured
-  con <- DBI::dbConnect(odbc::odbc(), "iquizoo-v3")
+  con <- DBI::dbConnect(odbc::odbc(), "iquizoo-v3", encoding = enc)
   on.exit(DBI::dbDisconnect(con))
   # `where_clause` is used in query template
   where_clause <- compose_where_clause(config_where)
