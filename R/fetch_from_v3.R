@@ -32,7 +32,7 @@ compose_where_clause <- function(config_where) {
       dplyr::mutate(
         sel = purrr::map(
           .data$sel,
-          ~ enframe(.x, name = "column", value = "value")
+          ~ tibble::enframe(.x, name = "column", value = "value")
         )
       ) %>%
       tidyr::unnest(.data$sel) %>%
