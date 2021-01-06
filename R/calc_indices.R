@@ -48,7 +48,7 @@ calc_indices <- function(data, prep_fun) {
     dplyr::select(
       dplyr::all_of(
         c("user_id", "occasion",
-          "game_id", "game_name", "game_duration",
+          "game_id", "game_name", "game_time", "game_duration",
           "index", "score", "is_normal", "is_outlier")
       )
     )
