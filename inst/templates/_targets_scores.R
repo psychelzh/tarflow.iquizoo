@@ -2,9 +2,9 @@
 library(targets)
 library(tarchetypes)
 # set required packages used in pipeline running
-tar_option_set(packages = c("tidyverse", "dataproc.iquizoo", "tarflow.iquizoo"))
+tar_option_set(packages = c("tidyverse", "tarflow.iquizoo"))
 # track changes in the following packages
-tar_option_set(imports = c("dataproc.iquizoo", "tarflow.iquizoo"))
+tar_option_set(imports = "tarflow.iquizoo")
 # add more jobs in the following plans
 list(
   tar_file(file_config, "config.yml"),
