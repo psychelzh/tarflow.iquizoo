@@ -8,7 +8,7 @@ tar_option_set(imports = c("dataproc.iquizoo", "tarflow.iquizoo"))
 # build sub-targets of calculating indices for each game
 targets_indices <- tarflow.iquizoo::build_targets_indices()
 # add more jobs in the following plans
-tar_pipeline(
+list(
   tar_file(file_config, "config.yml"),
   tar_file(query_tmpl_data, "sql/data.tmpl.sql"),
   tar_file(query_tmpl_users, "sql/users.tmpl.sql"),

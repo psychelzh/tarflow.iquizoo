@@ -6,7 +6,7 @@ tar_option_set(packages = c("tidyverse", "dataproc.iquizoo", "tarflow.iquizoo"))
 # track changes in the following packages
 tar_option_set(imports = c("dataproc.iquizoo", "tarflow.iquizoo"))
 # add more jobs in the following plans
-tar_pipeline(
+list(
   tar_file(file_config, "config.yml"),
   tar_file(query_tmpl_scores, "sql/scores.tmpl.sql"),
   tar_file(query_tmpl_users, "sql/users.tmpl.sql"),
