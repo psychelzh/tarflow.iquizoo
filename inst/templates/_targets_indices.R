@@ -4,7 +4,7 @@ library(tarchetypes)
 # set required packages used in pipeline running
 tar_option_set(packages = c("tidyverse", "dataproc.iquizoo", "tarflow.iquizoo"))
 # track changes in the following packages
-tar_option_set(imports = c("dataproc.iquizoo", "tarflow.iquizoo"))
+tar_option_set(imports = "dataproc.iquizoo")
 # build sub-targets of calculating indices for each game
 targets_indices <- tarflow.iquizoo::build_targets_indices()
 # add more jobs in the following plans
