@@ -4,13 +4,13 @@
 \alias{use_targets}
 \title{Add specific targets to workflow}
 \usage{
-use_targets(schema = c("indices", "scores"))
+use_targets(schema = c("indices", "scores", "original"))
 }
 \arguments{
-\item{schema}{The name of your jobs. 'indices' means calculate game idices
-from rawdata, mostly for scholar usage; and 'scores' means extracting the
+\item{schema}{The name of your jobs. 'indices' means calculate game indices
+from rawdata, mostly for scholar usage; 'scores' means extracting the
 scores directly from online database, mostly for norm calculation and
-report generation.}
+report generation; 'original' fetches raw data only.}
 }
 \description{
 Add some pre-defined targets to your workflow.
