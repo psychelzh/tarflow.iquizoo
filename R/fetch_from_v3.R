@@ -27,23 +27,30 @@ compose_where_clause <- function(config_where) {
   if (is.null(config_where)) {
     return("")
   } else {
-    where_base <- config_where %>%
-      tibble::enframe(name = "table", value = "sel") %>%
+    config_where_tbl <- tibble::tibble(where = config_where) %>%
+      tidyr::unnest_wider("where")
+    if (!rlang::has_name(config_where_tbl, "operator")) {
+      config_where_tbl$operator <- NA_character_
+    }
+    where_base <- config_where_tbl %>%
       dplyr::mutate(
-        sel = purrr::map(
-          .data$sel,
-          ~ tibble::enframe(.x, name = "column", value = "value")
-        )
-      ) %>%
-      tidyr::unnest(.data$sel) %>%
-      dplyr::mutate(
-        op = dplyr::if_else(lengths(.data$value) == 1, "=", "IN"),
+        operator = dplyr::case_when(
+          is.na(.data$operator) & lengths(.data$values) == 1 ~ "=",
+          is.na(.data$operator) & lengths(.data$values) > 1 ~ "IN",
+          TRUE ~ .data$operator
+        ),
         value_str = purrr::map_chr(
-          .data$value,
-          ~ stringr::str_c("(", stringr::str_c("'", .x, "'", collapse = ", "), ")")
+          .data$values,
+          ~ if (length(.x) == 1) {
+            stringr::str_c("'", .x, "'")
+          } else {
+            stringr::str_c(
+              "(", stringr::str_c("'", .x, "'", collapse = ", "), ")"
+            )
+          }
         )
       ) %>%
-      stringr::str_glue_data("{table}.{column} {op} {value_str}") %>%
+      stringr::str_glue_data("{table}.{field} {operator} {value_str}") %>%
       stringr::str_c(collapse = " AND ")
     stringr::str_c("WHERE", where_base, sep = " ")
   }
