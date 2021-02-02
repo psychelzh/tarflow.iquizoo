@@ -31,12 +31,11 @@ Imports:
     tidyr,
     usethis,
     targets,
-    tarchetypes (>= 0.0.0.9001)
+    tarchetypes
 Suggests:
     dataproc.iquizoo (>= 0.2.0)
 Remotes:
-    psychelzh/dataproc.iquizoo,
-    wlandau/tarchetypes
+    psychelzh/dataproc.iquizoo
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
