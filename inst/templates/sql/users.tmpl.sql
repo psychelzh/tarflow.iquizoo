@@ -8,6 +8,7 @@ SELECT DISTINCT
 	base_organization.`Name` school,
 	base_organization.Province province,
 	base_organization.City city,
+	base_organization.District district,
 	base_grade_class.GradeName grade,
 	base_grade_class.ClassName class
 FROM
