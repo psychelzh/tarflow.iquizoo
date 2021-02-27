@@ -9,7 +9,8 @@ fetch_from_v3(query_file, config_where = NULL)
 \arguments{
 \item{query_file}{File name of \code{sql} query}
 
-\item{config_where}{A \code{list} storing configuration of \code{where-clause}}
+\item{config_where}{Configuration of "where-clause" of the \code{sql} query. Can
+be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 }
 \value{
 A \code{tibble} of original data
