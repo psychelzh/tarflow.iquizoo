@@ -9,6 +9,6 @@ list(
   tar_file(query_tmpl_data, "sql/data.tmpl.sql"),
   tar_file(query_tmpl_users, "sql/users.tmpl.sql"),
   tar_target(config_where, config::get("where", file = file_config)),
-  tar_fst_tbl(data, fetch_from_v3(query_tmpl_data, config_where)),
-  tar_fst_tbl(users, fetch_from_v3(query_tmpl_users, config_where))
+  tar_fst_tbl(data, tarflow.iquizoo::fetch(query_tmpl_data, config_where)),
+  tar_fst_tbl(users, tarflow.iquizoo::fetch(query_tmpl_users, config_where))
 )
