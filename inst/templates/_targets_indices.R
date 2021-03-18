@@ -1,26 +1,26 @@
 # load required packages used in pipeline setup
+options(tidyverse.quiet = TRUE)
 library(targets)
 library(tarchetypes)
+library(tidyverse)
 # set required packages used in pipeline running
-tar_option_set(packages = c("tidyverse", "dataproc.iquizoo", "tarflow.iquizoo"))
+tar_option_set(packages = c("tidyverse", "dataproc.iquizoo"))
 # track changes in the following packages
 tar_option_set(imports = "dataproc.iquizoo")
-# build sub-targets of calculating indices for each game
-targets_indices <- tarflow.iquizoo::build_targets_indices()
 # add more jobs in the following plans
 list(
   tar_file(file_config, "config.yml"),
   tar_file(query_tmpl_data, "sql/data.tmpl.sql"),
   tar_file(query_tmpl_users, "sql/users.tmpl.sql"),
   tar_target(config_where, config::get("where", file = file_config)),
-  tar_fst_tbl(
-    data,
-    fetch_from_v3(query_tmpl_data, config_where) %>%
-      group_by(game_id) %>%
-      tar_group(),
-    iteration = "group"
-  ),
+  tar_fst_tbl(data, fetch_from_v3(query_tmpl_data, config_where)),
   tar_fst_tbl(users, fetch_from_v3(query_tmpl_users, config_where)),
-  targets_indices,
+  targets_indices <- tar_map(
+    values = tarflow.iquizoo::game_info %>%
+      distinct(prep_fun_name) %>%
+      mutate(prep_fun = syms(prep_fun_name)),
+    names = prep_fun_name,
+    tar_target(indices, tarflow.iquizoo::calc_indices(data, prep_fun))
+  ),
   tar_combine(game_indices, targets_indices, format = "fst_tbl")
 )

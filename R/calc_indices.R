@@ -13,8 +13,8 @@ calc_indices <- function(data, prep_fun) {
   # get the name of the preprocessing function
   prep_fun_name <- deparse1(substitute(prep_fun))
   # extract all the data that can be preprocessed by this function
-  valid_game_ids <- gameconfig %>%
-    dplyr::filter(.data$prep_fun == prep_fun_name) %>%
+  valid_game_ids <- game_info %>%
+    dplyr::filter(.data$prep_fun_name == prep_fun_name) %>%
     dplyr::pull("game_id")
   cur_fun_data <- data %>%
     dplyr::filter(.data$game_id %in% valid_game_ids) %>%
