@@ -2,7 +2,7 @@
 library(targets)
 library(tarchetypes)
 # set required packages used in pipeline running
-tar_option_set(packages = c("tidyverse", "tarflow.iquizoo"))
+tar_option_set(packages = "tidyverse")
 # add more jobs in the following plans
 list(
   tar_file(file_config, "config.yml"),
