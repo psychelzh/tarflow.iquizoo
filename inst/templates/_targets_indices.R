@@ -17,10 +17,12 @@ list(
   tar_fst_tbl(users, fetch_from_v3(query_tmpl_users, config_where)),
   targets_indices <- tar_map(
     values = tarflow.iquizoo::game_info %>%
-      distinct(prep_fun_name) %>%
+      group_by(prep_fun_name) %>%
+      summarise(game_ids = list(game_id), .groups = "drop") %>%
       mutate(prep_fun = syms(prep_fun_name)),
     names = prep_fun_name,
-    tar_target(indices, tarflow.iquizoo::calc_indices(data, prep_fun))
+    tar_target(data_prep, data %>% filter(game_id %in% game_ids)),
+    tar_target(indices, tarflow.iquizoo::calc_indices(data_prep, prep_fun))
   ),
-  tar_combine(game_indices, targets_indices, format = "fst_tbl")
+  tar_combine(game_indices, targets_indices[[2]], format = "fst_tbl")
 )
