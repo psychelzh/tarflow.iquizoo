@@ -10,21 +10,12 @@
 #' @importFrom rlang .data
 #' @export
 calc_indices <- function(data, prep_fun) {
-  # get the name of the preprocessing function
-  prep_fun_name <- deparse1(substitute(prep_fun))
-  # extract all the data that can be preprocessed by this function
-  valid_game_ids <- gameconfig %>%
-    dplyr::filter(.data$prep_fun == prep_fun_name) %>%
-    dplyr::pull("game_id")
-  cur_fun_data <- data %>%
-    dplyr::filter(.data$game_id %in% valid_game_ids) %>%
-    dplyr::filter(purrr::map_lgl(.data$game_data, jsonlite::validate))
   # if no data found, no further processing is needed
-  if (nrow(cur_fun_data) == 0) {
+  if (nrow(data) == 0) {
     return(NULL)
   }
   # use `prep_fun` to calculate
-  cur_fun_data %>%
+  data %>%
     dplyr::group_by(.data$user_id) %>%
     dplyr::mutate(occasion = dplyr::row_number(.data$game_time)) %>%
     dplyr::ungroup() %>%

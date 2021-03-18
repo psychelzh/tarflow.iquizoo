@@ -1,0 +1,87 @@
+﻿game_id,game_name,game_name_en,game_name_abbr,prep_fun_name
+b058c5e3-cff0-417d-93a9-dd82f901530d,变色魔块,Stop Signal,StopSig,stopsignal
+2dfe4cb6-2fcc-4b44-a7f0-e42f74810872,察颜观色,Faces Reading,Faces,complexswitch
+d4995118-c8ed-401d-9eb6-ee729fb98116,超级秒表,Simple Reaction Time Test,SRT,srt
+c26c3b9c-5582-4155-9f76-b31e47c07f2a,吹气球,BART,BART,bart
+c89ae889-110f-4c57-b201-802374d2f624,词语判断,Lexic,Lexic,countcorrect
+7034b6f2-0f09-46ea-8b95-634689a8e998,倒背数,Backward Digit Span,BDS,span
+8cf5d67b-d853-4acb-a253-a8ff9aa2d486,登陆月球（初级）,Number Line Estimation Junior,NLEJr,nle
+5c9e7f8b-41a1-4b31-9d94-63be74e5d806,登陆月球（中级）,Number Line Estimation Medium,NLEMed,nle
+1c188618-612a-468c-b0a0-76a4afcdbaa0,多彩文字,Color Stroop Paradigm,ColStrp,congeff
+697d1de9-d140-4e21-9269-6de08443f784,方块速记,Spatial Short-term Memory Simple,SSTMS,span
+1813dfbd-f61e-47f5-aec6-721cde20f838,方向临摹,Judgment of Line Orientation,JLO,jlo
+cd0b8686-e775-416e-8a58-31a44f37f239,符号判断,Symbol,Symbol,countcorrect
+e4399b39-92a0-4f44-871c-6108a1b17a63,各得其所,London Tower Test,LdnTwr,london
+7cb86e74-810d-45a3-ba3c-8b8a9dc6dc1c,过目不忘,Forward Word Span,FWS,span
+ebcab989-3390-446c-ac8f-f61132765f3e,候鸟迁徙,Birds Migration,Birds,complexswitch
+c175b435-27ed-4eac-9f98-00b4d2f22838,蝴蝶照相机,Symmetry Complex Span,SCSpan,span
+d5d29d3b-2a4c-4e1a-ab8e-b8fcc0fae48b,火眼金睛,Attention Search,AttSrc,countcorrect
+b3886679-7004-4581-8cb4-bdd0b5ddc055,九五之集,Number Sets Test,NumSets,countcorrect
+24b1d4ad-ab3e-4361-8b9b-d1dcb5edf2b9,卡片分类,Card Sorting,CardSort,switchcost
+07b9b48e-2350-4c5f-9b6a-5e2c2c1b97c5,快速归类,Choice Reaction Time,CRT,crt
+32b4ed17-52d5-464e-9009-1752f2b6731d,连点成画,Five Point Test,FPT,countcorrect
+6c84a085-e118-4089-9143-a65a24c74aa4,模拟驾驶,Driving,Driving,driving
+1757b97c-597e-4d4c-b7f4-dd749df394fd,魔术师,Adaptive N Back Test,Nback,nback
+208fae84-7ae1-4e41-b15f-af731b825914,魔术师初级,One Back Test,Nback1,nback
+cab61a44-0891-4d0f-bdc3-aee60f3a5f00,魔术师高级,Three Back Test,Nback3,nback
+83d5c767-12ae-464b-9892-c3883c3b1a78,魔术师中级,Two Back Test,Nback2,nback
+bc9f51d0-1d24-4826-a024-67b431741f51,魔术师终极,Four Back Test,Nback4,nback
+082ea578-9bea-4618-94ac-946b7c1daff6,拼音判断,Pinyin,Pinyin,countcorrect
+44853d2f-87bb-4b66-8678-f95cd1bacd8e,人工语言,Associative Memory Language,AscLan,countcorrect
+4b245057-1fc7-4b88-83e1-9cc8b0448c7a,人工语言-初级,Associative Memory Language Junior,AscLanJr,countcorrect
+33cb1542-8736-444d-80b5-4bed6cdac1a5,人工语言-中级,Associative Memory Language Medium,AscLanMd,countcorrect
+eecc6df6-a95d-4036-aca0-b1aa65b120db,声调判断,Tone,Tone,countcorrect
+ec40acb2-efba-40cd-adbc-fd604668b451,时空相机A,Spatiotemporal Memory A,SpatTempA,spattemp
+b896281d-9460-450e-9675-47ab3ba1068c,时空相机B,Spatiotemporal Memory B,SpatTempB,spattemp
+87c63149-07ba-4d34-bcad-7e5fff3b5dc8,视听反应,Multisense,MltSns,multisense
+98b2cb06-900e-49c1-b9bf-499e6c705838,舒尔特方格（初级）,Schulte Grid Junior,SchulteJr,schulte
+8cd79a3c-bcfa-45f1-aa15-65c52bd4f4ea,舒尔特方格（高级）,Schulte Grid Advanced,SchulteAdv,schulte
+e88ce3d8-88eb-41c6-ba2d-0650e6897d0f,舒尔特方格（中级）,Schulte Grid Medium,SchulteMed,schulte
+6d16b4e2-cb8a-4fe7-be67-17aca93ababf,数感,Nonsymbolic Numeric Comparison,NsymNCmp,nsymncmp
+9007f653-4750-4b6a-bf5d-e5084fb35417,数字大小比较,Symbolic Numeric Comparison,SymNCmp,symncmp
+7c7fe5b8-58dd-49dd-bf2a-30376b44f778,顺背数,Forward Digit Span,FDS,span
+761ae897-4196-496e-b1bf-58c214acaebd,速算师（初级）,Calculation Junior,CalcJr,countcorrect
+933d51d5-49de-454a-bb7b-a9481f7244f0,速算师（中级）,Calculation Medium,CalcMed,countcorrect
+6bfc5052-76d1-4234-9f82-d1d2dd3ade11,塔罗牌,Weather Prediction Paradigm,WxPred,wxpred
+6ea55de0-0d70-4ae1-8ccf-00705d103b69,太空飞船,Flanker Test,Flkr,congeff
+f4e7115d-ba8a-474f-945d-fc88946000e8,图片记忆A,Behavioral Pattern Separation A,BPSA,bps
+f1156275-3f17-40c2-bda6-22767878ddf2,图片记忆B,Behavioral Pattern Separation B,BPSB,bps
+bcbdfb36-58a3-4df9-b31e-5f54295a1468,图片记忆C,Behavioral Pattern Separation C,BPSC,bps
+b4dcbdfe-f835-438b-9448-bc570f384851,图片记忆D,Behavioral Pattern Separation D,BPSD,bps
+71d62d15-c149-4a3a-82f5-fa16d722463f,位置记忆,Spatial Short-term Memory,SSTM,span
+76621a53-d00c-4efd-83f2-d7d499b7c8b0,言语记忆,DRM Paradigm,DRM,drm
+3b68c304-efbe-431c-8f87-38611b593b80,一心二用,Dual Task Paradigm,DualTask,dualtask
+393b69dc-c995-45ae-9a8d-c65b18eb659b,萤火虫,Multiple Object Tracking,MOT,span
+5134b80a-945f-452e-b6cc-3c2b01295120,萤火虫高级版,Multiple Object Tracking 2,MOT2,span
+de124965-f280-4177-a747-20fe4aba79fa,宇宙黑洞A,Location Memory A,LocMemA,locmem
+9ca38d8d-a402-49fd-bb5f-aa0f1d499c5e,宇宙黑洞B,Location Memory B,LocMemB,locmem
+605d5346-5b07-4a9a-b28d-db522de05b02,语义判断,Semanteme,Seman,countcorrect
+28ddff7c-396a-4bce-8b16-c3258cd637dc,专注大师,Calculation Speeded,CalcSpd,countcorrect
+ef44f5a5-5134-47da-9c6e-9f2f714f6cfc,捉虫,Continuous Performance Test,CPT,cpt
+db0b4727-86f8-40c7-95dd-863197b95c03,字形判断,Orthography,Ortho,countcorrect
+4b72d72d-b6f3-430f-b744-4209fe9508a2,阻挡陨石,Earth Protect,EP,countcorrect
+e5aa6979-91be-4dae-b51e-5f9719f6c3d1,二维心理旋转测试A,Mental Rotation A,MRA,countcorrect
+777a91ab-fd7c-4039-8feb-d314cdfd7c70,二维心理旋转测试B,Mental Rotation B,MRB,countcorrect
+fe1c2015-ab53-4899-8357-c64dc6aad075,二维心理旋转测试C,Mental Rotation C,MRC,countcorrect
+8fa69a79-d25b-4079-9d9e-1db817f959b3,二维心理旋转测试D,Mental Rotation D,MRD,countcorrect
+19c64c85-e049-4f07-98a0-3ba7c6e2f7db,瑞文标准推理,Raven Standard,RavenS,countcorrect
+98ff7e39-c007-496a-9657-b2be8425d303,瑞文标准推理偶数版,Raven Standard Even,RavenSE,countcorrect
+b2c2007f-1eac-43cd-b189-b2e8b205505a,瑞文标准推理奇数版,Raven Standard Odd,RavenSO,countcorrect
+993e97f8-25be-4b20-9fa8-a901c8a6b7e8,瑞文高级推理,Raven Advanced,RavenAdv,countcorrect
+ad810784-6bef-4277-803d-644a4d5d57f6,三维心理旋转测试A,Mental Rotation 3D A,MR3DA,countcorrect
+1cee9ffa-6391-4bc1-8a87-2199036e1f6b,三维心理旋转测试B,Mental Rotation 3D B,MR3DB,countcorrect
+b019d6ec-9e38-497e-8259-8bf7128fe76c,数字归纳推理A,Digit Reasoning Induction A,DRIA,countcorrect
+3759e0fa-bccd-4539-81fd-73f5671af290,数字归纳推理B,Digit Reasoning Induction B,DRIB,countcorrect
+816b7e90-49d8-474c-9779-c2193fade13b,数字归纳推理C,Digit Reasoning Induction C,DRIC,countcorrect
+0c810c88-29ca-4d10-9d2f-9fcc6bed7c9c,数字归纳推理D,Digit Reasoning Induction D,DRID,countcorrect
+b958aca6-2898-46ec-863e-78254fe21ef8,数字演绎推理,Digit Reasoning Deduction,DRD,countcorrect
+26eb4f74-91aa-4965-b542-4cfb77a618be,图形归纳推理A,Non-verbal Reasoning Induction A,NVRIA,countcorrect
+4e538055-d5a1-4e91-bf6c-93c68cf4de28,图形归纳推理B,Non-verbal Reasoning Induction B,NVRIB,countcorrect
+ca646547-8ef2-4657-8b9b-35b586073683,图形演绎推理A,Non-verbal Reasoning Deduction A,NVRDA,countcorrect
+831784bc-2aeb-4a1e-95ed-2df1224836bb,图形演绎推理B,Non-verbal Reasoning Deduction B,NVRDB,countcorrect
+a0cab4df-f1de-44e2-afbc-2a205d5ca7e4,图形折叠与展开A,Folding A,FOLDA,countcorrect
+49feab5f-c3e8-4bf3-b58f-63730c616b50,图形折叠与展开B,Folding B,FOLDB,countcorrect
+11d071cc-7289-429a-a6c5-a552753c52a0,文字推理-初级,Verbal Reasoning Junior,VRJr,countcorrect
+2b9cd51a-64d6-49b3-8e9c-2db69d21771b,文字推理-高级,Verbal Reasoning Advanced,VRAdv,countcorrect
+82c50d3a-5a13-451f-ad3a-9b8082731ac9,阅读理解,Reading 2,Reading2,countcorrect
+2a82342b-f1bf-489e-8dd4-403e708123d1,阅读判断,Reading,Reading,countcorrect
