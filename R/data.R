@@ -9,7 +9,7 @@
 #'   \item{game_name}{Game name in Chinese, matching that in the database.}
 #'   \item{game_name_en}{English game name.}
 #'   \item{game_name_abbr}{English game name abbreviated.}
-#'   \item{prep_fun}{Name of the preprocessing function.}
+#'   \item{prep_fun_name}{Name of the preprocessing function.}
 #' }
 #' @export
 "game_info"
