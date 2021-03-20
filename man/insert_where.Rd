@@ -11,18 +11,17 @@ insert_where(old, ...)
 
 \method{insert_where}{`NULL`}(old, ...)
 
-\method{insert_where}{list}(old, element, ..., replace = TRUE)
+\method{insert_where}{list}(old, ..., replace = TRUE)
 
-\method{insert_where}{data.frame}(old, element, ..., replace = TRUE)
+\method{insert_where}{data.frame}(old, ..., replace = TRUE)
 }
 \arguments{
 \item{old}{The old where configuration.}
 
-\item{...}{Other argument kept for future use. Currently, they are silently
-ignored.}
-
-\item{element}{The new where element. Can be a \code{list} or \code{data.frame}. \code{NULL}
-is accepted so that returns an unchanged version of the old config.}
+\item{...}{The new where element. Can be of \code{list} or \code{data.frame} class.
+Note they must have name of \code{"table"}. What's more, to make it work
+properly in the whole project, the names should be no other than
+\code{c("table", "field", "operator", "values")}.}
 
 \item{replace}{Replace the element with the same \code{table} value or not.
 Default is set to replace, set \code{FALSE} to add it anyway (not recommended,
@@ -36,8 +35,12 @@ Insert new where configurations into the existed one. This can be useful in
 many projects doing minor changes to current where configurations.
 }
 \details{
-This function is intended to modify an existed where configuration. To create
-a completely new one, please specify it by using \code{\link[tibble:tribble]{tibble::tribble()}} instead.
+This function is intended to modify an existed where configuration.
+To create a completely new one, please specify it by using
+\code{\link[tibble:tribble]{tibble::tribble()}} instead.
+
+If you insisted on calling \code{\link[=insert_where]{insert_where()}} with empty where configration,
+it will signal an error.
 }
 \author{
 Liang Zhang
