@@ -42,6 +42,29 @@ To create a completely new one, please specify it by using
 If you insisted on calling \code{\link[=insert_where]{insert_where()}} with empty where configration,
 it will signal an error.
 }
+\examples{
+require(tarflow.iquizoo)
+config_where <- list(list(table = "content", field = "name", values = "test"))
+
+# configuration of the same "table" value is replaced by default
+insert_where(config_where, list(table = "content"))
+# keep all the old elements by setting `replace = FALSE`
+insert_where(config_where, list(table = "content"), replace = FALSE)
+
+# do not call it with an empty configuration, this will signal an error
+\dontrun{
+insert_where(NULL)
+insert_where(list())
+insert_where(data.frame())
+}
+
+# instead, just use `tibble::tribble()`
+config_new <- tibble::tribble(
+  ~table, ~field, ~values,
+  "content", "name", "test2"
+)
+
+}
 \author{
 Liang Zhang
 }
