@@ -44,7 +44,9 @@ it will signal an error.
 }
 \examples{
 require(tarflow.iquizoo)
-config_where <- list(list(table = "content", field = "name", values = "test"))
+config_where <- list(
+  list(table = "content", field = "name", values = "test")
+)
 
 # configuration of the same "table" value is replaced by default
 insert_where(config_where, list(table = "content"))
