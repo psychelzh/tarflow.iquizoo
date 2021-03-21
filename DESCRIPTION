@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 0.0.1
+Version: 0.0.1.9000
 Authors@R:
     person(given = "Liang",
            family = "Zhang",
