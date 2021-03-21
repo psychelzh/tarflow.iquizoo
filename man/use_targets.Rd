@@ -14,7 +14,9 @@ report generation; 'original' fetches raw data only.}
 
 \item{separate}{Separate main targets into branches or not. For \code{"indices"}
 and \code{"original"} schema, the default is set to \code{TRUE}. For \code{"scores"}
-schema, the default is set to \code{FALSE}.}
+schema, the default is set to \code{FALSE}. Note, when setting to \code{TRUE},
+package "dataproc.iquizoo" is required and its version should be \code{"0.2.6"}
+or higher.}
 }
 \description{
 Add some pre-defined targets to your workflow.

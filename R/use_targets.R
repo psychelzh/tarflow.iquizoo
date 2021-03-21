@@ -8,7 +8,9 @@
 #'   report generation; 'original' fetches raw data only.
 #' @param separate Separate main targets into branches or not. For `"indices"`
 #'   and `"original"` schema, the default is set to `TRUE`. For `"scores"`
-#'   schema, the default is set to `FALSE`.
+#'   schema, the default is set to `FALSE`. Note, when setting to `TRUE`,
+#'   package "dataproc.iquizoo" is required and its version should be `"0.2.6"`
+#'   or higher.
 #' @author Liang Zhang
 #' @export
 use_targets <- function(schema = c("indices", "scores", "original"),
@@ -19,6 +21,16 @@ use_targets <- function(schema = c("indices", "scores", "original"),
     separate <- ifelse(schema == "scores", FALSE, TRUE)
   }
   stopifnot(rlang::is_scalar_logical(separate))
+  # check package availability
+  if (separate &
+      !requireNamespace(
+        "dataproc.iquizoo",
+        versionCheck = list(op = ">=", version = "0.2.6"),
+        quietly = TRUE
+      ))
+    stop("When setting 'separate' to `TRUE`. ",
+         "Please make sure package 'dataproc.iquizoo' ",
+         "of version 0.2.6 or higher is available.")
   # prepare names of templates to be used
   templates_query <- c(
     "sql/users.tmpl.sql",
