@@ -55,12 +55,14 @@ use_targets <- function(schema = c("indices", "scores", "original"),
   )
   usethis::ui_done("Added query files for fetching datasets.")
   # add configuration files
-  usethis::use_template("config.yml", package = "tarflow.iquizoo")
-  usethis::ui_done("Added config file template.")
-  usethis::ui_todo(
-    paste("You probably need to edit the config file",
-          "{usethis::ui_value('config.yml')}.")
-  )
+  if (!file.exists("config.yml")) {
+    usethis::use_template("config.yml", package = "tarflow.iquizoo")
+    usethis::ui_done("Added config file template.")
+    usethis::ui_todo(
+      paste("You probably need to edit the config file",
+            "{usethis::ui_value('config.yml')}.")
+    )
+  }
   # add targets file
   usethis::use_template(
     template_targets,
