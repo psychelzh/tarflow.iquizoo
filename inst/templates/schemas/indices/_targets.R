@@ -16,7 +16,7 @@ list(
   tar_fst_tbl(data, tarflow.iquizoo::fetch(query_tmpl_data, config_where)),
   tar_fst_tbl(users, tarflow.iquizoo::fetch(query_tmpl_users, config_where)),
   targets_indices <- tar_map(
-    values = tarflow.iquizoo::game_info %>%
+    values = dataproc.iquizoo::game_info %>%
       group_by(prep_fun_name) %>%
       summarise(game_ids = list(game_id), .groups = "drop") %>%
       mutate(prep_fun = syms(prep_fun_name)),

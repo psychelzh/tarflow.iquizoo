@@ -9,7 +9,7 @@ tar_option_set(packages = c("tidyverse", "dataproc.iquizoo"))
 tar_option_set(imports = "dataproc.iquizoo")
 # prepare configurations for games to be fetched
 games <- tarflow.iquizoo::fetch("sql/games.tmpl.sql", config::get("where")) %>%
-  left_join(tarflow.iquizoo::game_info, by = "game_id") %>%
+  left_join(dataproc.iquizoo::game_info, by = "game_id") %>%
   mutate(prep_fun = syms(prep_fun_name))
 # add more jobs in the following plans
 list(
