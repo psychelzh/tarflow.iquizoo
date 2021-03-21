@@ -74,7 +74,7 @@ insert_where.list <- function(old, ..., replace = TRUE) {
 #' @exportS3Method insert_where
 insert_where.data.frame <- function(old, ..., replace = TRUE) {
   if (nrow(old) == 0) insert_where.NULL(old)
-  old <- as.list(old) %>% purrr::transpose()
+  old <- purrr::transpose(as.list(old))
   insert_where(old, ..., replace = replace) %>%
     purrr::transpose() %>%
     tibble::as_tibble() %>%
