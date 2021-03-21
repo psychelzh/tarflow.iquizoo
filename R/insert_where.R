@@ -60,7 +60,7 @@ insert_where.NULL <- function(old, ...) {
 #' @rdname insert_where
 #' @exportS3Method insert_where
 insert_where.list <- function(old, ..., replace = TRUE) {
-  if (length(old) == 0) insert_where.NULL(old)
+  if (length(old) == 0) insert_where.NULL(old, ...)
   new <- purrr::map(list(...), ~ as.list(unlist(.x)))
   if (!all(purrr::map_lgl(new, ~ rlang::has_name(.x, "table")))) {
     stop("At least one of the new element has no name of 'table'.")
@@ -75,7 +75,7 @@ insert_where.list <- function(old, ..., replace = TRUE) {
 #' @rdname insert_where
 #' @exportS3Method insert_where
 insert_where.data.frame <- function(old, ..., replace = TRUE) {
-  if (nrow(old) == 0) insert_where.NULL(old)
+  if (nrow(old) == 0) insert_where.NULL(old, ...)
   old <- purrr::transpose(as.list(old))
   insert_where(old, ..., replace = replace) %>%
     purrr::transpose() %>%

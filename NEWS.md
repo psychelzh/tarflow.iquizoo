@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 0.0.1
 
 * Fix the encoding issue on Windows system.
 * Add new schema "original" to download original data only.
