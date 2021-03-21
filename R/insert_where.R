@@ -63,8 +63,8 @@ insert_where.list <- function(old, ..., replace = TRUE) {
   if (!all(purrr::map_lgl(new, ~ rlang::has_name(.x, "table")))) {
     stop("At least one of the new element has no name of 'table'.")
   }
-  new_tables <- purrr::map_chr(new, ~ .x[["table"]])
   if (replace) {
+    new_tables <- purrr::map_chr(new, ~ .x[["table"]])
     old[purrr::map_lgl(old, ~ .x[["table"]] %in% new_tables)] <- NULL
   }
   return(c(old, new))
