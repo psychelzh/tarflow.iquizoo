@@ -4,13 +4,17 @@
 \alias{use_targets}
 \title{Add specific targets to workflow}
 \usage{
-use_targets(schema = c("indices", "scores", "original"))
+use_targets(schema = c("indices", "scores", "original"), separate = NULL)
 }
 \arguments{
 \item{schema}{The name of your jobs. 'indices' means calculate game indices
 from rawdata, mostly for scholar usage; 'scores' means extracting the
 scores directly from online database, mostly for norm calculation and
 report generation; 'original' fetches raw data only.}
+
+\item{separate}{Separate main targets into branches or not. For \code{"indices"}
+and \code{"original"} schema, the default is set to \code{TRUE}. For \code{"scores"}
+schema, the default is set to \code{FALSE}.}
 }
 \description{
 Add some pre-defined targets to your workflow.
