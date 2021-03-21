@@ -7,6 +7,8 @@
 * Rename `fetch_from_v3()` as `fetch()`, and the API is now `fetch(query_file, config_where, dsn)`. That is to say, you can now pass the data source name of your database to it.
 * Export S3 method `compose_where()`, which originally was named as `compose_where_clause()`.
 * Support new argument `separate` in `use_targets()` to optionally separate fetching into branches by games.
+* Support new argument `ignore_tar` in `use_targets()` to optionally ignore internal data from targets package in version control system (i.e., ".gitignore").
+* Now `use_targets()` will skip "config.yml" file silently if there already exists one.
 * Moved internal data named `game_info` to "dataproc.iquizoo (>= 0.2.6)" package.
 
 # tarflow.iquizoo 0.0.0.9001
