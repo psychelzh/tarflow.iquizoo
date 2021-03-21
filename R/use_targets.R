@@ -72,6 +72,7 @@ use_targets <- function(schema = c("indices", "scores", "original"),
   usethis::ui_done("Added {usethis::ui_value('_targets.R')}.")
   # ignore targets internal files
   usethis::use_git_ignore("_targets")
+  # signal work done
   usethis::ui_done(
     paste("All work done.",
           "Please run {usethis::ui_code('targets::tar_make()')}",
