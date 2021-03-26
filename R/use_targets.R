@@ -27,7 +27,7 @@ use_targets <- function(schema = c("indices", "scores", "original", "academic"),
   stopifnot(rlang::is_scalar_logical(ignore_tar))
   # warning if schema is "academic" but set separate as TRUE, we havn't finish the function
   if (schema == "academic" & separate ) {
-    separate <- TRUE
+    separate <- FALSE
     warning('Schema "academic" can not run separately! We still run "academic" for you though.')
   }
   # check package availability
