@@ -15,16 +15,21 @@
 #'   ignored or not? Default to `TRUE`.
 #' @author Liang Zhang
 #' @export
-use_targets <- function(schema = c("indices", "scores", "original"),
+use_targets <- function(schema = c("indices", "scores", "original", "academic"),
                         separate = NULL,
                         ignore_tar = TRUE) {
   schema <- match.arg(schema)
   # set `separate` default to FALSE for a schema of "scores"
   if (is.null(separate)) {
-    separate <- ifelse(schema == "scores", FALSE, TRUE)
+    separate <- ifelse(schema %in% c("scores", "academic"), FALSE, TRUE)
   }
   stopifnot(rlang::is_scalar_logical(separate))
   stopifnot(rlang::is_scalar_logical(ignore_tar))
+  # warning if schema is "academic" but set separate as TRUE, we havn't finish the function
+  if (schema == "academic" & separate ) {
+    separate <- TRUE
+    warning('Schema "academic" can not run separately! We still run "academic" for you though.')
+  }
   # check package availability
   if (separate &
       !requireNamespace(
@@ -42,7 +47,8 @@ use_targets <- function(schema = c("indices", "scores", "original"),
       schema,
       original = ,
       indices = "sql/data.tmpl.sql",
-      scores = "sql/scores.tmpl.sql"
+      scores = "sql/scores.tmpl.sql",
+      academic = "sql/academic.tmpl.sql"
     ),
     if (separate) "sql/games.tmpl.sql"
   )
