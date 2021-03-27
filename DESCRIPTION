@@ -33,6 +33,7 @@ Imports:
     tidyr,
     usethis
 Suggests:
+    testthat (>= 3.0.0),
     dataproc.iquizoo (>= 0.2.6)
 Remotes:
     psychelzh/dataproc.iquizoo
@@ -40,3 +41,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Config/testthat/edition: 3
