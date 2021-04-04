@@ -6,6 +6,7 @@ SELECT DISTINCT
 	course.`Name` course_name,
 	content.Id game_id,
 	content.`Name` game_name,
+	content_score_detail.ContentAbilityId ability_id,
 	content_score_detail.CreateTime game_time,
 	content_score_detail.ApproximateScore game_score_raw,
 	content_score_detail.StandardScore game_score_std
