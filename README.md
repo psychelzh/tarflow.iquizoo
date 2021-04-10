@@ -1,10 +1,12 @@
 # tarflow-iquizoo
 
-[![tic](https://github.com/psychelzh/tarflow.iquizoo/workflows/tic/badge.svg?branch=master)](https://github.com/psychelzh/tarflow.iquizoo/actions)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/psychelzh/tarflow.iquizoo/workflows/R-CMD-check/badge.svg)](https://github.com/psychelzh/tarflow.iquizoo/actions)
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+<!-- badges: end -->
 
-Workflow generation for IQUIZOO data powered by [`targets`](https://github.com/wlandau/targets).
+Workflow generation for IQUIZOO data powered by [targets](https://github.com/wlandau/targets) package.
 
 ## Table of Contents
 
@@ -17,7 +19,7 @@ Workflow generation for IQUIZOO data powered by [`targets`](https://github.com/w
 
 ## Background
 
-The preprocessing of IQUIZOO data used to be very harduous because the datasets were very disorganized. Newer version of database and games make things much better. Now there is a package called [`dataproc.iquizoo`](https://github.com/psychelzh/dataproc.iquizoo), containing all the required functions used in preprocessing. It facilitates analysis significantly. For now, with the advent of [`targets`](https://github.com/wlandau/targets), we can easily setup workflows to automate all the preprocessing! This is what this package does. Hopefully, it will make the analysis of IQUIZOO data a favorable thing.
+The preprocessing of IQUIZOO data used to be very harduous because the datasets were very disorganized. Newer version of database and games make things much better. Now there is a package called [dataproc.iquizo`](https://github.com/psychelzh/dataproc.iquizoo), containing all the required functions used in preprocessing. It facilitates analysis significantly. For now, with the advent of [targets](https://github.com/wlandau/targets), we can easily setup workflows to automate all the preprocessing! This is what this package does. Hopefully, it will make the analysis of IQUIZOO data a favorable thing.
 
 ## Install
 
