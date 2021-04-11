@@ -13,7 +13,8 @@ Description: For "iquizoo" data processing, there is already a package
     provided by "targets" package which mimicks the logic of "make",
     automating the building processes.
 License: MIT + file LICENSE
-URL: https://github.com/psychelzh/tarflow.iquizoo
+URL: https://psychelzh.github.io/tarflow.iquizoo,
+    https://github.com/psychelzh/tarflow.iquizoo
 Depends:
     R (>= 2.10)
 Imports:

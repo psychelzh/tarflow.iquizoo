@@ -4,3 +4,6 @@
 ^\.ccache$
 ^\.github$
 ^tic\.R$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
