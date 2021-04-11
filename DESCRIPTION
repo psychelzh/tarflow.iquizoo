@@ -17,10 +17,14 @@ URL: https://github.com/psychelzh/tarflow.iquizoo
 Depends:
     R (>= 2.10)
 Imports:
+    cli,
     config,
+    dataproc.iquizoo (>= 1.0.0),
     DBI,
     dplyr,
+    fs,
     jsonlite,
+    lifecycle,
     magrittr,
     odbc,
     purrr,
@@ -31,9 +35,9 @@ Imports:
     targets,
     tibble,
     tidyr,
-    usethis
+    usethis,
+    utils
 Suggests:
-    dataproc.iquizoo (>= 0.2.6),
     testthat (>= 3.0.0),
     withr
 Remotes:
