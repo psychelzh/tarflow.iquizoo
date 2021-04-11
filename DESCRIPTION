@@ -9,9 +9,9 @@ Authors@R:
            comment = c(ORCID = "0000-0001-9041-1150"))
 Description: For "iquizoo" data processing, there is already a package
     called "dataproc.iquizoo", but eventually the use of it is relied on a
-    workflow.  This package is used to build such workflows based on tools
-    provided by "targets". The "targets" is a package mimicking the logic
-    of "make", automating the building processes.
+    workflow. This package is used to build such workflows based on tools
+    provided by "targets" package which mimicks the logic of "make",
+    automating the building processes.
 License: MIT + file LICENSE
 URL: https://github.com/psychelzh/tarflow.iquizoo
 Depends:
