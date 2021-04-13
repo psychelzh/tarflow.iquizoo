@@ -132,7 +132,9 @@ TarScript <- R6::R6Class(
       # deparse pipeline, note it is wrapped around a call to `list()`
       cmds_pipeline <- c(
         "list(",
-        purrr::map_chr(private$pipeline, rlang::expr_deparse),
+        private$pipeline %>%
+          purrr::map_chr(rlang::expr_deparse) %>%
+          stringr::str_c(collapse = ",\n"),
         ")"
       )
       c(cmds_pre, cmds_pipeline)
