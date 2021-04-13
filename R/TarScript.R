@@ -44,7 +44,7 @@ TarScript <- R6::R6Class(
       # option is a `list` with names, making sure its names are unique
       stopifnot(!anyDuplicated(names(option)))
       private$package <- unique(package)
-      private$global <- unique(global)
+      private$global <- global
       private$option <- option
       private$targets <- targets
       private$pipeline <- unique(pipeline)
@@ -86,9 +86,10 @@ TarScript <- R6::R6Class(
     #' @param append A logical value indicating if the `codes` are appended to
     #'   the old `step` (`TRUE`) or replaced (`FALSE`).
     update = function(step, codes, append = TRUE) {
-      # different when updating option and targets
+      # make sure no duplicated names when updating option
       stopifnot(!(step == "option" && anyDuplicated(names(codes))))
-      if (!step %in% c("option", "targets")) {
+      # make sure unique for package and pipeline
+      if (step %in% c("package", "pipeline")) {
         codes <- unique(codes)
       }
       if (append) {
