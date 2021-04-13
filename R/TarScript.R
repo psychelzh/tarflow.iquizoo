@@ -104,7 +104,7 @@ TarScript <- R6::R6Class(
       } else {
         private[[step]] <- codes
       }
-      self
+      invisible(self)
     },
     #' @description
     #'
