@@ -71,7 +71,7 @@ TarScript <- R6::R6Class(
         script_text <- styler::style_text(script_text)
       }
       if (is.null(path)) {
-        path = fs::path(usethis::proj_path(), private$path_script)
+        path <- fs::path(usethis::proj_path(), private$path_script)
       }
       cat(script_text, file = path, sep = "\n")
       invisible(self)

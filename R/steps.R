@@ -34,8 +34,7 @@ step_query <- function(schema, separate, script) {
     package = utils::packageName()
   )
   script$update("pipeline", .compose_query_target("users", fetch = TRUE))
-  query_name_main <- switch(
-    schema,
+  query_name_main <- switch(schema,
     scores = "scores",
     original = ,
     preproc = "data"
@@ -118,8 +117,7 @@ build_separate_requirements <- function(schema, script) {
   script$update("targets", tar_targets_text(schema))
   script$update(
     "pipeline",
-    switch(
-      schema,
+    switch(schema,
       scores = rlang::exprs(
         targets_scores,
         tar_combine(scores, targets_scores)
