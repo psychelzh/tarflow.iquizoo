@@ -20,7 +20,12 @@ calc_indices <- function(data, prep_fun, name_data = "game_data") {
       )
     ) %>%
     tidyr::unnest(.data[[name_data]])
-  dataproc.iquizoo::preproc_data(data_parsed, prep_fun, vars_by) %>%
+  dataproc.iquizoo::preproc_data(
+    data_parsed,
+    deparse1(substitute(prep_fun)),
+    vars_by,
+    character.only = TRUE
+  ) %>%
     # results must be stacked for there might be game time
     tidyr::pivot_longer(
       !dplyr::all_of(vars_by),
