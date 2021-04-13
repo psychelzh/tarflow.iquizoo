@@ -4,10 +4,7 @@
 \alias{edit_config}
 \title{Edit configuration file}
 \usage{
-edit_config(file = "config.yml")
-}
-\arguments{
-\item{file}{The configuration file name.}
+edit_config()
 }
 \value{
 \code{NULL} (invisibly). This function is called for its side effect.

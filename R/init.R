@@ -63,6 +63,9 @@ init <- function(wizard = interactive(), schema = "scores", separate = NULL) {
     )
   )
   cli::cli_alert_success("All Done.")
+  if (interactive()) {
+    edit_config()
+  }
   invisible()
 }
 
