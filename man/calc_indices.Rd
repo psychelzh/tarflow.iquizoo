@@ -4,19 +4,21 @@
 \alias{calc_indices}
 \title{Calculate indices for a single game}
 \usage{
-calc_indices(data, prep_fun)
+calc_indices(data, prep_fun, name_data = "game_data")
 }
 \arguments{
 \item{data}{The raw data.}
 
 \item{prep_fun}{The name (symbol) of the calculation function}
+
+\item{name_data}{The column name in the \code{data} that stores original data. It
+is typically of a vector containing \code{JSON} string.}
 }
 \value{
 A \code{tibble} with the calculated indices.
 }
 \description{
-Use the given \code{prep_fun} to calculate indices for a single game. In addition,
-a variable named \code{occasion} is added to track the times of participation.
+Use the given \code{prep_fun} to calculate indices for a single game.
 }
 \author{
 Liang Zhang
