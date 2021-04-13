@@ -3,16 +3,16 @@
 \name{steps}
 \alias{steps}
 \alias{step_config}
-\alias{step_pipeline}
 \alias{step_query}
+\alias{step_pipeline}
 \alias{step_gitignore}
 \title{Basic Steps}
 \usage{
-step_config(file = "config.yml")
+step_config(script)
 
-step_pipeline(schema, separate)
+step_query(schema, separate, script)
 
-step_query(schema, separate, dir)
+step_pipeline(schema, separate, script)
 
 step_gitignore()
 }
