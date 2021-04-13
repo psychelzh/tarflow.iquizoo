@@ -13,6 +13,6 @@ targets_data <- tar_map(
   ),
   tar_target(
     indices,
-    calc_indices(data, prep_fun)
+    tarflow.iquizoo::calc_indices(data, prep_fun)
   )
 )
