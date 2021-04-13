@@ -81,8 +81,7 @@ TarScript <- R6::R6Class(
     #' Update a part of the script.
     #'
     #' @param step A character of the updating step name.
-    #' @param codes The codes to update. See details at [TarScript$initialize]
-    #'   for the supported format.
+    #' @param codes The codes to update.
     #' @param append A logical value indicating if the `codes` are appended to
     #'   the old `step` (`TRUE`) or replaced (`FALSE`).
     update = function(step, codes, append = TRUE) {

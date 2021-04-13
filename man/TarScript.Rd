@@ -96,8 +96,7 @@ Update a part of the script.
 \describe{
 \item{\code{step}}{A character of the updating step name.}
 
-\item{\code{codes}}{The codes to update. See details at \link{TarScript$initialize}
-for the supported format.}
+\item{\code{codes}}{The codes to update.}
 
 \item{\code{append}}{A logical value indicating if the \code{codes} are appended to
 the old \code{step} (\code{TRUE}) or replaced (\code{FALSE}).}
