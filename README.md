@@ -45,7 +45,7 @@ Essentially, file `_targets.R` will be created in which lists a pipeline that ca
 targets::tar_make()
 ```
 
-Or if you prefer to run on multicores, use this:
+Or if you prefer to run on multicores (note you can only do this when you separate works into branches), use this:
 
 ```r
 # set the number of works in the `workers` argument
