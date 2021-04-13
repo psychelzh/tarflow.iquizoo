@@ -39,15 +39,17 @@ Create a new \link{TarScript} object.
 script. Usually only "targets" and "tarchetypes" only. Set it \code{NULL} if
 not needed. And repetitive packages are removed.}
 
-\item{\code{global}}{A \code{list} of expressions. Global variables or functions used
-in the script. For example, there might be a \code{source()} call to prepare
-functions.}
+\item{\code{global}}{A \code{character} vector. Global variables or functions used in
+the script. For example, there might be a \code{source()} call to prepare
+functions. \code{character} used for better formatting. No \code{unique()} is
+applied.}
 
 \item{\code{option}}{A \code{list}. Will be arguments of \code{tar_option_set()}. Set it
 \code{NULL} if not needed.}
 
-\item{\code{targets}}{A \code{list} of expressions. Defined targets out of the
-pipeline \code{list}.}
+\item{\code{targets}}{A \code{character} vector. Defined targets out of the pipeline
+\code{list}. \code{character} used for better formatting. No \code{unique()} is
+applied.}
 
 \item{\code{pipeline}}{A \code{list} of expressions, each of which is a \code{call} to
 \code{tar_target()} or its related. This cannot be \code{NULL} when build.}

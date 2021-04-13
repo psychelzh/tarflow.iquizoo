@@ -25,13 +25,15 @@ TarScript <- R6::R6Class(
     #' @param package Character vector. The package need to be included in the
     #'   script. Usually only "targets" and "tarchetypes" only. Set it `NULL` if
     #'   not needed. And repetitive packages are removed.
-    #' @param global A `list` of expressions. Global variables or functions used
-    #'   in the script. For example, there might be a `source()` call to prepare
-    #'   functions.
+    #' @param global A `character` vector. Global variables or functions used in
+    #'   the script. For example, there might be a `source()` call to prepare
+    #'   functions. `character` used for better formatting. No `unique()` is
+    #'   applied.
     #' @param option A `list`. Will be arguments of `tar_option_set()`. Set it
     #'   `NULL` if not needed.
-    #' @param targets A `list` of expressions. Defined targets out of the
-    #'   pipeline `list`.
+    #' @param targets A `character` vector. Defined targets out of the pipeline
+    #'   `list`. `character` used for better formatting. No `unique()` is
+    #'   applied.
     #' @param pipeline A `list` of expressions, each of which is a `call` to
     #'   `tar_target()` or its related. This cannot be `NULL` when build.
     initialize = function(package = c("targets", "tarchetypes"),
@@ -41,8 +43,10 @@ TarScript <- R6::R6Class(
                           pipeline = NULL) {
       private$package <- unique(package)
       private$global <- unique(global)
-      private$option <- unique(option)
-      private$targets <- unique(targets)
+      # option is a `list` with names, making sure its names are unique
+      stopifnot(!anyDuplicated(names(option)))
+      private$option <- option
+      private$targets <- targets
       private$pipeline <- unique(pipeline)
     },
     #' @description
@@ -82,10 +86,22 @@ TarScript <- R6::R6Class(
     #' @param append A logical value indicating if the `codes` are appended to
     #'   the old `step` (`TRUE`) or replaced (`FALSE`).
     update = function(step, codes, append = TRUE) {
+      # different when updating option and targets
+      stopifnot(!(step == "option" && anyDuplicated(names(codes))))
+      if (!step %in% c("option", "targets")) {
+        codes <- unique(codes)
+      }
       if (append) {
-        private[[step]] <- unique(c(private[[step]], codes))
+        if (step == "option") {
+          # delete old options with repetitive names
+          old_option <- private$option
+          old_option[names(old_option) %in% names(codes)] <- NULL
+          private$option <- c(old_option, codes)
+        } else {
+          private[[step]] <- unique(c(private[[step]], codes))
+        }
       } else {
-        private[[step]] <- unique(codes)
+        private[[step]] <- codes
       }
       self
     },
@@ -115,29 +131,24 @@ TarScript <- R6::R6Class(
     #' code line. Note this method does not return the object itself, so it
     #' cannot be chained.
     deparse_script = function() {
-      # deparse command before pipeline
-      cmds_pre <- c(
-        purrr::map(
+      deparse_call2 <- function(.fn, ...) {
+        deparse1(rlang::call2(.fn, ...))
+      }
+      # global and targets should be strings
+      c(
+        purrr::map_chr(
           private$package,
-          ~ rlang::call2("library", !!!rlang::syms(.x))
+          ~ deparse_call2("library", !!!rlang::syms(.x))
         ),
         private$global,
-        purrr::map(
-          private$option,
-          ~ rlang::call2("tar_option_set", !!!.x)
-        ),
-        private$targets
-      ) %>%
-        purrr::map_chr(rlang::expr_deparse)
-      # deparse pipeline, note it is wrapped around a call to `list()`
-      cmds_pipeline <- c(
+        deparse_call2("tar_option_set", !!!private$option),
+        private$targets,
         "list(",
         private$pipeline %>%
-          purrr::map_chr(rlang::expr_deparse) %>%
+          purrr::map_chr(deparse1) %>%
           stringr::str_c(collapse = ",\n"),
         ")"
       )
-      c(cmds_pre, cmds_pipeline)
     }
   )
 )
