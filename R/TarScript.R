@@ -24,7 +24,7 @@ TarScript <- R6::R6Class(
     #'
     #' @param package Character vector. The package need to be included in the
     #'   script. Usually only "targets" and "tarchetypes" only. Set it `NULL` if
-    #'   not needed.
+    #'   not needed. And repetitive packages are removed.
     #' @param global A `list` of expressions. Global variables or functions used
     #'   in the script. For example, there might be a `source()` call to prepare
     #'   functions.
@@ -39,43 +39,37 @@ TarScript <- R6::R6Class(
                           option = NULL,
                           targets = NULL,
                           pipeline = NULL) {
-      private$package <- package
-      private$global <- global
-      private$option <- option
-      private$targets <- targets
-      private$pipeline <- pipeline
+      private$package <- unique(package)
+      private$global <- unique(global)
+      private$option <- unique(option)
+      private$targets <- unique(targets)
+      private$pipeline <- unique(pipeline)
     },
     #' @description
     #'
     #' Build the targets script. This will update the file "_targets.R" from
-    #' current project.
+    #' current project by default.
     #'
+    #' @param path A [connection][base::connection], or a character string
+    #'   naming the file to print the script. Set to "" to print to the standard
+    #'   output. The default is "_targets.R".
     #' @param ... For future expansion use and must be empty.
     #' @param styler A logical indicating if styler should be called to make the
     #'   generated file nicer to read. Default is `TRUE`.
-    build = function(..., styler = TRUE) {
+    build = function(path = NULL, ..., styler = TRUE) {
       if (!missing(...)) {
         ellipsis::check_dots_empty()
       }
       stopifnot(!is.null(private$pipeline))
-      c(
-        purrr::map(
-          private$package,
-          ~ rlang::call2("library", !!!rlang::syms(.x))
-        ),
-        private$global,
-        purrr::map(
-          private$option,
-          ~ rlang::call2("tar_option_set", !!!.x)
-        ),
-        private$targets,
-        rlang::call2("list", !!!private$pipeline)
-      ) %>%
-        purrr::map_chr(rlang::expr_deparse) %>%
-        writeLines(private$path_script)
+      # prepare commands before pipeline
+      script_text <- self$deparse_script()
       if (styler) {
-        styler::style_file(private$path_script)
+        script_text <- styler::style_text(script_text)
       }
+      if (is.null(path)) {
+        path = fs::path(usethis::proj_path(), private$path_script)
+      }
+      cat(script_text, file = path, sep = "\n")
       invisible(self)
     },
     #' @description
@@ -83,10 +77,16 @@ TarScript <- R6::R6Class(
     #' Update a part of the script.
     #'
     #' @param step A character of the updating step name.
-    #' @param codes The codes to be added. See details at [TarScript$initialize]
+    #' @param codes The codes to update. See details at [TarScript$initialize]
     #'   for the supported format.
-    update = function(step, codes) {
-      private[[step]] <- codes
+    #' @param append A logical value indicating if the `codes` are appended to
+    #'   the old `step` (`TRUE`) or replaced (`FALSE`).
+    update = function(step, codes, append = TRUE) {
+      if (append) {
+        private[[step]] <- unique(c(private[[step]], codes))
+      } else {
+        private[[step]] <- unique(codes)
+      }
       self
     },
     #' @description
@@ -108,6 +108,34 @@ TarScript <- R6::R6Class(
         sep = "\n"
       )
       invisible(self)
+    },
+    #' @description
+    #'
+    #' Deparse the whole script to a character vector. Each element of it is a
+    #' code line. Note this method does not return the object itself, so it
+    #' cannot be chained.
+    deparse_script = function() {
+      # deparse command before pipeline
+      cmds_pre <- c(
+        purrr::map(
+          private$package,
+          ~ rlang::call2("library", !!!rlang::syms(.x))
+        ),
+        private$global,
+        purrr::map(
+          private$option,
+          ~ rlang::call2("tar_option_set", !!!.x)
+        ),
+        private$targets
+      ) %>%
+        purrr::map_chr(rlang::expr_deparse)
+      # deparse pipeline, note it is wrapped around a call to `list()`
+      cmds_pipeline <- c(
+        "list(",
+        purrr::map_chr(private$pipeline, rlang::expr_deparse),
+        ")"
+      )
+      c(cmds_pre, cmds_pipeline)
     }
   )
 )

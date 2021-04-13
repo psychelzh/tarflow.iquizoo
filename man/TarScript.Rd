@@ -14,6 +14,7 @@ for pipeline building.
 \item \href{#method-build}{\code{TarScript$build()}}
 \item \href{#method-update}{\code{TarScript$update()}}
 \item \href{#method-print}{\code{TarScript$print()}}
+\item \href{#method-deparse_script}{\code{TarScript$deparse_script()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -36,7 +37,7 @@ Create a new \link{TarScript} object.
 \describe{
 \item{\code{package}}{Character vector. The package need to be included in the
 script. Usually only "targets" and "tarchetypes" only. Set it \code{NULL} if
-not needed.}
+not needed. And repetitive packages are removed.}
 
 \item{\code{global}}{A \code{list} of expressions. Global variables or functions used
 in the script. For example, there might be a \code{source()} call to prepare
@@ -59,14 +60,18 @@ pipeline \code{list}.}
 \if{latex}{\out{\hypertarget{method-build}{}}}
 \subsection{Method \code{build()}}{
 Build the targets script. This will update the file "_targets.R" from
-current project.
+current project by default.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TarScript$build(..., styler = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TarScript$build(path = NULL, ..., styler = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{path}}{A \link[base:connections]{connection}, or a character string
+naming the file to print the script. Set to "" to print to the standard
+output. The default is "_targets.R".}
+
 \item{\code{...}}{For future expansion use and must be empty.}
 
 \item{\code{styler}}{A logical indicating if styler should be called to make the
@@ -81,7 +86,7 @@ generated file nicer to read. Default is \code{TRUE}.}
 \subsection{Method \code{update()}}{
 Update a part of the script.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TarScript$update(step, codes)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TarScript$update(step, codes, append = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -89,8 +94,11 @@ Update a part of the script.
 \describe{
 \item{\code{step}}{A character of the updating step name.}
 
-\item{\code{codes}}{The codes to be added. See details at \link{TarScript$initialize}
+\item{\code{codes}}{The codes to update. See details at \link{TarScript$initialize}
 for the supported format.}
+
+\item{\code{append}}{A logical value indicating if the \code{codes} are appended to
+the old \code{step} (\code{TRUE}) or replaced (\code{FALSE}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -111,5 +119,17 @@ Print object more informative.
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-deparse_script"></a>}}
+\if{latex}{\out{\hypertarget{method-deparse_script}{}}}
+\subsection{Method \code{deparse_script()}}{
+Deparse the whole script to a character vector. Each element of it is a
+code line. Note this method does not return the object itself, so it
+cannot be chained.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TarScript$deparse_script()}\if{html}{\out{</div>}}
+}
+
 }
 }
