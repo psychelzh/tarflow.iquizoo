@@ -41,10 +41,10 @@ TarScript <- R6::R6Class(
                           option = NULL,
                           targets = NULL,
                           pipeline = NULL) {
-      private$package <- unique(package)
-      private$global <- unique(global)
       # option is a `list` with names, making sure its names are unique
       stopifnot(!anyDuplicated(names(option)))
+      private$package <- unique(package)
+      private$global <- unique(global)
       private$option <- option
       private$targets <- targets
       private$pipeline <- unique(pipeline)
