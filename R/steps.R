@@ -63,6 +63,19 @@ step_query <- function(schema, separate, script) {
 
 #' @rdname steps
 step_pipeline <- function(schema, separate, script) {
+  # tar_option_set()
+  if (schema == "preproc") {
+    script$update(
+      "option",
+      list(package = c("tidyverse", "dataproc.iquizoo"))
+    )
+    script$update(
+      "option",
+      list(imports = "dataproc.iquizoo")
+    )
+  } else {
+    script$update("option", list(package = "tidyverse"))
+  }
   if (separate) {
     build_separate_requirements(schema, script)
   }
