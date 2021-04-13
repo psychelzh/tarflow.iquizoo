@@ -65,7 +65,6 @@ config_new <- tibble::tribble(
   ~table, ~field, ~values,
   "content", "name", "test2"
 )
-
 }
 \author{
 Liang Zhang

@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 0.0.1
+Version: 0.0.2
 Authors@R:
     person(given = "Liang",
            family = "Zhang",
@@ -9,33 +9,45 @@ Authors@R:
            comment = c(ORCID = "0000-0001-9041-1150"))
 Description: For "iquizoo" data processing, there is already a package
     called "dataproc.iquizoo", but eventually the use of it is relied on a
-    workflow.  This package is used to build such workflows based on tools
-    provided by "targets". The "targets" is a package mimicking the logic
-    of "make", automating the building processes.
+    workflow. This package is used to build such workflows based on tools
+    provided by "targets" package which mimicks the logic of "make",
+    automating the building processes.
 License: MIT + file LICENSE
-URL: https://github.com/psychelzh/tarflow.iquizoo
+URL: https://psychelzh.github.io/tarflow.iquizoo,
+    https://github.com/psychelzh/tarflow.iquizoo
 Depends:
     R (>= 2.10)
 Imports:
+    cli,
     config,
+    dataproc.iquizoo (>= 1.0.0),
     DBI,
     dplyr,
+    ellipsis,
+    fs,
     jsonlite,
+    lifecycle,
     magrittr,
     odbc,
     purrr,
+    R6,
     readr,
-    rlang,
+    rlang (>= 0.1.2),
     stringr,
+    styler,
     tarchetypes,
     targets,
     tibble,
     tidyr,
-    usethis
+    usethis,
+    utils
 Suggests:
-    dataproc.iquizoo (>= 0.2.6)
+    roxygen2,
+    testthat (>= 3.0.0),
+    withr
 Remotes:
     psychelzh/dataproc.iquizoo
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

@@ -1,46 +1,35 @@
 #' Calculate indices for a single game
 #'
-#' Use the given `prep_fun` to calculate indices for a single game. In addition,
-#' a variable named `occasion` is added to track the times of participation.
+#' Use the given `prep_fun` to calculate indices for a single game.
 #'
 #' @param data The raw data.
 #' @param prep_fun The name (symbol) of the calculation function
+#' @param name_data The column name in the `data` that stores original data. It
+#'   is typically of a vector containing `JSON` string.
 #' @return A `tibble` with the calculated indices.
 #' @author Liang Zhang
 #' @importFrom rlang .data
 #' @export
-calc_indices <- function(data, prep_fun) {
-  # if no data found, no further processing is needed
-  if (nrow(data) == 0) {
-    return(NULL)
-  }
-  # use `prep_fun` to calculate
-  data %>%
-    dplyr::group_by(.data$user_id) %>%
-    dplyr::mutate(occasion = dplyr::row_number(.data$game_time)) %>%
-    dplyr::ungroup() %>%
+calc_indices <- function(data, prep_fun, name_data = "game_data") {
+  vars_by <- setdiff(names(data), name_data)
+  data_parsed <- data %>%
     dplyr::mutate(
-      indices = purrr::map(
-        .data$game_data,
-        ~ prep_fun(jsonlite::fromJSON(.x)) %>%
-          tidyr::pivot_longer(
-            -.data$is_normal,
-            names_to = "index",
-            values_to = "score"
-          )
+      "{name_data}" := purrr::map(
+        .data[[name_data]],
+        jsonlite::fromJSON
       )
     ) %>%
-    tidyr::unnest(.data$indices) %>%
-    dplyr::group_by(.data$index) %>%
-    dplyr::mutate(
-      is_outlier = .data$score %in% grDevices::boxplot.stats(.data$score)$out
-    ) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(
-      dplyr::all_of(
-        c("user_id", "occasion",
-          "game_id", "game_name", "game_time", "game_duration",
-          "index", "score", "is_normal", "is_outlier")
-      )
+    tidyr::unnest(.data[[name_data]])
+  dataproc.iquizoo::preproc_data(
+    data_parsed,
+    deparse1(substitute(prep_fun)),
+    vars_by,
+    character.only = TRUE
+  ) %>%
+    # results must be stacked for there might be game time
+    tidyr::pivot_longer(
+      !dplyr::all_of(vars_by),
+      names_to = "index",
+      values_to = "score"
     )
 }

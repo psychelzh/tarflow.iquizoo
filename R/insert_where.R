@@ -42,7 +42,6 @@
 #'   ~table, ~field, ~values,
 #'   "content", "name", "test2"
 #' )
-#'
 #' @author Liang Zhang
 #' @rdname insert_where
 #' @export
@@ -53,8 +52,10 @@ insert_where <- function(old, ...) {
 #' @rdname insert_where
 #' @exportS3Method insert_where
 insert_where.NULL <- function(old, ...) {
-  stop("You are trying to create new where configuration.",
-       "Please use `tibble::tribble()` instead.")
+  stop(
+    "You are trying to create new where configuration.",
+    "Please use `tibble::tribble()` instead."
+  )
 }
 
 #' @rdname insert_where
