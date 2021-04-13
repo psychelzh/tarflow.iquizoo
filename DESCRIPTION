@@ -23,14 +23,16 @@ Imports:
     dataproc.iquizoo (>= 1.0.0),
     DBI,
     dplyr,
+    ellipsis,
     fs,
     jsonlite,
     lifecycle,
     magrittr,
     odbc,
     purrr,
+    R6,
     readr,
-    rlang,
+    rlang (>= 0.1.2),
     stringr,
     tarchetypes,
     targets,
@@ -39,6 +41,7 @@ Imports:
     usethis,
     utils
 Suggests:
+    roxygen2,
     testthat (>= 3.0.0),
     withr
 Remotes:

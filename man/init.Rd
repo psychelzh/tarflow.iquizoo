@@ -20,22 +20,23 @@ based on games?}
 \code{NULL} (invisibly). This function is called for its side-effect.
 }
 \description{
-Create a basic infrastructure for iquizoo data analysis.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Create a basic infrastructure for
+iquizoo data analysis.
 }
 \details{
 These steps are done in order:
 \enumerate{
+\item Prepare configuration file if not found. Configuration file is named as
+"config.yml", which is basically used to set the \code{where-clause} for
+database queries (\code{SQL}).
+\item Prepare database query files (\code{SQL}). The major part of the whole work
+is just to download data from database, so for now, up to four query files
+are used. Note they are all \emph{"templates"} only, cannot be used directly.
 \item Prepare "_targets.R". Package targets parses commands from this R
 script, which plays a role as a workflow blueprint. In this step, users
 will be asked to choose which "schema" to use if \code{wizard} is \code{TRUE},
 typically when in interactive mode.
-\item Prepare database query files (\code{SQL}). The major part of the whole work
-is just to download data from database, so for now, up to four query files
-are used. Note they are all \emph{"templates"} only, cannot be used directly.
-\item Prepare configuration file if not found. Configuration file is named as
-"config.yml", which is basically used to set the \code{where-clause} for
-database queries (\code{SQL}).
-\item \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Add "_targets" to file .gitignore
+\item Add "_targets" to file .gitignore
 if found.
 \item Manually check configuration file "config.yml".
 }
