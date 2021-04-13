@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## New Features
+
+* New feature is introduced with a huge change that `use_targets()` has been removed. And `init()` is used to replace it. With this function, we can define many other schemas. Maybe in future, the logic should be modified to better handle schemas.
+
 # tarflow.iquizoo 0.0.1
 
 * Fix the encoding issue on Windows system.
