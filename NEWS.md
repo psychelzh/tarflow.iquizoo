@@ -1,3 +1,9 @@
+# tarflow.iquizoo 0.0.5
+
+## Bug Fixes
+
+* Fix issue of empty json string by removing empty (i.e., `"[]"`) json string data in validation step of `calc_indices()`.
+
 # tarflow.iquizoo 0.0.4
 
 ## Bug Fixes
