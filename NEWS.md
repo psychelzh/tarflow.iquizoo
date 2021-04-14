@@ -1,4 +1,8 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 0.0.3
+
+## Bug Fixes
+
+* Fix an issue of data name case, and now all the names are translated to lower-case ones before preprocessing.
 
 # tarflow.iquizoo 0.0.2
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_indices.R
 \name{calc_indices}
 \alias{calc_indices}
-\title{Calculate indices for a single game}
+\title{Calculate Indices}
 \usage{
 calc_indices(data, prep_fun, name_data = "game_data")
 }
@@ -18,7 +18,7 @@ is typically of a vector containing \code{JSON} string.}
 A \code{tibble} with the calculated indices.
 }
 \description{
-Use the given \code{prep_fun} to calculate indices for a single game.
+Get raw data prepared and calculate indices.
 }
 \author{
 Liang Zhang
