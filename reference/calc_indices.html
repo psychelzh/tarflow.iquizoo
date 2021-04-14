@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
@@ -143,6 +143,20 @@ is typically of a vector containing <code>JSON</code> string.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>tibble</code> with the calculated indices.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>These steps are performed in order:</p><ol>
+<li><p>Remove observations with invalid json string data. If this step produces
+data with no observation, following steps are skipped and <code>NULL</code> is
+returned.</p></li>
+<li><p>Parse data stored in json string, convert the names to lower case and
+stack the parsed data. Stacking have better performances than
+<a href='https://dplyr.tidyverse.org/reference/group_nest.html'>group_nest</a>ing.</p></li>
+<li><p>Call <code><a href='https://psychelzh.github.io/dataproc.iquizoo/reference/preproc_data.html'>dataproc.iquizoo::preproc_data()</a></code> to pre-process on the parsed
+data, and the results are stacked into a long format. The longer format is
+used because each observation has its own creating time information.</p></li>
+</ol>
+
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Liang Zhang</p>
