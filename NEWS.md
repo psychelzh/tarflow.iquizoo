@@ -1,3 +1,9 @@
+# tarflow.iquizoo 0.0.4
+
+## Bug Fixes
+
+* Fix issue of invalid json string by introducing a data validation step in `calc_indices()`.
+
 # tarflow.iquizoo 0.0.3
 
 ## Bug Fixes
