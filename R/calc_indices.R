@@ -1,6 +1,6 @@
-#' Calculate indices for a single game
+#' Calculate Indices
 #'
-#' Use the given `prep_fun` to calculate indices for a single game.
+#' Get raw data prepared and calculate indices.
 #'
 #' @param data The raw data.
 #' @param prep_fun The name (symbol) of the calculation function
@@ -8,7 +8,6 @@
 #'   is typically of a vector containing `JSON` string.
 #' @return A `tibble` with the calculated indices.
 #' @author Liang Zhang
-#' @importFrom rlang .data
 #' @export
 calc_indices <- function(data, prep_fun, name_data = "game_data") {
   vars_by <- setdiff(names(data), name_data)
@@ -16,7 +15,8 @@ calc_indices <- function(data, prep_fun, name_data = "game_data") {
     dplyr::mutate(
       "{name_data}" := purrr::map(
         .data[[name_data]],
-        jsonlite::fromJSON
+        ~ jsonlite::fromJSON(.x) %>%
+          dplyr::rename_with(tolower)
       )
     ) %>%
     tidyr::unnest(.data[[name_data]])
