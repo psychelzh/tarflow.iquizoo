@@ -20,6 +20,20 @@ A \code{tibble} with the calculated indices.
 \description{
 Get raw data prepared and calculate indices.
 }
+\details{
+These steps are performed in order:
+\enumerate{
+\item Remove observations with invalid json string data. If this step produces
+data with no observation, following steps are skipped and \code{NULL} is
+returned.
+\item Parse data stored in json string, convert the names to lower case and
+stack the parsed data. Stacking have better performances than
+\link[dplyr:group_nest]{group_nest}ing.
+\item Call \code{\link[dataproc.iquizoo:preproc_data]{dataproc.iquizoo::preproc_data()}} to pre-process on the parsed
+data, and the results are stacked into a long format. The longer format is
+used because each observation has its own creating time information.
+}
+}
 \author{
 Liang Zhang
 }
