@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
       </span>
     </div>
 
@@ -114,12 +114,23 @@
       <small>Source: <a href='https://github.com/psychelzh/tarflow.iquizoo/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="tarflowiquizoo-005" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.5">
-<a href="#tarflowiquizoo-005" class="anchor"></a>tarflow.iquizoo 0.0.5</h1>
+    <div id="tarflowiquizoo-006" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.6">
+<a href="#tarflowiquizoo-006" class="anchor"></a>tarflow.iquizoo 0.0.6</h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<ul>
+<li>Use <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">stringr::str_detect()</a></code> to remove empty json string. Now <code>"[]"</code> and <code>"{}"</code> are both removed.</li>
+</ul>
+</div>
+</div>
+    <div id="tarflowiquizoo-005" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.5">
+<a href="#tarflowiquizoo-005" class="anchor"></a>tarflow.iquizoo 0.0.5</h1>
+<div id="bug-fixes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fix issue of empty json string by removing empty (i.e., <code>"[]"</code>) json string data in validation step of <code><a href="../reference/calc_indices.html">calc_indices()</a></code>.</li>
 </ul>
@@ -128,9 +139,9 @@
     <div id="tarflowiquizoo-004" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.4">
 <a href="#tarflowiquizoo-004" class="anchor"></a>tarflow.iquizoo 0.0.4</h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fix issue of invalid json string by introducing a data validation step in <code><a href="../reference/calc_indices.html">calc_indices()</a></code>.</li>
 </ul>
@@ -139,9 +150,9 @@
     <div id="tarflowiquizoo-003" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.3">
 <a href="#tarflowiquizoo-003" class="anchor"></a>tarflow.iquizoo 0.0.3</h1>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fix an issue of data name case, and now all the names are translated to lower-case ones before preprocessing.</li>
 </ul>
