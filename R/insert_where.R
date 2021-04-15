@@ -3,12 +3,13 @@
 #' Insert new where configurations into the existed one. This can be useful in
 #' many projects doing minor changes to current where configurations.
 #'
-#' @details This function is intended to modify an existed where configuration.
-#'   To create a completely new one, please specify it by using
-#'   [tibble::tribble()] instead.
+#' @details
 #'
-#'   If you insisted on calling [insert_where()] with empty where configration,
-#'   it will signal an error.
+#' This function is intended to modify an existed where configuration. To create
+#' a completely new one, please specify it by using [tibble::tribble()] instead.
+#'
+#' If you insisted on calling [insert_where()] with empty where configration, it
+#' will signal an error.
 #'
 #' @param old The old where configuration.
 #' @param ... The new where element. Can be of `list` or `data.frame` class.
@@ -19,38 +20,13 @@
 #'   Default is set to replace, set `FALSE` to add it anyway (not recommended,
 #'   might cause error in further analysis).
 #' @return A where configuration of the same format with the old one.
-#' @examples
-#' require(tarflow.iquizoo)
-#' config_where <- list(
-#'   list(table = "content", field = "name", values = "test")
-#' )
-#'
-#' # configuration of the same "table" value is replaced by default
-#' insert_where(config_where, list(table = "content"))
-#' # keep all the old elements by setting `replace = FALSE`
-#' insert_where(config_where, list(table = "content"), replace = FALSE)
-#'
-#' # do not call it with an empty configuration, this will signal an error
-#' \dontrun{
-#' insert_where(NULL)
-#' insert_where(list())
-#' insert_where(data.frame())
-#' }
-#'
-#' # instead, just use `tibble::tribble()`
-#' config_new <- tibble::tribble(
-#'   ~table, ~field, ~values,
-#'   "content", "name", "test2"
-#' )
 #' @author Liang Zhang
-#' @rdname insert_where
-#' @export
+#' @keywords internal
 insert_where <- function(old, ...) {
   UseMethod("insert_where")
 }
 
 #' @rdname insert_where
-#' @exportS3Method insert_where
 insert_where.NULL <- function(old, ...) {
   stop(
     "You are trying to create new where configuration.",
@@ -59,7 +35,6 @@ insert_where.NULL <- function(old, ...) {
 }
 
 #' @rdname insert_where
-#' @exportS3Method insert_where
 insert_where.list <- function(old, ..., replace = TRUE) {
   if (length(old) == 0) insert_where.NULL(old, ...)
   new <- purrr::map(list(...), ~ as.list(unlist(.x)))
@@ -74,7 +49,6 @@ insert_where.list <- function(old, ..., replace = TRUE) {
 }
 
 #' @rdname insert_where
-#' @exportS3Method insert_where
 insert_where.data.frame <- function(old, ..., replace = TRUE) {
   if (nrow(old) == 0) insert_where.NULL(old, ...)
   old <- purrr::transpose(as.list(old))
