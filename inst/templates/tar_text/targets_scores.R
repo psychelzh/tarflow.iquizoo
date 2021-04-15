@@ -3,12 +3,8 @@ targets_scores <- tar_map(
   names = game_name_abbr,
   tar_target(
     scores,
-    tarflow.iquizoo::fetch(
-      query_tmpl_scores,
-      tarflow.iquizoo::insert_where(
-        config_where,
-        list(table = "content", field = "Id", values = game_id)
-      )
+    tarflow.iquizoo::fetch_single_game(
+      query_tmpl_scores, config_where, game_id
     )
   )
 )
