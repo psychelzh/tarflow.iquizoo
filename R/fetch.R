@@ -19,11 +19,13 @@ fetch <- function(query_file, config_where = NULL, dsn = "iquizoo-v3") {
   # connect to given database which is pre-configured
   con <- DBI::dbConnect(odbc::odbc(), dsn, encoding = enc)
   on.exit(DBI::dbDisconnect(con))
-  # `where_clause` is used in query template
-  where_clause <- compose_where(config_where)
   query <- query_file %>%
     readr::read_file() %>%
-    stringr::str_glue()
+    stringr::str_glue(
+      .envir = rlang::env(
+        where_clause = compose_where(config_where)
+      )
+    )
   tibble::tibble(DBI::dbGetQuery(con, query))
 }
 
@@ -38,7 +40,11 @@ fetch_single_game <- function(query_file,
     query_file,
     insert_where(
       config_where,
-      list(table = "content", field = "Id", values = game_id)
+      list(
+        table = "content",
+        field = "Id",
+        values = game_id
+      )
     )
   )
 }
