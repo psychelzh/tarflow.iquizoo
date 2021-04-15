@@ -23,9 +23,9 @@ Get raw data prepared and calculate indices.
 \details{
 These steps are performed in order:
 \enumerate{
-\item Remove observations with invalid or empty (i.e., \code{"[]"}) json string
-data. If this step produces data with no observation, following steps are
-skipped and \code{NULL} is returned.
+\item Remove observations with invalid or empty (i.e., \code{"[]"} or \code{"{}"}) json
+string data. If this step produces data with no observation, following
+steps are skipped and \code{NULL} is returned.
 \item Parse data stored in json string, convert the names to lower case and
 stack the parsed data. Stacking have better performances than
 \link[dplyr:group_nest]{group_nest}ing.

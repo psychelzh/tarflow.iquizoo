@@ -15,17 +15,14 @@ calc_indices <- function(data, prep_fun, name_data = "game_data") {
   #'
   #' These steps are performed in order:
   #'
-  #' 1. Remove observations with invalid or empty (i.e., `"[]"`) json string
-  #' data. If this step produces data with no observation, following steps are
-  #' skipped and `NULL` is returned.
-  data_valid <- dplyr::filter(
-    data,
-    purrr::map_lgl(
-      .data[[name_data]],
-      ~ jsonlite::validate(.x) &
-        jsonlite::minify(.x) != "[]"
+  #' 1. Remove observations with invalid or empty (i.e., `"[]"` or `"{}"`) json
+  #' string data. If this step produces data with no observation, following
+  #' steps are skipped and `NULL` is returned.
+  data_valid <- data %>%
+    dplyr::filter(
+      purrr::map_lgl(.data[[name_data]], jsonlite::validate),
+      !stringr::str_detect(.data[[name_data]], r"(^\s*(\[\s*\]|\{\s*\})\s*$)")
     )
-  )
   if (nrow(data_valid) == 0) {
     return()
   }
