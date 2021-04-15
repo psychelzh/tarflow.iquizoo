@@ -1,5 +1,9 @@
 # tarflow.iquizoo 0.0.6
 
+## Bug Fixes
+
+* Use `stringr::str_detect()` to remove empty json string. Now `"[]"` and `"{}"` are both removed.
+
 # tarflow.iquizoo 0.0.5
 
 ## Bug Fixes
