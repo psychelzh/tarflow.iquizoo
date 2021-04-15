@@ -9,32 +9,27 @@
 #' @param config_where Configuration of "where-clause".
 #' @return A "where-clause" character which is directly used in database query.
 #' @author Liang Zhang
-#' @rdname compose_where
-#' @export
+#' @keywords internal
 compose_where <- function(config_where) {
   UseMethod("compose_where")
 }
 
 #' @rdname compose_where
-#' @exportS3Method compose_where
 compose_where.default <- function(config_where) {
   config_where
 }
 
 #' @rdname compose_where
-#' @exportS3Method compose_where
 compose_where.NULL <- function(config_where) {
   compose_where.default("")
 }
 
 #' @rdname compose_where
-#' @exportS3Method compose_where
 compose_where.character <- function(config_where) {
   compose_where.default(config_where)
 }
 
 #' @rdname compose_where
-#' @exportS3Method compose_where
 compose_where.list <- function(config_where) {
   config_where_tbl <- tibble::tibble(where = config_where) %>%
     tidyr::unnest_wider("where")
@@ -42,7 +37,6 @@ compose_where.list <- function(config_where) {
 }
 
 #' @rdname compose_where
-#' @exportS3Method compose_where
 compose_where.data.frame <- function(config_where) {
   if (!rlang::has_name(config_where, "operator")) {
     config_where$operator <- NA_character_

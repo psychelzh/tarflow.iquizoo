@@ -38,3 +38,4 @@ it can also handle situations with \code{character} and \code{data.frame} input.
 \author{
 Liang Zhang
 }
+\keyword{internal}
