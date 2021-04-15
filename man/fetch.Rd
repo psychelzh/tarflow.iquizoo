@@ -2,9 +2,12 @@
 % Please edit documentation in R/fetch.R
 \name{fetch}
 \alias{fetch}
+\alias{fetch_single_game}
 \title{Fetch datasets from given database}
 \usage{
 fetch(query_file, config_where = NULL, dsn = "iquizoo-v3")
+
+fetch_single_game(query_file, config_where = NULL, game_id, dsn = "iquizoo-v3")
 }
 \arguments{
 \item{query_file}{File name of \code{sql} query}
@@ -13,6 +16,8 @@ fetch(query_file, config_where = NULL, dsn = "iquizoo-v3")
 be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 
 \item{dsn}{Data source name of an \code{odbc} database connector.}
+
+\item{game_id}{The identifier of the game to fetch datasets from.}
 }
 \value{
 A \code{tibble} of original data
@@ -21,6 +26,13 @@ A \code{tibble} of original data
 Based on a template query file and "where clause" configuration, datasets are
 extracted from a given database.
 }
+\section{Functions}{
+\itemize{
+\item \code{fetch}: Default usage of fetch.
+
+\item \code{fetch_single_game}: A special case to fetch datasets from a single game.
+}}
+
 \author{
 Liang Zhang
 }

@@ -3,13 +3,16 @@
 #' Based on a template query file and "where clause" configuration, datasets are
 #' extracted from a given database.
 #'
+#' @name fetch
 #' @param query_file File name of `sql` query
 #' @param config_where Configuration of "where-clause" of the `sql` query. Can
 #'   be a `list` (mostly from the `config.yml` file) or `data.frame`.
 #' @param dsn Data source name of an `odbc` database connector.
 #' @return A `tibble` of original data
 #' @author Liang Zhang
-#' @importFrom rlang .data
+NULL
+
+#' @describeIn fetch Default usage of fetch.
 #' @export
 fetch <- function(query_file, config_where = NULL, dsn = "iquizoo-v3") {
   enc <- ifelse(.Platform$OS.type == "windows", "gbk", "utf-8")
@@ -22,4 +25,20 @@ fetch <- function(query_file, config_where = NULL, dsn = "iquizoo-v3") {
     readr::read_file() %>%
     stringr::str_glue()
   tibble::tibble(DBI::dbGetQuery(con, query))
+}
+
+#' @describeIn fetch A special case to fetch datasets from a single game.
+#' @param game_id The identifier of the game to fetch datasets from.
+#' @export
+fetch_single_game <- function(query_file,
+                              config_where = NULL,
+                              game_id,
+                              dsn = "iquizoo-v3") {
+  fetch(
+    query_file,
+    insert_where(
+      config_where,
+      list(table = "content", field = "Id", values = game_id)
+    )
+  )
 }
