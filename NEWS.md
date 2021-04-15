@@ -1,5 +1,10 @@
 # tarflow.iquizoo (development version)
 
+## Enhancements
+
+* Added `fetch_single_game()` to treat special case of fetching dataset from a single game. This is used especially when using branches.
+* Unexported `compose_where()` and `insert_where()`, because they are just for usage in current package.
+
 # tarflow.iquizoo 0.0.6
 
 ## Bug Fixes
