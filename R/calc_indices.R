@@ -6,7 +6,7 @@
 #' @param prep_fun The name (symbol) of the calculation function
 #' @param name_data The column name in the `data` that stores original data. It
 #'   is typically of a vector containing `JSON` string.
-#' @return A `tibble` with the calculated indices.
+#' @return A [tibble][tibble::tibble-package] of the calculated indices.
 #' @author Liang Zhang
 #' @export
 calc_indices <- function(data, prep_fun, name_data = "game_data") {

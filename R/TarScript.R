@@ -3,7 +3,8 @@
 #' @description
 #'
 #' `r lifecycle::badge("experimental")` Stores all the required commands used
-#' for pipeline building.
+#' for pipeline building. See [targets::tar_script()] for more details of a
+#' target script.
 #'
 #' @export
 TarScript <- R6::R6Class(

@@ -15,7 +15,7 @@ calc_indices(data, prep_fun, name_data = "game_data")
 is typically of a vector containing \code{JSON} string.}
 }
 \value{
-A \code{tibble} with the calculated indices.
+A \link[tibble:tibble-package]{tibble} of the calculated indices.
 }
 \description{
 Get raw data prepared and calculate indices.

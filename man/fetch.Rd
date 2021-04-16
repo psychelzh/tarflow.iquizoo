@@ -15,12 +15,13 @@ fetch_single_game(query_file, config_where = NULL, game_id, dsn = "iquizoo-v3")
 \item{config_where}{Configuration of "where-clause" of the \code{sql} query. Can
 be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 
-\item{dsn}{Data source name of an \code{odbc} database connector.}
+\item{dsn}{The data source name of an \strong{ODBC} database connector. See
+\code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::dbConnect()}} for more information.}
 
 \item{game_id}{The identifier of the game to fetch datasets from.}
 }
 \value{
-A \code{tibble} of original data
+A \link[tibble:tibble-package]{tibble} of the fetched data.
 }
 \description{
 Based on a template query file and "where clause" configuration, datasets are

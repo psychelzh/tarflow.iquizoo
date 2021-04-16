@@ -7,8 +7,9 @@
 #' @param query_file File name of `sql` query
 #' @param config_where Configuration of "where-clause" of the `sql` query. Can
 #'   be a `list` (mostly from the `config.yml` file) or `data.frame`.
-#' @param dsn Data source name of an `odbc` database connector.
-#' @return A `tibble` of original data
+#' @param dsn The data source name of an **ODBC** database connector. See
+#'   [odbc::dbConnect()] for more information.
+#' @return A [tibble][tibble::tibble-package] of the fetched data.
 #' @author Liang Zhang
 NULL
 
