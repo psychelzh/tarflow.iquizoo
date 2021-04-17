@@ -129,7 +129,8 @@ build_separate_requirements <- function(schema, script) {
       preproc = exprs(
         targets_data,
         tar_combine(data, targets_data[[1]]),
-        tar_combine(indices, targets_data[[2]])
+        tar_combine(data_parsed, targets_data[[2]]),
+        tar_combine(indices, targets_data[[3]])
       )
     )
   )
