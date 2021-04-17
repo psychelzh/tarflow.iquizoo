@@ -16,10 +16,10 @@ step_config <- function(script) {
   } else {
     usethis::use_template(config_file, package = utils::packageName())
   }
-  codes <- rlang::exprs(
+  codes <- exprs(
     tar_file(file_config, !!config_file),
     tar_target(
-      !!rlang::sym(config_where),
+      !!sym(config_where),
       config::get("where", file = file_config)
     )
   )
@@ -89,21 +89,21 @@ step_gitignore <- function() {
 }
 
 .compose_query_target <- function(name_query, fetch) {
-  tar_name_query <- rlang::sym(stringr::str_glue("query_tmpl_{name_query}"))
+  tar_name_query <- sym(stringr::str_glue("query_tmpl_{name_query}"))
   c(
-    rlang::exprs(
+    exprs(
       tar_file(
         !!tar_name_query,
         fs::path(!!query_dir, !!query_files[[name_query]])
       )
     ),
     if (fetch) {
-      rlang::exprs(
+      exprs(
         tar_fst_tbl(
-          !!rlang::sym(name_query),
+          !!sym(name_query),
           tarflow.iquizoo::fetch(
             !!tar_name_query,
-            !!rlang::sym(config_where)
+            !!sym(config_where)
           )
         )
       )
@@ -118,18 +118,19 @@ build_separate_requirements <- function(schema, script) {
   script$update(
     "pipeline",
     switch(schema,
-      scores = rlang::exprs(
+      scores = exprs(
         targets_scores,
         tar_combine(scores, targets_scores)
       ),
-      original = rlang::exprs(
+      original = exprs(
         targets_data,
         tar_combine(data, targets_data)
       ),
-      preproc = rlang::exprs(
+      preproc = exprs(
         targets_data,
         tar_combine(data, targets_data[[1]]),
-        tar_combine(indices, targets_data[[2]])
+        tar_combine(data_parsed, targets_data[[2]]),
+        tar_combine(indices, targets_data[[3]])
       )
     )
   )

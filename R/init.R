@@ -56,8 +56,8 @@ init <- function(wizard = interactive(), schema = "scores", separate = NULL) {
     c(
       "You'd better manually check {.file config.yml} using {.fn edit_config}.",
       paste(
-        "After checking, please run {.fn targets::tar_make}",
-        "or {.code targets::tar_make_future(works = <numeric>)} (for parallel)",
+        "After checking, please run {.fn targets::tar_make} or",
+        "{.code targets::tar_make_future(workers = <numeric>)} (for parallel)",
         "to start your analysis."
       )
     )

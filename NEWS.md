@@ -1,3 +1,14 @@
+# tarflow.iquizoo 0.0.7
+
+## Breaking changes
+
+* Removed `calc_indices` (#24) and added `wrangle_data()` to fit the jobs for this package. This new function will parse input `json` string and stack them into long format, but keep other meta info in the attribute `"info"` of output. With all these, the output added a subclass `"tbl_meta"` and a `print()` method.
+
+## Enhancements
+
+* Added `fetch_single_game()` to treat special case of fetching dataset from a single game. This is used especially when using branches.
+* Unexported `compose_where()` and `insert_where()`, because they are just for usage in current package.
+
 # tarflow.iquizoo 0.0.6
 
 ## Bug Fixes

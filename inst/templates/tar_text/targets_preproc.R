@@ -3,16 +3,19 @@ targets_data <- tar_map(
   names = game_name_abbr,
   tar_target(
     data,
-    tarflow.iquizoo::fetch(
-      query_tmpl_data,
-      tarflow.iquizoo::insert_where(
-        config_where,
-        list(table = "content", field = "Id", values = game_id)
-      )
+    tarflow.iquizoo::fetch_single_game(
+      query_tmpl_data, config_where, game_id
     )
   ),
   tar_target(
+    data_parsed,
+    tarflow.iquizoo::wrangle_data(data)
+  ),
+  tar_target(
     indices,
-    tarflow.iquizoo::calc_indices(data, prep_fun)
+    dataproc.iquizoo::preproc_data(
+      data_parsed, prep_fun,
+      by = attr(data_parsed, "name_key")
+    )
   )
 )

@@ -1,16 +1,16 @@
-#' Calculate Indices
+#' Wrangle Raw Data
 #'
-#' Get raw data prepared and calculate indices.
+#' Data wrangling is the first step for data analysis. In this function, raw
+#' data fetched from database.
 #'
 #' @param data The raw data.
-#' @param prep_fun The name (symbol) of the calculation function
 #' @param name_data The column name in the `data` that stores original data. It
 #'   is typically of a vector containing `JSON` string.
-#' @return A `tibble` with the calculated indices.
-#' @author Liang Zhang
+#' @return A [tibble][tibble::tibble-package] with two pieces of meta data:
+#'   `info` and `name_key`. They stores other metadata from input rawdata other
+#'   than game data from `name_data`.
 #' @export
-calc_indices <- function(data, prep_fun, name_data = "game_data") {
-  vars_by <- setdiff(names(data), name_data)
+wrangle_data <- function(data, name_data = "game_data") {
   #' @details
   #'
   #' These steps are performed in order:
@@ -22,14 +22,17 @@ calc_indices <- function(data, prep_fun, name_data = "game_data") {
     dplyr::filter(
       purrr::map_lgl(.data[[name_data]], jsonlite::validate),
       !stringr::str_detect(.data[[name_data]], r"(^\s*(\[\s*\]|\{\s*\})\s*$)")
-    )
+    ) %>%
+    dplyr::mutate("{name_key}" := seq_len(dplyr::n()), .before = 1)
   if (nrow(data_valid) == 0) {
     return()
   }
   #' 1. Parse data stored in json string, convert the names to lower case and
   #' stack the parsed data. Stacking have better performances than
   #' [group_nest][dplyr::group_nest()]ing.
+  meta <- dplyr::select(data_valid, -.data[[name_data]])
   data_parsed <- data_valid %>%
+    dplyr::select(.data[[name_key]], .data[[name_data]]) %>%
     dplyr::mutate(
       "{name_data}" := purrr::map(
         .data[[name_data]],
@@ -38,18 +41,19 @@ calc_indices <- function(data, prep_fun, name_data = "game_data") {
       )
     ) %>%
     tidyr::unnest(.data[[name_data]])
-  #' 1. Call [dataproc.iquizoo::preproc_data()] to pre-process on the parsed
-  #' data, and the results are stacked into a long format. The longer format is
-  #' used because each observation has its own creating time information.
-  dataproc.iquizoo::preproc_data(
+  structure(
     data_parsed,
-    deparse1(substitute(prep_fun)),
-    vars_by,
-    character.only = TRUE
-  ) %>%
-    tidyr::pivot_longer(
-      !dplyr::all_of(vars_by),
-      names_to = "index",
-      values_to = "score"
-    )
+    class = c("tbl_meta", class(data_parsed)),
+    meta = meta,
+    name_key = name_key
+  )
+}
+
+#' @export
+print.tbl_meta <- function(x, ...) {
+  NextMethod()
+  cat("* Name of key: '", attr(x, "name_key"), "'\n", sep = "")
+  meta <- attr(x, "meta")
+  cat("* Meta of", nrow(meta), "obs and", ncol(meta), "vars")
+  invisible(x)
 }
