@@ -20,8 +20,8 @@ fetch <- function(query_file, config_where = NULL, dsn = "iquizoo-v3") {
   # connect to given database which is pre-configured
   con <- DBI::dbConnect(odbc::odbc(), dsn, encoding = enc)
   on.exit(DBI::dbDisconnect(con))
-  query <- query_file %>%
-    readr::read_file() %>%
+  query <- readLines(query_file) %>%
+    stringr::str_c(collapse = "\n") %>%
     stringr::str_glue(
       .envir = env(
         where_clause = compose_where(config_where)
