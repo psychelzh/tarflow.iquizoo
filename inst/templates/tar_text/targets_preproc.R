@@ -8,7 +8,14 @@ targets_data <- tar_map(
     )
   ),
   tar_target(
+    data_parsed,
+    tarflow.iquizoo::wrangle_data(data, prep_fun)
+  ),
+  tar_target(
     indices,
-    tarflow.iquizoo::calc_indices(data, prep_fun)
+    dataproc.iquizoo::preproc_data(
+      data_parsed, prep_fun,
+      by = attr(data_parsed, "name_key")
+    )
   )
 )
