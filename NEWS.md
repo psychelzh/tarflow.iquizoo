@@ -1,4 +1,8 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 0.0.7
+
+## Breaking changes
+
+* Removed `calc_indices` (#24) and added `wrangle_data()` to fit the jobs for this package. This new function will parse input `json` string and stack them into long format, but keep other meta info in the attribute `"info"` of output. With all these, the output added a subclass `"tbl_meta"` and a `print()` method.
 
 ## Enhancements
 
