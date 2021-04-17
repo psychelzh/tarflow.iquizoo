@@ -50,7 +50,7 @@ wrangle_data <- function(data, name_data = "game_data") {
 }
 
 #' @export
-print.tbl_meta <- function(x) {
+print.tbl_meta <- function(x, ...) {
   NextMethod()
   cat("* Name of key: '", attr(x, "name_key"), "'\n", sep = "")
   meta <- attr(x, "meta")
