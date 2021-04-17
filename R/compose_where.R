@@ -38,7 +38,7 @@ compose_where.list <- function(config_where) {
 
 #' @rdname compose_where
 compose_where.data.frame <- function(config_where) {
-  if (!rlang::has_name(config_where, "operator")) {
+  if (!has_name(config_where, "operator")) {
     config_where$operator <- NA_character_
   }
   where_base <- config_where %>%

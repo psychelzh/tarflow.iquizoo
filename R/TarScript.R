@@ -133,13 +133,13 @@ TarScript <- R6::R6Class(
     #' cannot be chained.
     deparse_script = function() {
       deparse_call2 <- function(.fn, ...) {
-        deparse1(rlang::call2(.fn, ...))
+        deparse1(call2(.fn, ...))
       }
       # global and targets should be strings
       c(
         purrr::map_chr(
           private$package,
-          ~ deparse_call2("library", !!!rlang::syms(.x))
+          ~ deparse_call2("library", !!!syms(.x))
         ),
         private$global,
         deparse_call2("tar_option_set", !!!private$option),

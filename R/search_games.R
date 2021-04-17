@@ -23,5 +23,5 @@ search_games <- function(config_where) {
   stopifnot(fs::file_exists(query_path))
   tarflow.iquizoo::fetch(query_path, config_where) %>%
     dplyr::left_join(dataproc.iquizoo::game_info, by = "game_id") %>%
-    dplyr::mutate(prep_fun = rlang::syms(.data[["prep_fun_name"]]))
+    dplyr::mutate(prep_fun = syms(.data[["prep_fun_name"]]))
 }

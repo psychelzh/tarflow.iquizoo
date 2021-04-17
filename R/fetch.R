@@ -23,7 +23,7 @@ fetch <- function(query_file, config_where = NULL, dsn = "iquizoo-v3") {
   query <- query_file %>%
     readr::read_file() %>%
     stringr::str_glue(
-      .envir = rlang::env(
+      .envir = env(
         where_clause = compose_where(config_where)
       )
     )
