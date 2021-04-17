@@ -7,9 +7,6 @@
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/TarScript.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/calc_indices.html</loc>
-  </url>
-  <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/compose_where.html</loc>
   </url>
   <url>
@@ -28,9 +25,6 @@
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/insert_where.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/pipe.html</loc>
-  </url>
-  <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/query_dir.html</loc>
   </url>
   <url>
@@ -46,6 +40,6 @@
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/steps.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tidyeval.html</loc>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/wrangle_data.html</loc>
   </url>
 </urlset>

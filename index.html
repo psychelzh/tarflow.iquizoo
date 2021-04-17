@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7</span>
       </span>
     </div>
 
@@ -73,40 +73,28 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="tarflow-iquizoo" class="section level1">
+<div id="tarflowiquizoo" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#tarflow-iquizoo" class="anchor"></a>tarflow-iquizoo</h1></div>
+<a href="#tarflowiquizoo" class="anchor"></a>tarflow.iquizoo</h1></div>
 <!-- badges: start -->
 
-<p>Workflow generation for IQUIZOO data powered by <a href="https://github.com/wlandau/targets">targets</a> package.</p>
-<div id="table-of-contents" class="section level2">
-<h2 class="hasAnchor">
-<a href="#table-of-contents" class="anchor"></a>Table of Contents</h2>
-<ul>
-<li><a href="#background">Background</a></li>
-<li><a href="#install">Install</a></li>
-<li><a href="#usage">Usage</a></li>
-<li><a href="#maintainers">Maintainers</a></li>
-<li><a href="#contributing">Contributing</a></li>
-<li><a href="#license">License</a></li>
-</ul>
-</div>
+<p>The goal of tarflow.iquizoo is to provide workflow auto-generation for IQUIZOO data powered by <a href="https://github.com/wlandau/targets">targets</a> package.</p>
 <div id="background" class="section level2">
 <h2 class="hasAnchor">
 <a href="#background" class="anchor"></a>Background</h2>
 <p>The preprocessing of IQUIZOO data used to be very harduous because the datasets were very disorganized. Newer version of database and games make things much better. Now there is a package called <a href="https://github.com/psychelzh/dataproc.iquizoo">dataproc.iquizoo</a>, containing all the required functions used in preprocessing. It facilitates analysis significantly. For now, with the advent of <a href="https://github.com/wlandau/targets">targets</a>, we can easily setup workflows to automate all the preprocessing! This is what this package does. Hopefully, it will make the analysis of IQUIZOO data a favorable thing.</p>
 </div>
-<div id="install" class="section level2">
+<div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#install" class="anchor"></a>Install</h2>
-<p>Install the development version from github.</p>
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.package("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"psychelzh/tarflow.iquizoo"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"psychelzh/tarflow.iquizoo"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="usage" class="section level2">
+<div id="example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<a href="#example" class="anchor"></a>Example</h2>
 <p>If you are using R in interactive mode (typically when using <em>RStudio</em>), there will be a simple wizard to guide your setup. It will prompt you to choose the correct actions.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># invoke setup wizard</span>
@@ -117,22 +105,6 @@
 <p>Or if you prefer to run on multicores (note you can only do this when you separate works into branches), use this:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># set the number of works in the `workers` argument</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>targets<span class="op">::</span><span class="kw">tar_make_future</span>(<span class="dt">workers =</span> <span class="op">&lt;</span>numeric<span class="op">&gt;</span>)</span></code></pre></div>
-</div>
-<div id="maintainers" class="section level2">
-<h2 class="hasAnchor">
-<a href="#maintainers" class="anchor"></a>Maintainers</h2>
-<p><a href="https://github.com/psychelzh">@psychelzh</a></p>
-</div>
-<div id="contributing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contributing" class="anchor"></a>Contributing</h2>
-<p>PRs accepted.</p>
-<p>Small note: If editing the README, please conform to the <a href="https://github.com/RichardLitt/standard-readme">standard-readme</a> specification.</p>
-</div>
-<div id="license" class="section level2">
-<h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
-<p>MIT © 2021 Liang Zhang</p>
 </div>
 </div>
   </div>
@@ -163,8 +135,7 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/psychelzh/tarflow.iquizoo/actions"><img src="https://github.com/psychelzh/tarflow.iquizoo/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://github.com/RichardLitt/standard-readme"><img src="https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square" alt="standard-readme compliant"></a></li>
-<li><a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 </ul>
 </div>
 </div>
