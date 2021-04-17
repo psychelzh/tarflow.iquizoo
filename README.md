@@ -1,67 +1,65 @@
-# tarflow-iquizoo
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# tarflow.iquizoo
 
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/psychelzh/tarflow.iquizoo/workflows/R-CMD-check/badge.svg)](https://github.com/psychelzh/tarflow.iquizoo/actions)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-Workflow generation for IQUIZOO data powered by [targets](https://github.com/wlandau/targets) package.
-
-## Table of Contents
-
-- [Background](#background)
-- [Install](#install)
-- [Usage](#usage)
-- [Maintainers](#maintainers)
-- [Contributing](#contributing)
-- [License](#license)
+The goal of tarflow.iquizoo is to provide workflow auto-generation for
+IQUIZOO data powered by [targets](https://github.com/wlandau/targets)
+package.
 
 ## Background
 
-The preprocessing of IQUIZOO data used to be very harduous because the datasets were very disorganized. Newer version of database and games make things much better. Now there is a package called [dataproc.iquizoo](https://github.com/psychelzh/dataproc.iquizoo), containing all the required functions used in preprocessing. It facilitates analysis significantly. For now, with the advent of [targets](https://github.com/wlandau/targets), we can easily setup workflows to automate all the preprocessing! This is what this package does. Hopefully, it will make the analysis of IQUIZOO data a favorable thing.
+The preprocessing of IQUIZOO data used to be very harduous because the
+datasets were very disorganized. Newer version of database and games
+make things much better. Now there is a package called
+[dataproc.iquizoo](https://github.com/psychelzh/dataproc.iquizoo),
+containing all the required functions used in preprocessing. It
+facilitates analysis significantly. For now, with the advent of
+[targets](https://github.com/wlandau/targets), we can easily setup
+workflows to automate all the preprocessing! This is what this package
+does. Hopefully, it will make the analysis of IQUIZOO data a favorable
+thing.
 
-## Install
+## Installation
 
-Install the development version from github.
+You can install the development version from
+[GitHub](https://github.com/) with:
 
-```r
-# install.package("remotes")
-remotes::install_github("psychelzh/tarflow.iquizoo")
+``` r
+# install.packages("devtools")
+devtools::install_github("psychelzh/tarflow.iquizoo")
 ```
 
-## Usage
+## Example
 
-If you are using R in interactive mode (typically when using *RStudio*), there will be a simple wizard to guide your setup. It will prompt you to choose the correct actions.
+If you are using R in interactive mode (typically when using *RStudio*),
+there will be a simple wizard to guide your setup. It will prompt you to
+choose the correct actions.
 
-```r
+``` r
 # invoke setup wizard
 tarflow.iquizoo::init()
 ```
 
-Essentially, file `_targets.R` will be created in which lists a pipeline that can be used by targets package. You can run the pipeline with the following line of code:
+Essentially, file `_targets.R` will be created in which lists a pipeline
+that can be used by targets package. You can run the pipeline with the
+following line of code:
 
-```r
+``` r
 targets::tar_make()
 ```
 
-Or if you prefer to run on multicores (note you can only do this when you separate works into branches), use this:
+Or if you prefer to run on multicores (note you can only do this when
+you separate works into branches), use this:
 
-```r
+``` r
 # set the number of works in the `workers` argument
 targets::tar_make_future(workers = <numeric>)
 ```
-
-## Maintainers
-
-[@psychelzh](https://github.com/psychelzh)
-
-## Contributing
-
-PRs accepted.
-
-Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
-
-## License
-
-MIT © 2021 Liang Zhang
