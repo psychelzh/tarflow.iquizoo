@@ -10,9 +10,7 @@
 #'   `info` and `name_key`. They stores other metadata from input rawdata other
 #'   than game data from `name_data`.
 #' @export
-wrangle_data <- function(data, name_data) {
-  # starts with "." to prevent name conflicts (to some extent)
-  name_key <- ".id"
+wrangle_data <- function(data, name_data = "game_data") {
   #' @details
   #'
   #' These steps are performed in order:

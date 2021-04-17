@@ -4,7 +4,7 @@
 \alias{wrangle_data}
 \title{Wrangle Raw Data}
 \usage{
-wrangle_data(data, name_data)
+wrangle_data(data, name_data = "game_data")
 }
 \arguments{
 \item{data}{The raw data.}

@@ -5,5 +5,5 @@ test_that("Should return with attributes (meta information):", {
     game_time = "1990-01-01",
     game_data = jsonlite::toJSON(data.frame(a = 1:5, b = 1:5))
   )
-  expect_snapshot(wrangle_data(data, "game_data"))
+  expect_snapshot(wrangle_data(data))
 })

@@ -1,7 +1,7 @@
 # Should return with attributes (meta information):
 
     Code
-      wrangle_data(data, "game_data")
+      wrangle_data(data)
     Output
       # A tibble: 5 x 3
           .id     a     b
