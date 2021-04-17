@@ -9,7 +9,7 @@ targets_data <- tar_map(
   ),
   tar_target(
     data_parsed,
-    tarflow.iquizoo::wrangle_data(data, prep_fun)
+    tarflow.iquizoo::wrangle_data(data)
   ),
   tar_target(
     indices,
