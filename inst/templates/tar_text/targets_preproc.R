@@ -9,11 +9,11 @@ targets_data <- tar_map(
   ),
   tar_target(
     data_parsed,
-    tarflow.iquizoo::wrangle_data(data)
+    wrangle_data(data)
   ),
   tar_target(
     indices,
-    dataproc.iquizoo::preproc_data(
+    preproc_data(
       data_parsed, prep_fun,
       by = attr(data_parsed, "name_key")
     )

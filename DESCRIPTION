@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 0.0.7
+Version: 0.1.0
 Authors@R:
     person(given = "Liang",
            family = "Zhang",
@@ -20,7 +20,7 @@ Depends:
 Imports:
     cli,
     config,
-    dataproc.iquizoo (>= 1.0.3),
+    dataproc.iquizoo (>= 1.1.0),
     DBI,
     dplyr,
     ellipsis,

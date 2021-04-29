@@ -1,3 +1,9 @@
+# tarflow.iquizoo 0.1.0
+
+## Breaking changes
+
+* Moved `wrangle_data()` (#24) to dataproc.iquizoo package now. That is, the data preprocessing parts are all moved to dataproc.iquizoo package now. This better fits our mental models about these packages.
+
 # tarflow.iquizoo 0.0.7
 
 ## Breaking changes
