@@ -32,6 +32,3 @@ query_files <- c(
 #'
 #' @keywords internal
 query_dir <- "sql"
-
-# starts with "." to prevent name conflicts (to some extent)
-name_key <- ".id"
