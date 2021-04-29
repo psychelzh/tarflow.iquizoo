@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -114,14 +114,25 @@
       <small>Source: <a href='https://github.com/psychelzh/tarflow.iquizoo/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="tarflowiquizoo-007" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.7">
-<a href="#tarflowiquizoo-007" class="anchor"></a>tarflow.iquizoo 0.0.7</h1>
+    <div id="tarflowiquizoo-010" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.0">
+<a href="#tarflowiquizoo-010" class="anchor"></a>tarflow.iquizoo 0.1.0</h1>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <ul>
-<li>Removed <code>calc_indices</code> (<a href='https://github.com/psychelzh/tarflow.iquizoo/issues/24'>#24</a>) and added <code><a href="../reference/wrangle_data.html">wrangle_data()</a></code> to fit the jobs for this package. This new function will parse input <code>json</code> string and stack them into long format, but keep other meta info in the attribute <code>"info"</code> of output. With all these, the output added a subclass <code>"tbl_meta"</code> and a <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method.</li>
+<li>Moved <code>wrangle_data()</code> (<a href='https://github.com/psychelzh/tarflow.iquizoo/issues/24'>#24</a>) to dataproc.iquizoo package now. That is, the data preprocessing parts are all moved to dataproc.iquizoo package now. This better fits our mental models about these packages.</li>
+</ul>
+</div>
+</div>
+    <div id="tarflowiquizoo-007" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.7">
+<a href="#tarflowiquizoo-007" class="anchor"></a>tarflow.iquizoo 0.0.7</h1>
+<div id="breaking-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>Removed <code>calc_indices</code> (<a href='https://github.com/psychelzh/tarflow.iquizoo/issues/24'>#24</a>) and added <code>wrangle_data()</code> to fit the jobs for this package. This new function will parse input <code>json</code> string and stack them into long format, but keep other meta info in the attribute <code>"info"</code> of output. With all these, the output added a subclass <code>"tbl_meta"</code> and a <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method.</li>
 </ul>
 </div>
 <div id="enhancements" class="section level2">
