@@ -1,3 +1,7 @@
+# tarflow.iquizoo 0.1.1
+
+* Adapt to new database design in IQUIZOO.
+
 # tarflow.iquizoo 0.1.0
 
 ## Breaking changes
