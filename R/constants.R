@@ -14,7 +14,6 @@ schemas <- c(
 #'
 #' @keywords internal
 config_file <- "config.yml"
-config_where <- "config_where"
 
 #' Query files used
 #'

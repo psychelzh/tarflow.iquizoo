@@ -19,7 +19,7 @@ step_config <- function(script) {
   codes <- exprs(
     tar_file(file_config, !!config_file),
     tar_target(
-      !!sym(config_where),
+      config_where,
       config::get("where", file = file_config)
     )
   )
@@ -100,11 +100,11 @@ step_gitignore <- function() {
     ),
     if (fetch) {
       exprs(
-        tar_fst_tbl(
+        tar_target(
           !!sym(name_query),
           tarflow.iquizoo::fetch(
             !!tar_name_query,
-            !!sym(config_where)
+            config_where
           )
         )
       )
