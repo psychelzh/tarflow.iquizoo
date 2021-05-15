@@ -29,35 +29,21 @@ step_config <- function(script) {
 #' @rdname steps
 step_query <- function(schema, separate, script) {
   usethis::use_directory(query_dir)
-  usethis::use_template(
-    fs::path(query_dir, query_files[["users"]]),
-    package = utils::packageName()
+  names_query <- c(
+    "users",
+    switch(
+      schema,
+      scores = c("scores", "abilities"),
+      original = ,
+      preproc = "data"
+    ),
+    if (separate) "games"
   )
-  script$update("pipeline", .compose_query_target("users", fetch = TRUE))
-  query_name_main <- switch(schema,
-    scores = "scores",
-    original = ,
-    preproc = "data"
+  do_fetch <- ifelse(
+    names_query == "abilities",
+    TRUE, names_query != "games" & !separate
   )
-  usethis::use_template(
-    fs::path(query_dir, query_files[[query_name_main]]),
-    package = utils::packageName()
-  )
-  script$update(
-    "pipeline",
-    .compose_query_target(query_name_main, fetch = !separate)
-  )
-  # when separate games should be searched before pipeline
-  if (separate) {
-    usethis::use_template(
-      fs::path(query_dir, query_files[["games"]]),
-      package = utils::packageName()
-    )
-    script$update(
-      "pipeline",
-      .compose_query_target("games", fetch = FALSE)
-    )
-  }
+  purrr::walk2(names_query, do_fetch, .do_step_query, script = script)
 }
 
 #' @rdname steps
@@ -89,23 +75,27 @@ step_gitignore <- function() {
   }
 }
 
+.do_step_query <- function(name_query, fetch, script) {
+  usethis::use_template(
+    fs::path(query_dir, query_files[[name_query]]),
+    package = utils::packageName()
+  )
+  script$update("pipeline", .compose_query_target(name_query, fetch))
+}
+
 .compose_query_target <- function(name_query, fetch) {
   tar_name_query <- sym(stringr::str_glue("query_tmpl_{name_query}"))
   c(
-    exprs(
-      tar_file(
-        !!tar_name_query,
-        fs::path(!!query_dir, !!query_files[[name_query]])
-      )
+    call2(
+      "tar_file", tar_name_query,
+      call2(quote(fs::path), query_dir, query_files[[name_query]])
     ),
     if (fetch) {
-      exprs(
-        tar_target(
-          !!sym(name_query),
-          tarflow.iquizoo::fetch(
-            !!tar_name_query,
-            config_where
-          )
+      call2(
+        "tar_target", sym(name_query),
+        call2(
+          quote(tarflow.iquizoo::fetch),
+          tar_name_query, sym("config_where")
         )
       )
     }
@@ -117,7 +107,8 @@ build_separate_requirements <- function(schema, script) {
   script$update("targets", tar_targets_text(schema))
   script$update(
     "pipeline",
-    switch(schema,
+    switch(
+      schema,
       scores = exprs(
         targets_scores,
         tar_combine(scores, targets_scores)
