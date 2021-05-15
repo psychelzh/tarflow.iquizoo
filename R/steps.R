@@ -16,14 +16,16 @@ step_config <- function(script) {
   } else {
     usethis::use_template(config_file, package = utils::packageName())
   }
-  codes <- exprs(
-    tar_file(file_config, !!config_file),
-    tar_target(
-      config_where,
-      config::get("where", file = file_config)
+  script$update(
+    "pipeline",
+    c(
+      call2("tar_file", sym("file_config"), config_file),
+      call2(
+        "tar_target", sym("config_where"),
+        call2(quote(config::get), "where", file = sym("file_config"))
+      )
     )
   )
-  script$update("pipeline", codes)
 }
 
 #' @rdname steps
@@ -109,20 +111,15 @@ build_separate_requirements <- function(schema, script) {
     "pipeline",
     switch(
       schema,
-      scores = exprs(
-        targets_scores,
-        tar_combine(scores, targets_scores)
+      scores = c(
+        sym("targets_scores"),
+        call2("tar_combine", sym("scores"), sym("targets_scores"))
       ),
-      original = exprs(
-        targets_data,
-        tar_combine(data, targets_data)
-      ),
-      preproc = exprs(
-        tar_target(key, ".id"),
-        targets_data,
-        tar_combine(data, targets_data[[1]]),
-        tar_combine(data_parsed, targets_data[[2]]),
-        tar_combine(indices, targets_data[[3]])
+      # do not combine these data on default
+      original = sym("targets_data"),
+      preproc = c(
+        call2("key", ".id"),
+        sym("targets_data")
       )
     )
   )
