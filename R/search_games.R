@@ -1,18 +1,17 @@
-#' Search games used in analysis
+#' Search and cache games used in analysis
 #'
 #' When separate analysis into branches, the games to be analyzed should be
 #' known in advance. This function should be used with memoise package to reduce
 #' executing time.
 #'
-#' The fetched will be joined with `dataproc.iquizoo::game_info` to expose the
-#' pre-processing function name.
+#' The fetched will be joined with [`game_info`][dataproc.iquizoo::game_info]
+#' data from dataproc.iquizoo package to expose the pre-processing function
+#' name.
 #'
-#' @examples
-#' \dontrun{
-#' # use it with memoise
-#' search_games_mem <- memoise::memoise(search_games)
-#' games <- search_games_mem(config::get("where"))
-#' }
+#' @usage
+#' search_games(config_where)
+#' # cached version using `memoise::memoise()`
+#' search_games_mem(config_where)
 #'
 #' @param config_where Configuration of "where-clause".
 #' @return A [tibble][tibble::tibble-package] contains all the games to be
@@ -25,3 +24,9 @@ search_games <- function(config_where) {
     dplyr::left_join(dataproc.iquizoo::game_info, by = "game_id") %>%
     dplyr::mutate(prep_fun = syms(.data[["prep_fun_name"]]))
 }
+
+#' @export
+search_games_mem <- memoise::memoise(
+  search_games,
+  cache = cachem::cache_disk("~/.cache.tarflow")
+)

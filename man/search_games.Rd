@@ -2,9 +2,11 @@
 % Please edit documentation in R/search_games.R
 \name{search_games}
 \alias{search_games}
-\title{Search games used in analysis}
+\title{Search and cache games used in analysis}
 \usage{
 search_games(config_where)
+# cached version using `memoise::memoise()`
+search_games_mem(config_where)
 }
 \arguments{
 \item{config_where}{Configuration of "where-clause".}
@@ -19,14 +21,7 @@ known in advance. This function should be used with memoise package to reduce
 executing time.
 }
 \details{
-The fetched will be joined with \code{dataproc.iquizoo::game_info} to expose the
-pre-processing function name.
-}
-\examples{
-\dontrun{
-# use it with memoise
-search_games_mem <- memoise::memoise(search_games)
-games <- search_games_mem(config::get("where"))
-}
-
+The fetched will be joined with \code{\link[dataproc.iquizoo:game_info]{game_info}}
+data from dataproc.iquizoo package to expose the pre-processing function
+name.
 }
