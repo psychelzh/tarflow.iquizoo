@@ -62,7 +62,7 @@ step_query <- function(schema, separate, script) {
 
 #' @rdname steps
 step_pipeline <- function(schema, separate, script) {
-  # tar_option_set()
+  # targets options
   if (schema == "preproc") {
     script$update(
       "option",
@@ -75,6 +75,7 @@ step_pipeline <- function(schema, separate, script) {
   } else {
     script$update("option", list(package = "tidyverse"))
   }
+  # some special parts used when separating
   if (separate) {
     build_separate_requirements(schema, script)
   }
@@ -112,7 +113,6 @@ step_gitignore <- function() {
 }
 
 build_separate_requirements <- function(schema, script) {
-  path <- fs::path("~", stringr::str_c(".cache.", utils::packageName()))
   script$update("global", tar_global_text())
   script$update("targets", tar_targets_text(schema))
   script$update(

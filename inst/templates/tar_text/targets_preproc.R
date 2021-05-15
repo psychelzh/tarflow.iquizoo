@@ -7,10 +7,7 @@ targets_data <- tar_map(
       query_tmpl_data, config_where, game_id
     )
   ),
-  tar_target(
-    data_parsed,
-    wrangle_data(data)
-  ),
+  tar_target(data_parsed, wrangle_data(data)),
   tar_target(
     indices,
     preproc_data(
