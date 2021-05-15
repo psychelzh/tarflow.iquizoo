@@ -127,6 +127,7 @@ build_separate_requirements <- function(schema, script) {
         tar_combine(data, targets_data)
       ),
       preproc = exprs(
+        tar_target(key, ".id"),
         targets_data,
         tar_combine(data, targets_data[[1]]),
         tar_combine(data_parsed, targets_data[[2]]),
