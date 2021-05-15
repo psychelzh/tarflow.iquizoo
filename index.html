@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@
 <span class="fu">tarflow.iquizoo</span><span class="fu">::</span><span class="fu"><a href="reference/init.html">init</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Essentially, file <code>_targets.R</code> will be created in which lists a pipeline that can be used by targets package. You can run the pipeline with the following line of code:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">targets</span><span class="fu">::</span><span class="fu">tar_make</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_make.html">tar_make</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Or if you prefer to run on multicores (note you can only do this when you separate works into branches), use this:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># set the number of works in the `workers` argument</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>targets<span class="op">::</span><span class="kw">tar_make_future</span>(<span class="dt">workers =</span> <span class="op">&lt;</span>numeric<span class="op">&gt;</span>)</span></code></pre></div>
