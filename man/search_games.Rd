@@ -2,6 +2,7 @@
 % Please edit documentation in R/search_games.R
 \name{search_games}
 \alias{search_games}
+\alias{search_games_mem}
 \title{Search and cache games used in analysis}
 \usage{
 search_games(config_where)

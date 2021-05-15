@@ -25,6 +25,8 @@ search_games <- function(config_where) {
     dplyr::mutate(prep_fun = syms(.data[["prep_fun_name"]]))
 }
 
+#' @rdname search_games
+#' @usage NULL
 #' @export
 search_games_mem <- memoise::memoise(
   search_games,
