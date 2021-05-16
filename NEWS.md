@@ -1,3 +1,9 @@
+# tarflow.iquizoo 0.1.3
+
+## Bug Fixes
+
+* Correct logic of `step_query()`. The query named `games` are not to be included in targets. And queries named `users` and `abilities` should be always fetched. Other queries depend on whether it is separated or not.
+
 # tarflow.iquizoo 0.1.2
 
 ## New Features

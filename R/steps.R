@@ -41,11 +41,11 @@ step_query <- function(schema, separate, script) {
     ),
     if (separate) "games"
   )
-  do_fetch <- ifelse(
-    names_query == "abilities",
-    TRUE, names_query != "games" & !separate
+  purrr::walk(
+    names_query, do_step_query,
+    separate = separate,
+    script = script
   )
-  purrr::walk2(names_query, do_fetch, .do_step_query, script = script)
 }
 
 #' @rdname steps
@@ -77,31 +77,32 @@ step_gitignore <- function() {
   }
 }
 
-.do_step_query <- function(name_query, fetch, script) {
+do_step_query <- function(name_query, separate, script) {
   usethis::use_template(
     fs::path(query_dir, query_files[[name_query]]),
     package = utils::packageName()
   )
-  script$update("pipeline", .compose_query_target(name_query, fetch))
-}
-
-.compose_query_target <- function(name_query, fetch) {
-  tar_name_query <- sym(stringr::str_glue("query_tmpl_{name_query}"))
-  c(
-    call2(
-      "tar_file", tar_name_query,
-      call2(quote(fs::path), query_dir, query_files[[name_query]])
-    ),
-    if (fetch) {
-      call2(
-        "tar_target", sym(name_query),
+  if (name_query != "games") {
+    tar_name_query <- sym(stringr::str_glue("query_tmpl_{name_query}"))
+    script$update(
+      "pipeline",
+      c(
         call2(
-          quote(tarflow.iquizoo::fetch),
-          tar_name_query, sym("config_where")
-        )
+          "tar_file", tar_name_query,
+          call2(quote(fs::path), query_dir, query_files[[name_query]])
+        ),
+        if (name_query %in% c("users", "abilities") || !separate) {
+          call2(
+            "tar_target", sym(name_query),
+            call2(
+              quote(tarflow.iquizoo::fetch),
+              tar_name_query, sym("config_where")
+            )
+          )
+        }
       )
-    }
-  )
+    )
+  }
 }
 
 build_separate_requirements <- function(schema, script) {
@@ -126,10 +127,10 @@ build_separate_requirements <- function(schema, script) {
 }
 
 tar_global_text <- function() {
-  stringr::str_glue(
+  stringr::str_c(
     "future::plan(future::multisession)",
     "games <- tarflow.iquizoo::search_games_mem(config::get(\"where\"))",
-    .sep = "\n"
+    sep = "\n"
   )
 }
 
@@ -140,9 +141,8 @@ tar_targets_text <- function(schema) {
     original = ,
     preproc = "data"
   )
-  targets_name <- stringr::str_glue("targets_{keyword}")
-  targets_body <- stringr::str_c(
-    "tar_map(",
+  stringr::str_glue(
+    "targets_{keyword} <- tar_map(",
     stringr::str_c(
       "values = games",
       "names = game_name_abbr",
@@ -161,7 +161,6 @@ tar_targets_text <- function(schema) {
       sep = ",\n"
     ),
     ")",
-    sep = "\n"
+    .sep = "\n"
   )
-  stringr::str_c(targets_name, "<-", targets_body)
 }

@@ -1,12 +1,15 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 0.1.2
+Version: 0.1.3
 Authors@R:
-    person(given = "Liang",
-           family = "Zhang",
-           role = c("aut", "cre"),
-           email = "psychelzh@outlook.com",
-           comment = c(ORCID = "0000-0001-9041-1150"))
+    c(person(given = "Liang",
+             family = "Zhang",
+             role = c("aut", "cre"),
+             email = "psychelzh@outlook.com",
+             comment = c(ORCID = "0000-0001-9041-1150")),
+      person(given = "Yujian",
+             family = "Dai",
+             role = "ctb"))
 Description: For "iquizoo" data processing, there is already a package
     called "dataproc.iquizoo", but eventually the use of it is relied on a
     workflow. This package is used to build such workflows based on tools
