@@ -1,5 +1,3 @@
--- !preview conn=DBI::dbConnect(odbc::odbc(), "iquizoo-v3", database = "iquizoo_datacenter_db")
-
 SELECT DISTINCT
 	organization_user.Id user_id,
 	organization_user.RealName user_name,

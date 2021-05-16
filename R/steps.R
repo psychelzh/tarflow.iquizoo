@@ -16,53 +16,41 @@ step_config <- function(script) {
   } else {
     usethis::use_template(config_file, package = utils::packageName())
   }
-  codes <- exprs(
-    tar_file(file_config, !!config_file),
-    tar_target(
-      !!sym(config_where),
-      config::get("where", file = file_config)
+  script$update(
+    "pipeline",
+    c(
+      call2("tar_file", sym("file_config"), config_file),
+      call2(
+        "tar_target", sym("config_where"),
+        call2(quote(config::get), "where", file = sym("file_config"))
+      )
     )
   )
-  script$update("pipeline", codes)
 }
 
 #' @rdname steps
 step_query <- function(schema, separate, script) {
   usethis::use_directory(query_dir)
-  usethis::use_template(
-    fs::path(query_dir, query_files[["users"]]),
-    package = utils::packageName()
+  names_query <- c(
+    "users",
+    switch(
+      schema,
+      scores = c("scores", "abilities"),
+      original = ,
+      preproc = "data"
+    ),
+    if (separate) "games"
   )
-  script$update("pipeline", .compose_query_target("users", fetch = TRUE))
-  query_name_main <- switch(schema,
-    scores = "scores",
-    original = ,
-    preproc = "data"
+  do_fetch <- ifelse(
+    names_query == "abilities",
+    TRUE, names_query != "games" & !separate
   )
-  usethis::use_template(
-    fs::path(query_dir, query_files[[query_name_main]]),
-    package = utils::packageName()
-  )
-  script$update(
-    "pipeline",
-    .compose_query_target(query_name_main, fetch = !separate)
-  )
-  # when separate games should be searched before pipeline
-  if (separate) {
-    usethis::use_template(
-      fs::path(query_dir, query_files[["games"]]),
-      package = utils::packageName()
-    )
-    script$update(
-      "pipeline",
-      .compose_query_target("games", fetch = FALSE)
-    )
-  }
+  purrr::walk2(names_query, do_fetch, .do_step_query, script = script)
 }
 
 #' @rdname steps
 step_pipeline <- function(schema, separate, script) {
-  # tar_option_set()
+  # targets options
   if (schema == "preproc") {
     script$update(
       "option",
@@ -75,6 +63,7 @@ step_pipeline <- function(schema, separate, script) {
   } else {
     script$update("option", list(package = "tidyverse"))
   }
+  # some special parts used when separating
   if (separate) {
     build_separate_requirements(schema, script)
   }
@@ -88,23 +77,27 @@ step_gitignore <- function() {
   }
 }
 
+.do_step_query <- function(name_query, fetch, script) {
+  usethis::use_template(
+    fs::path(query_dir, query_files[[name_query]]),
+    package = utils::packageName()
+  )
+  script$update("pipeline", .compose_query_target(name_query, fetch))
+}
+
 .compose_query_target <- function(name_query, fetch) {
   tar_name_query <- sym(stringr::str_glue("query_tmpl_{name_query}"))
   c(
-    exprs(
-      tar_file(
-        !!tar_name_query,
-        fs::path(!!query_dir, !!query_files[[name_query]])
-      )
+    call2(
+      "tar_file", tar_name_query,
+      call2(quote(fs::path), query_dir, query_files[[name_query]])
     ),
     if (fetch) {
-      exprs(
-        tar_fst_tbl(
-          !!sym(name_query),
-          tarflow.iquizoo::fetch(
-            !!tar_name_query,
-            !!sym(config_where)
-          )
+      call2(
+        "tar_target", sym(name_query),
+        call2(
+          quote(tarflow.iquizoo::fetch),
+          tar_name_query, sym("config_where")
         )
       )
     }
@@ -112,26 +105,63 @@ step_gitignore <- function() {
 }
 
 build_separate_requirements <- function(schema, script) {
-  path <- fs::path("~", stringr::str_c(".cache.", utils::packageName()))
   script$update("global", tar_global_text())
   script$update("targets", tar_targets_text(schema))
   script$update(
     "pipeline",
-    switch(schema,
-      scores = exprs(
-        targets_scores,
-        tar_combine(scores, targets_scores)
+    switch(
+      schema,
+      scores = c(
+        sym("targets_scores"),
+        call2("tar_combine", sym("scores"), sym("targets_scores"))
       ),
-      original = exprs(
-        targets_data,
-        tar_combine(data, targets_data)
-      ),
-      preproc = exprs(
-        targets_data,
-        tar_combine(data, targets_data[[1]]),
-        tar_combine(data_parsed, targets_data[[2]]),
-        tar_combine(indices, targets_data[[3]])
+      # do not combine these data on default
+      original = sym("targets_data"),
+      preproc = c(
+        call2("key", ".id"),
+        sym("targets_data")
       )
     )
   )
+}
+
+tar_global_text <- function() {
+  stringr::str_glue(
+    "future::plan(future::multisession)",
+    "games <- tarflow.iquizoo::search_games_mem(config::get(\"where\"))",
+    .sep = "\n"
+  )
+}
+
+tar_targets_text <- function(schema) {
+  keyword <- switch(
+    schema,
+    scores = "scores",
+    original = ,
+    preproc = "data"
+  )
+  targets_name <- stringr::str_glue("targets_{keyword}")
+  targets_body <- stringr::str_c(
+    "tar_map(",
+    stringr::str_c(
+      "values = games",
+      "names = game_name_abbr",
+      stringr::str_glue(
+        "tar_target({keyword}, ",
+        "tarflow.iquizoo::fetch_single_game(",
+        "query_tmpl_{keyword}, config_where, game_id))",
+        .sep = "\n"
+      ),
+      if (schema == "preproc") {
+        "tar_target(data_parsed, wrangle_data(data, by = key))"
+      },
+      if (schema == "preproc") {
+        "tar_target(indices, preproc_data(data_parsed, prep_fun, by = key))"
+      },
+      sep = ",\n"
+    ),
+    ")",
+    sep = "\n"
+  )
+  stringr::str_c(targets_name, "<-", targets_body)
 }

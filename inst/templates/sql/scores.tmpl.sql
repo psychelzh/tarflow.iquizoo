@@ -1,10 +1,9 @@
--- !preview conn=DBI::dbConnect(odbc::odbc(), "iquizoo-v3", database = "iquizoo_datacenter_db")
-
 SELECT DISTINCT
 	organization_user.Id user_id,
 	course.`Name` course_name,
 	content.Id game_id,
 	content.`Name` game_name,
+	content_score_detail.ContentAbilityId ability_id,
 	content_score_detail.CreateTime game_time,
 	content_score_detail.ApproximateScore game_score_raw,
 	content_score_detail.StandardScore game_score_std
