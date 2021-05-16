@@ -127,10 +127,10 @@ build_separate_requirements <- function(schema, script) {
 }
 
 tar_global_text <- function() {
-  stringr::str_glue(
+  stringr::str_c(
     "future::plan(future::multisession)",
     "games <- tarflow.iquizoo::search_games_mem(config::get(\"where\"))",
-    .sep = "\n"
+    sep = "\n"
   )
 }
 
@@ -141,9 +141,8 @@ tar_targets_text <- function(schema) {
     original = ,
     preproc = "data"
   )
-  targets_name <- stringr::str_glue("targets_{keyword}")
-  targets_body <- stringr::str_c(
-    "tar_map(",
+  stringr::str_glue(
+    "targets_{keyword} <- tar_map(",
     stringr::str_c(
       "values = games",
       "names = game_name_abbr",
@@ -162,7 +161,6 @@ tar_targets_text <- function(schema) {
       sep = ",\n"
     ),
     ")",
-    sep = "\n"
+    .sep = "\n"
   )
-  stringr::str_c(targets_name, "<-", targets_body)
 }
