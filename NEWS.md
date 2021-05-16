@@ -1,4 +1,8 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 0.1.2
+
+## New Features
+
+* Supported games abilities.
 
 # tarflow.iquizoo 0.1.1
 
