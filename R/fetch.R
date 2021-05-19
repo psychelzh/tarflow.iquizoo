@@ -36,6 +36,7 @@ fetch <- function(query_file,
 
 #' @describeIn fetch A special case to fetch datasets from a single game.
 #' @param game_id The identifier of the game to fetch datasets from.
+#' @param ... Other arguments passed to [fetch()].
 #' @export
 fetch_single_game <- function(query_file, game_id,
                               config_where = NULL, ...) {

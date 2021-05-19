@@ -21,6 +21,8 @@ be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 \item{encoding}{Encoding to be assumed for input strings. Default to "UTF-8".}
 
 \item{game_id}{The identifier of the game to fetch datasets from.}
+
+\item{...}{Other arguments passed to \code{\link[=fetch]{fetch()}}.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} of the fetched data.
