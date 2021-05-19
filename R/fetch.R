@@ -9,18 +9,22 @@
 #'   be a `list` (mostly from the `config.yml` file) or `data.frame`.
 #' @param dsn The data source name of an **ODBC** database connector. See
 #'   [odbc::dbConnect()] for more information.
+#' @param encoding Encoding to be assumed for input strings. Default to "UTF-8".
 #' @return A [tibble][tibble::tibble-package] of the fetched data.
 #' @author Liang Zhang
 NULL
 
 #' @describeIn fetch Default usage of fetch.
 #' @export
-fetch <- function(query_file, config_where = NULL, dsn = "iquizoo-v3") {
+fetch <- function(query_file,
+                  config_where = NULL,
+                  dsn = "iquizoo-v3",
+                  encoding = "utf-8") {
   enc <- ifelse(.Platform$OS.type == "windows", "gbk", "utf-8")
   # connect to given database which is pre-configured
   con <- DBI::dbConnect(odbc::odbc(), dsn, encoding = enc)
   on.exit(DBI::dbDisconnect(con))
-  query <- readLines(query_file) %>%
+  query <- readLines(query_file, encoding = encoding) %>%
     stringr::str_c(collapse = "\n") %>%
     stringr::str_glue(
       .envir = env(
@@ -33,10 +37,8 @@ fetch <- function(query_file, config_where = NULL, dsn = "iquizoo-v3") {
 #' @describeIn fetch A special case to fetch datasets from a single game.
 #' @param game_id The identifier of the game to fetch datasets from.
 #' @export
-fetch_single_game <- function(query_file,
-                              config_where = NULL,
-                              game_id,
-                              dsn = "iquizoo-v3") {
+fetch_single_game <- function(query_file, game_id,
+                              config_where = NULL, ...) {
   fetch(
     query_file,
     insert_where(
@@ -46,7 +48,8 @@ fetch_single_game <- function(query_file,
         field = "Id",
         values = game_id
       )
-    )
+    ),
+    ...
   )
 }
 
