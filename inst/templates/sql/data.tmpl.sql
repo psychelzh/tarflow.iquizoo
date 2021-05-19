@@ -3,6 +3,7 @@ SELECT DISTINCT
 	course.`Name` course_name,
 	content.Id game_id,
 	content.`Name` game_name,
+	content.ContentType game_type,
 	content_orginal_data_detail.CreateTime game_time,
 	content_orginal_data_detail.TimeConsuming game_duration,
 	content_orginal_data_detail.OrginalData game_data
