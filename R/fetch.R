@@ -24,8 +24,8 @@ fetch <- function(query_file,
   # connect to given database which is pre-configured
   con <- DBI::dbConnect(odbc::odbc(), dsn, encoding = enc)
   on.exit(DBI::dbDisconnect(con))
-  query <- readLines(query_file, encoding = encoding) %>%
-    stringr::str_c(collapse = "\n") %>%
+  query <- readLines(query_file, encoding = encoding) |>
+    stringr::str_c(collapse = "\n") |>
     stringr::str_glue(
       .envir = env(
         where_clause = compose_where(config_where)
@@ -86,7 +86,7 @@ compose_where.character <- function(config_where) {
 
 #' @rdname compose_where
 compose_where.list <- function(config_where) {
-  config_where_tbl <- tibble::tibble(where = config_where) %>%
+  config_where_tbl <- tibble::tibble(where = config_where) |>
     tidyr::unnest_wider("where")
   compose_where(config_where_tbl)
 }
@@ -96,7 +96,7 @@ compose_where.data.frame <- function(config_where) {
   if (!has_name(config_where, "operator")) {
     config_where$operator <- NA_character_
   }
-  where_base <- config_where %>%
+  where_base <- config_where |>
     dplyr::mutate(
       operator = dplyr::case_when(
         is.na(.data$operator) & lengths(.data$values) == 1 ~ "=",
@@ -113,8 +113,8 @@ compose_where.data.frame <- function(config_where) {
           )
         }
       )
-    ) %>%
-    stringr::str_glue_data("{table}.{field} {operator} {value_str}") %>%
+    ) |>
+    stringr::str_glue_data("{table}.{field} {operator} {value_str}") |>
     stringr::str_c(collapse = " AND ")
   compose_where.default(stringr::str_c("WHERE", where_base, sep = " "))
 }
@@ -173,8 +173,8 @@ insert_where.list <- function(old, ..., replace = TRUE) {
 insert_where.data.frame <- function(old, ..., replace = TRUE) {
   if (nrow(old) == 0) insert_where.NULL(old, ...)
   old <- purrr::transpose(as.list(old))
-  insert_where(old, ..., replace = replace) %>%
-    purrr::transpose() %>%
-    tibble::as_tibble() %>%
+  insert_where(old, ..., replace = replace) |>
+    purrr::transpose() |>
+    tibble::as_tibble() |>
     tidyr::unnest(-.data[["values"]])
 }
