@@ -14,7 +14,6 @@ schemas <- c(
 #'
 #' @keywords internal
 config_file <- "config.yml"
-config_where <- "config_where"
 
 #' Query files used
 #'
@@ -25,6 +24,7 @@ query_files <- c(
   users = "users.tmpl.sql",
   scores = "scores.tmpl.sql",
   data = "data.tmpl.sql",
+  abilities = "abilities.sql",
   games = "games.tmpl.sql" # typically not in pipeline
 )
 

@@ -5,7 +5,8 @@
 \title{TarScript class}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Stores all the required commands used
-for pipeline building.
+for pipeline building. See \code{\link[targets:tar_script]{targets::tar_script()}} for more details of a
+target script.
 }
 \section{Methods}{
 \subsection{Public methods}{

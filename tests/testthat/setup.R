@@ -3,7 +3,12 @@ create_local_proj <- function(dir = tempdir(), env = parent.frame()) {
 
   # create new project
   usethis::create_project(dir, open = FALSE)
-  withr::defer(fs::dir_delete(dir), envir = env)
+  withr::defer({
+    fs::dir_delete(dir)
+    fs::dir_create(dir)
+  },
+    envir = env
+  )
 
   # switch to new project
   usethis::proj_set(dir)

@@ -1,3 +1,60 @@
+# tarflow.iquizoo 0.1.3
+
+## Bug Fixes
+
+* Correct logic of `step_query()`. The query named `games` are not to be included in targets. And queries named `users` and `abilities` should be always fetched. Other queries depend on whether it is separated or not.
+
+# tarflow.iquizoo 0.1.2
+
+## New Features
+
+* Supported games abilities.
+
+# tarflow.iquizoo 0.1.1
+
+* Adapt to new database design in IQUIZOO.
+
+# tarflow.iquizoo 0.1.0
+
+## Breaking changes
+
+* Moved `wrangle_data()` (#24) to dataproc.iquizoo package now. That is, the data preprocessing parts are all moved to dataproc.iquizoo package now. This better fits our mental models about these packages.
+
+# tarflow.iquizoo 0.0.7
+
+## Breaking changes
+
+* Removed `calc_indices` (#24) and added `wrangle_data()` to fit the jobs for this package. This new function will parse input `json` string and stack them into long format, but keep other meta info in the attribute `"info"` of output. With all these, the output added a subclass `"tbl_meta"` and a `print()` method.
+
+## Enhancements
+
+* Added `fetch_single_game()` to treat special case of fetching dataset from a single game. This is used especially when using branches.
+* Unexported `compose_where()` and `insert_where()`, because they are just for usage in current package.
+
+# tarflow.iquizoo 0.0.6
+
+## Bug Fixes
+
+* Use `stringr::str_detect()` to remove empty json string. Now `"[]"` and `"{}"` are both removed.
+
+# tarflow.iquizoo 0.0.5
+
+## Bug Fixes
+
+* Fix issue of empty json string by removing empty (i.e., `"[]"`) json string data in validation step of `calc_indices()`.
+
+# tarflow.iquizoo 0.0.4
+
+## Bug Fixes
+
+* Fix issue of invalid json string by introducing a data validation step in `calc_indices()`.
+
+# tarflow.iquizoo 0.0.3
+
+## Bug Fixes
+
+* Fix an issue of data name case, and now all the names are translated to lower-case ones before preprocessing.
+
 # tarflow.iquizoo 0.0.2
 
 ## New Features
