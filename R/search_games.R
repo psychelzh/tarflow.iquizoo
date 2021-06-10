@@ -9,9 +9,9 @@
 #' name.
 #'
 #' @usage
-#' search_games(config_where)
+#' search_games(config_where, known_only = TRUE)
 #' # cached version using `memoise::memoise()`
-#' search_games_mem(config_where)
+#' search_games_mem(config_where, known_only = TRUE)
 #'
 #' @param config_where Configuration of "where-clause".
 #' @param known_only Logical value indicates whether to use games in
