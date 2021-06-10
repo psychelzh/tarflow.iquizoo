@@ -5,9 +5,9 @@
 \alias{fetch_single_game}
 \title{Fetch datasets from given database}
 \usage{
-fetch(query_file, config_where = NULL, dsn = "iquizoo-v3")
+fetch(query_file, config_where = NULL, dsn = "iquizoo-v3", encoding = "utf-8")
 
-fetch_single_game(query_file, config_where = NULL, game_id, dsn = "iquizoo-v3")
+fetch_single_game(query_file, game_id, config_where = NULL, ...)
 }
 \arguments{
 \item{query_file}{File name of \code{sql} query}
@@ -18,7 +18,11 @@ be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 \item{dsn}{The data source name of an \strong{ODBC} database connector. See
 \code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::dbConnect()}} for more information.}
 
+\item{encoding}{Encoding to be assumed for input strings. Default to "UTF-8".}
+
 \item{game_id}{The identifier of the game to fetch datasets from.}
+
+\item{...}{Other arguments passed to \code{\link[=fetch]{fetch()}}.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} of the fetched data.

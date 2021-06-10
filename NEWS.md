@@ -1,3 +1,9 @@
+# tarflow.iquizoo 0.1.4
+
+## New Features
+
+* Add `encoding` argument (default to `"UTF-8"`) to `fetch()`, which is used to set the encoding of SQL query files. This will also fix some encoding issues on Windows OS.
+
 # tarflow.iquizoo 0.1.3
 
 ## Bug Fixes

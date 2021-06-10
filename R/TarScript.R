@@ -145,8 +145,8 @@ TarScript <- R6::R6Class(
         deparse_call2("tar_option_set", !!!private$option),
         private$targets,
         "list(",
-        private$pipeline %>%
-          purrr::map_chr(deparse1) %>%
+        private$pipeline |>
+          purrr::map_chr(deparse1) |>
           stringr::str_c(collapse = ",\n"),
         ")"
       )

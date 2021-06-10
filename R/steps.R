@@ -149,7 +149,7 @@ tar_targets_text <- function(schema) {
       stringr::str_glue(
         "tar_target({keyword}, ",
         "tarflow.iquizoo::fetch_single_game(",
-        "query_tmpl_{keyword}, config_where, game_id))",
+        "query_tmpl_{keyword}, game_id, config_where))",
         .sep = "\n"
       ),
       if (schema == "preproc") {

@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 0.1.3
+Version: 0.1.4
 Authors@R:
     c(person(given = "Liang",
              family = "Zhang",
@@ -19,7 +19,7 @@ License: MIT + file LICENSE
 URL: https://psychelzh.github.io/tarflow.iquizoo,
     https://github.com/psychelzh/tarflow.iquizoo
 Depends:
-    R (>= 2.10)
+    R (>= 4.1.0)
 Imports:
     cli,
     config,
@@ -28,7 +28,6 @@ Imports:
     dplyr,
     ellipsis,
     fs,
-    magrittr,
     memoise,
     odbc,
     purrr,

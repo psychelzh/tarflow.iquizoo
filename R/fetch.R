@@ -9,19 +9,28 @@
 #'   be a `list` (mostly from the `config.yml` file) or `data.frame`.
 #' @param dsn The data source name of an **ODBC** database connector. See
 #'   [odbc::dbConnect()] for more information.
+#' @param encoding Encoding to be assumed for input strings. Default to "UTF-8".
 #' @return A [tibble][tibble::tibble-package] of the fetched data.
 #' @author Liang Zhang
 NULL
 
 #' @describeIn fetch Default usage of fetch.
 #' @export
-fetch <- function(query_file, config_where = NULL, dsn = "iquizoo-v3") {
-  enc <- ifelse(.Platform$OS.type == "windows", "gbk", "utf-8")
+fetch <- function(query_file,
+                  config_where = NULL,
+                  dsn = "iquizoo-v3",
+                  encoding = "utf-8") {
   # connect to given database which is pre-configured
-  con <- DBI::dbConnect(odbc::odbc(), dsn, encoding = enc)
+  con <- DBI::dbConnect(
+    odbc::odbc(), dsn,
+    encoding = ifelse(
+      .Platform$OS.type == "windows",
+      "gbk", "utf-8"
+    )
+  )
   on.exit(DBI::dbDisconnect(con))
-  query <- readLines(query_file) %>%
-    stringr::str_c(collapse = "\n") %>%
+  query <- readLines(query_file, encoding = encoding) |>
+    stringr::str_c(collapse = "\n") |>
     stringr::str_glue(
       .envir = env(
         where_clause = compose_where(config_where)
@@ -32,11 +41,10 @@ fetch <- function(query_file, config_where = NULL, dsn = "iquizoo-v3") {
 
 #' @describeIn fetch A special case to fetch datasets from a single game.
 #' @param game_id The identifier of the game to fetch datasets from.
+#' @param ... Other arguments passed to [fetch()].
 #' @export
-fetch_single_game <- function(query_file,
-                              config_where = NULL,
-                              game_id,
-                              dsn = "iquizoo-v3") {
+fetch_single_game <- function(query_file, game_id,
+                              config_where = NULL, ...) {
   fetch(
     query_file,
     insert_where(
@@ -46,7 +54,8 @@ fetch_single_game <- function(query_file,
         field = "Id",
         values = game_id
       )
-    )
+    ),
+    ...
   )
 }
 
@@ -83,7 +92,7 @@ compose_where.character <- function(config_where) {
 
 #' @rdname compose_where
 compose_where.list <- function(config_where) {
-  config_where_tbl <- tibble::tibble(where = config_where) %>%
+  config_where_tbl <- tibble::tibble(where = config_where) |>
     tidyr::unnest_wider("where")
   compose_where(config_where_tbl)
 }
@@ -93,7 +102,7 @@ compose_where.data.frame <- function(config_where) {
   if (!has_name(config_where, "operator")) {
     config_where$operator <- NA_character_
   }
-  where_base <- config_where %>%
+  where_base <- config_where |>
     dplyr::mutate(
       operator = dplyr::case_when(
         is.na(.data$operator) & lengths(.data$values) == 1 ~ "=",
@@ -110,8 +119,8 @@ compose_where.data.frame <- function(config_where) {
           )
         }
       )
-    ) %>%
-    stringr::str_glue_data("{table}.{field} {operator} {value_str}") %>%
+    ) |>
+    stringr::str_glue_data("{table}.{field} {operator} {value_str}") |>
     stringr::str_c(collapse = " AND ")
   compose_where.default(stringr::str_c("WHERE", where_base, sep = " "))
 }
@@ -170,8 +179,8 @@ insert_where.list <- function(old, ..., replace = TRUE) {
 insert_where.data.frame <- function(old, ..., replace = TRUE) {
   if (nrow(old) == 0) insert_where.NULL(old, ...)
   old <- purrr::transpose(as.list(old))
-  insert_where(old, ..., replace = replace) %>%
-    purrr::transpose() %>%
-    tibble::as_tibble() %>%
+  insert_where(old, ..., replace = replace) |>
+    purrr::transpose() |>
+    tibble::as_tibble() |>
     tidyr::unnest(-.data[["values"]])
 }
