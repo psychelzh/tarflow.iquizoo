@@ -5,12 +5,15 @@
 \alias{search_games_mem}
 \title{Search and cache games used in analysis}
 \usage{
-search_games(config_where)
+search_games(config_where, known_only = TRUE)
 # cached version using `memoise::memoise()`
-search_games_mem(config_where)
+search_games_mem(config_where, known_only = TRUE)
 }
 \arguments{
 \item{config_where}{Configuration of "where-clause".}
+
+\item{known_only}{Logical value indicates whether to use games in
+\code{\link[dataproc.iquizoo:game_info]{game_info}} only (default) or not.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} contains all the games to be

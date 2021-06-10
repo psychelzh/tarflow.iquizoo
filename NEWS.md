@@ -1,3 +1,9 @@
+# tarflow.iquizoo 0.1.5
+
+## New Features
+
+* Add `known_only` argument (default to `TRUE`) to `search_games()`, which uses the games in `dataproc.iquizoo::game_info` only. You cannot set it as `FALSE` when fetching original data.
+
 # tarflow.iquizoo 0.1.4
 
 ## New Features
