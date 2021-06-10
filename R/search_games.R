@@ -17,12 +17,18 @@
 #' @return A [tibble][tibble::tibble-package] contains all the games to be
 #'   analyzed and its related information.
 #' @export
-search_games <- function(config_where) {
+search_games <- function(config_where, known_only = TRUE) {
   query_path <- fs::path(query_dir, query_files[["games"]])
   stopifnot(fs::file_exists(query_path))
-  tarflow.iquizoo::fetch(query_path, config_where) |>
-    dplyr::left_join(dataproc.iquizoo::game_info, by = "game_id") |>
-    dplyr::mutate(prep_fun = syms(.data[["prep_fun_name"]]))
+  games <- tarflow.iquizoo::fetch(query_path, config_where)
+  if (known_only) {
+    games |>
+      dplyr::inner_join(dataproc.iquizoo::game_info, by = "game_id") |>
+      dplyr::mutate(prep_fun = syms(.data[["prep_fun_name"]]))
+  } else {
+    games |>
+      dplyr::left_join(dataproc.iquizoo::game_info, by = "game_id")
+  }
 }
 
 #' @rdname search_games
