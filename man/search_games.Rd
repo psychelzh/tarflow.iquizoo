@@ -11,6 +11,9 @@ search_games_mem(config_where)
 }
 \arguments{
 \item{config_where}{Configuration of "where-clause".}
+
+\item{known_only}{Logical value indicates whether to use games in
+\code{\link[dataproc.iquizoo:game_info]{game_info}} only (default) or not.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} contains all the games to be

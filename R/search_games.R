@@ -14,6 +14,8 @@
 #' search_games_mem(config_where)
 #'
 #' @param config_where Configuration of "where-clause".
+#' @param known_only Logical value indicates whether to use games in
+#'   [`game_info`][dataproc.iquizoo::game_info] only (default) or not.
 #' @return A [tibble][tibble::tibble-package] contains all the games to be
 #'   analyzed and its related information.
 #' @export
