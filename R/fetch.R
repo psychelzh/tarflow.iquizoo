@@ -20,9 +20,14 @@ fetch <- function(query_file,
                   config_where = NULL,
                   dsn = "iquizoo-v3",
                   encoding = "utf-8") {
-  enc <- ifelse(.Platform$OS.type == "windows", "gbk", "utf-8")
   # connect to given database which is pre-configured
-  con <- DBI::dbConnect(odbc::odbc(), dsn, encoding = enc)
+  con <- DBI::dbConnect(
+    odbc::odbc(), dsn,
+    encoding = ifelse(
+      .Platform$OS.type == "windows",
+      "gbk", "utf-8"
+    )
+  )
   on.exit(DBI::dbDisconnect(con))
   query <- readLines(query_file, encoding = encoding) |>
     stringr::str_c(collapse = "\n") |>
