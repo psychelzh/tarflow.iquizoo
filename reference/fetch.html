@@ -73,7 +73,7 @@ extracted from a given database." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -122,9 +122,9 @@ extracted from a given database." />
 extracted from a given database.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fetch</span><span class='op'>(</span><span class='va'>query_file</span>, config_where <span class='op'>=</span> <span class='cn'>NULL</span>, dsn <span class='op'>=</span> <span class='st'>"iquizoo-v3"</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>fetch</span><span class='op'>(</span><span class='va'>query_file</span>, config_where <span class='op'>=</span> <span class='cn'>NULL</span>, dsn <span class='op'>=</span> <span class='st'>"iquizoo-v3"</span>, encoding <span class='op'>=</span> <span class='st'>"utf-8"</span><span class='op'>)</span>
 
-<span class='fu'>fetch_single_game</span><span class='op'>(</span><span class='va'>query_file</span>, config_where <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>game_id</span>, dsn <span class='op'>=</span> <span class='st'>"iquizoo-v3"</span><span class='op'>)</span></pre>
+<span class='fu'>fetch_single_game</span><span class='op'>(</span><span class='va'>query_file</span>, <span class='va'>game_id</span>, config_where <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,8 +144,16 @@ be a <code>list</code> (mostly from the <code>config.yml</code> file) or <code>d
 <code><a href='https://rdrr.io/pkg/odbc/man/dbConnect-OdbcDriver-method.html'>odbc::dbConnect()</a></code> for more information.</p></td>
     </tr>
     <tr>
+      <th>encoding</th>
+      <td><p>Encoding to be assumed for input strings. Default to "UTF-8".</p></td>
+    </tr>
+    <tr>
       <th>game_id</th>
       <td><p>The identifier of the game to fetch datasets from.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments passed to <code>fetch()</code>.</p></td>
     </tr>
     </table>
 
