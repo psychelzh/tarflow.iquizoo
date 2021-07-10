@@ -37,8 +37,8 @@ Create a new \link{TarScript} object.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{package}}{Character vector. The package need to be included in the
-script. Usually only "targets" and "tarchetypes" only. Set it \code{NULL} if
-not needed. And repetitive packages are removed.}
+script. Usually only "targets" and "tarchetypes". Set it \code{NULL} if not
+needed. And repetitive packages are removed.}
 
 \item{\code{global}}{A \code{character} vector. Global variables or functions used in
 the script. For example, there might be a \code{source()} call to prepare
