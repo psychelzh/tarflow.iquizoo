@@ -1,5 +1,14 @@
 # tarflow.iquizoo 0.1.6
 
+## New Features
+
+* Set `known_only` to `FALSE` when downloading pre-calculated scores (#32).
+
+## Bug Fixes
+
+* Fix an exception when using key as one target (#33).
+* Fix an issue of `TarScript()` when there are only one `codes` (thus `unique()` is not necessary to be called) to update.
+
 # tarflow.iquizoo 0.1.5
 
 ## New Features
