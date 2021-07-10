@@ -119,7 +119,7 @@ build_separate_requirements <- function(schema, script) {
       # do not combine these data on default
       original = sym("targets_data"),
       preproc = c(
-        call2("key", ".id"),
+        call2("tar_target", sym("key"), ".id"),
         sym("targets_data")
       )
     )
@@ -153,7 +153,7 @@ tar_targets_text <- function(schema) {
         .sep = "\n"
       ),
       if (schema == "preproc") {
-        "tar_target(data_parsed, wrangle_data(data, by = key))"
+        "tar_target(data_parsed, wrangle_data(data, name_key = key))"
       },
       if (schema == "preproc") {
         "tar_target(indices, preproc_data(data_parsed, prep_fun, by = key))"
