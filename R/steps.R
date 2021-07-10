@@ -106,7 +106,7 @@ do_step_query <- function(name_query, separate, script) {
 }
 
 build_separate_requirements <- function(schema, script) {
-  script$update("global", tar_global_text())
+  script$update("global", tar_global_text(schema))
   script$update("targets", tar_targets_text(schema))
   script$update(
     "pipeline",
@@ -126,10 +126,14 @@ build_separate_requirements <- function(schema, script) {
   )
 }
 
-tar_global_text <- function() {
+tar_global_text <- function(schema) {
   stringr::str_c(
     "future::plan(future::multisession)",
-    "games <- tarflow.iquizoo::search_games_mem(config::get(\"where\"))",
+    stringr::str_c(
+      "games <- tarflow.iquizoo::search_games_mem(config::get(\"where\")",
+      ifelse(schema == "scores", ", known_only = FALSE", ""),
+      ")"
+    ),
     sep = "\n"
   )
 }
