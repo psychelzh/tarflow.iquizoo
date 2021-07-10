@@ -54,7 +54,7 @@ step_pipeline <- function(schema, separate, script) {
   if (schema == "preproc") {
     script$update(
       "option",
-      list(package = c("tidyverse", "dataproc.iquizoo"))
+      list(package = call2("c", !!!c("tidyverse", "dataproc.iquizoo")))
     )
     script$update(
       "option",
@@ -106,7 +106,7 @@ do_step_query <- function(name_query, separate, script) {
 }
 
 build_separate_requirements <- function(schema, script) {
-  script$update("global", tar_global_text())
+  script$update("global", tar_global_text(schema))
   script$update("targets", tar_targets_text(schema))
   script$update(
     "pipeline",
@@ -119,17 +119,21 @@ build_separate_requirements <- function(schema, script) {
       # do not combine these data on default
       original = sym("targets_data"),
       preproc = c(
-        call2("key", ".id"),
+        call2("tar_target", sym("key"), ".id"),
         sym("targets_data")
       )
     )
   )
 }
 
-tar_global_text <- function() {
+tar_global_text <- function(schema) {
   stringr::str_c(
     "future::plan(future::multisession)",
-    "games <- tarflow.iquizoo::search_games_mem(config::get(\"where\"))",
+    stringr::str_c(
+      "games <- tarflow.iquizoo::search_games_mem(config::get(\"where\")",
+      ifelse(schema == "scores", ", known_only = FALSE", ""),
+      ")"
+    ),
     sep = "\n"
   )
 }
@@ -153,7 +157,7 @@ tar_targets_text <- function(schema) {
         .sep = "\n"
       ),
       if (schema == "preproc") {
-        "tar_target(data_parsed, wrangle_data(data, by = key))"
+        "tar_target(data_parsed, wrangle_data(data, name_key = key))"
       },
       if (schema == "preproc") {
         "tar_target(indices, preproc_data(data_parsed, prep_fun, by = key))"

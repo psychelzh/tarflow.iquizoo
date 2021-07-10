@@ -24,8 +24,8 @@ TarScript <- R6::R6Class(
     #' Create a new [TarScript] object.
     #'
     #' @param package Character vector. The package need to be included in the
-    #'   script. Usually only "targets" and "tarchetypes" only. Set it `NULL` if
-    #'   not needed. And repetitive packages are removed.
+    #'   script. Usually only "targets" and "tarchetypes". Set it `NULL` if not
+    #'   needed. And repetitive packages are removed.
     #' @param global A `character` vector. Global variables or functions used in
     #'   the script. For example, there might be a `source()` call to prepare
     #'   functions. `character` used for better formatting. No `unique()` is
@@ -89,7 +89,7 @@ TarScript <- R6::R6Class(
       # make sure no duplicated names when updating option
       stopifnot(!(step == "option" && anyDuplicated(names(codes))))
       # make sure unique for package and pipeline
-      if (step %in% c("package", "pipeline")) {
+      if (step %in% c("package", "pipeline") && length(codes) > 1) {
         codes <- unique(codes)
       }
       if (append) {
@@ -132,22 +132,19 @@ TarScript <- R6::R6Class(
     #' code line. Note this method does not return the object itself, so it
     #' cannot be chained.
     deparse_script = function() {
-      deparse_call2 <- function(.fn, ...) {
-        deparse1(call2(.fn, ...))
-      }
       # global and targets should be strings
       c(
         purrr::map_chr(
           private$package,
-          ~ deparse_call2("library", !!!syms(.x))
+          ~ expr_deparse(call2("library", !!!syms(.x)))
         ),
         private$global,
-        deparse_call2("tar_option_set", !!!private$option),
+        expr_deparse(call2("tar_option_set", !!!private$option)),
         private$targets,
         "list(",
         private$pipeline |>
-          purrr::map_chr(deparse1) |>
-          stringr::str_c(collapse = ",\n"),
+          purrr::map_chr(expr_deparse) |>
+          paste0(collapse = ",\n"),
         ")"
       )
     }
