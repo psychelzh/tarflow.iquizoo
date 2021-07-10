@@ -89,7 +89,7 @@ TarScript <- R6::R6Class(
       # make sure no duplicated names when updating option
       stopifnot(!(step == "option" && anyDuplicated(names(codes))))
       # make sure unique for package and pipeline
-      if (step %in% c("package", "pipeline")) {
+      if (step %in% c("package", "pipeline") && length(codes) > 1) {
         codes <- unique(codes)
       }
       if (append) {
