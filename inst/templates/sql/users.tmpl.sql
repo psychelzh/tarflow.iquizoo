@@ -18,5 +18,4 @@ FROM
 	INNER JOIN iquizoo_content_db.course_child ON course_child.CourseId = course.Id
 	INNER JOIN iquizoo_content_db.course_child_config ON course_child_config.ChildCourseId = course_child.Id
 	INNER JOIN iquizoo_content_db.content ON content.Id = course_child_config.ContentId -- `content` might be used in "where_clause"
-	INNER JOIN iquizoo_content_db.projects ON projects.Id = project_course_user.ProjectId -- -- `projects` might be used in "where_clause"
 { where_clause };
