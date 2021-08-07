@@ -1,4 +1,8 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 0.1.7
+
+## Bug Fixes
+
+* Fix an exception caused by new database design of IQUIZOO.
 
 # tarflow.iquizoo 0.1.6
 
