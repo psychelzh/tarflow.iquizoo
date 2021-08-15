@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
       </span>
     </div>
 
@@ -114,12 +114,23 @@
       <small>Source: <a href='https://github.com/psychelzh/tarflow.iquizoo/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="tarflowiquizoo-017" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.7">
-<a href="#tarflowiquizoo-017" class="anchor"></a>tarflow.iquizoo 0.1.7</h1>
+    <div id="tarflowiquizoo-018" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.8">
+<a href="#tarflowiquizoo-018" class="anchor"></a>tarflow.iquizoo 0.1.8</h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<ul>
+<li>Fix exception of encoding issue of SQL query by removing the recoding of user sex.</li>
+</ul>
+</div>
+</div>
+    <div id="tarflowiquizoo-017" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.7">
+<a href="#tarflowiquizoo-017" class="anchor"></a>tarflow.iquizoo 0.1.7</h1>
+<div id="bug-fixes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fix an exception caused by new database design of IQUIZOO.</li>
 </ul>
@@ -135,9 +146,9 @@
 <li>Set <code>known_only</code> to <code>FALSE</code> when downloading pre-calculated scores (<a href='https://github.com/psychelzh/tarflow.iquizoo/issues/32'>#32</a>).</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fix an exception when using key as one target (<a href='https://github.com/psychelzh/tarflow.iquizoo/issues/33'>#33</a>).</li>
 <li>Fix an issue of <code><a href="../reference/TarScript.html">TarScript()</a></code> when there are only one <code>codes</code> (thus <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code> is not necessary to be called) to update.</li>
@@ -169,9 +180,9 @@
     <div id="tarflowiquizoo-013" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.3">
 <a href="#tarflowiquizoo-013" class="anchor"></a>tarflow.iquizoo 0.1.3</h1>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Correct logic of <code><a href="../reference/steps.html">step_query()</a></code>. The query named <code>games</code> are not to be included in targets. And queries named <code>users</code> and <code>abilities</code> should be always fetched. Other queries depend on whether it is separated or not.</li>
 </ul>
@@ -228,9 +239,9 @@
     <div id="tarflowiquizoo-006" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.6">
 <a href="#tarflowiquizoo-006" class="anchor"></a>tarflow.iquizoo 0.0.6</h1>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Use <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">stringr::str_detect()</a></code> to remove empty json string. Now <code>"[]"</code> and <code>"{}"</code> are both removed.</li>
 </ul>
@@ -239,9 +250,9 @@
     <div id="tarflowiquizoo-005" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.5">
 <a href="#tarflowiquizoo-005" class="anchor"></a>tarflow.iquizoo 0.0.5</h1>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fix issue of empty json string by removing empty (i.e., <code>"[]"</code>) json string data in validation step of <code>calc_indices()</code>.</li>
 </ul>
@@ -250,9 +261,9 @@
     <div id="tarflowiquizoo-004" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.4">
 <a href="#tarflowiquizoo-004" class="anchor"></a>tarflow.iquizoo 0.0.4</h1>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fix issue of invalid json string by introducing a data validation step in <code>calc_indices()</code>.</li>
 </ul>
@@ -261,9 +272,9 @@
     <div id="tarflowiquizoo-003" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.3">
 <a href="#tarflowiquizoo-003" class="anchor"></a>tarflow.iquizoo 0.0.3</h1>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fix an issue of data name case, and now all the names are translated to lower-case ones before preprocessing.</li>
 </ul>
