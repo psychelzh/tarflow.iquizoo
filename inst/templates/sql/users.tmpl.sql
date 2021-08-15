@@ -1,10 +1,7 @@
 SELECT DISTINCT
 	v_organizationuser.OrganizationUserId user_id,
 	v_organizationuser.RealName user_name,
-	CASE v_organizationuser.Gender
-	WHEN 1 THEN '男'
-	WHEN 2 THEN '女'
-	END	user_sex,
+	v_organizationuser.Gender user_sex,
 	v_organizationuser.Birthday user_dob,
 	base_organization.`Name` school,
 	base_organization.Province province,
