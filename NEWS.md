@@ -1,3 +1,9 @@
+# tarflow.iquizoo 0.1.8
+
+## Bug Fixes
+
+* Fix exception of encoding issue of SQL query by removing the recoding of user sex.
+
 # tarflow.iquizoo 0.1.7
 
 ## Bug Fixes
