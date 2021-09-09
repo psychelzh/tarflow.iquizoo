@@ -1,3 +1,9 @@
+# tarflow.iquizoo 0.1.9
+
+## Bug Fixes
+
+* Fixed an exception when fetching `users` from new version of database. Now `base_grade_class` was obsolete and removed from query.
+
 # tarflow.iquizoo 0.1.8
 
 ## Bug Fixes
