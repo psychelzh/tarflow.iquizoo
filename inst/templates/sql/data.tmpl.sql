@@ -1,5 +1,5 @@
 SELECT DISTINCT
-	v_organizationuser.Id user_id,
+	v_organizationuser.OrganizationUserId user_id,
 	course.`Name` course_name,
 	content.Id game_id,
 	content.`Name` game_name,
