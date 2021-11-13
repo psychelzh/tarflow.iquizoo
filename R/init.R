@@ -1,6 +1,6 @@
 #' Setup Workflow
 #'
-#' `r lifecycle::badge("experimental")` Create a basic infrastructure for
+#' `r lifecycle::badge("deprecated")` Create a basic infrastructure for
 #' iquizoo data analysis.
 #'
 #' @param wizard A logical value indicating whether to use interactive
@@ -12,6 +12,10 @@
 #' @return `NULL` (invisibly). This function is called for its side-effect.
 #' @export
 init <- function(wizard = interactive(), schema = "scores", separate = NULL) {
+  lifecycle::deprecate_warn(
+    "1.0.0", "init()",
+    details = "Please use rmarkdown template instead."
+  )
   cli::cli_alert("Welcome to {.pkg {utils::packageName()}}")
   script <- TarScript$new()
   if (wizard) {
