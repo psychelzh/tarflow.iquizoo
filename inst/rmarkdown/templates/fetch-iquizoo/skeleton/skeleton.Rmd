@@ -1,6 +1,6 @@
 ---
 title: "Untitled"
-output: output_format
+output: html_document
 ---
 
 ```{r setup, include=FALSE}

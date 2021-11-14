@@ -1,6 +1,6 @@
 ---
 title: "Untitled"
-output: output_format
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -13,8 +13,8 @@ targets::tar_unscript()
 future::plan(future::multisession, workers = 8)
 games <- tarflow.iquizoo::search_games_mem(config::get("where"))
 tar_option_set(
-  package = c("tidyverse", "dataproc.iquizoo"), 
-  format = "qs", 
+  package = c("tidyverse", "dataproc.iquizoo"),
+  format = "qs",
   imports = "dataproc.iquizoo"
 )
 targets_data <- tarchetypes::tar_map(
