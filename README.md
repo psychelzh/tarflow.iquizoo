@@ -37,7 +37,22 @@ You can install the development version from
 devtools::install_github("psychelzh/tarflow.iquizoo")
 ```
 
-## Example
+## Usage
+
+This package is essentially providing several rmarkdown templates for
+use. See [this
+article](https://rstudio.github.io/rstudio-extensions/rmarkdown_templates.html)
+to understand how to open a new template.
+
+Currently two templates are provided:
+
+-   `"fetch-iquizoo"` (“Fetch Iquizoo Data”): Fetch all the data as a
+    whole, not appropriate for raw data preprocessing.
+-   `"fetch-iquizoo-branches"` (“Fetch Iquizoo Data Separately”): Fetch
+    all the data separately by games, appropriate for raw data
+    preprocessing.
+
+## Obsolete Example (deprecated, probably removed in near future)
 
 If you are using R in interactive mode (typically when using *RStudio*),
 there will be a simple wizard to guide your setup. It will prompt you to
