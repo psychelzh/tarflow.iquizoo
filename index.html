@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -92,9 +92,21 @@
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"psychelzh/tarflow.iquizoo"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="example" class="section level2">
+<div id="usage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<a href="#usage" class="anchor"></a>Usage</h2>
+<p>This package is essentially providing several rmarkdown templates for use. See <a href="https://rstudio.github.io/rstudio-extensions/rmarkdown_templates.html">this article</a> to understand how to open a new template.</p>
+<p>Currently two templates are provided:</p>
+<ul>
+<li>
+<code>"fetch-iquizoo"</code> (“Fetch Iquizoo Data”): Fetch all the data as a whole, not appropriate for raw data preprocessing.</li>
+<li>
+<code>"fetch-iquizoo-branches"</code> (“Fetch Iquizoo Data Separately”): Fetch all the data separately by games, appropriate for raw data preprocessing.</li>
+</ul>
+</div>
+<div id="obsolete-example-deprecated-probably-removed-in-near-future" class="section level2">
+<h2 class="hasAnchor">
+<a href="#obsolete-example-deprecated-probably-removed-in-near-future" class="anchor"></a>Obsolete Example (deprecated, probably removed in near future)</h2>
 <p>If you are using R in interactive mode (typically when using <em>RStudio</em>), there will be a simple wizard to guide your setup. It will prompt you to choose the correct actions.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># invoke setup wizard</span>
