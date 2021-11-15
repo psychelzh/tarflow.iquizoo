@@ -20,7 +20,7 @@ based on games?}
 \code{NULL} (invisibly). This function is called for its side-effect.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Create a basic infrastructure for
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Create a basic infrastructure for
 iquizoo data analysis.
 }
 \details{

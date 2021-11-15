@@ -1,0 +1,55 @@
+---
+title: "Untitled"
+output: html_document
+# redirect output to another folder (default is base_dir/output)
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = fs::path(here::here(), "output"),
+      ...
+    )
+  })
+---
+
+```{r setup, include=FALSE}
+library(targets)
+knitr::opts_chunk$set(echo = TRUE, tar_interactive = FALSE)
+targets::tar_unscript()
+```
+
+```{targets set-globals, tar_globals=TRUE, include=FALSE}
+future::plan(future.callr::callr)
+tar_option_set(packages = "tidyverse", format = "qs")
+```
+
+```{targets load-config, include=FALSE}
+list(
+  tar_target(file_config, "config.yml", format = "file"),
+  tar_target(config_where, config::get("where", file = file_config))
+)
+```
+
+```{targets download-users, include=FALSE}
+list(
+  tar_target(query_tmpl_users, fs::path("sql", "users.tmpl.sql"), format = "file"),
+  tar_target(users, tarflow.iquizoo::fetch(query_tmpl_users, config_where))
+)
+```
+
+```{targets download-scores, include=FALSE}
+list(
+  tar_target(query_scores_tmpl, fs::path("sql", "scores.tmpl.sql"), format = "file"),
+  tar_target(scores, tarflow.iquizoo::fetch(query_scores_tmpl, config_where))
+)
+```
+
+```{targets download-raw-data, include=FALSE}
+list(
+  tar_target(query_tmpl_data, fs::path("sql", "data.tmpl.sql"), format = "file"),
+  tar_target(data, tarflow.iquizoo::fetch(query_tmpl_data, config_where))
+)
+```
+
+```{r run-pipeline, include=FALSE}
+tar_make_future(workers = 8)
+```

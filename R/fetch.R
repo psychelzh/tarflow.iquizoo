@@ -76,21 +76,25 @@ compose_where <- function(config_where) {
 }
 
 #' @rdname compose_where
+#' @export
 compose_where.default <- function(config_where) {
   config_where
 }
 
 #' @rdname compose_where
+#' @export
 compose_where.NULL <- function(config_where) {
   compose_where.default("")
 }
 
 #' @rdname compose_where
+#' @export
 compose_where.character <- function(config_where) {
   compose_where.default(config_where)
 }
 
 #' @rdname compose_where
+#' @export
 compose_where.list <- function(config_where) {
   config_where_tbl <- tibble::tibble(where = config_where) |>
     tidyr::unnest_wider("where")
@@ -98,6 +102,7 @@ compose_where.list <- function(config_where) {
 }
 
 #' @rdname compose_where
+#' @export
 compose_where.data.frame <- function(config_where) {
   if (!has_name(config_where, "operator")) {
     config_where$operator <- NA_character_
@@ -154,6 +159,7 @@ insert_where <- function(old, ...) {
 }
 
 #' @rdname insert_where
+#' @export
 insert_where.NULL <- function(old, ...) {
   stop(
     "You are trying to create new where configuration.",
@@ -162,6 +168,7 @@ insert_where.NULL <- function(old, ...) {
 }
 
 #' @rdname insert_where
+#' @export
 insert_where.list <- function(old, ..., replace = TRUE) {
   if (length(old) == 0) insert_where.NULL(old, ...)
   new <- purrr::map(list(...), ~ as.list(unlist(.x)))
@@ -176,6 +183,7 @@ insert_where.list <- function(old, ..., replace = TRUE) {
 }
 
 #' @rdname insert_where
+#' @export
 insert_where.data.frame <- function(old, ..., replace = TRUE) {
   if (nrow(old) == 0) insert_where.NULL(old, ...)
   old <- purrr::transpose(as.list(old))
