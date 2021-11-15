@@ -13,7 +13,6 @@ knit: (function(input, ...) {
 
 ```{r setup, include=FALSE}
 library(targets)
-knitr::opts_knit$set(root.dir = here::here()) # remove this line if run under this document path
 knitr::opts_chunk$set(echo = TRUE, tar_interactive = FALSE)
 targets::tar_unscript()
 ```
