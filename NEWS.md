@@ -1,5 +1,13 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Now `init()` is deprecated, and rmarkdown template is recommended instead.
+
+## New Features
+
+* Support setting up pipeline in rmarkdown using template (#35).
+
 # tarflow.iquizoo 0.1.10
 
 ## Bug Fixes
