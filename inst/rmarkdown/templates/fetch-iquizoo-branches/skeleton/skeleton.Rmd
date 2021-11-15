@@ -1,10 +1,19 @@
 ---
 title: "Untitled"
 output: html_document
+# redirect output to another folder (default is base_dir/output)
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = fs::path(here::here(), "output"),
+      ...
+    )
+  })
 ---
 
 ```{r setup, include=FALSE}
 library(targets)
+knitr::opts_knit$set(root.dir = here::here()) # remove this line if run under this document path
 knitr::opts_chunk$set(echo = TRUE, tar_interactive = FALSE)
 targets::tar_unscript()
 ```
