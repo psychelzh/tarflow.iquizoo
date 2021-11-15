@@ -18,7 +18,7 @@ targets::tar_unscript()
 ```
 
 ```{targets set-globals, tar_globals=TRUE, include=FALSE}
-future::plan(future::multisession, workers = 8)
+future::plan(future.callr::callr)
 tar_option_set(packages = "tidyverse", format = "qs")
 ```
 
@@ -51,5 +51,5 @@ list(
 ```
 
 ```{r run-pipeline, include=FALSE}
-tar_make_future()
+tar_make_future(workers = 8)
 ```
