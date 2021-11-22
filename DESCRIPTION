@@ -40,6 +40,7 @@ Imports:
     usethis,
     utils
 Suggests:
+    covr,
     jsonlite,
     lifecycle,
     roxygen2,
