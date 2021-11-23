@@ -10,6 +10,8 @@ test_that("Basic situation of `wrange_data()`", {
   expect_named(data_wrangled, c("meta", "data"))
   expect_snapshot(data_wrangled$meta)
   expect_snapshot(data_wrangled$data)
+  key <- ".id"
+  expect_equal(data_wrangled, wrangle_data(data, name_key = key))
 })
 
 test_that("Can deal with invalid json (remove it) in `wrangle_data()`", {
