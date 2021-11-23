@@ -21,7 +21,7 @@ package.
 The preprocessing of IQUIZOO data used to be very harduous because the
 datasets were very disorganized. Newer version of database and games
 make things much better. Now there is a package called
-[dataproc.iquizoo](https://github.com/psychelzh/dataproc.iquizoo),
+[preproc.iquizoo](https://github.com/psychelzh/preproc.iquizoo),
 containing all the required functions used in preprocessing. It
 facilitates analysis significantly. For now, with the advent of
 [targets](https://github.com/wlandau/targets), we can easily setup

@@ -13,7 +13,7 @@ search_games_mem(config_where, known_only = TRUE)
 \item{config_where}{Configuration of "where-clause".}
 
 \item{known_only}{Logical value indicates whether to use games in
-\code{\link[dataproc.iquizoo:game_info]{game_info}} only (default) or not.}
+\code{\link[data.iquizoo:game_info]{game_info}} only (default) or not.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} contains all the games to be
@@ -25,7 +25,7 @@ known in advance. This function should be used with memoise package to reduce
 executing time.
 }
 \details{
-The fetched will be joined with \code{\link[dataproc.iquizoo:game_info]{game_info}}
-data from dataproc.iquizoo package to expose the pre-processing function
+The fetched will be joined with \code{\link[data.iquizoo:game_info]{game_info}}
+data from data.iquizoo package to expose the pre-processing function
 name.
 }
