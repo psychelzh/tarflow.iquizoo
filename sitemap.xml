@@ -25,6 +25,12 @@
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/insert_where.html</loc>
   </url>
   <url>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/keys.html</loc>
+  </url>
+  <url>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/preproc_data.html</loc>
+  </url>
+  <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/query_dir.html</loc>
   </url>
   <url>
@@ -38,5 +44,8 @@
   </url>
   <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/steps.html</loc>
+  </url>
+  <url>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/wrangle_data.html</loc>
   </url>
 </urlset>

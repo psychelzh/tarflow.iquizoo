@@ -13,7 +13,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Setup " targets workflows for data processing>
 <meta property="og:description" content='For "iquizoo" data processing, there is already a package
-    called "dataproc.iquizoo", but eventually the use of it is relied on a
+    called "preproc.iquizoo", but eventually the use of it is relied on a
     workflow. This package is used to build such workflows based on tools
     provided by "targets" package which mimicks the logic of "make",
     automating the building processes.'>
@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
 <div id="background" class="section level2">
 <h2 class="hasAnchor">
 <a href="#background" class="anchor"></a>Background</h2>
-<p>The preprocessing of IQUIZOO data used to be very harduous because the datasets were very disorganized. Newer version of database and games make things much better. Now there is a package called <a href="https://github.com/psychelzh/dataproc.iquizoo">dataproc.iquizoo</a>, containing all the required functions used in preprocessing. It facilitates analysis significantly. For now, with the advent of <a href="https://github.com/wlandau/targets">targets</a>, we can easily setup workflows to automate all the preprocessing! This is what this package does. Hopefully, it will make the analysis of IQUIZOO data a favorable thing.</p>
+<p>The preprocessing of IQUIZOO data used to be very harduous because the datasets were very disorganized. Newer version of database and games make things much better. Now there is a package called <a href="https://github.com/psychelzh/preproc.iquizoo">preproc.iquizoo</a>, containing all the required functions used in preprocessing. It facilitates analysis significantly. For now, with the advent of <a href="https://github.com/wlandau/targets">targets</a>, we can easily setup workflows to automate all the preprocessing! This is what this package does. Hopefully, it will make the analysis of IQUIZOO data a favorable thing.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -149,6 +149,7 @@
 <ul class="list-unstyled">
 <li><a href="https://github.com/psychelzh/tarflow.iquizoo/actions"><img src="https://github.com/psychelzh/tarflow.iquizoo/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://app.codecov.io/gh/psychelzh/tarflow.iquizoo?branch=main"><img src="https://codecov.io/gh/psychelzh/tarflow.iquizoo/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 </div>

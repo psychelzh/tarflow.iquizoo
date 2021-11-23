@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="Wrangle Raw Data — wrangle_data" />
-<meta property="og:description" content="Data wrangling is the first step for data analysis. In this function, raw
-data fetched from database." />
+<meta property="og:description" content="Data wrangling is the first step for data analysis." />
 
 
 
@@ -73,7 +72,7 @@ data fetched from database." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -113,16 +112,15 @@ data fetched from database." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Wrangle Raw Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/psychelzh/tarflow.iquizoo/blob/master/R/wrangle_data.R'><code>R/wrangle_data.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/psychelzh/tarflow.iquizoo/blob/master/R/utils_rawdata.R'><code>R/utils_rawdata.R</code></a></small>
     <div class="hidden name"><code>wrangle_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Data wrangling is the first step for data analysis. In this function, raw
-data fetched from database.</p>
+    <p>Data wrangling is the first step for data analysis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>wrangle_data</span><span class='op'>(</span><span class='va'>data</span>, name_data <span class='op'>=</span> <span class='st'>"game_data"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>wrangle_data</span><span class='op'>(</span><span class='va'>data</span>, name_key <span class='op'>=</span> <span class='st'>".id"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,26 +130,25 @@ data fetched from database.</p>
       <td><p>The raw data.</p></td>
     </tr>
     <tr>
-      <th>name_data</th>
-      <td><p>The column name in the <code>data</code> that stores original data. It
-is typically of a vector containing <code>JSON</code> string.</p></td>
+      <th>name_key</th>
+      <td><p>The key name used to match meta data. Should be a scalar
+character. Default is <code>".id"</code>, which is appropriate for most cases.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <a href='https://tibble.tidyverse.org/reference/tibble-package.html'>tibble</a> with two pieces of meta data:
-<code>info</code> and <code>name_key</code>. They stores other metadata from input rawdata other
-than game data from <code>name_data</code>.</p>
+    <p>A <a href='https://cynkra.github.io/dm/reference/dm.html'>dm</a> object containing two tables: <code>meta</code> and <code>data</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>These steps are performed in order:</p><ol>
-<li><p>Remove observations with invalid or empty (i.e., <code>"[]"</code> or <code>"{}"</code>) json
-string data. If this step produces data with no observation, following
-steps are skipped and <code>NULL</code> is returned.</p></li>
-<li><p>Parse data stored in json string, convert the names to lower case and
-stack the parsed data. Stacking have better performances than
-<a href='https://dplyr.tidyverse.org/reference/group_nest.html'>group_nest</a>ing.</p></li>
+<li><p>Data clean. Remove observations with invalid or empty (i.e., <code>"[]"</code> or
+<code>"{}"</code>) json string data and then remove duplicates from data. If this step
+produces data with no observation, following steps are skipped and <code>NULL</code>
+is returned.</p></li>
+<li><p>Data parse. Parse data stored in json string, convert the names to lower
+case and stack the parsed data. Stacking have better performances than
+group_nesting.</p></li>
 </ol>
 
 

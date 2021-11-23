@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Insert where configurations — insert_where • tarflow.iquizoo</title>
+<title>Key variables in data — keys • tarflow.iquizoo</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Insert where configurations — insert_where" />
-<meta property="og:description" content="Insert new where configurations into the existed one. This can be useful in
-many projects doing minor changes to current where configurations." />
+<meta property="og:title" content="Key variables in data — keys" />
+<meta property="og:description" content="Key variables in data" />
 
 
 
@@ -112,61 +111,21 @@ many projects doing minor changes to current where configurations." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Insert where configurations</h1>
-    <small class="dont-index">Source: <a href='https://github.com/psychelzh/tarflow.iquizoo/blob/master/R/fetch.R'><code>R/fetch.R</code></a></small>
-    <div class="hidden name"><code>insert_where.Rd</code></div>
+    <h1>Key variables in data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/psychelzh/tarflow.iquizoo/blob/master/R/constants.R'><code>R/constants.R</code></a></small>
+    <div class="hidden name"><code>keys.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Insert new where configurations into the existed one. This can be useful in
-many projects doing minor changes to current where configurations.</p>
+    <p>Key variables in data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>insert_where</span><span class='op'>(</span><span class='va'>old</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='va'>keys</span></pre>
 
-<span class='co'># S3 method for `NULL`</span>
-<span class='fu'>insert_where</span><span class='op'>(</span><span class='va'>old</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for list</span>
-<span class='fu'>insert_where</span><span class='op'>(</span><span class='va'>old</span>, <span class='va'>...</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-<span class='co'># S3 method for data.frame</span>
-<span class='fu'>insert_where</span><span class='op'>(</span><span class='va'>old</span>, <span class='va'>...</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>old</th>
-      <td><p>The old where configuration.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>The new where element. Can be of <code>list</code> or <code>data.frame</code> class.
-Note they must have name of <code>"table"</code>. What's more, to make it work
-properly in the whole project, the names should be no other than
-<code>c("table", "field", "operator", "values")</code>.</p></td>
-    </tr>
-    <tr>
-      <th>replace</th>
-      <td><p>Replace the element with the same <code>table</code> value or not.
-Default is set to replace, set <code>FALSE</code> to add it anyway (not recommended,
-might cause error in further analysis).</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A where configuration of the same format with the old one.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function is intended to modify an existed where configuration. To create
-a completely new one, please specify it by using <code><a href='https://tibble.tidyverse.org/reference/tribble.html'>tibble::tribble()</a></code> instead.</p>
-<p>If you insisted on calling <code>insert_where()</code> with empty where configration, it
-will signal an error.</p>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Liang Zhang</p>
+    <p>An object of class <code>character</code> of length 2.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
