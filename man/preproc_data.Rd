@@ -10,7 +10,7 @@ preproc_data(dm, ...)
 \item{dm}{A \link[dm:dm]{dm} object typically from \code{\link[=wrangle_data]{wrangle_data()}} contains
 two tables: \code{meta} and \code{data}.}
 
-\item{...}{Parameters passed to \code{\link[dataproc.iquizoo:preproc]{dataproc.iquizoo::preproc()}}.}
+\item{...}{Parameters passed to \code{\link[preproc.iquizoo:preproc]{preproc.iquizoo::preproc()}}.}
 }
 \value{
 A \link[dm:dm]{dm} object containing three tables: \code{meta}, \code{data} and
@@ -18,5 +18,5 @@ A \link[dm:dm]{dm} object containing three tables: \code{meta}, \code{data} and
 }
 \description{
 Integrate \link[dm:dm]{dm} object returned by \code{\link[=wrangle_data]{wrangle_data()}} with
-\code{\link[dataproc.iquizoo:preproc]{dataproc.iquizoo::preproc()}} API.
+\code{\link[preproc.iquizoo:preproc]{preproc.iquizoo::preproc()}} API.
 }

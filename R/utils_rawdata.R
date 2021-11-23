@@ -57,11 +57,11 @@ wrangle_data <- function(data, name_key = ".id") {
 #' Feed Raw Data to Pre-processing
 #'
 #' Integrate [dm][dm::dm()] object returned by [wrangle_data()] with
-#' [dataproc.iquizoo::preproc()] API.
+#' [preproc.iquizoo::preproc()] API.
 #'
 #' @param dm A [dm][dm::dm()] object typically from [wrangle_data()] contains
 #'   two tables: `meta` and `data`.
-#' @param ... Parameters passed to [dataproc.iquizoo::preproc()].
+#' @param ... Parameters passed to [preproc.iquizoo::preproc()].
 #' @return A [dm][dm::dm()] object containing three tables: `meta`, `data` and
 #'   `indices`.
 #' @export
@@ -73,7 +73,7 @@ preproc_data <- function(dm, ...) {
   name_key <- dm::dm_get_all_pks(dm, "data")$pk_col[[1]]
   dm_indices <- dm |>
     dm::dm_zoom_to(data) |>
-    dataproc.iquizoo::preproc(by = name_key, ...)
+    preproc.iquizoo::preproc(by = name_key, ...)
   if (is_empty(dm_indices)) {
     warn("No valid data", "data_invalid")
     return()
