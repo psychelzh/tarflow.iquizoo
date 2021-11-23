@@ -64,7 +64,7 @@ list(
 
 ```{targets data-and-scores, include=FALSE}
 list(
-  tar_target(query_scores_tmpl, fs::path("sql", "scores.tmpl.sql"), format = "file"),
+  tar_target(query_tmpl_scores, fs::path("sql", "scores.tmpl.sql"), format = "file"),
   tar_target(query_tmpl_data, fs::path("sql", "data.tmpl.sql"), format = "file"),
   tar_target(key, ".id"),
   targets_data

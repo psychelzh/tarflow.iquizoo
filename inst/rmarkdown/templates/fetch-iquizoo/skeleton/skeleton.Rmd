@@ -38,8 +38,8 @@ list(
 
 ```{targets download-scores, include=FALSE}
 list(
-  tar_target(query_scores_tmpl, fs::path("sql", "scores.tmpl.sql"), format = "file"),
-  tar_target(scores, tarflow.iquizoo::fetch(query_scores_tmpl, config_where))
+  tar_target(query_tmpl_scores, fs::path("sql", "scores.tmpl.sql"), format = "file"),
+  tar_target(scores, tarflow.iquizoo::fetch(query_tmpl_scores, config_where))
 )
 ```
 
