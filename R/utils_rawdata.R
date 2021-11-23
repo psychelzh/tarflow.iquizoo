@@ -35,7 +35,7 @@ wrangle_data <- function(data, name_key = ".id") {
   #' [group_nest][group_nest()]ing.
   data_decomposed <- dm::decompose_table(
     data_valid, -keys[["raw_data"]],
-    new_id_column = {{ name_key }}
+    new_id_column = !!name_key
   )
   meta <- data_decomposed$parent_table
   data <- data_decomposed$child_table |>
@@ -49,9 +49,9 @@ wrangle_data <- function(data, name_key = ".id") {
       .groups = "drop"
     )
   dm::dm(meta, data) |>
-    dm::dm_add_pk(meta, {{ name_key }}) |>
-    dm::dm_add_pk(data, {{ name_key }}) |>
-    dm::dm_add_fk(meta, {{ name_key }}, data, {{ name_key }})
+    dm::dm_add_pk(meta, !!name_key) |>
+    dm::dm_add_pk(data, !!name_key) |>
+    dm::dm_add_fk(meta, !!name_key, data, !!name_key)
 }
 
 #' Feed Raw Data to Pre-processing
