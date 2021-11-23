@@ -21,9 +21,9 @@ targets::tar_unscript()
 future::plan(future.callr::callr)
 games <- tarflow.iquizoo::search_games_mem(config::get("where"))
 tar_option_set(
-  package = c("tidyverse", "dataproc.iquizoo"),
+  package = c("tidyverse", "preproc.iquizoo"),
   format = "qs",
-  imports = "dataproc.iquizoo"
+  imports = "preproc.iquizoo"
 )
 targets_data <- tarchetypes::tar_map(
   values = games,
@@ -40,8 +40,11 @@ targets_data <- tarchetypes::tar_map(
       query_tmpl_data, game_id, config_where
     )
   ),
-  tar_target(data_parsed, wrangle_data(data, name_key = key)),
-  tar_target(indices, preproc_data(data_parsed, prep_fun, by = key))
+  tar_target(data_parsed, tarflow.iquizoo::wrangle_data(data, name_key = key)),
+  tar_target(
+    indices,
+    tarflow.iquizoo::preproc_data(data_parsed, prep_fun_name = prep_fun)
+  )
 )
 ```
 
@@ -61,7 +64,7 @@ list(
 
 ```{targets data-and-scores, include=FALSE}
 list(
-  tar_target(query_scores_tmpl, fs::path("sql", "scores.tmpl.sql"), format = "file"),
+  tar_target(query_tmpl_scores, fs::path("sql", "scores.tmpl.sql"), format = "file"),
   tar_target(query_tmpl_data, fs::path("sql", "data.tmpl.sql"), format = "file"),
   tar_target(key, ".id"),
   targets_data

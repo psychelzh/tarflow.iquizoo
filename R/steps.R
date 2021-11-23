@@ -54,11 +54,11 @@ step_pipeline <- function(schema, separate, script) {
   if (schema == "preproc") {
     script$update(
       "option",
-      list(package = call2("c", !!!c("tidyverse", "dataproc.iquizoo")))
+      list(package = call2("c", !!!c("tidyverse", "preproc.iquizoo")))
     )
     script$update(
       "option",
-      list(imports = "dataproc.iquizoo")
+      list(imports = "preproc.iquizoo")
     )
   } else {
     script$update("option", list(package = "tidyverse"))

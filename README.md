@@ -8,6 +8,8 @@
 [![R-CMD-check](https://github.com/psychelzh/tarflow.iquizoo/workflows/R-CMD-check/badge.svg)](https://github.com/psychelzh/tarflow.iquizoo/actions)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test
+coverage](https://codecov.io/gh/psychelzh/tarflow.iquizoo/branch/main/graph/badge.svg)](https://app.codecov.io/gh/psychelzh/tarflow.iquizoo?branch=main)
 <!-- badges: end -->
 
 The goal of tarflow.iquizoo is to provide workflow auto-generation for
@@ -19,7 +21,7 @@ package.
 The preprocessing of IQUIZOO data used to be very harduous because the
 datasets were very disorganized. Newer version of database and games
 make things much better. Now there is a package called
-[dataproc.iquizoo](https://github.com/psychelzh/dataproc.iquizoo),
+[preproc.iquizoo](https://github.com/psychelzh/preproc.iquizoo),
 containing all the required functions used in preprocessing. It
 facilitates analysis significantly. For now, with the advent of
 [targets](https://github.com/wlandau/targets), we can easily setup

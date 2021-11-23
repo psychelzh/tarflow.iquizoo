@@ -1,3 +1,13 @@
+# tarflow.iquizoo 0.2.1
+
+## Breaking Changes
+
+* Adapt to new preproc.iquizoo and data.iquizoo packages.
+
+## Bug Fixes
+
+* Fix a target name problem.
+
 # tarflow.iquizoo 0.2.0
 
 ## Breaking Changes
