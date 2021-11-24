@@ -67,7 +67,7 @@ test_that("Basic situation in `preproc_data()`", {
   library(preproc.iquizoo)
   dm_indices <- data |>
     wrangle_data() |>
-    preproc_data(prep_fun = bart)
+    preproc_data(.fn = bart)
   expect_snapshot(dm_indices)
   expect_snapshot(dm::dm_get_tables(dm_indices))
 })
@@ -88,7 +88,7 @@ test_that("Complex dplyr verbs in `preproc_data()`", {
   library(preproc.iquizoo)
   dm_indices <- data |>
     wrangle_data() |>
-    preproc_data(prep_fun = cpt)
+    preproc_data(.fn = cpt)
   expect_snapshot(dm_indices)
   expect_snapshot(dm::dm_get_tables(dm_indices))
 })

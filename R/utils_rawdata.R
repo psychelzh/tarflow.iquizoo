@@ -73,7 +73,7 @@ preproc_data <- function(dm, ...) {
   name_key <- dm::dm_get_all_pks(dm, "data")$pk_col[[1]]
   indices <- dm |>
     dm::pull_tbl(data) |>
-    preproc.iquizoo::preproc(by = name_key, ...)
+    preproc.iquizoo::preproc(.by = name_key, ...)
   if (is_empty(indices)) {
     warn("No valid data", "data_invalid")
     return()
