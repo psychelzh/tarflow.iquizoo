@@ -19,6 +19,7 @@ Depends:
 Imports:
     cli,
     config,
+    data.iquizoo (>= 0.0.3),
     DBI,
     dm,
     dplyr,
@@ -45,7 +46,8 @@ Suggests:
     targets,
     testthat (>= 3.0.0),
     withr
-Remotes:
+Remotes: 
+    psychelzh/data.iquizoo,
     psychelzh/preproc.iquizoo
 Config/testthat/edition: 3
 Encoding: UTF-8
