@@ -9,7 +9,7 @@ test_that("Basic situation of `wrange_data()`", {
   expect_snapshot(data_wrangled)
   expect_snapshot(dm::dm_get_tables(data_wrangled))
   key <- ".id"
-  expect_equal(data_wrangled, wrangle_data(data, name_key = key))
+  expect_equal(data_wrangled, wrangle_data(data, .key = key))
 })
 
 test_that("Can deal with invalid json (remove it) in `wrangle_data()`", {
