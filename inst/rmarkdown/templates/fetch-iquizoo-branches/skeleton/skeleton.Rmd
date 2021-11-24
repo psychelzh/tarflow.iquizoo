@@ -43,7 +43,7 @@ targets_data <- tarchetypes::tar_map(
   tar_target(data_parsed, tarflow.iquizoo::wrangle_data(data, name_key = key)),
   tar_target(
     indices,
-    tarflow.iquizoo::preproc_data(data_parsed, prep_fun_name = prep_fun)
+    tarflow.iquizoo::preproc_data(data_parsed, .fn = prep_fun)
   )
 )
 ```
