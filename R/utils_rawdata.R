@@ -71,13 +71,17 @@ preproc_data <- function(dm, ...) {
     return()
   }
   name_key <- dm::dm_get_all_pks(dm, "data")$pk_col[[1]]
-  dm_indices <- dm |>
-    dm::dm_zoom_to(data) |>
+  indices <- dm |>
+    dm::pull_tbl(data) |>
     preproc.iquizoo::preproc(by = name_key, ...)
-  if (is_empty(dm_indices)) {
+  if (is_empty(indices)) {
     warn("No valid data", "data_invalid")
     return()
   }
-  dm::dm_insert_zoomed(dm_indices, "indices") |>
-    dm::dm_select_tbl(-"data")
+  dm_indices <- dm::dm(indices) |>
+    dm::dm_add_pk("indices", !!name_key)
+  dm |>
+    dm::dm_select_tbl(-"data") |>
+    dm::dm_bind(dm_indices) |>
+    dm::dm_add_fk("meta", !!name_key, "indices", !!name_key)
 }
