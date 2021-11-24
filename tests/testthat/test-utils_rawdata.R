@@ -7,9 +7,7 @@ test_that("Basic situation of `wrange_data()`", {
   )
   data_wrangled <- wrangle_data(data)
   expect_snapshot(data_wrangled)
-  expect_named(data_wrangled, c("meta", "data"))
-  expect_snapshot(data_wrangled$meta)
-  expect_snapshot(data_wrangled$data)
+  expect_snapshot(dm::dm_get_tables(data_wrangled))
   key <- ".id"
   expect_equal(data_wrangled, wrangle_data(data, name_key = key))
 })
@@ -53,9 +51,7 @@ test_that("Remove duplicates in `wrangle_data()`", {
     dplyr::slice(seq_len(nrow(data)), 1)
   parsed_dup <- wrangle_data(data_dup)
   expect_snapshot(parsed_dup)
-  expect_named(parsed_dup, c("meta", "data"))
-  expect_snapshot(parsed_dup$meta)
-  expect_snapshot(parsed_dup$data)
+  expect_snapshot(dm::dm_get_tables(parsed_dup))
   expect_identical(parsed_dup, wrangle_data(data))
 })
 
@@ -71,7 +67,5 @@ test_that("Basic situation in `preproc_data()`", {
     wrangle_data() |>
     preproc_data(prep_fun_name = bart)
   expect_snapshot(dm_indices)
-  expect_named(dm_indices, c("meta", "indices"))
-  expect_snapshot(dm_indices$meta)
-  expect_snapshot(dm_indices$indices)
+  expect_snapshot(dm::dm_get_tables(dm_indices))
 })
