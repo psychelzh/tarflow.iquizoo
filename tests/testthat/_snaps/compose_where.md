@@ -6,3 +6,7 @@
 
     "WHERE content.name IN ('test1', 'test2')"
 
+# Can compose after `insert_where()`
+
+    "WHERE content.name = 'test_new'"
+

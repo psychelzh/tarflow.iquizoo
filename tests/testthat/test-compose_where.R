@@ -14,3 +14,18 @@ test_that("Works for multiple values", {
   )
   expect_snapshot_value(where_clause <- compose_where(config_where))
 })
+
+test_that("Can compose after `insert_where()`", {
+  list(
+    list(table = "content", field = "name", values = "test")
+  ) |>
+    insert_where(
+      list(
+        table = "content",
+        field = "name",
+        values = "test_new"
+      )
+    ) |>
+    compose_where() |>
+    expect_snapshot_value()
+})
