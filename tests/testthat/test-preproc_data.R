@@ -15,6 +15,23 @@ test_that("Basic situation in `preproc_data()`", {
   expect_snapshot(dm::dm_get_tables(dm_indices))
 })
 
+test_that("Can deal with abnormals:", {
+  expect_warning(be_null <- preproc_data(dm::dm()), class = "data_empty")
+  expect_null(be_null)
+  data <- tibble::tibble(
+    user_id = 1,
+    game_data = jsonlite::toJSON(data.frame(nhit = 1))
+  )
+  {
+    be_null <- data |>
+      wrangle_data() |>
+      preproc_data(.fn = bart)
+  } |>
+    expect_warning(class = "data_invalid") |>
+    expect_warning(class = "indices_empty")
+  expect_null(be_null)
+})
+
 test_that("Complex dplyr verbs in `preproc_data()`", {
   set.seed(1)
   data <- tibble::tibble(
