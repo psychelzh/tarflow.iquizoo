@@ -4,12 +4,12 @@
 \alias{wrangle_data}
 \title{Wrangle Raw Data}
 \usage{
-wrangle_data(data, name_key = ".id")
+wrangle_data(data, .key = ".id")
 }
 \arguments{
 \item{data}{The raw data.}
 
-\item{name_key}{The key name used to match meta data. Should be a scalar
+\item{.key}{The key name used to match meta data. Should be a scalar
 character. Default is \code{".id"}, which is appropriate for most cases.}
 }
 \value{
