@@ -70,7 +70,8 @@ preproc_data <- function(dm, ...) {
     warn("Input `dm` is empty.", "data_empty")
     return()
   }
-  .key <- dm::dm_get_all_pks(dm, "data")$pk_col[[1]]
+  .key <- dm::dm_get_all_pks(dm, "data") |>
+    purrr::pluck("pk_col", 1)
   indices <- dm |>
     dm::pull_tbl(data) |>
     preproc.iquizoo::preproc(.by = .key, ...)
