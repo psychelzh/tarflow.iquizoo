@@ -19,7 +19,7 @@
 search_games <- function(config_where, known_only = TRUE, query_file = NULL) {
   if (is.null(query_file)) query_file <- "sql/games.sql"
   if (!file.exists(query_file)) abort("Query file missing.", "query_file_miss")
-  games <- tarflow.iquizoo::fetch(query_file, config_where)
+  games <- pickup(query_file, config_where)
   if (known_only) {
     games |>
       dplyr::inner_join(data.iquizoo::game_info, by = "game_id") |>
