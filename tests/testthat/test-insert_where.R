@@ -2,7 +2,7 @@ config_where <- list(
   list(table = "content", field = "name", values = "test")
 )
 test_that("Check method dispatch works", {
-  expect_snapshot_value(
+  expect_snapshot(
     insert_where(
       config_where,
       list(
@@ -27,7 +27,7 @@ test_that("Check method dispatch works", {
 })
 
 test_that("Check `replace = FALSE`", {
-  expect_snapshot_value(
+  expect_snapshot(
     insert_where(
       config_where, list(
         table = "content",
@@ -40,8 +40,15 @@ test_that("Check `replace = FALSE`", {
 })
 
 test_that("Works with empty old", {
-  expect_snapshot_value(
+  expect_snapshot(
     insert_where(NULL, list(
+      table = "content",
+      field = "name",
+      values = "test_new"
+    ))
+  )
+  expect_snapshot(
+    insert_where(list(), list(
       table = "content",
       field = "name",
       values = "test_new"
@@ -58,6 +65,7 @@ test_that("Works with empty old", {
 
 test_that("Error for invalid where config", {
   expect_error(
-    insert_where(config_where, list(table2 = "")), class = "where_invalid"
+    insert_where(config_where, list(table2 = "")),
+    class = "where_invalid"
   )
 })
