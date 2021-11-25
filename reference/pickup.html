@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compose where clause for database query — compose_where • tarflow.iquizoo</title>
+<title>Download (pick up) datasets from given database — pickup • tarflow.iquizoo</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Compose where clause for database query — compose_where" />
-<meta property="og:description" content="Here we just compose &quot;where-clause&quot; according to tables in the database." />
+<meta property="og:title" content="Download (pick up) datasets from given database — pickup" />
+<meta property="og:description" content="Based on a template query file and &quot;where clause&quot; configuration, datasets are
+extracted from a given database." />
 
 
 
@@ -111,49 +112,61 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compose where clause for database query</h1>
-    <small class="dont-index">Source: <a href='https://github.com/psychelzh/tarflow.iquizoo/blob/master/R/compose_where.R'><code>R/compose_where.R</code></a></small>
-    <div class="hidden name"><code>compose_where.Rd</code></div>
+    <h1>Download (pick up) datasets from given database</h1>
+    <small class="dont-index">Source: <a href='https://github.com/psychelzh/tarflow.iquizoo/blob/master/R/pickup.R'><code>R/pickup.R</code></a></small>
+    <div class="hidden name"><code>pickup.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Here we just compose "where-clause" according to tables in the database.</p>
+    <p>Based on a template query file and "where clause" configuration, datasets are
+extracted from a given database.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compose_where</span><span class='op'>(</span><span class='va'>config_where</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>pickup</span><span class='op'>(</span><span class='va'>query_file</span>, config_where <span class='op'>=</span> <span class='cn'>NULL</span>, dsn <span class='op'>=</span> <span class='st'>"iquizoo-v3"</span>, encoding <span class='op'>=</span> <span class='st'>"utf-8"</span><span class='op'>)</span>
 
-<span class='co'># S3 method for default</span>
-<span class='fu'>compose_where</span><span class='op'>(</span><span class='va'>config_where</span><span class='op'>)</span>
-
-<span class='co'># S3 method for `NULL`</span>
-<span class='fu'>compose_where</span><span class='op'>(</span><span class='va'>config_where</span><span class='op'>)</span>
-
-<span class='co'># S3 method for character</span>
-<span class='fu'>compose_where</span><span class='op'>(</span><span class='va'>config_where</span><span class='op'>)</span>
-
-<span class='co'># S3 method for list</span>
-<span class='fu'>compose_where</span><span class='op'>(</span><span class='va'>config_where</span><span class='op'>)</span>
-
-<span class='co'># S3 method for data.frame</span>
-<span class='fu'>compose_where</span><span class='op'>(</span><span class='va'>config_where</span><span class='op'>)</span></pre>
+<span class='fu'>pickup_single_game</span><span class='op'>(</span><span class='va'>query_file</span>, <span class='va'>game_id</span>, config_where <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>query_file</th>
+      <td><p>File name of <code>sql</code> query</p></td>
+    </tr>
+    <tr>
       <th>config_where</th>
-      <td><p>Configuration of "where-clause".</p></td>
+      <td><p>Configuration of "where-clause" of the <code>sql</code> query. Can
+be a <code>list</code> (mostly from the <code>config.yml</code> file) or <code>data.frame</code>.</p></td>
+    </tr>
+    <tr>
+      <th>dsn</th>
+      <td><p>The data source name of an <strong>ODBC</strong> database connector. See
+<code><a href='https://rdrr.io/pkg/odbc/man/dbConnect-OdbcDriver-method.html'>odbc::dbConnect()</a></code> for more information.</p></td>
+    </tr>
+    <tr>
+      <th>encoding</th>
+      <td><p>Encoding to be assumed for input strings. Default to "UTF-8".</p></td>
+    </tr>
+    <tr>
+      <th>game_id</th>
+      <td><p>The identifier of the game to pickup datasets from.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments passed to <code>pickup()</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A "where-clause" character which is directly used in database query.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>A <a href='https://tibble.tidyverse.org/reference/tibble-package.html'>tibble</a> of the downloaded data.</p>
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
-    <p>In reality, this is mostly combined with a <code>yaml</code> configurations whose
-template lives in this package, which forms an input of <code>list</code> data type. But
-it can also handle situations with <code>character</code> and <code>data.frame</code> input.</p>
+    
+<ul>
+<li><p><code>pickup</code>: Default usage of pickup.</p></li>
+<li><p><code>pickup_single_game</code>: A special case to pickup datasets from a single game.</p></li>
+</ul>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Liang Zhang</p>

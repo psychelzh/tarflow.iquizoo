@@ -2,7 +2,7 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2021-11-23T13:19Z
+last_built: 2021-11-25T15:50Z
 urls:
   reference: https://psychelzh.github.io/tarflow.iquizoo/reference
   article: https://psychelzh.github.io/tarflow.iquizoo/articles

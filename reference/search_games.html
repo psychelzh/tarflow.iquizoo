@@ -74,7 +74,7 @@ executing time." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -124,9 +124,9 @@ known in advance. This function should be used with memoise package to reduce
 executing time.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>search_games</span><span class='op'>(</span><span class='va'>config_where</span>, known_only <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='co'># cached version using `memoise::memoise()`</span>
-<span class='fu'>search_games_mem</span><span class='op'>(</span><span class='va'>config_where</span>, known_only <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>search_games</span><span class='op'>(</span><span class='va'>config_where</span>, known_only <span class='op'>=</span> <span class='cn'>TRUE</span>, query_file <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='fu'>search_games_mem</span><span class='op'>(</span><span class='va'>config_where</span>, known_only <span class='op'>=</span> <span class='cn'>TRUE</span>, query_file <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,6 +140,12 @@ executing time.</p>
       <td><p>Logical value indicates whether to use games in
 <code><a href='https://rdrr.io/pkg/data.iquizoo/man/game_info.html'>game_info</a></code> only (default) or not.</p></td>
     </tr>
+    <tr>
+      <th>query_file</th>
+      <td><p>An optional argument specifying the file storing query of
+games. If leave as <code>NULL</code>, default to "sql/games.tmpl.sql", which is
+created by rmarkdown template.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -148,9 +154,14 @@ executing time.</p>
 analyzed and its related information.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The fetched will be joined with <code><a href='https://rdrr.io/pkg/data.iquizoo/man/game_info.html'>game_info</a></code>
-data from data.iquizoo package to expose the pre-processing function
-name.</p>
+    <p>The fetched will be joined with <code><a href='https://rdrr.io/pkg/data.iquizoo/man/game_info.html'>game_info</a></code> data
+from data.iquizoo package to expose the pre-processing function name.</p>
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    
+<ul>
+<li><p><code>search_games_mem</code>: Cached version using <code><a href='https://rdrr.io/pkg/memoise/man/memoise.html'>memoise::memoise</a></code>.</p></li>
+</ul>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

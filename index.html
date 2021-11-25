@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -110,7 +110,7 @@
 <p>If you are using R in interactive mode (typically when using <em>RStudio</em>), there will be a simple wizard to guide your setup. It will prompt you to choose the correct actions.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># invoke setup wizard</span>
-<span class="fu">tarflow.iquizoo</span><span class="fu">::</span><span class="fu"><a href="reference/init.html">init</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu">tarflow.iquizoo</span><span class="fu">::</span><span class="fu">init</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Essentially, file <code>_targets.R</code> will be created in which lists a pipeline that can be used by targets package. You can run the pipeline with the following line of code:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_make.html">tar_make</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
