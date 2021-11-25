@@ -11,13 +11,13 @@
 #' @param known_only Logical value indicates whether to use games in
 #'   [`game_info`][data.iquizoo::game_info] only (default) or not.
 #' @param query_file An optional argument specifying the file storing query of
-#'   games. If leave as `NULL`, default to "sql/games.sql", which is created by
-#'   rmarkdown template.
+#'   games. If leave as `NULL`, default to "sql/games.tmpl.sql", which is
+#'   created by rmarkdown template.
 #' @return A [tibble][tibble::tibble-package] contains all the games to be
 #'   analyzed and its related information.
 #' @export
 search_games <- function(config_where, known_only = TRUE, query_file = NULL) {
-  if (is.null(query_file)) query_file <- "sql/games.sql"
+  if (is.null(query_file)) query_file <- "sql/games.tmpl.sql"
   if (!file.exists(query_file)) abort("Query file missing.", "query_file_miss")
   games <- pickup(query_file, config_where)
   if (known_only) {

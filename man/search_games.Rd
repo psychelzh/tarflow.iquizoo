@@ -16,8 +16,8 @@ search_games_mem(config_where, known_only = TRUE, query_file = NULL)
 \code{\link[data.iquizoo:game_info]{game_info}} only (default) or not.}
 
 \item{query_file}{An optional argument specifying the file storing query of
-games. If leave as \code{NULL}, default to "sql/games.sql", which is created by
-rmarkdown template.}
+games. If leave as \code{NULL}, default to "sql/games.tmpl.sql", which is
+created by rmarkdown template.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} contains all the games to be
