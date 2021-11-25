@@ -1,5 +1,18 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* `init()` and its related functions were totally removed, which were deprecated in `"0.2.0"` and later.
+* `fetch()` and `fetch_single_game()` were renamed as `pickup()` and `pickup_single_game()` to avoid name masking of `DBI::fetch()` (see #45).
+
+## Bug Fixes
+
+* Fix a bug of `preproc_data()` occured when using complex dplyr verbs (see #43).
+
+## Internal
+
+* Added more tests for many core functions except `pickup()` (see #41).
+
 # tarflow.iquizoo 0.2.1
 
 ## Breaking Changes
