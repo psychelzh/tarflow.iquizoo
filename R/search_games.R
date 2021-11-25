@@ -4,25 +4,22 @@
 #' known in advance. This function should be used with memoise package to reduce
 #' executing time.
 #'
-#' The fetched will be joined with [`game_info`][data.iquizoo::game_info]
-#' data from data.iquizoo package to expose the pre-processing function
-#' name.
-#'
-#' @usage
-#' search_games(config_where, known_only = TRUE)
-#' # cached version using `memoise::memoise()`
-#' search_games_mem(config_where, known_only = TRUE)
+#' The fetched will be joined with [`game_info`][data.iquizoo::game_info] data
+#' from data.iquizoo package to expose the pre-processing function name.
 #'
 #' @param config_where Configuration of "where-clause".
 #' @param known_only Logical value indicates whether to use games in
 #'   [`game_info`][data.iquizoo::game_info] only (default) or not.
+#' @param query_file An optional argument specifying the file storing query of
+#'   games. If leave as `NULL`, default to "sql/games.tmpl.sql", which is
+#'   created by rmarkdown template.
 #' @return A [tibble][tibble::tibble-package] contains all the games to be
 #'   analyzed and its related information.
 #' @export
-search_games <- function(config_where, known_only = TRUE) {
-  query_path <- fs::path(query_dir, query_files[["games"]])
-  stopifnot(fs::file_exists(query_path))
-  games <- tarflow.iquizoo::fetch(query_path, config_where)
+search_games <- function(config_where, known_only = TRUE, query_file = NULL) {
+  if (is.null(query_file)) query_file <- "sql/games.tmpl.sql"
+  if (!file.exists(query_file)) abort("Query file missing.", "query_file_miss")
+  games <- pickup(query_file, config_where)
   if (known_only) {
     games |>
       dplyr::inner_join(data.iquizoo::game_info, by = "game_id") |>
@@ -33,8 +30,7 @@ search_games <- function(config_where, known_only = TRUE) {
   }
 }
 
-#' @rdname search_games
-#' @usage NULL
+#' @describeIn search_games Cached version using `memoise::memoise`.
 #' @export
 search_games_mem <- memoise::memoise(
   search_games,

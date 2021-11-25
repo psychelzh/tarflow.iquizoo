@@ -32,21 +32,21 @@ list(
 ```{targets download-users, include=FALSE}
 list(
   tar_target(query_tmpl_users, fs::path("sql", "users.tmpl.sql"), format = "file"),
-  tar_target(users, tarflow.iquizoo::fetch(query_tmpl_users, config_where))
+  tar_target(users, tarflow.iquizoo::pickup(query_tmpl_users, config_where))
 )
 ```
 
 ```{targets download-scores, include=FALSE}
 list(
   tar_target(query_tmpl_scores, fs::path("sql", "scores.tmpl.sql"), format = "file"),
-  tar_target(scores, tarflow.iquizoo::fetch(query_tmpl_scores, config_where))
+  tar_target(scores, tarflow.iquizoo::pickup(query_tmpl_scores, config_where))
 )
 ```
 
 ```{targets download-raw-data, include=FALSE}
 list(
   tar_target(query_tmpl_data, fs::path("sql", "data.tmpl.sql"), format = "file"),
-  tar_target(data, tarflow.iquizoo::fetch(query_tmpl_data, config_where))
+  tar_target(data, tarflow.iquizoo::pickup(query_tmpl_data, config_where))
 )
 ```
 

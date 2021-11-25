@@ -30,20 +30,20 @@ targets_data <- tarchetypes::tar_map(
   names = game_name_abbr,
   tar_target(
     scores,
-    tarflow.iquizoo::fetch_single_game(
+    tarflow.iquizoo::pickup_single_game(
       query_tmpl_scores, game_id, config_where
     )
   ),
   tar_target(
     data,
-    tarflow.iquizoo::fetch_single_game(
+    tarflow.iquizoo::pickup_single_game(
       query_tmpl_data, game_id, config_where
     )
   ),
-  tar_target(data_parsed, tarflow.iquizoo::wrangle_data(data, name_key = key)),
+  tar_target(data_parsed, tarflow.iquizoo::wrangle_data(data, .key = key)),
   tar_target(
     indices,
-    tarflow.iquizoo::preproc_data(data_parsed, prep_fun_name = prep_fun)
+    tarflow.iquizoo::preproc_data(data_parsed, .fn = prep_fun)
   )
 )
 ```
@@ -58,7 +58,7 @@ list(
 ```{targets download-users, include=FALSE}
 list(
   tar_target(query_tmpl_users, fs::path("sql", "users.tmpl.sql"), format = "file"),
-  tar_target(users, tarflow.iquizoo::fetch(query_tmpl_users, config_where))
+  tar_target(users, tarflow.iquizoo::pickup(query_tmpl_users, config_where))
 )
 ```
 

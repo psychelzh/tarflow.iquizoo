@@ -5,15 +5,19 @@
 \alias{search_games_mem}
 \title{Search and cache games used in analysis}
 \usage{
-search_games(config_where, known_only = TRUE)
-# cached version using `memoise::memoise()`
-search_games_mem(config_where, known_only = TRUE)
+search_games(config_where, known_only = TRUE, query_file = NULL)
+
+search_games_mem(config_where, known_only = TRUE, query_file = NULL)
 }
 \arguments{
 \item{config_where}{Configuration of "where-clause".}
 
 \item{known_only}{Logical value indicates whether to use games in
 \code{\link[data.iquizoo:game_info]{game_info}} only (default) or not.}
+
+\item{query_file}{An optional argument specifying the file storing query of
+games. If leave as \code{NULL}, default to "sql/games.tmpl.sql", which is
+created by rmarkdown template.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} contains all the games to be
@@ -25,7 +29,11 @@ known in advance. This function should be used with memoise package to reduce
 executing time.
 }
 \details{
-The fetched will be joined with \code{\link[data.iquizoo:game_info]{game_info}}
-data from data.iquizoo package to expose the pre-processing function
-name.
+The fetched will be joined with \code{\link[data.iquizoo:game_info]{game_info}} data
+from data.iquizoo package to expose the pre-processing function name.
 }
+\section{Functions}{
+\itemize{
+\item \code{search_games_mem}: Cached version using \code{memoise::memoise}.
+}}
+
