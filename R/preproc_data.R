@@ -20,7 +20,7 @@ preproc_data <- function(dm, ...) {
     dm::pull_tbl(data) |>
     preproc.iquizoo::preproc(.by = .key, ...)
   if (is_empty(indices)) {
-    warn("No valid data", "data_invalid")
+    warn("Pre-processing exception occured.", "indices_empty")
     return()
   }
   dm_indices <- dm::dm(indices) |>
