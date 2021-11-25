@@ -37,6 +37,7 @@ Suggests:
     future.callr,
     jsonlite,
     lifecycle,
+    mockery,
     roxygen2,
     tarchetypes,
     targets,
