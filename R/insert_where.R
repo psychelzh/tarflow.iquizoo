@@ -29,17 +29,14 @@ insert_where <- function(old, ...) {
 #' @rdname insert_where
 #' @export
 insert_where.NULL <- function(old, ...) {
-  return(...)
+  return(parse_where(...))
 }
 
 #' @rdname insert_where
 #' @export
 insert_where.list <- function(old, ..., replace = TRUE) {
-  if (length(old) == 0) insert_where.NULL(old, ...)
-  new <- purrr::map(list(...), ~ as.list(unlist(.x)))
-  if (!all(purrr::map_lgl(new, ~ has_name(.x, "table")))) {
-    stop("At least one of the new element has no name of 'table'.")
-  }
+  if (length(old) == 0) return(insert_where.NULL(old, ...))
+  new <- parse_where(...)
   if (replace) {
     new_tables <- purrr::map_chr(new, ~ .x[["table"]])
     old[purrr::map_lgl(old, ~ .x[["table"]] %in% new_tables)] <- NULL
@@ -50,10 +47,25 @@ insert_where.list <- function(old, ..., replace = TRUE) {
 #' @rdname insert_where
 #' @export
 insert_where.data.frame <- function(old, ..., replace = TRUE) {
-  if (nrow(old) == 0) insert_where.NULL(old, ...)
-  old <- purrr::transpose(as.list(old))
-  insert_where(old, ..., replace = replace) |>
+  if (nrow(old) == 0) {
+    new <- insert_where.NULL(old, ...)
+  } else {
+    old <- purrr::transpose(as.list(old))
+    new <- insert_where(old, ..., replace = replace)
+  }
+  new |>
     purrr::transpose() |>
     tibble::as_tibble() |>
     tidyr::unnest(-.data[["values"]])
+}
+
+parse_where <- function(...) {
+  where <- purrr::map(list(...), ~ as.list(unlist(.x)))
+  if (!all(purrr::map_lgl(where, ~ has_name(.x, "table")))) {
+    abort(
+      "At least one of the new element has no name of 'table'.",
+      "where_invalid"
+    )
+  }
+  where
 }
