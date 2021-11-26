@@ -1,4 +1,8 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 1.0.1
+
+## Internal
+
+* Remove old content from github README.
 
 # tarflow.iquizoo 1.0.0
 
