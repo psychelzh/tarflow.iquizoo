@@ -34,6 +34,7 @@ from data.iquizoo package to expose the pre-processing function name.
 }
 \section{Functions}{
 \itemize{
-\item \code{search_games_mem}: Cached version using \code{memoise::memoise}.
+\item \code{search_games_mem}: Cached version using
+\link[memoise:memoise]{memoise()}.
 }}
 

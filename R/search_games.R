@@ -30,7 +30,8 @@ search_games <- function(config_where, known_only = TRUE, query_file = NULL) {
   }
 }
 
-#' @describeIn search_games Cached version using `memoise::memoise`.
+#' @describeIn search_games Cached version using
+#'   [memoise()][memoise::memoise()].
 #' @export
 search_games_mem <- memoise::memoise(
   search_games,
