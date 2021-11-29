@@ -35,7 +35,9 @@ insert_where.NULL <- function(old, ...) {
 #' @rdname insert_where
 #' @export
 insert_where.list <- function(old, ..., replace = TRUE) {
-  if (length(old) == 0) return(insert_where.NULL(old, ...))
+  if (length(old) == 0) {
+    return(insert_where.NULL(old, ...))
+  }
   new <- parse_where(...)
   if (replace) {
     new_tables <- purrr::map_chr(new, ~ .x[["table"]])

@@ -10,7 +10,7 @@ test_that("Works for all the class types", {
 
 test_that("Works for multiple values", {
   config_where <- list(
-    list(table = "content", field = "name", values = c("test1","test2"))
+    list(table = "content", field = "name", values = c("test1", "test2"))
   )
   expect_snapshot_value(where_clause <- compose_where(config_where))
 })
