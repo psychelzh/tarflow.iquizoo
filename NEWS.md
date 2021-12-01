@@ -1,5 +1,10 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Now `preproc_data()` returns `tibble()` instead. And many exceptions now is not dealt explicitly.
+* Now `wrangle_data()` also changes character values to lower case.
+
 # tarflow.iquizoo 1.0.1
 
 ## Internal
