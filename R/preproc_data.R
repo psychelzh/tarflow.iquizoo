@@ -13,9 +13,9 @@ preproc_data <- function(dm, .fn) {
   .fn <- as_function(.fn)
   .key <- dm::dm_get_all_pks(dm, "data") |>
     purrr::pluck("pk_col", 1)
-  dplyr::full_join(
+  dm::reunite_parent_child(
     dm::pull_tbl(dm, "meta"),
     .fn(dm::pull_tbl(dm, "data"), .key),
-    by = .key
+    id_column = !!.key
   )
 }

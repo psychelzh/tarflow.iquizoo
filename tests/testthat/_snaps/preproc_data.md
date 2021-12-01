@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": [".id", "user_id", "mean_pumps", "mean_pumps_raw", "num_explosion"]
+          "value": ["user_id", "mean_pumps", "mean_pumps_raw", "num_explosion"]
         },
         "row.names": {
           "type": "integer",
@@ -20,11 +20,6 @@
         }
       },
       "value": [
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": [1, 2]
-        },
         {
           "type": "integer",
           "attributes": {},
@@ -56,7 +51,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": [".id", "user_id", "nc", "mrt", "rtsd", "dprime", "c", "commissions", "omissions"]
+          "value": ["user_id", "nc", "mrt", "rtsd", "dprime", "c", "commissions", "omissions"]
         },
         "row.names": {
           "type": "integer",
@@ -70,11 +65,6 @@
         }
       },
       "value": [
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": [1]
-        },
         {
           "type": "double",
           "attributes": {},
