@@ -35,11 +35,9 @@ Insert new where configurations into the existed one. This can be useful in
 many projects doing minor changes to current where configurations.
 }
 \details{
-This function is intended to modify an existed where configuration. To create
-a completely new one, please specify it by using \code{\link[tibble:tribble]{tibble::tribble()}} instead.
-
-If you insisted on calling \code{\link[=insert_where]{insert_where()}} with empty where configration, it
-will signal an error.
+This function is intended to modify an existed where configuration. If the
+existed one \link[rlang:is_empty]{is_empty()}, the added will be returned as a
+\code{\link[=list]{list()}}.
 }
 \author{
 Liang Zhang

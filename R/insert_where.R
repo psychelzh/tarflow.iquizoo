@@ -5,11 +5,9 @@
 #'
 #' @details
 #'
-#' This function is intended to modify an existed where configuration. To create
-#' a completely new one, please specify it by using [tibble::tribble()] instead.
-#'
-#' If you insisted on calling [insert_where()] with empty where configration, it
-#' will signal an error.
+#' This function is intended to modify an existed where configuration. If the
+#' existed one [is_empty()][rlang::is_empty()], the added will be returned as a
+#' [list()].
 #'
 #' @param old The old where configuration.
 #' @param ... The new where element. Can be of `list` or `data.frame` class.
@@ -35,7 +33,7 @@ insert_where.NULL <- function(old, ...) {
 #' @rdname insert_where
 #' @export
 insert_where.list <- function(old, ..., replace = TRUE) {
-  if (length(old) == 0) {
+  if (is_empty(old)) {
     return(insert_where.NULL(old, ...))
   }
   new <- parse_where(...)
@@ -49,7 +47,7 @@ insert_where.list <- function(old, ..., replace = TRUE) {
 #' @rdname insert_where
 #' @export
 insert_where.data.frame <- function(old, ..., replace = TRUE) {
-  if (nrow(old) == 0) {
+  if (is_empty(old)) {
     new <- insert_where.NULL(old, ...)
   } else {
     old <- purrr::transpose(as.list(old))
