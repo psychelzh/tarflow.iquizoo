@@ -4,7 +4,7 @@
 \alias{preproc_data}
 \title{Feed Raw Data to Pre-processing}
 \usage{
-preproc_data(dm, .fn)
+preproc_data(dm, .fn, ...)
 }
 \arguments{
 \item{dm}{A \link[dm:dm]{dm} object typically from \code{\link[=wrangle_data]{wrangle_data()}} contains
@@ -12,6 +12,9 @@ two tables: \code{meta} and \code{data}.}
 
 \item{.fn}{This can be a function or formula. See \code{\link[rlang:as_function]{rlang::as_function()}} for
 more details.}
+
+\item{...}{Additional arguments passed to \code{.fn}. Note \code{.by} argument is
+handled by current function itself, do not pass it.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} of calculated indices.
