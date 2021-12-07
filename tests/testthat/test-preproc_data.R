@@ -1,3 +1,5 @@
+withr::local_package("preproc.iquizoo")
+
 test_that("Basic situation in `preproc_data()`", {
   data <- tibble::tibble(
     user_id = 1:2,
@@ -6,8 +8,6 @@ test_that("Basic situation in `preproc_data()`", {
       jsonlite::toJSON(data.frame(nhit = 1, feedback = 1))
     )
   )
-  skip_if_not_installed("preproc.iquizoo", "1.3.0")
-  library(preproc.iquizoo)
   expect_snapshot_value(
     data |>
       wrangle_data() |>
@@ -17,7 +17,7 @@ test_that("Basic situation in `preproc_data()`", {
 })
 
 test_that("Complex dplyr verbs in `preproc_data()`", {
-  set.seed(1)
+  withr::local_seed(1)
   data <- tibble::tibble(
     user_id = 1,
     game_data = jsonlite::toJSON(
@@ -28,8 +28,6 @@ test_that("Complex dplyr verbs in `preproc_data()`", {
       )
     )
   )
-  skip_if_not_installed("preproc.iquizoo", "1.3.0")
-  library(preproc.iquizoo)
   expect_snapshot_value(
     data |>
       wrangle_data() |>
