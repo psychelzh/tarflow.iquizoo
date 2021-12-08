@@ -21,7 +21,7 @@ targets::tar_unscript()
 future::plan(future.callr::callr)
 games <- tarflow.iquizoo::search_games_mem(config::get("where"))
 tar_option_set(
-  package = c("tidyverse", "preproc.iquizoo"),
+  package = c("tidyverse", "preproc.iquizoo", "tarflow.iquizoo"),
   format = "qs",
   imports = "preproc.iquizoo"
 )
@@ -29,22 +29,13 @@ targets_data <- tarchetypes::tar_map(
   values = games,
   names = game_name_abbr,
   tar_target(
-    scores,
-    tarflow.iquizoo::pickup_single_game(
-      query_tmpl_scores, game_id, config_where
-    )
+    config_where_single_game,
+    insert_where_single_game(config_where, game_id)
   ),
-  tar_target(
-    data,
-    tarflow.iquizoo::pickup_single_game(
-      query_tmpl_data, game_id, config_where
-    )
-  ),
-  tar_target(data_parsed, tarflow.iquizoo::wrangle_data(data, .key = key)),
-  tar_target(
-    indices,
-    tarflow.iquizoo::preproc_data(data_parsed, .fn = prep_fun)
-  )
+  tar_target(scores, pickup(query_tmpl_scores, config_where_single_game)),
+  tar_target(data, pickup(query_tmpl_data, config_where_single_game)),
+  tar_target(data_parsed, wrangle_data(data, key)),
+  tar_target(indices, preproc_data(data_parsed, prep_fun))
 )
 ```
 
