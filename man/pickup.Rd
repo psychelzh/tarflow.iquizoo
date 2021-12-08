@@ -2,12 +2,9 @@
 % Please edit documentation in R/pickup.R
 \name{pickup}
 \alias{pickup}
-\alias{pickup_single_game}
 \title{Download (pick up) datasets from given database}
 \usage{
 pickup(query_file, config_where = NULL, dsn = "iquizoo-v3", encoding = "utf-8")
-
-pickup_single_game(query_file, game_id, config_where = NULL, ...)
 }
 \arguments{
 \item{query_file}{File name of \code{sql} query}
@@ -19,10 +16,6 @@ be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 \code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::dbConnect()}} for more information.}
 
 \item{encoding}{Encoding to be assumed for input strings. Default to "UTF-8".}
-
-\item{game_id}{The identifier of the game to pickup datasets from.}
-
-\item{...}{Other arguments passed to \code{\link[=pickup]{pickup()}}.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} of the downloaded data.
@@ -34,8 +27,6 @@ extracted from a given database.
 \section{Functions}{
 \itemize{
 \item \code{pickup}: Default usage of pickup.
-
-\item \code{pickup_single_game}: A special case to pickup datasets from a single game.
 }}
 
 \author{

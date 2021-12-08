@@ -74,3 +74,37 @@
       8     2     4     3
       
 
+# Change names and values to lowercase in `wrangle_data()
+
+    Code
+      parsed
+    Output
+      -- Metadata --------------------------------------------------------------------
+      Tables: `meta`, `data`
+      Columns: 4
+      Primary keys: 2
+      Foreign keys: 1
+
+---
+
+    Code
+      dm::dm_get_tables(parsed)
+    Output
+      $meta
+      # A tibble: 2 x 2
+          .id user_id
+        <int>   <int>
+      1     1       1
+      2     2       2
+      
+      $data
+      # A tibble: 5 x 2
+          .id a    
+        <int> <chr>
+      1     1 a    
+      2     1 b    
+      3     2 a    
+      4     2 b    
+      5     2 c    
+      
+

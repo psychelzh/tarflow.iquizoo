@@ -4,19 +4,28 @@
 \alias{preproc_data}
 \title{Feed Raw Data to Pre-processing}
 \usage{
-preproc_data(dm, ...)
+preproc_data(dm, .fn, ...)
 }
 \arguments{
 \item{dm}{A \link[dm:dm]{dm} object typically from \code{\link[=wrangle_data]{wrangle_data()}} contains
 two tables: \code{meta} and \code{data}.}
 
-\item{...}{Parameters passed to \code{\link[preproc.iquizoo:preproc]{preproc.iquizoo::preproc()}}.}
+\item{.fn}{This can be a function or formula. See \code{\link[rlang:as_function]{rlang::as_function()}} for
+more details.}
+
+\item{...}{Additional arguments passed to \code{.fn}. Note \code{.by} argument is
+handled by current function itself, do not pass it.}
 }
 \value{
-A \link[dm:dm]{dm} object containing three tables: \code{meta}, \code{data} and
-\code{indices}.
+A \link[dm:dm]{dm} object containing two tables: \code{meta} and \code{indices}.
 }
 \description{
-Integrate \link[dm:dm]{dm} object returned by \code{\link[=wrangle_data]{wrangle_data()}} with
-\code{\link[preproc.iquizoo:preproc]{preproc.iquizoo::preproc()}} API.
+Integrate \link[dm:dm]{dm} object returned by \code{\link[=wrangle_data]{wrangle_data()}} with functions
+in preproc.iquizoo package.
+}
+\details{
+The calculated indices are stored in a \link[=data.frame]{data.frame} of
+\link[tidyr:pivot_longer]{longer} format with two columns named \code{"index_name"}
+and \code{"score"} respectively and are wrapped into a \link[dm:dm]{dm} object. The
+longer format is used to facilitate combining.
 }

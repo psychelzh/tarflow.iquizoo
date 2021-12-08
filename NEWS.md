@@ -1,3 +1,11 @@
+# tarflow.iquizoo 2.0.0
+
+## Breaking Changes
+
+* Now `preproc_data()` returns `indices` after `tidyr::pivot_longer()`, so the column names are now `"index_name"` and `"score"`, consistent among all games.
+* Now `wrangle_data()` also changes character values to lower case.
+* A better logic dealing with data preprocessing after preproc.iquizoo functions accept `.input` and `.extra` inputs.
+
 # tarflow.iquizoo 1.0.1
 
 ## Internal

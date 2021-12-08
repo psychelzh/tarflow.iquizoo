@@ -21,7 +21,7 @@ targets::tar_unscript()
 future::plan(future.callr::callr)
 games <- tarflow.iquizoo::search_games_mem(config::get("where"))
 tar_option_set(
-  package = c("tidyverse", "preproc.iquizoo"),
+  package = c("tidyverse", "preproc.iquizoo", "tarflow.iquizoo"),
   format = "qs",
   imports = "preproc.iquizoo"
 )
@@ -29,21 +29,23 @@ targets_data <- tarchetypes::tar_map(
   values = games,
   names = game_name_abbr,
   tar_target(
-    scores,
-    tarflow.iquizoo::pickup_single_game(
-      query_tmpl_scores, game_id, config_where
-    )
+    config_where_single_game,
+    insert_where_single_game(config_where, game_id)
+  ),
+  tar_target(scores, pickup(query_tmpl_scores, config_where_single_game)),
+  tar_target(data, pickup(query_tmpl_data, config_where_single_game)),
+  tar_target(data_parsed, wrangle_data(data, key)),
+  tar_target(
+    input,
+    config::get("input", config = game_name_abbr, file = file_config)
   ),
   tar_target(
-    data,
-    tarflow.iquizoo::pickup_single_game(
-      query_tmpl_data, game_id, config_where
-    )
+    extra,
+    config::get("extra", config = game_name_abbr, file = file_config)
   ),
-  tar_target(data_parsed, tarflow.iquizoo::wrangle_data(data, .key = key)),
   tar_target(
     indices,
-    tarflow.iquizoo::preproc_data(data_parsed, .fn = prep_fun)
+    preproc_data(data_parsed, prep_fun, .input = input, .extra = extra)
   )
 )
 ```
@@ -73,4 +75,29 @@ list(
 
 ```{r run-pipeline, include=FALSE}
 tar_make_future(workers = 8)
+```
+
+```{r configure-preproc, eval=FALSE, include=FALSE}
+# configure this if "indices" step failed
+# this should only run once, and you can safely delete this chunk afterwards
+tar_load_globals()
+prepare_config <- function(game_name_abbr, game_name, prep_fun_name, ...) {
+  rlang::list2(
+    "{game_name_abbr}" := list(
+      game_name = game_name,
+      prep_fun_name = prep_fun_name,
+      input = NULL,
+      extra = NULL
+    )
+  )
+}
+config_file <- "config.yml"
+str_c(
+  read_file(config_file),
+  games |>
+    pmap(prepare_config) |>
+    reduce(c) |>
+    yaml::as.yaml()
+) |>
+  write_lines(config_file)
 ```

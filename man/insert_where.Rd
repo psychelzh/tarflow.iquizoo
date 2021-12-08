@@ -5,6 +5,7 @@
 \alias{insert_where.NULL}
 \alias{insert_where.list}
 \alias{insert_where.data.frame}
+\alias{insert_where_single_game}
 \title{Insert where configurations}
 \usage{
 insert_where(old, ...)
@@ -14,6 +15,8 @@ insert_where(old, ...)
 \method{insert_where}{list}(old, ..., replace = TRUE)
 
 \method{insert_where}{data.frame}(old, ..., replace = TRUE)
+
+insert_where_single_game(old, game_id)
 }
 \arguments{
 \item{old}{The old where configuration.}
@@ -26,6 +29,8 @@ properly in the whole project, the names should be no other than
 \item{replace}{Replace the element with the same \code{table} value or not.
 Default is set to replace, set \code{FALSE} to add it anyway (not recommended,
 might cause error in further analysis).}
+
+\item{game_id}{The identifier of the game to set the limitation.}
 }
 \value{
 A where configuration of the same format with the old one.
@@ -35,12 +40,15 @@ Insert new where configurations into the existed one. This can be useful in
 many projects doing minor changes to current where configurations.
 }
 \details{
-This function is intended to modify an existed where configuration. To create
-a completely new one, please specify it by using \code{\link[tibble:tribble]{tibble::tribble()}} instead.
-
-If you insisted on calling \code{\link[=insert_where]{insert_where()}} with empty where configration, it
-will signal an error.
+This function is intended to modify an existed where configuration. If the
+existed one \link[rlang:is_empty]{is_empty()}, the added will be returned as a
+\code{\link[=list]{list()}}.
 }
+\section{Functions}{
+\itemize{
+\item \code{insert_where_single_game}: Limit old where config to one single game.
+}}
+
 \author{
 Liang Zhang
 }

@@ -98,3 +98,13 @@
         <chr>   <chr> <list>   
       1 content name  <chr [1]>
 
+# Insert single game
+
+    [
+      {
+        "table": "content",
+        "field": "Id",
+        "values": "dummy"
+      }
+    ]
+

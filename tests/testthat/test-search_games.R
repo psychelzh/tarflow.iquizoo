@@ -2,7 +2,7 @@ test_that("Correctly combine `game_info`", {
   skip_on_os("windows")
   mockery::stub(
     search_games, "pickup",
-    function (query_file, ...) tibble::tibble(read.csv(query_file))
+    function(query_file, ...) tibble::tibble(read.csv(query_file))
   )
   expect_snapshot(
     search_games(NULL, query_file = "dummy/test.sql")

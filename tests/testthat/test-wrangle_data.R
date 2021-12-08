@@ -54,3 +54,16 @@ test_that("Remove duplicates in `wrangle_data()`", {
   expect_snapshot(dm::dm_get_tables(parsed_dup))
   expect_identical(parsed_dup, wrangle_data(data))
 })
+
+test_that("Change names and values to lowercase in `wrangle_data()", {
+  data <- tibble::tibble(
+    user_id = 1:2,
+    game_data = c(
+      jsonlite::toJSON(data.frame(A = LETTERS[1:2])),
+      jsonlite::toJSON(data.frame(A = LETTERS[1:3]))
+    )
+  )
+  parsed <- wrangle_data(data)
+  expect_snapshot(parsed)
+  expect_snapshot(dm::dm_get_tables(parsed))
+})

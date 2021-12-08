@@ -25,8 +25,8 @@ These steps are performed in order:
 \code{"{}"}) json string data and then remove duplicates from data. If this step
 produces data with no observation, following steps are skipped and \code{NULL}
 is returned.
-\item Data parse. Parse data stored in json string, convert the names to lower
-case and stack the parsed data. Stacking have better performances than
-\link[=group_nest]{group_nest}ing.
+\item Data parse. Parse data stored in json string, convert the names and
+values to lower case and stack the parsed data. Stacking have better
+performances than \link[=group_nest]{group_nest}ing.
 }
 }

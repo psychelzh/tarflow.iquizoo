@@ -34,9 +34,9 @@ wrangle_data <- function(data, .key = ".id") {
   if (nrow(data_valid) == 0) {
     return()
   }
-  #' 1. Data parse. Parse data stored in json string, convert the names to lower
-  #' case and stack the parsed data. Stacking have better performances than
-  #' [group_nest][group_nest()]ing.
+  #' 1. Data parse. Parse data stored in json string, convert the names and
+  #' values to lower case and stack the parsed data. Stacking have better
+  #' performances than [group_nest][group_nest()]ing.
   data_decomposed <- dm::decompose_table(
     data_valid, -keys[["raw_data"]],
     new_id_column = !!.key
@@ -48,12 +48,13 @@ wrangle_data <- function(data, .key = ".id") {
       purrr::map_df(
         .data[[keys[["raw_data"]]]],
         ~ jsonlite::fromJSON(.x) |>
-          dplyr::rename_with(tolower)
+          dplyr::rename_with(tolower) |>
+          dplyr::mutate(dplyr::across(where(is.character), tolower))
       ),
       .groups = "drop"
     )
   dm::dm(meta, data) |>
-    dm::dm_add_pk(meta, !!.key) |>
-    dm::dm_add_pk(data, !!.key) |>
-    dm::dm_add_fk(meta, !!.key, data, !!.key)
+    dm::dm_add_pk("meta", !!.key) |>
+    dm::dm_add_pk("data", !!.key) |>
+    dm::dm_add_fk("meta", !!.key, "data", !!.key)
 }

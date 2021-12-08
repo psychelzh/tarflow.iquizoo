@@ -38,23 +38,3 @@ pickup <- function(query_file,
     )
   tibble::tibble(DBI::dbGetQuery(con, query))
 }
-
-#' @describeIn pickup A special case to pickup datasets from a single game.
-#' @param game_id The identifier of the game to pickup datasets from.
-#' @param ... Other arguments passed to [pickup()].
-#' @export
-pickup_single_game <- function(query_file, game_id,
-                               config_where = NULL, ...) {
-  pickup(
-    query_file,
-    insert_where(
-      config_where,
-      list(
-        table = "content",
-        field = "Id",
-        values = game_id
-      )
-    ),
-    ...
-  )
-}
