@@ -59,6 +59,20 @@ insert_where.data.frame <- function(old, ..., replace = TRUE) {
     tidyr::unnest(-.data[["values"]])
 }
 
+#' @describeIn insert_where Limit old where config to one single game.
+#' @param game_id The identifier of the game to set the limitation.
+#' @export
+insert_where_single_game <- function(old, game_id) {
+  insert_where(
+    old,
+    list(
+      table = "content",
+      field = "Id",
+      values = game_id
+    )
+  )
+}
+
 parse_where <- function(...) {
   where <- purrr::map(list(...), ~ as.list(unlist(.x)))
   if (!all(purrr::map_lgl(where, ~ has_name(.x, "table")))) {
