@@ -69,3 +69,7 @@ test_that("Error for invalid where config", {
     class = "where_invalid"
   )
 })
+
+test_that("Insert single game", {
+  expect_snapshot_value(insert_where_single_game(NULL, "dummy"))
+})
