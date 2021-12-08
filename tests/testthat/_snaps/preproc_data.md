@@ -1,110 +1,58 @@
 # Basic situation in `preproc_data()`
 
-    {
-      "type": "list",
-      "attributes": {
-        "names": {
-          "type": "character",
-          "attributes": {},
-          "value": ["user_id", "mean_pumps", "mean_pumps_raw", "num_explosion"]
-        },
-        "row.names": {
-          "type": "integer",
-          "attributes": {},
-          "value": [1, 2]
-        },
-        "class": {
-          "type": "character",
-          "attributes": {},
-          "value": ["tbl_df", "tbl", "data.frame"]
-        }
-      },
-      "value": [
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": [1, 2]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NaN", 1]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": [1, 1]
-        },
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": [1, 0]
-        }
-      ]
-    }
+    -- Metadata --------------------------------------------------------------------
+    Tables: `meta`, `indices`
+    Columns: 5
+    Primary keys: 2
+    Foreign keys: 1
+
+---
+
+    $meta
+    # A tibble: 2 x 2
+        .id user_id
+      <int>   <int>
+    1     1       1
+    2     2       2
+    
+    $indices
+    # A tibble: 6 x 3
+        .id index_name     score
+      <int> <chr>          <dbl>
+    1     1 mean_pumps       NaN
+    2     1 mean_pumps_raw     1
+    3     1 num_explosion      1
+    4     2 mean_pumps         1
+    5     2 mean_pumps_raw     1
+    6     2 num_explosion      0
+    
 
 # Complex dplyr verbs in `preproc_data()`
 
-    {
-      "type": "list",
-      "attributes": {
-        "names": {
-          "type": "character",
-          "attributes": {},
-          "value": ["user_id", "nc", "mrt", "rtsd", "dprime", "c", "commissions", "omissions"]
-        },
-        "row.names": {
-          "type": "integer",
-          "attributes": {},
-          "value": [1]
-        },
-        "class": {
-          "type": "character",
-          "attributes": {},
-          "value": ["tbl_df", "tbl", "data.frame"]
-        }
-      },
-      "value": [
-        {
-          "type": "double",
-          "attributes": {},
-          "value": [1]
-        },
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": [8]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": [1193.92238]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": [522.6247082]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": [-0.45976824]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": [-5.55111512e-17]
-        },
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": [6]
-        },
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": [6]
-        }
-      ]
-    }
+    -- Metadata --------------------------------------------------------------------
+    Tables: `meta`, `indices`
+    Columns: 5
+    Primary keys: 2
+    Foreign keys: 1
+
+---
+
+    $meta
+    # A tibble: 1 x 2
+        .id user_id
+      <int>   <dbl>
+    1     1       1
+    
+    $indices
+    # A tibble: 7 x 3
+        .id index_name      score
+      <int> <chr>           <dbl>
+    1     1 nc           8   e+ 0
+    2     1 mrt          1.19e+ 3
+    3     1 rtsd         5.23e+ 2
+    4     1 dprime      -4.60e- 1
+    5     1 c           -5.55e-17
+    6     1 commissions  6   e+ 0
+    7     1 omissions    6   e+ 0
+    
 

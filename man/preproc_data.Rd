@@ -17,9 +17,15 @@ more details.}
 handled by current function itself, do not pass it.}
 }
 \value{
-A \link[tibble:tibble-package]{tibble} of calculated indices.
+A \link[dm:dm]{dm} object containing two tables: \code{meta} and \code{indices}.
 }
 \description{
 Integrate \link[dm:dm]{dm} object returned by \code{\link[=wrangle_data]{wrangle_data()}} with functions
 in preproc.iquizoo package.
+}
+\details{
+The calculated indices are stored in a \link[=data.frame]{data.frame} of
+\link[tidyr:pivot_longer]{longer} format with two columns named \code{"index_name"}
+and \code{"score"} respectively and are wrapped into a \link[dm:dm]{dm} object. The
+longer format is used to facilitate combining.
 }

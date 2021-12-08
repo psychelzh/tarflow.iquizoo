@@ -8,12 +8,11 @@ test_that("Basic situation in `preproc_data()`", {
       jsonlite::toJSON(data.frame(nhit = 1, feedback = 1))
     )
   )
-  expect_snapshot_value(
-    data |>
-      wrangle_data() |>
-      preproc_data(.fn = bart),
-    style = "json2"
-  )
+  dm_results <- data |>
+    wrangle_data() |>
+    preproc_data(.fn = bart)
+  expect_snapshot_output(dm_results)
+  expect_snapshot_output(dm::dm_get_tables(dm_results))
 })
 
 test_that("Complex dplyr verbs in `preproc_data()`", {
@@ -28,10 +27,9 @@ test_that("Complex dplyr verbs in `preproc_data()`", {
       )
     )
   )
-  expect_snapshot_value(
-    data |>
-      wrangle_data() |>
-      preproc_data(.fn = cpt),
-    style = "json2"
-  )
+  dm_results <- data |>
+    wrangle_data() |>
+    preproc_data(.fn = cpt)
+  expect_snapshot_output(dm_results)
+  expect_snapshot_output(dm::dm_get_tables(dm_results))
 })
