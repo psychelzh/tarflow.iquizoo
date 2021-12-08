@@ -54,7 +54,7 @@ wrangle_data <- function(data, .key = ".id") {
       .groups = "drop"
     )
   dm::dm(meta, data) |>
-    dm::dm_add_pk(meta, !!.key) |>
-    dm::dm_add_pk(data, !!.key) |>
-    dm::dm_add_fk(meta, !!.key, data, !!.key)
+    dm::dm_add_pk("meta", !!.key) |>
+    dm::dm_add_pk("data", !!.key) |>
+    dm::dm_add_fk("meta", !!.key, "data", !!.key)
 }

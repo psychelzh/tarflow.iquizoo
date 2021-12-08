@@ -29,6 +29,6 @@ preproc_data <- function(dm, .fn, ...) {
   dm |>
     dm::dm_select_tbl(-"data") |>
     dm::dm_add_tbl(indices) |>
-    dm::dm_add_pk(indices, !!.key) |>
-    dm::dm_add_fk(meta, !!.key, indices, !!.key)
+    dm::dm_add_pk("indices", !!.key) |>
+    dm::dm_add_fk("meta", !!.key, "indices", !!.key)
 }
