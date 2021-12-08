@@ -35,7 +35,18 @@ targets_data <- tarchetypes::tar_map(
   tar_target(scores, pickup(query_tmpl_scores, config_where_single_game)),
   tar_target(data, pickup(query_tmpl_data, config_where_single_game)),
   tar_target(data_parsed, wrangle_data(data, key)),
-  tar_target(indices, preproc_data(data_parsed, prep_fun))
+  tar_target(
+    input,
+    config::get("input", config = game_name_abbr, file = file_config)
+  ),
+  tar_target(
+    extra,
+    config::get("extra", config = game_name_abbr, file = file_config)
+  ),
+  tar_target(
+    indices,
+    preproc_data(data_parsed, prep_fun, .input = input, .extra = extra)
+  )
 )
 ```
 
@@ -64,4 +75,29 @@ list(
 
 ```{r run-pipeline, include=FALSE}
 tar_make_future(workers = 8)
+```
+
+```{r configure-preproc, eval=FALSE, include=FALSE}
+# configure this if "indices" step failed
+# this should only run once, and you can safely delete this chunk afterwards
+tar_load_globals()
+prepare_config <- function(game_name_abbr, game_name, prep_fun_name, ...) {
+  rlang::list2(
+    "{game_name_abbr}" := list(
+      game_name = game_name,
+      prep_fun_name = prep_fun_name,
+      input = NULL,
+      extra = NULL
+    )
+  )
+}
+config_file <- "config.yml"
+str_c(
+  read_file(config_file),
+  games |>
+    pmap(prepare_config) |>
+    reduce(c) |>
+    yaml::as.yaml()
+) |>
+  write_lines(config_file)
 ```
