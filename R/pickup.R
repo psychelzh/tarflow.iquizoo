@@ -4,7 +4,8 @@
 #' extracted from a given database.
 #'
 #' @name pickup
-#' @param query_file File name of `sql` query
+#' @param query_file File name of `sql` query. If not found, will try using it
+#'   as a sql query directly.
 #' @param config_where Configuration of "where-clause" of the `sql` query. Can
 #'   be a `list` (mostly from the `config.yml` file) or `data.frame`.
 #' @param dsn The data source name of an **ODBC** database connector. See
@@ -29,7 +30,11 @@ pickup <- function(query_file,
     )
   )
   on.exit(DBI::dbDisconnect(con))
-  query <- readLines(query_file, encoding = encoding) |>
+  query <- ifelse(
+    file.exists(query_file),
+    readLines(query_file, encoding = encoding),
+    query_file
+  ) |>
     stringr::str_c(collapse = "\n") |>
     stringr::str_glue(
       .envir = env(
