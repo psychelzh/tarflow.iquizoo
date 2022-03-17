@@ -48,8 +48,8 @@
         .id index_name      score
       <int> <chr>           <dbl>
     1     1 nc           8   e+ 0
-    2     1 mrt          1.19e+ 3
-    3     1 rtsd         5.23e+ 2
+    2     1 mrt          1.53e+ 3
+    3     1 rtsd         3.26e+ 2
     4     1 dprime      -4.60e- 1
     5     1 c           -5.55e-17
     6     1 commissions  6   e+ 0
