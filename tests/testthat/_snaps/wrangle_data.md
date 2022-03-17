@@ -1,110 +1,110 @@
 # Basic situation of `wrange_data()`
 
-    Code
-      data_wrangled
-    Output
-      -- Metadata --------------------------------------------------------------------
-      Tables: `meta`, `data`
-      Columns: 7
-      Primary keys: 2
-      Foreign keys: 1
-
----
-
-    Code
-      dm::dm_get_tables(data_wrangled)
-    Output
-      $meta
-      # A tibble: 2 x 4
-          .id user_id game_id game_time 
-        <int>   <int> <chr>   <chr>     
-      1     1       1 A       1990-01-01
-      2     2       2 B       1990-01-01
-      
-      $data
-      # A tibble: 10 x 3
-           .id     a     b
-         <int> <int> <int>
-       1     1     1     1
-       2     1     2     2
-       3     1     3     3
-       4     1     4     4
-       5     1     5     5
-       6     2     1     1
-       7     2     2     2
-       8     2     3     3
-       9     2     4     4
-      10     2     5     5
-      
-
-# Remove duplicates in `wrangle_data()`
-
-    Code
-      parsed_dup
-    Output
-      -- Metadata --------------------------------------------------------------------
-      Tables: `meta`, `data`
-      Columns: 5
-      Primary keys: 2
-      Foreign keys: 1
-
----
-
-    Code
-      dm::dm_get_tables(parsed_dup)
-    Output
-      $meta
-      # A tibble: 2 x 2
-          .id user_id
-        <int>   <int>
-      1     1       1
-      2     2       2
-      
-      $data
-      # A tibble: 8 x 3
-          .id     a     b
-        <int> <int> <int>
-      1     1     1     1
-      2     1     2     2
-      3     1     3     3
-      4     1     4     4
-      5     1     5     5
-      6     2     2     1
-      7     2     3     2
-      8     2     4     3
-      
-
-# Change names and values to lowercase in `wrangle_data()
-
-    Code
-      parsed
-    Output
-      -- Metadata --------------------------------------------------------------------
-      Tables: `meta`, `data`
-      Columns: 4
-      Primary keys: 2
-      Foreign keys: 1
-
----
-
-    Code
-      dm::dm_get_tables(parsed)
-    Output
-      $meta
-      # A tibble: 2 x 2
-          .id user_id
-        <int>   <int>
-      1     1       1
-      2     2       2
-      
-      $data
-      # A tibble: 5 x 2
-          .id a    
-        <int> <chr>
-      1     1 a    
-      2     1 b    
-      3     2 a    
-      4     2 b    
-      5     2 c    
-      
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["user_id", "game_id", "game_time", "raw_parsed"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["tbl_df", "tbl", "data.frame"]
+        }
+      },
+      "value": [
+        {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["A", "B"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["1990-01-01", "1990-01-01"]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "list",
+              "attributes": {
+                "names": {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["a", "b"]
+                },
+                "class": {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["data.frame"]
+                },
+                "row.names": {
+                  "type": "integer",
+                  "attributes": {},
+                  "value": [1, 2, 3, 4, 5]
+                }
+              },
+              "value": [
+                {
+                  "type": "integer",
+                  "attributes": {},
+                  "value": [1, 2, 3, 4, 5]
+                },
+                {
+                  "type": "integer",
+                  "attributes": {},
+                  "value": [1, 2, 3, 4, 5]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "attributes": {
+                "names": {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["a", "b"]
+                },
+                "class": {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["data.frame"]
+                },
+                "row.names": {
+                  "type": "integer",
+                  "attributes": {},
+                  "value": [1, 2, 3, 4, 5]
+                }
+              },
+              "value": [
+                {
+                  "type": "integer",
+                  "attributes": {},
+                  "value": [1, 2, 3, 4, 5]
+                },
+                {
+                  "type": "integer",
+                  "attributes": {},
+                  "value": [1, 2, 3, 4, 5]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
 

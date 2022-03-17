@@ -4,29 +4,17 @@
 \alias{wrangle_data}
 \title{Wrangle Raw Data}
 \usage{
-wrangle_data(data, .key = ".id")
+wrangle_data(data, name_raw_json = "game_data")
 }
 \arguments{
 \item{data}{The raw data.}
 
-\item{.key}{The key name used to match meta data. Should be a scalar
-character. Default is \code{".id"}, which is appropriate for most cases.}
+\item{name_raw_json}{The column name in which stores user's raw data in
+format of json string.}
 }
 \value{
-A \link[dm:dm]{dm} object containing two tables: \code{meta} and \code{data}.
+
 }
 \description{
 Data wrangling is the first step for data analysis.
-}
-\details{
-These steps are performed in order:
-\enumerate{
-\item Data clean. Remove observations with invalid or empty (i.e., \code{"[]"} or
-\code{"{}"}) json string data and then remove duplicates from data. If this step
-produces data with no observation, following steps are skipped and \code{NULL}
-is returned.
-\item Data parse. Parse data stored in json string, convert the names and
-values to lower case and stack the parsed data. Stacking have better
-performances than \link[=group_nest]{group_nest}ing.
-}
 }

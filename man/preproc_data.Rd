@@ -4,20 +4,21 @@
 \alias{preproc_data}
 \title{Feed Raw Data to Pre-processing}
 \usage{
-preproc_data(dm, .fn, ...)
+preproc_data(data, fn, name_raw_parsed = "raw_parsed", ...)
 }
 \arguments{
-\item{dm}{A \link[dm:dm]{dm} object typically from \code{\link[=wrangle_data]{wrangle_data()}} contains
-two tables: \code{meta} and \code{data}.}
+\item{data}{A \link[tibble:tibble-package]{tibble} contains raw data.}
 
-\item{.fn}{This can be a function or formula. See \code{\link[rlang:as_function]{rlang::as_function()}} for
+\item{fn}{This can be a function or formula. See \code{\link[rlang:as_function]{rlang::as_function()}} for
 more details.}
 
-\item{...}{Additional arguments passed to \code{.fn}. Note \code{.by} argument is
-handled by current function itself, do not pass it.}
+\item{name_raw_parsed}{The column name in which stores user's raw data in
+format of a list of \link[=data.frame]{data.frame}s.}
+
+\item{...}{Additional arguments passed to \code{fn}.}
 }
 \value{
-A \link[dm:dm]{dm} object containing two tables: \code{meta} and \code{indices}.
+A \link[tibble:tibble-package]{tibble} contains the calculated indices.
 }
 \description{
 Integrate \link[dm:dm]{dm} object returned by \code{\link[=wrangle_data]{wrangle_data()}} with functions

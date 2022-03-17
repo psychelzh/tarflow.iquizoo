@@ -8,27 +8,32 @@
 #' and `"score"` respectively and are wrapped into a [dm][dm::dm()] object. The
 #' longer format is used to facilitate combining.
 #'
-#' @param dm A [dm][dm::dm()] object typically from [wrangle_data()] contains
-#'   two tables: `meta` and `data`.
-#' @param .fn This can be a function or formula. See [rlang::as_function()] for
+#' @param data A [tibble][tibble::tibble-package] contains raw data.
+#' @param fn This can be a function or formula. See [rlang::as_function()] for
 #'   more details.
-#' @param ... Additional arguments passed to `.fn`. Note `.by` argument is
-#'   handled by current function itself, do not pass it.
-#' @return A [dm][dm::dm()] object containing two tables: `meta` and `indices`.
+#' @param name_raw_parsed The column name in which stores user's raw data in
+#'   format of a list of [data.frame][data.frame()]s.
+#' @param ... Additional arguments passed to `fn`.
+#' @return A [tibble][tibble::tibble-package] contains the calculated indices.
 #' @export
-preproc_data <- function(dm, .fn, ...) {
-  .fn <- as_function(.fn)
-  .key <- dm::dm_get_all_pks(dm, "data") |>
-    purrr::pluck("pk_col", 1)
-  indices <- .fn(dm::pull_tbl(dm, "data"), .key, ...) |>
-    tidyr::pivot_longer(
-      -dplyr::any_of(.key),
-      names_to = "index_name",
-      values_to = "score"
+preproc_data <- function(data, fn, name_raw_parsed = "raw_parsed", ...) {
+  fn <- as_function(fn)
+  calc_indices <- purrr::possibly(
+    \(x, ...) fn(x, ...) |>
+      tidyr::pivot_longer(
+        cols = dplyr::everything(),
+        names_to = "index_name",
+        values_to = "score"
+      ),
+    otherwise = NULL
+  )
+  indices <- data |>
+    dplyr::mutate(
+      indices = purrr::map(
+        .data[[name_raw_parsed]],
+        calc_indices,
+        ...
+      ),
+      .keep = "unused"
     )
-  dm |>
-    dm::dm_select_tbl(-"data") |>
-    dm::dm_add_tbl(indices) |>
-    dm::dm_add_pk("indices", !!.key) |>
-    dm::dm_add_fk("meta", !!.key, "indices", !!.key)
 }

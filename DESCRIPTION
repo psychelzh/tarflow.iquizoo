@@ -19,7 +19,6 @@ Depends:
 Imports:
     data.iquizoo (>= 0.0.3),
     DBI,
-    dm,
     dplyr,
     memoise,
     odbc,
