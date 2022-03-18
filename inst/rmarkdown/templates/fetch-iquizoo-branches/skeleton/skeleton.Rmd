@@ -28,13 +28,19 @@ tar_option_set(
 targets_data <- tarchetypes::tar_map(
   values = games,
   names = game_name_abbr,
+  # major targets
+  tar_target(scores, pickup(query_tmpl_scores, config_where_single_game)),
+  tar_target(data, pickup(query_tmpl_data, config_where_single_game)),
+  tar_target(data_parsed, wrangle_data(data)),
+  tar_target(
+    indices,
+    preproc_data(data_parsed, prep_fun, .input = input, .extra = extra)
+  ),
+  # configurations
   tar_target(
     config_where_single_game,
     insert_where_single_game(config_where, game_id)
   ),
-  tar_target(scores, pickup(query_tmpl_scores, config_where_single_game)),
-  tar_target(data, pickup(query_tmpl_data, config_where_single_game)),
-  tar_target(data_parsed, wrangle_data(data, key)),
   tar_target(
     input,
     config::get("input", config = game_name_abbr, file = file_config)
@@ -42,10 +48,6 @@ targets_data <- tarchetypes::tar_map(
   tar_target(
     extra,
     config::get("extra", config = game_name_abbr, file = file_config)
-  ),
-  tar_target(
-    indices,
-    preproc_data(data_parsed, prep_fun, .input = input, .extra = extra)
   )
 )
 ```
@@ -68,7 +70,6 @@ list(
 list(
   tar_target(query_tmpl_scores, fs::path("sql", "scores.tmpl.sql"), format = "file"),
   tar_target(query_tmpl_data, fs::path("sql", "data.tmpl.sql"), format = "file"),
-  tar_target(key, ".id"),
   targets_data
 )
 ```

@@ -1,58 +1,168 @@
 # Basic situation in `preproc_data()`
 
-    -- Metadata --------------------------------------------------------------------
-    Tables: `meta`, `indices`
-    Columns: 5
-    Primary keys: 2
-    Foreign keys: 1
-
----
-
-    $meta
-    # A tibble: 2 x 2
-        .id user_id
-      <int>   <int>
-    1     1       1
-    2     2       2
-    
-    $indices
-    # A tibble: 6 x 3
-        .id index_name     score
-      <int> <chr>          <dbl>
-    1     1 mean_pumps       NaN
-    2     1 mean_pumps_raw     1
-    3     1 num_explosion      1
-    4     2 mean_pumps         1
-    5     2 mean_pumps_raw     1
-    6     2 num_explosion      0
-    
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["user_id", "indices"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["tbl_df", "tbl", "data.frame"]
+        }
+      },
+      "value": [
+        {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "list",
+              "attributes": {
+                "class": {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["tbl_df", "tbl", "data.frame"]
+                },
+                "row.names": {
+                  "type": "integer",
+                  "attributes": {},
+                  "value": [1, 2, 3]
+                },
+                "names": {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["index_name", "score"]
+                }
+              },
+              "value": [
+                {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["mean_pumps", "mean_pumps_raw", "num_explosion"]
+                },
+                {
+                  "type": "double",
+                  "attributes": {},
+                  "value": ["NaN", 1, 1]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "attributes": {
+                "class": {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["tbl_df", "tbl", "data.frame"]
+                },
+                "row.names": {
+                  "type": "integer",
+                  "attributes": {},
+                  "value": [1, 2, 3]
+                },
+                "names": {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["index_name", "score"]
+                }
+              },
+              "value": [
+                {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["mean_pumps", "mean_pumps_raw", "num_explosion"]
+                },
+                {
+                  "type": "double",
+                  "attributes": {},
+                  "value": [1, 1, 0]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
 
 # Complex dplyr verbs in `preproc_data()`
 
-    -- Metadata --------------------------------------------------------------------
-    Tables: `meta`, `indices`
-    Columns: 5
-    Primary keys: 2
-    Foreign keys: 1
-
----
-
-    $meta
-    # A tibble: 1 x 2
-        .id user_id
-      <int>   <dbl>
-    1     1       1
-    
-    $indices
-    # A tibble: 7 x 3
-        .id index_name      score
-      <int> <chr>           <dbl>
-    1     1 nc           8   e+ 0
-    2     1 mrt          1.19e+ 3
-    3     1 rtsd         5.23e+ 2
-    4     1 dprime      -4.60e- 1
-    5     1 c           -5.55e-17
-    6     1 commissions  6   e+ 0
-    7     1 omissions    6   e+ 0
-    
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["user_id", "indices"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["tbl_df", "tbl", "data.frame"]
+        }
+      },
+      "value": [
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [1]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "list",
+              "attributes": {
+                "class": {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["tbl_df", "tbl", "data.frame"]
+                },
+                "row.names": {
+                  "type": "integer",
+                  "attributes": {},
+                  "value": [1, 2, 3, 4, 5, 6, 7]
+                },
+                "names": {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["index_name", "score"]
+                }
+              },
+              "value": [
+                {
+                  "type": "character",
+                  "attributes": {},
+                  "value": ["nc", "mrt", "rtsd", "dprime", "c", "commissions", "omissions"]
+                },
+                {
+                  "type": "double",
+                  "attributes": {},
+                  "value": [8, 1529.78493887, 325.82606023, -0.45976824, -5.55111512e-17, 6, 6]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
 

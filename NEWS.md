@@ -1,3 +1,11 @@
+# tarflow.iquizoo 2.1.0
+
+## Breaking Changes
+
+* Now parsed data are nested into the `data.frame()` of data, which will be more efficient (#50).
+* Now `pickup()` support input literal sql query string through argument `query_file`. To be recognized as literal sql query, the string must contains at least one new line.
+* Now raw data will also fetch `"game_version"` column.
+
 # tarflow.iquizoo 2.0.0
 
 ## Breaking Changes
