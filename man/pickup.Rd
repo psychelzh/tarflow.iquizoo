@@ -26,11 +26,6 @@ A \link[tibble:tibble-package]{tibble} of the downloaded data.
 Based on a template query file and "where clause" configuration, datasets are
 extracted from a given database.
 }
-\section{Functions}{
-\itemize{
-\item \code{pickup}: Default usage of pickup.
-}}
-
 \author{
 Liang Zhang
 }
