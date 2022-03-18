@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tarflow.iquizoo</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -53,31 +53,21 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">wrangle_data</span><span class="op">(</span><span class="va">data</span>, .key <span class="op">=</span> <span class="st">".id"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">wrangle_data</span><span class="op">(</span><span class="va">data</span>, name_raw_json <span class="op">=</span> <span class="st">"game_data"</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>The raw data.</p></dd>
-<dt>.key</dt>
-<dd><p>The key name used to match meta data. Should be a scalar
-character. Default is <code>".id"</code>, which is appropriate for most cases.</p></dd>
+<dt>name_raw_json</dt>
+<dd><p>The column name in which stores user's raw data in
+format of json string.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <a href="https://cynkra.github.io/dm/reference/dm.html" class="external-link">dm</a> object containing two tables: <code>meta</code> and <code>data</code>.</p>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble-package.html" class="external-link">tibble</a> contains the parsed data.</p>
     </div>
-    <div id="details">
-    <h2>Details</h2>
-    <p>These steps are performed in order:</p><ol><li><p>Data clean. Remove observations with invalid or empty (i.e., <code>"[]"</code> or
-<code>"{}"</code>) json string data and then remove duplicates from data. If this step
-produces data with no observation, following steps are skipped and <code>NULL</code>
-is returned.</p></li>
-<li><p>Data parse. Parse data stored in json string, convert the names and
-values to lower case and stack the parsed data. Stacking have better
-performances than group_nesting.</p></li>
-</ol></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -91,7 +81,7 @@ performances than group_nesting.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>
