@@ -5,7 +5,7 @@
 #' @param data The raw data.
 #' @param name_raw_json The column name in which stores user's raw data in
 #'   format of json string.
-#' @return
+#' @return A [tibble][tibble::tibble-package] contains the parsed data.
 #' @export
 wrangle_data <- function(data, name_raw_json = "game_data") {
   # return `NULL` in case of error when parsing

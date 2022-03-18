@@ -13,7 +13,7 @@ wrangle_data(data, name_raw_json = "game_data")
 format of json string.}
 }
 \value{
-
+A \link[tibble:tibble-package]{tibble} contains the parsed data.
 }
 \description{
 Data wrangling is the first step for data analysis.
