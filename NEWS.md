@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Now `preproc_data()` do not use `purrr::possibly()` to suppress errors.
+
 # tarflow.iquizoo 2.1.0
 
 ## Breaking Changes
