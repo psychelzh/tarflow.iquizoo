@@ -19,20 +19,11 @@
 #' @export
 preproc_data <- function(data, fn, name_raw_parsed = "raw_parsed", ...) {
   fn <- as_function(fn)
-  calc_indices <- purrr::possibly(
-    \(x, ...) fn(x, ...) |>
-      tidyr::pivot_longer(
-        cols = dplyr::everything(),
-        names_to = "index_name",
-        values_to = "score"
-      ),
-    otherwise = NULL
-  )
   indices <- data |>
     dplyr::mutate(
       indices = purrr::map(
         .data[[name_raw_parsed]],
-        calc_indices,
+        fn,
         ...
       ),
       .keep = "unused"

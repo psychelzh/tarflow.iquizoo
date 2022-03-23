@@ -3,7 +3,6 @@
 #' Based on a template query file and "where clause" configuration, datasets are
 #' extracted from a given database.
 #'
-#' @name pickup
 #' @param query_file File name of `sql` query. Literal query is acceptable, and
 #'   to be recognized as literal query, the input must be a string containing at
 #'   least one new line.
@@ -14,9 +13,6 @@
 #' @param encoding Encoding to be assumed for input strings. Default to "UTF-8".
 #' @return A [tibble][tibble::tibble-package] of the downloaded data.
 #' @author Liang Zhang
-NULL
-
-#' @describeIn pickup Default usage of pickup.
 #' @export
 pickup <- function(query_file,
                    config_where = NULL,
