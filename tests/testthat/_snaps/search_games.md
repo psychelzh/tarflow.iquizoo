@@ -23,7 +23,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["1813dfbd-f61e-47f5-aec6-721cde20f838"]
+          "value": ["268008982642792"]
         },
         {
           "type": "character",
@@ -84,7 +84,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["1813dfbd-f61e-47f5-aec6-721cde20f838", "test"]
+          "value": ["268008982642792", "test"]
         },
         {
           "type": "character",
