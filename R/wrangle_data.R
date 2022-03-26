@@ -5,9 +5,12 @@
 #' @param data The raw data.
 #' @param name_raw_json The column name in which stores user's raw data in
 #'   format of json string.
+#' @param name_raw_parsed The name used to store parsed data.
 #' @return A [tibble][tibble::tibble-package] contains the parsed data.
 #' @export
-wrangle_data <- function(data, name_raw_json = "game_data") {
+wrangle_data <- function(data,
+                         name_raw_json = "game_data",
+                         name_raw_parsed = "raw_parsed") {
   # return `NULL` in case of error when parsing
   parse_raw_json <- purrr::possibly(
     ~ jsonlite::fromJSON(.) |>
@@ -17,7 +20,7 @@ wrangle_data <- function(data, name_raw_json = "game_data") {
   )
   data |>
     dplyr::mutate(
-      raw_parsed = purrr::map(
+      "{name_raw_parsed}" := purrr::map(
         .data[[name_raw_json]],
         parse_raw_json
       ),
