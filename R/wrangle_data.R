@@ -11,7 +11,7 @@
 wrangle_data <- function(data,
                          name_raw_json = "game_data",
                          name_raw_parsed = "raw_parsed") {
-  # return `NULL` in case of error when parsing
+  # make it error-proof to avoid trivial errors
   parse_raw_json <- purrr::possibly(
     ~ jsonlite::fromJSON(.) |>
       dplyr::rename_with(tolower) |>

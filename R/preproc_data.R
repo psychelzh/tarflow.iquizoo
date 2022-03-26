@@ -18,6 +18,7 @@
 #' @return A [tibble][tibble::tibble-package] contains the calculated indices.
 #' @export
 preproc_data <- function(data, fn, name_raw_parsed = "raw_parsed", ...) {
+  # error is needed for checking configurations, do not add `possibly()`
   fn <- as_function(fn)
   data |>
     dplyr::mutate(
