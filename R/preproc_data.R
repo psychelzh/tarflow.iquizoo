@@ -19,7 +19,7 @@
 #' @export
 preproc_data <- function(data, fn, name_raw_parsed = "raw_parsed", ...) {
   fn <- as_function(fn)
-  indices <- data |>
+  data |>
     dplyr::mutate(
       indices = purrr::map(
         .data[[name_raw_parsed]],
