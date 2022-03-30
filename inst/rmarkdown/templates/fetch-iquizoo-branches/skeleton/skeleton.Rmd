@@ -80,25 +80,18 @@ tar_make_future(workers = 8)
 
 ```{r configure-preproc, eval=FALSE, include=FALSE}
 # configure this if "indices" step failed
-# this should only run once, and you can safely delete this chunk afterwards
 tar_load_globals()
-prepare_config <- function(game_name_abbr, game_name, prep_fun_name, ...) {
-  rlang::list2(
-    "{game_name_abbr}" := list(
-      game_name = game_name,
-      prep_fun_name = prep_fun_name,
+config_file <- "config.yml"
+config <- yaml::read_yaml(config_file)
+for (row in seq_len(nrow(games))) {
+  if (!hasName(config, games$game_name_abbr[[row]])) {
+    config[[games$game_name_abbr[[row]]]] <- list(
+      game_name = games$game_name[[row]],
+      prep_fun_name = games$prep_fun_name[[row]],
       input = NULL,
       extra = NULL
     )
-  )
+  }
 }
-config_file <- "config.yml"
-str_c(
-  read_file(config_file),
-  games |>
-    pmap(prepare_config) |>
-    reduce(c) |>
-    yaml::as.yaml()
-) |>
-  write_lines(config_file)
+yaml::write_yaml(config, config_file)
 ```
