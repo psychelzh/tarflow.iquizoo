@@ -1,5 +1,13 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Implemented new udpations of data.iquizoo package, and now `input` and `extra` should be configured in `game_info` data from that package.
+
+## New Features
+
+* Supported setting custom variable name for parsed raw data.
+
 # tarflow.iquizoo 2.2.0
 
 ## Breaking Changes
