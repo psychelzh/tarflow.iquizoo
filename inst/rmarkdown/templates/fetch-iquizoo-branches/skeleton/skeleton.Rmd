@@ -77,21 +77,3 @@ list(
 ```{r run-pipeline, include=FALSE}
 tar_make_future(workers = 8)
 ```
-
-```{r configure-preproc, eval=FALSE, include=FALSE}
-# configure this if "indices" step failed
-tar_load_globals()
-config_file <- "config.yml"
-config <- yaml::read_yaml(config_file)
-for (row in seq_len(nrow(games))) {
-  if (!hasName(config, games$game_name_abbr[[row]])) {
-    config[[games$game_name_abbr[[row]]]] <- list(
-      game_name = games$game_name[[row]],
-      prep_fun_name = games$prep_fun_name[[row]],
-      input = NULL,
-      extra = NULL
-    )
-  }
-}
-yaml::write_yaml(config, config_file)
-```

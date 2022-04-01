@@ -23,7 +23,13 @@ search_games <- function(config_where, known_only = TRUE, query_file = NULL) {
   if (known_only) {
     games |>
       dplyr::inner_join(data.iquizoo::game_info, by = "game_id") |>
-      dplyr::mutate(prep_fun = syms(.data[["prep_fun_name"]]))
+      dplyr::mutate(
+        prep_fun = syms(.data[["prep_fun_name"]]),
+        dplyr::across(
+          dplyr::all_of(c("input", "extra")),
+          parse_exprs
+        )
+      )
   } else {
     games |>
       dplyr::left_join(data.iquizoo::game_info, by = "game_id")
