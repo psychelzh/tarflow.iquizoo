@@ -40,14 +40,6 @@ targets_data <- tarchetypes::tar_map(
   tar_target(
     config_where_single_game,
     insert_where_single_game(config_where, game_id)
-  ),
-  tar_target(
-    input,
-    config::get("input", config = game_name_abbr, file = file_config)
-  ),
-  tar_target(
-    extra,
-    config::get("extra", config = game_name_abbr, file = file_config)
   )
 )
 ```
