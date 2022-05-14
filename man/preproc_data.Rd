@@ -4,7 +4,15 @@
 \alias{preproc_data}
 \title{Feed Raw Data to Pre-processing}
 \usage{
-preproc_data(data, fn, name_raw_parsed = "raw_parsed", ...)
+preproc_data(
+  data,
+  fn,
+  name_raw_parsed = "raw_parsed",
+  out_name_index = "index_name",
+  out_name_score = "score",
+  out_index_key = "indices",
+  ...
+)
 }
 \arguments{
 \item{data}{A \link[tibble:tibble-package]{tibble} contains raw data.}
@@ -15,10 +23,20 @@ more details.}
 \item{name_raw_parsed}{The column name in which stores user's raw data in
 format of a list of \link[=data.frame]{data.frame}s.}
 
+\item{out_name_index}{The column name used in output storing the name of each
+calculated index.}
+
+\item{out_name_score}{The column name used in output storing the value of
+each calculated index.}
+
+\item{out_index_key}{The name used as \code{.key} for \code{\link[dplyr:group_nest]{dplyr::group_nest()}} to
+store calculated indices.}
+
 \item{...}{Additional arguments passed to \code{fn}.}
 }
 \value{
-A \link[tibble:tibble-package]{tibble} contains the calculated indices.
+A \link[tibble:tibble-package]{tibble} contains the calculated indices
+which is \code{\link[tidyr:nest]{tidyr::nest()}}ed as data named with value of \code{out_index_key}.
 }
 \description{
 Integrate data returned by \code{\link[=wrangle_data]{wrangle_data()}} with functions in preproc.iquizoo
@@ -27,7 +45,7 @@ package.
 \details{
 The calculated indices are stored in a \link[=data.frame]{data.frame} of
 \link[tidyr:pivot_longer]{longer} format with two columns named \code{"index_name"}
-and \code{"score"} respectively and are nested into a
+and \code{"score"} (both could be configured) respectively and are nested into a
 \link[tibble:tibble-package]{tibble} object. The longer format is used to
 facilitate combining.
 }
