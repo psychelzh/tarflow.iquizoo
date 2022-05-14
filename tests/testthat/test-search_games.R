@@ -13,6 +13,18 @@ test_that("Correctly combine `game_info`", {
   )
 })
 
+test_that("Support `integer64`", {
+  mockery::stub(
+    search_games, "pickup",
+    function(query_file, ...)
+      tibble::tibble(game_id = bit64::as.integer64.double(225528186135045))
+  )
+  expect_snapshot_value(
+    search_games(query_file = "dummy/test.sql"),
+    style = "json2"
+  )
+})
+
 test_that("Error when query file not found", {
   expect_error(search_games(NULL), class = "query_file_miss")
 })

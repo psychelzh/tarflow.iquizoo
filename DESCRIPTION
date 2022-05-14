@@ -17,6 +17,7 @@ URL: https://psychelzh.github.io/tarflow.iquizoo,
 Depends:
     R (>= 4.1.0)
 Imports:
+    bit64,
     data.iquizoo (>= 0.0.3),
     DBI,
     dplyr,
