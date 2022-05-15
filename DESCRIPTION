@@ -28,7 +28,8 @@ Imports:
     rlang (>= 0.1.2),
     stringr,
     tibble,
-    tidyr
+    tidyr,
+    utils
 Suggests:
     config,
     covr,

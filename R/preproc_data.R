@@ -53,7 +53,7 @@ preproc_data <- function(data, fn,
         dplyr::mutate(
           dplyr::across(
             -dplyr::any_of(group_vars),
-            type.convert,
+            utils::type.convert,
             as.is = TRUE
           )
         )
