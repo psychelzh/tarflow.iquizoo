@@ -18,6 +18,7 @@ test_that("Basic situation in `preproc_data()`", {
   preproc_data(data, fn = prep_fun) |>
     expect_silent() |>
     expect_snapshot_value(style = "json2")
+  expect_null(preproc_data(tibble::tibble(raw_parsed = list(NULL)), prep_fun))
 })
 
 test_that("Can deal with mismatch column types in raw data", {
