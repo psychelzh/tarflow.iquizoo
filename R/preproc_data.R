@@ -31,9 +31,38 @@ preproc_data <- function(data, fn,
   # do not add `possibly()` for early error is needed to check configurations
   fn <- as_function(fn)
   group_vars <- setdiff(names(data), name_raw_parsed)
-  data |>
-    # `NULL`s in raw parsed will be removed implicitly
-    tidyr::unnest(.data[[name_raw_parsed]]) |>
+  data_unnested <- try_fetch(
+    tidyr::unnest(data, .data[[name_raw_parsed]]),
+    error = function(cnd) {
+      pattern <- r"(Can't combine `\.\.1\$\w+` <.+> and `\.\.2\$\w+` <.+>)"
+      if (!grepl(pattern, conditionMessage(cnd))) {
+        abort(
+          "Don't know how to handle this error.",
+          class = "tarflow/unnest_incompatible",
+          parent = cnd
+        )
+      }
+      data |>
+        dplyr::mutate(
+          "{name_raw_parsed}" := purrr::map(
+            .data[[name_raw_parsed]],
+            ~ dplyr::mutate(., dplyr::across(.fns = as.character))
+          )
+        ) |>
+        tidyr::unnest(.data[[name_raw_parsed]]) |>
+        dplyr::mutate(
+          dplyr::across(
+            -dplyr::any_of(group_vars),
+            type.convert,
+            as.is = TRUE
+          )
+        )
+    }
+  )
+  if (nrow(data_unnested) == 0) {
+    return()
+  }
+  data_unnested |>
     fn(.by = group_vars, ...) |>
     tidyr::pivot_longer(
       cols = -dplyr::any_of(group_vars),
