@@ -10,7 +10,6 @@ preproc_data(
   name_raw_parsed = "raw_parsed",
   out_name_index = "index_name",
   out_name_score = "score",
-  out_index_key = "indices",
   ...
 )
 }
@@ -29,14 +28,12 @@ calculated index.}
 \item{out_name_score}{The column name used in output storing the value of
 each calculated index.}
 
-\item{out_index_key}{The name used as \code{.key} for \code{\link[dplyr:group_nest]{dplyr::group_nest()}} to
-store calculated indices.}
-
 \item{...}{Additional arguments passed to \code{fn}.}
 }
 \value{
-A \link[tibble:tibble-package]{tibble} contains the calculated indices
-which is \code{\link[tidyr:nest]{tidyr::nest()}}ed as data named with value of \code{out_index_key}.
+A \link[tibble:tibble-package]{tibble} contains the calculated indices.
+The index names are stored in the column of \code{out_name_index}, and index
+values are stored in the column of \code{out_name_score}.
 }
 \description{
 Integrate data returned by \code{\link[=wrangle_data]{wrangle_data()}} with functions in preproc.iquizoo
