@@ -29,7 +29,8 @@ Imports:
     stringr,
     tibble,
     tidyr,
-    utils
+    utils,
+    vctrs
 Suggests:
     config,
     covr,

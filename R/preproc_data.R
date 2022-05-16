@@ -52,13 +52,8 @@ preproc_data <- function(data, fn,
           )
         ) |>
         tidyr::unnest(.data[[name_raw_parsed]]) |>
-        dplyr::mutate(
-          dplyr::across(
-            -.data$.id,
-            utils::type.convert,
-            as.is = TRUE
-          )
-        )
+        utils::type.convert(as.is = TRUE) |>
+        vctrs::vec_restore(raw_data)
     }
   )
   if (nrow(data_unnested) == 0) {
