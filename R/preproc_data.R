@@ -30,9 +30,11 @@ preproc_data <- function(data, fn,
                          ...) {
   # do not add `possibly()` for early error is needed to check configurations
   fn <- as_function(fn)
-  group_vars <- setdiff(names(data), name_raw_parsed)
+  data_with_id <- dplyr::mutate(data, .id = seq_len(dplyr::n()))
+  groups <- dplyr::select(data_with_id, -.data[[name_raw_parsed]])
+  raw_data <- dplyr::select(data_with_id, .data$.id, .data[[name_raw_parsed]])
   data_unnested <- try_fetch(
-    tidyr::unnest(data, .data[[name_raw_parsed]]),
+    tidyr::unnest(raw_data, .data[[name_raw_parsed]]),
     error = function(cnd) {
       pattern <- r"(Can't combine `\.\.1\$\w+` <.+> and `\.\.2\$\w+` <.+>)"
       if (!grepl(pattern, conditionMessage(cnd))) {
@@ -42,7 +44,7 @@ preproc_data <- function(data, fn,
           parent = cnd
         )
       }
-      data |>
+      raw_data |>
         dplyr::mutate(
           "{name_raw_parsed}" := purrr::map(
             .data[[name_raw_parsed]],
@@ -52,7 +54,7 @@ preproc_data <- function(data, fn,
         tidyr::unnest(.data[[name_raw_parsed]]) |>
         dplyr::mutate(
           dplyr::across(
-            -dplyr::any_of(group_vars),
+            -.data$.id,
             utils::type.convert,
             as.is = TRUE
           )
@@ -62,11 +64,16 @@ preproc_data <- function(data, fn,
   if (nrow(data_unnested) == 0) {
     return()
   }
-  data_unnested |>
-    fn(.by = group_vars, ...) |>
-    tidyr::pivot_longer(
-      cols = -dplyr::any_of(group_vars),
-      names_to = out_name_index,
-      values_to = out_name_score
-    )
+  dplyr::inner_join(
+    groups,
+    data_unnested |>
+      fn(.by = ".id", ...) |>
+      tidyr::pivot_longer(
+        cols = -.data$.id,
+        names_to = out_name_index,
+        values_to = out_name_score
+      ),
+    by = ".id"
+  ) |>
+    dplyr::select(-.data$.id)
 }
