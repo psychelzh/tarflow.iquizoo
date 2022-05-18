@@ -5,9 +5,9 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/psychelzh/tarflow.iquizoo/workflows/R-CMD-check/badge.svg)](https://github.com/psychelzh/tarflow.iquizoo/actions)
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![R-CMD-check](https://github.com/psychelzh/tarflow.iquizoo/workflows/R-CMD-check/badge.svg)](https://github.com/psychelzh/tarflow.iquizoo/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/psychelzh/tarflow.iquizoo/branch/main/graph/badge.svg)](https://app.codecov.io/gh/psychelzh/tarflow.iquizoo?branch=main)
 <!-- badges: end -->

@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["game_id", "game_name", "game_name_en", "game_name_abbr", "prep_fun_name", "prep_fun"]
+          "value": ["game_id", "game_name", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
         },
         "row.names": {
           "type": "integer",
@@ -23,27 +23,47 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["1813dfbd-f61e-47f5-aec6-721cde20f838"]
+          "value": ["225528186135045"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["方向临摹"]
+          "value": ["打靶场"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Judgment of Line Orientation"]
+          "value": ["Rotation Span"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["JLO"]
+          "value": ["RSpan"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["jlo"]
+          "value": ["span"]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "language",
+              "attributes": {},
+              "value": ["list(name_acc = \"accarrow\")"]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "NULL"
+            }
+          ]
         },
         {
           "type": "list",
@@ -52,7 +72,7 @@
             {
               "type": "symbol",
               "attributes": {},
-              "value": ["jlo"]
+              "value": ["span"]
             }
           ]
         }
@@ -77,34 +97,125 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["game_id", "game_name", "game_name_en", "game_name_abbr", "prep_fun_name"]
+          "value": ["game_id", "game_name", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra"]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["1813dfbd-f61e-47f5-aec6-721cde20f838", "test"]
+          "value": ["225528186135045", "test"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["方向临摹", null]
+          "value": ["打靶场", null]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Judgment of Line Orientation", null]
+          "value": ["Rotation Span", null]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["JLO", null]
+          "value": ["RSpan", null]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["jlo", null]
+          "value": ["span", null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["list(name_acc = \"accarrow\")", null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["NULL", null]
+        }
+      ]
+    }
+
+# Support `integer64`
+
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["game_id", "game_name", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["tbl_df", "tbl", "data.frame"]
+        }
+      },
+      "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["225528186135045"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["打靶场"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["Rotation Span"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["RSpan"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["span"]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "language",
+              "attributes": {},
+              "value": ["list(name_acc = \"accarrow\")"]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "NULL"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "symbol",
+              "attributes": {},
+              "value": ["span"]
+            }
+          ]
         }
       ]
     }

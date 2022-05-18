@@ -3,20 +3,20 @@
     {
       "type": "list",
       "attributes": {
-        "names": {
+        "class": {
           "type": "character",
           "attributes": {},
-          "value": ["user_id", "indices"]
+          "value": ["tbl_df", "tbl", "data.frame"]
         },
         "row.names": {
           "type": "integer",
           "attributes": {},
           "value": [1, 2]
         },
-        "class": {
+        "names": {
           "type": "character",
           "attributes": {},
-          "value": ["tbl_df", "tbl", "data.frame"]
+          "value": ["user_id", "index_name", "score"]
         }
       },
       "value": [
@@ -26,84 +26,54 @@
           "value": [1, 2]
         },
         {
-          "type": "list",
+          "type": "character",
           "attributes": {},
-          "value": [
-            {
-              "type": "list",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["data.frame"]
-                },
-                "row.names": {
-                  "type": "integer",
-                  "attributes": {},
-                  "value": [1]
-                },
-                "names": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["mean_pumps", "mean_pumps_raw", "num_explosion"]
-                }
-              },
-              "value": [
-                {
-                  "type": "double",
-                  "attributes": {},
-                  "value": ["NaN"]
-                },
-                {
-                  "type": "double",
-                  "attributes": {},
-                  "value": [1]
-                },
-                {
-                  "type": "integer",
-                  "attributes": {},
-                  "value": [1]
-                }
-              ]
-            },
-            {
-              "type": "list",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["data.frame"]
-                },
-                "row.names": {
-                  "type": "integer",
-                  "attributes": {},
-                  "value": [1]
-                },
-                "names": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["mean_pumps", "mean_pumps_raw", "num_explosion"]
-                }
-              },
-              "value": [
-                {
-                  "type": "double",
-                  "attributes": {},
-                  "value": [1]
-                },
-                {
-                  "type": "double",
-                  "attributes": {},
-                  "value": [1]
-                },
-                {
-                  "type": "integer",
-                  "attributes": {},
-                  "value": [0]
-                }
-              ]
-            }
-          ]
+          "value": ["nhit", "nhit"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": ["NaN", 1]
+        }
+      ]
+    }
+
+# Can deal with mismatch column types in raw data
+
+    {
+      "type": "list",
+      "attributes": {
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["tbl_df", "tbl", "data.frame"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2]
+        },
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["user_id", "index_name", "score"]
+        }
+      },
+      "value": [
+        {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["nhit", "nhit"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": ["NaN", 1]
         }
       ]
     }

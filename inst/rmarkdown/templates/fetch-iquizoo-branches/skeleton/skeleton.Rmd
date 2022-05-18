@@ -19,7 +19,7 @@ targets::tar_unscript()
 
 ```{targets set-globals, tar_globals=TRUE, include=FALSE}
 future::plan(future.callr::callr)
-games <- tarflow.iquizoo::search_games_mem(config::get("where"))
+games <- tarflow.iquizoo::search_games_mem(config_where = config::get("where"))
 tar_option_set(
   package = c("tidyverse", "preproc.iquizoo", "tarflow.iquizoo"),
   format = "qs",
@@ -40,14 +40,6 @@ targets_data <- tarchetypes::tar_map(
   tar_target(
     config_where_single_game,
     insert_where_single_game(config_where, game_id)
-  ),
-  tar_target(
-    input,
-    config::get("input", config = game_name_abbr, file = file_config)
-  ),
-  tar_target(
-    extra,
-    config::get("extra", config = game_name_abbr, file = file_config)
   )
 )
 ```
@@ -76,29 +68,4 @@ list(
 
 ```{r run-pipeline, include=FALSE}
 tar_make_future(workers = 8)
-```
-
-```{r configure-preproc, eval=FALSE, include=FALSE}
-# configure this if "indices" step failed
-# this should only run once, and you can safely delete this chunk afterwards
-tar_load_globals()
-prepare_config <- function(game_name_abbr, game_name, prep_fun_name, ...) {
-  rlang::list2(
-    "{game_name_abbr}" := list(
-      game_name = game_name,
-      prep_fun_name = prep_fun_name,
-      input = NULL,
-      extra = NULL
-    )
-  )
-}
-config_file <- "config.yml"
-str_c(
-  read_file(config_file),
-  games |>
-    pmap(prepare_config) |>
-    reduce(c) |>
-    yaml::as.yaml()
-) |>
-  write_lines(config_file)
 ```

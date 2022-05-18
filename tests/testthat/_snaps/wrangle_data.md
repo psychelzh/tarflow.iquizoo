@@ -1,4 +1,4 @@
-# Basic situation of `wrange_data()`
+# Basic functions work correctly
 
     {
       "type": "list",
@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["user_id", "game_id", "game_time", "raw_parsed"]
+          "value": ["raw_parsed"]
         },
         "row.names": {
           "type": "integer",
@@ -20,21 +20,6 @@
         }
       },
       "value": [
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": [1, 2]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["A", "B"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["1990-01-01", "1990-01-01"]
-        },
         {
           "type": "list",
           "attributes": {},

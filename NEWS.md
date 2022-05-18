@@ -1,3 +1,18 @@
+# tarflow.iquizoo 2.3.0
+
+## Breaking Changes
+
+* Implemented new udpations of data.iquizoo package, and now `input` and `extra` should be configured in `game_info` data from that package.
+* Suggests {preproc.iquizoo} 2.4.0 or higher now, because we require the preprocessing functions support `.by` again.
+
+## New Features
+
+* Supported setting custom variable name for parsed raw data.
+
+## Bug Fixes
+
+* Fixed bug of `integer64` type.
+
 # tarflow.iquizoo 2.2.0
 
 ## Breaking Changes

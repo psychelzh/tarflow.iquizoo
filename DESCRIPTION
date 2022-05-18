@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 2.2.0
+Version: 2.3.0
 Authors@R: c(
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150")),
@@ -17,17 +17,20 @@ URL: https://psychelzh.github.io/tarflow.iquizoo,
 Depends:
     R (>= 4.1.0)
 Imports:
+    bit64,
+    cachem,
     data.iquizoo (>= 0.0.3),
     DBI,
     dplyr,
     memoise,
     odbc,
-    preproc.iquizoo (>= 2.0.1),
     purrr,
     rlang (>= 0.1.2),
     stringr,
     tibble,
-    tidyr
+    tidyr,
+    utils,
+    vctrs
 Suggests:
     config,
     covr,
@@ -37,6 +40,7 @@ Suggests:
     jsonlite,
     lifecycle,
     mockery,
+    preproc.iquizoo (>= 2.4.0),
     roxygen2,
     tarchetypes,
     targets,
@@ -47,6 +51,5 @@ Remotes:
     psychelzh/preproc.iquizoo
 Config/testthat/edition: 3
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0

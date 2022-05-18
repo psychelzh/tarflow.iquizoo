@@ -7,7 +7,7 @@
 \usage{
 search_games(config_where, known_only = TRUE, query_file = NULL)
 
-search_games_mem(config_where, known_only = TRUE, query_file = NULL)
+search_games_mem(file_cache = "~/.cache.tarflow", ...)
 }
 \arguments{
 \item{config_where}{Configuration of "where-clause".}
@@ -18,6 +18,11 @@ search_games_mem(config_where, known_only = TRUE, query_file = NULL)
 \item{query_file}{An optional argument specifying the file storing query of
 games. If leave as \code{NULL}, default to "sql/games.tmpl.sql", which is
 created by rmarkdown template.}
+
+\item{file_cache}{The file used to store caches of results which is passed to
+\code{\link[cachem:cache_disk]{cachem::cache_disk()}}.}
+
+\item{...}{Arguments passed to \code{\link[=search_games]{search_games()}}.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} contains all the games to be

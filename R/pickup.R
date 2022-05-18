@@ -19,13 +19,7 @@ pickup <- function(query_file,
                    dsn = "iquizoo-v3",
                    encoding = "utf-8") {
   # connect to given database which is pre-configured
-  con <- DBI::dbConnect(
-    odbc::odbc(), dsn,
-    encoding = ifelse(
-      .Platform$OS.type == "windows",
-      "gbk", "utf-8"
-    )
-  )
+  con <- DBI::dbConnect(odbc::odbc(), dsn)
   on.exit(DBI::dbDisconnect(con))
   query <- ifelse(
     stringr::str_detect(query_file, "\\n"),
