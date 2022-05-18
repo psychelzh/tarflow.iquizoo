@@ -36,13 +36,5 @@ The index names are stored in the column of \code{out_name_index}, and index
 values are stored in the column of \code{out_name_score}.
 }
 \description{
-Integrate data returned by \code{\link[=wrangle_data]{wrangle_data()}} with functions in preproc.iquizoo
-package.
-}
-\details{
-The calculated indices are stored in a \link[=data.frame]{data.frame} of
-\link[tidyr:pivot_longer]{longer} format with two columns named \code{"index_name"}
-and \code{"score"} (both could be configured) respectively and are nested into a
-\link[tibble:tibble-package]{tibble} object. The longer format is used to
-facilitate combining.
+Calculate indices using data returned by \code{\link[=wrangle_data]{wrangle_data()}}.
 }
