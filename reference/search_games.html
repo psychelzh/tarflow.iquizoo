@@ -14,7 +14,7 @@ executing time."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@ executing time.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">search_games</span><span class="op">(</span><span class="va">config_where</span>, known_only <span class="op">=</span> <span class="cn">TRUE</span>, query_file <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
-<span class="fu">search_games_mem</span><span class="op">(</span><span class="va">config_where</span>, known_only <span class="op">=</span> <span class="cn">TRUE</span>, query_file <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<span class="fu">search_games_mem</span><span class="op">(</span>file_cache <span class="op">=</span> <span class="st">"~/.cache.tarflow"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -73,6 +73,11 @@ executing time.</p>
 <dd><p>An optional argument specifying the file storing query of
 games. If leave as <code>NULL</code>, default to "sql/games.tmpl.sql", which is
 created by rmarkdown template.</p></dd>
+<dt>file_cache</dt>
+<dd><p>The file used to store caches of results which is passed to
+<code><a href="https://cachem.r-lib.org/reference/cache_disk.html" class="external-link">cachem::cache_disk()</a></code>.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to <code>search_games()</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -100,7 +105,7 @@ from data.iquizoo package to expose the pre-processing function name.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

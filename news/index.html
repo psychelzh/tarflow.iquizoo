@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,11 +45,24 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.3.0" id="tarflowiquizoo-230">tarflow.iquizoo 2.3.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-230"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-2-3-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-2-3-0"></a></h3>
+<ul><li>Implemented new udpations of data.iquizoo package, and now <code>input</code> and <code>extra</code> should be configured in <code>game_info</code> data from that package.</li>
+<li>Suggests {preproc.iquizoo} 2.4.0 or higher now, because we require the preprocessing functions support <code>.by</code> again.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-2-3-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-2-3-0"></a></h3>
+<ul><li>Supported setting custom variable name for parsed raw data.</li></ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-2-3-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-3-0"></a></h3>
+<ul><li>Fixed bug of <code>integer64</code> type.</li></ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.2.0" id="tarflowiquizoo-220">tarflow.iquizoo 2.2.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-220"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-2-2-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-2-2-0"></a></h3>
-<ul><li>Now <code><a href="../reference/preproc_data.html">preproc_data()</a></code> do not use <code><a href="https://purrr.tidyverse.org/reference/safely.html" class="external-link">purrr::possibly()</a></code> to suppress errors.</li>
-</ul></div>
+<ul><li>Now <code><a href="../reference/preproc_data.html">preproc_data()</a></code> do not use <code><a href="https://purrr.tidyverse.org/reference/safely.html" class="external-link">purrr::possibly()</a></code> to suppress errors.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.1.0" id="tarflowiquizoo-210">tarflow.iquizoo 2.1.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-210"></a></h2>
@@ -73,8 +86,7 @@
 <h2 class="pkg-version" data-toc-text="1.0.1" id="tarflowiquizoo-101">tarflow.iquizoo 1.0.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-101"></a></h2>
 <div class="section level3">
 <h3 id="internal-1-0-1">Internal<a class="anchor" aria-label="anchor" href="#internal-1-0-1"></a></h3>
-<ul><li>Remove old content from github README.</li>
-</ul></div>
+<ul><li>Remove old content from github README.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="tarflowiquizoo-100">tarflow.iquizoo 1.0.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-100"></a></h2>
@@ -87,69 +99,58 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-0-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-0"></a></h3>
-<ul><li>Fix a bug of <code><a href="../reference/preproc_data.html">preproc_data()</a></code> occured when using complex dplyr verbs (see <a href="https://github.com/psychelzh/tarflow.iquizoo/issues/43" class="external-link">#43</a>).</li>
-</ul></div>
+<ul><li>Fix a bug of <code><a href="../reference/preproc_data.html">preproc_data()</a></code> occured when using complex dplyr verbs (see <a href="https://github.com/psychelzh/tarflow.iquizoo/issues/43" class="external-link">#43</a>).</li></ul></div>
 <div class="section level3">
 <h3 id="internal-1-0-0">Internal<a class="anchor" aria-label="anchor" href="#internal-1-0-0"></a></h3>
-<ul><li>Added more tests for many core functions except <code><a href="../reference/pickup.html">pickup()</a></code> (see <a href="https://github.com/psychelzh/tarflow.iquizoo/issues/41" class="external-link">#41</a>).</li>
-</ul></div>
+<ul><li>Added more tests for many core functions except <code><a href="../reference/pickup.html">pickup()</a></code> (see <a href="https://github.com/psychelzh/tarflow.iquizoo/issues/41" class="external-link">#41</a>).</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.1" id="tarflowiquizoo-021">tarflow.iquizoo 0.2.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-021"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-2-1">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-1"></a></h3>
-<ul><li>Adapt to new preproc.iquizoo and data.iquizoo packages.</li>
-</ul></div>
+<ul><li>Adapt to new preproc.iquizoo and data.iquizoo packages.</li></ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-2-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-1"></a></h3>
-<ul><li>Fix a target name problem.</li>
-</ul></div>
+<ul><li>Fix a target name problem.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="tarflowiquizoo-020">tarflow.iquizoo 0.2.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-020"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-2-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-0"></a></h3>
-<ul><li>Now <code>init()</code> is deprecated, and rmarkdown template is recommended instead.</li>
-</ul></div>
+<ul><li>Now <code>init()</code> is deprecated, and rmarkdown template is recommended instead.</li></ul></div>
 <div class="section level3">
 <h3 id="new-features-0-2-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-2-0"></a></h3>
-<ul><li>Support setting up pipeline in rmarkdown using template (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/35" class="external-link">#35</a>).</li>
-</ul></div>
+<ul><li>Support setting up pipeline in rmarkdown using template (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/35" class="external-link">#35</a>).</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.10" id="tarflowiquizoo-0110">tarflow.iquizoo 0.1.10<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-0110"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-1-10">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-10"></a></h3>
-<ul><li>Unified user identifier to <code>'OrganizationUserId'</code>.</li>
-</ul></div>
+<ul><li>Unified user identifier to <code>'OrganizationUserId'</code>.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.9" id="tarflowiquizoo-019">tarflow.iquizoo 0.1.9<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-019"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-1-9">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-9"></a></h3>
-<ul><li>Fixed an exception when fetching <code>users</code> from new version of database. Now <code>base_grade_class</code> was obsolete and removed from query.</li>
-</ul></div>
+<ul><li>Fixed an exception when fetching <code>users</code> from new version of database. Now <code>base_grade_class</code> was obsolete and removed from query.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.8" id="tarflowiquizoo-018">tarflow.iquizoo 0.1.8<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-018"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-1-8">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-8"></a></h3>
-<ul><li>Fix exception of encoding issue of SQL query by removing the recoding of user sex.</li>
-</ul></div>
+<ul><li>Fix exception of encoding issue of SQL query by removing the recoding of user sex.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.7" id="tarflowiquizoo-017">tarflow.iquizoo 0.1.7<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-017"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-1-7">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-7"></a></h3>
-<ul><li>Fix an exception caused by new database design of IQUIZOO.</li>
-</ul></div>
+<ul><li>Fix an exception caused by new database design of IQUIZOO.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.6" id="tarflowiquizoo-016">tarflow.iquizoo 0.1.6<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-016"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-1-6">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-1-6"></a></h3>
-<ul><li>Set <code>known_only</code> to <code>FALSE</code> when downloading pre-calculated scores (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/32" class="external-link">#32</a>).</li>
-</ul></div>
+<ul><li>Set <code>known_only</code> to <code>FALSE</code> when downloading pre-calculated scores (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/32" class="external-link">#32</a>).</li></ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-1-6">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-6"></a></h3>
 <ul><li>Fix an exception when using key as one target (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/33" class="external-link">#33</a>).</li>
@@ -160,47 +161,40 @@
 <h2 class="pkg-version" data-toc-text="0.1.5" id="tarflowiquizoo-015">tarflow.iquizoo 0.1.5<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-015"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-1-5">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-1-5"></a></h3>
-<ul><li>Add <code>known_only</code> argument (default to <code>TRUE</code>) to <code><a href="../reference/search_games.html">search_games()</a></code>, which uses the games in <code>dataproc.iquizoo::game_info</code> only. You cannot set it as <code>FALSE</code> when fetching original data.</li>
-</ul></div>
+<ul><li>Add <code>known_only</code> argument (default to <code>TRUE</code>) to <code><a href="../reference/search_games.html">search_games()</a></code>, which uses the games in <code>dataproc.iquizoo::game_info</code> only. You cannot set it as <code>FALSE</code> when fetching original data.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.4" id="tarflowiquizoo-014">tarflow.iquizoo 0.1.4<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-014"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-1-4">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-1-4"></a></h3>
-<ul><li>Add <code>encoding</code> argument (default to <code>"UTF-8"</code>) to <code>fetch()</code>, which is used to set the encoding of SQL query files. This will also fix some encoding issues on Windows OS.</li>
-</ul></div>
+<ul><li>Add <code>encoding</code> argument (default to <code>"UTF-8"</code>) to <code>fetch()</code>, which is used to set the encoding of SQL query files. This will also fix some encoding issues on Windows OS.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.3" id="tarflowiquizoo-013">tarflow.iquizoo 0.1.3<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-013"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-1-3">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-3"></a></h3>
-<ul><li>Correct logic of <code>step_query()</code>. The query named <code>games</code> are not to be included in targets. And queries named <code>users</code> and <code>abilities</code> should be always fetched. Other queries depend on whether it is separated or not.</li>
-</ul></div>
+<ul><li>Correct logic of <code>step_query()</code>. The query named <code>games</code> are not to be included in targets. And queries named <code>users</code> and <code>abilities</code> should be always fetched. Other queries depend on whether it is separated or not.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.2" id="tarflowiquizoo-012">tarflow.iquizoo 0.1.2<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-012"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-1-2">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-1-2"></a></h3>
-<ul><li>Supported games abilities.</li>
-</ul></div>
+<ul><li>Supported games abilities.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.1" id="tarflowiquizoo-011">tarflow.iquizoo 0.1.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-011"></a></h2>
-<ul><li>Adapt to new database design in IQUIZOO.</li>
-</ul></div>
+<ul><li>Adapt to new database design in IQUIZOO.</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="tarflowiquizoo-010">tarflow.iquizoo 0.1.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-010"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-1-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-0"></a></h3>
-<ul><li>Moved <code><a href="../reference/wrangle_data.html">wrangle_data()</a></code> (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/24" class="external-link">#24</a>) to dataproc.iquizoo package now. That is, the data preprocessing parts are all moved to dataproc.iquizoo package now. This better fits our mental models about these packages.</li>
-</ul></div>
+<ul><li>Moved <code><a href="../reference/wrangle_data.html">wrangle_data()</a></code> (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/24" class="external-link">#24</a>) to dataproc.iquizoo package now. That is, the data preprocessing parts are all moved to dataproc.iquizoo package now. This better fits our mental models about these packages.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.7" id="tarflowiquizoo-007">tarflow.iquizoo 0.0.7<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-007"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-0-7">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-7"></a></h3>
-<ul><li>Removed <code>calc_indices</code> (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/24" class="external-link">#24</a>) and added <code><a href="../reference/wrangle_data.html">wrangle_data()</a></code> to fit the jobs for this package. This new function will parse input <code>json</code> string and stack them into long format, but keep other meta info in the attribute <code>"info"</code> of output. With all these, the output added a subclass <code>"tbl_meta"</code> and a <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method.</li>
-</ul></div>
+<ul><li>Removed <code>calc_indices</code> (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/24" class="external-link">#24</a>) and added <code><a href="../reference/wrangle_data.html">wrangle_data()</a></code> to fit the jobs for this package. This new function will parse input <code>json</code> string and stack them into long format, but keep other meta info in the attribute <code>"info"</code> of output. With all these, the output added a subclass <code>"tbl_meta"</code> and a <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method.</li></ul></div>
 <div class="section level3">
 <h3 id="enhancements-0-0-7">Enhancements<a class="anchor" aria-label="anchor" href="#enhancements-0-0-7"></a></h3>
 <ul><li>Added <code>fetch_single_game()</code> to treat special case of fetching dataset from a single game. This is used especially when using branches.</li>
@@ -211,36 +205,31 @@
 <h2 class="pkg-version" data-toc-text="0.0.6" id="tarflowiquizoo-006">tarflow.iquizoo 0.0.6<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-006"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-0-6">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-6"></a></h3>
-<ul><li>Use <code><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">stringr::str_detect()</a></code> to remove empty json string. Now <code>"[]"</code> and <code>"{}"</code> are both removed.</li>
-</ul></div>
+<ul><li>Use <code><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">stringr::str_detect()</a></code> to remove empty json string. Now <code>"[]"</code> and <code>"{}"</code> are both removed.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.5" id="tarflowiquizoo-005">tarflow.iquizoo 0.0.5<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-005"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-0-5">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-5"></a></h3>
-<ul><li>Fix issue of empty json string by removing empty (i.e., <code>"[]"</code>) json string data in validation step of <code>calc_indices()</code>.</li>
-</ul></div>
+<ul><li>Fix issue of empty json string by removing empty (i.e., <code>"[]"</code>) json string data in validation step of <code>calc_indices()</code>.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.4" id="tarflowiquizoo-004">tarflow.iquizoo 0.0.4<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-004"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-0-4">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-4"></a></h3>
-<ul><li>Fix issue of invalid json string by introducing a data validation step in <code>calc_indices()</code>.</li>
-</ul></div>
+<ul><li>Fix issue of invalid json string by introducing a data validation step in <code>calc_indices()</code>.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.3" id="tarflowiquizoo-003">tarflow.iquizoo 0.0.3<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-003"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-0-3">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-3"></a></h3>
-<ul><li>Fix an issue of data name case, and now all the names are translated to lower-case ones before preprocessing.</li>
-</ul></div>
+<ul><li>Fix an issue of data name case, and now all the names are translated to lower-case ones before preprocessing.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.2" id="tarflowiquizoo-002">tarflow.iquizoo 0.0.2<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-002"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-0-2">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-2"></a></h3>
-<ul><li>New feature is introduced with a huge change that <code>use_targets()</code> has been removed. And <code>init()</code> is used to replace it. With this function, we can define many other schemas. Maybe in future, the logic should be modified to better handle schemas.</li>
-</ul></div>
+<ul><li>New feature is introduced with a huge change that <code>use_targets()</code> has been removed. And <code>init()</code> is used to replace it. With this function, we can define many other schemas. Maybe in future, the logic should be modified to better handle schemas.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.1" id="tarflowiquizoo-001">tarflow.iquizoo 0.0.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-001"></a></h2>
@@ -257,8 +246,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9001" id="tarflowiquizoo-0009001">tarflow.iquizoo 0.0.0.9001<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-0009001"></a></h2>
-<ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-</ul></div>
+<ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li></ul></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -268,7 +256,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>
