@@ -1,3 +1,9 @@
+# tarflow.iquizoo 2.3.1
+
+## Bug fixes
+
+* Fixed recoverable error message pattern to match more cases.
+
 # tarflow.iquizoo 2.3.0
 
 ## Breaking Changes
