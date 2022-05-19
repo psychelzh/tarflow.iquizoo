@@ -29,7 +29,7 @@ preproc_data <- function(data, fn,
   data_unnested <- try_fetch(
     tidyr::unnest(raw_data, .data[[name_raw_parsed]]),
     error = function(cnd) {
-      pattern <- r"(Can't combine `\.\.1\$\w+` <.+> and `\.\.2\$\w+` <.+>)"
+      pattern <- r"(Can't combine `.+\$.+` <.+> and `.+\$.+` <.+>)"
       if (!grepl(pattern, conditionMessage(cnd))) {
         abort(
           "Don't know how to handle this error.",
