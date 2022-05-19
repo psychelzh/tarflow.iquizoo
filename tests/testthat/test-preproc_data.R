@@ -23,10 +23,11 @@ test_that("Basic situation in `preproc_data()`", {
 
 test_that("Can deal with mismatch column types in raw data", {
   data <- tibble::tibble(
-    user_id = 1:2,
+    user_id = 1:3,
     raw_parsed = list(
       data.frame(nhit = 1, feedback = 0),
-      data.frame(nhit = "1", feedback = 1)
+      data.frame(nhit = 2, feedback = 1),
+      data.frame(nhit = "3", feedback = 1)
     )
   )
   preproc_data(data, fn = prep_fun) |>
