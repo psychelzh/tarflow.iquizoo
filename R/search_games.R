@@ -23,23 +23,21 @@ search_games <- function(config_where, known_only = TRUE, query_file = NULL) {
   if (is.null(query_file)) query_file <- "sql/games.tmpl.sql"
   if (!file.exists(query_file)) abort("Query file missing.", "query_file_miss")
   games <- pickup(query_file, config_where)
-  if (bit64::is.integer64(games$game_id)) {
-    games$game_id <- bit64::as.character.integer64(games$game_id)
-  }
-  if (known_only) {
-    games |>
-      dplyr::inner_join(data.iquizoo::game_info, by = "game_id") |>
-      dplyr::mutate(
-        prep_fun = syms(.data[["prep_fun_name"]]),
-        dplyr::across(
-          dplyr::all_of(c("input", "extra")),
-          parse_exprs
-        )
+  join_method <- if (known_only) dplyr::inner_join else dplyr::left_join
+  games |>
+    join_method(data.iquizoo::game_info, by = names(games)) |>
+    dplyr::mutate(
+      # https://github.com/ropensci/tarchetypes/issues/94
+      game_id = bit64::as.character.integer64(game_id),
+      prep_fun = purrr::map(
+        .data[["prep_fun_name"]],
+        purrr::possibly(sym, NA)
+      ),
+      dplyr::across(
+        dplyr::all_of(c("input", "extra")),
+        parse_exprs
       )
-  } else {
-    games |>
-      dplyr::left_join(data.iquizoo::game_info, by = "game_id")
-  }
+    )
 }
 
 #' @describeIn search_games Cached version using

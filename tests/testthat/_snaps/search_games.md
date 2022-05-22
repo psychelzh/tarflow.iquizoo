@@ -84,27 +84,27 @@
     {
       "type": "list",
       "attributes": {
-        "class": {
+        "names": {
           "type": "character",
           "attributes": {},
-          "value": ["tbl_df", "tbl", "data.frame"]
+          "value": ["game_id", "game_name", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
         },
         "row.names": {
           "type": "integer",
           "attributes": {},
           "value": [1, 2]
         },
-        "names": {
+        "class": {
           "type": "character",
           "attributes": {},
-          "value": ["game_id", "game_name", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra"]
+          "value": ["tbl_df", "tbl", "data.frame"]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["225528186135045", "test"]
+          "value": ["225528186135045", "225528186135046"]
         },
         {
           "type": "character",
@@ -127,14 +127,50 @@
           "value": ["span", null]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": ["list(name_acc = \"accarrow\")", null]
+          "value": [
+            {
+              "type": "language",
+              "attributes": {},
+              "value": ["list(name_acc = \"accarrow\")"]
+            },
+            {
+              "type": "logical",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": ["NULL", null]
+          "value": [
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "logical",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "symbol",
+              "attributes": {},
+              "value": ["span"]
+            },
+            {
+              "type": "logical",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         }
       ]
     }
