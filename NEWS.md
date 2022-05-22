@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## Bug Fixes
+
+* Fixed errors caused by `<integer64>` class. Now `data.iquizoo::game_info` and data returned by `pickup()` stores `game_id` as `<integer64>` class from bit64 package, but `tarchetypes::tar_map()` does not support such class, and here we convert it to `<character>` class as a workaround.
+
 # tarflow.iquizoo 2.3.1
 
 ## Bug fixes
