@@ -19,7 +19,7 @@ Depends:
 Imports:
     bit64,
     cachem,
-    data.iquizoo (>= 0.0.3),
+    data.iquizoo (>= 0.2.0),
     DBI,
     dplyr,
     memoise,
