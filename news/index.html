@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,12 @@
       <small>Source: <a href="https://github.com/psychelzh/tarflow.iquizoo/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.3.2" id="tarflowiquizoo-232">tarflow.iquizoo 2.3.2<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-232"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-2-3-2">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-3-2"></a></h3>
+<ul><li>Fixed errors caused by <code>&lt;integer64&gt;</code> class. Now <code><a href="https://rdrr.io/pkg/data.iquizoo/man/game_info.html" class="external-link">data.iquizoo::game_info</a></code> and data returned by <code><a href="../reference/pickup.html">pickup()</a></code> stores <code>game_id</code> as <code>&lt;integer64&gt;</code> class from bit64 package, but <code><a href="https://docs.ropensci.org/tarchetypes/reference/tar_map.html" class="external-link">tarchetypes::tar_map()</a></code> does not support such class, and here we convert it to <code>&lt;character&gt;</code> class as a workaround.</li></ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.3.1" id="tarflowiquizoo-231">tarflow.iquizoo 2.3.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-231"></a></h2>
 <div class="section level3">
