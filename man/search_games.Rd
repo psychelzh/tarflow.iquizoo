@@ -2,12 +2,9 @@
 % Please edit documentation in R/search_games.R
 \name{search_games}
 \alias{search_games}
-\alias{search_games_mem}
 \title{Search and cache games used in analysis}
 \usage{
 search_games(config_where, known_only = TRUE, query_file = NULL)
-
-search_games_mem(file_cache = "~/.cache.tarflow", ...)
 }
 \arguments{
 \item{config_where}{Configuration of "where-clause".}
@@ -18,11 +15,6 @@ search_games_mem(file_cache = "~/.cache.tarflow", ...)
 \item{query_file}{An optional argument specifying the file storing query of
 games. If leave as \code{NULL}, default to "sql/games.tmpl.sql", which is
 created by rmarkdown template.}
-
-\item{file_cache}{The file used to store caches of results which is passed to
-\code{\link[cachem:cache_disk]{cachem::cache_disk()}}.}
-
-\item{...}{Arguments passed to \code{\link[=search_games]{search_games()}}.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} contains all the games to be
@@ -37,9 +29,3 @@ executing time.
 The fetched will be joined with \code{\link[data.iquizoo:game_info]{game_info}} data
 from data.iquizoo package to expose the pre-processing function name.
 }
-\section{Functions}{
-\itemize{
-\item \code{search_games_mem}: Cached version using
-\link[memoise:memoise]{memoise()}.
-}}
-

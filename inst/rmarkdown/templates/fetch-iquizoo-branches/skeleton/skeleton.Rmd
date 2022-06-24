@@ -19,7 +19,11 @@ targets::tar_unscript()
 
 ```{targets set-globals, tar_globals=TRUE, include=FALSE}
 future::plan(future.callr::callr)
-games <- tarflow.iquizoo::search_games_mem(config_where = config::get("where"))
+search_games_mem <- memoise::memoise(
+  tarflow.iquizoo::search_games,
+  cache = cachem::cache_disk("~/.cache.tarflow")
+)
+games <- search_games_mem(config_where = config::get("where"))
 tar_option_set(
   package = c("tidyverse", "preproc.iquizoo", "tarflow.iquizoo"),
   format = "qs",

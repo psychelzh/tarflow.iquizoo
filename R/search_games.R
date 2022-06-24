@@ -13,9 +13,6 @@
 #' @param query_file An optional argument specifying the file storing query of
 #'   games. If leave as `NULL`, default to "sql/games.tmpl.sql", which is
 #'   created by rmarkdown template.
-#' @param file_cache The file used to store caches of results which is passed to
-#'   [cachem::cache_disk()].
-#' @param ... Arguments passed to [search_games()].
 #' @return A [tibble][tibble::tibble-package] contains all the games to be
 #'   analyzed and its related information.
 #' @export
@@ -38,14 +35,4 @@ search_games <- function(config_where, known_only = TRUE, query_file = NULL) {
         parse_exprs
       )
     )
-}
-
-#' @describeIn search_games Cached version using
-#'   [memoise()][memoise::memoise()].
-#' @export
-search_games_mem <- function(file_cache = "~/.cache.tarflow", ...) {
-  memoise::memoise(
-    search_games,
-    cache = cachem::cache_disk(file_cache)
-  )(...)
 }
