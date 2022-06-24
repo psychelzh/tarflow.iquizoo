@@ -24,7 +24,7 @@ search_games <- function(config_where, known_only = TRUE, query_file = NULL) {
     join_method(data.iquizoo::game_info, by = names(games)) |>
     dplyr::mutate(
       # https://github.com/ropensci/tarchetypes/issues/94
-      game_id = bit64::as.character.integer64(game_id),
+      game_id = bit64::as.character.integer64(.data$game_id),
       prep_fun = purrr::map(
         .data[["prep_fun_name"]],
         purrr::possibly(sym, NA)
