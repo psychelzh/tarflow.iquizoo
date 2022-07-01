@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 2.4.0
 
 ## Breaking Changes
 
