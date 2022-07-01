@@ -1,5 +1,13 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Removed `search_games_mem()` for it will not behave as expected. Especially, `memoise::forget()` will not work. A working version is added in rmarkdown template.
+
+## Misc
+
+* Enhanced code quality.
+
 # tarflow.iquizoo 2.3.2
 
 ## Bug Fixes
