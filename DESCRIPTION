@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 2.3.2
+Version: 2.4.0
 Authors@R: c(
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150")),
@@ -18,11 +18,9 @@ Depends:
     R (>= 4.1.0)
 Imports:
     bit64,
-    cachem,
     data.iquizoo (>= 0.2.0),
     DBI,
     dplyr,
-    memoise,
     odbc,
     purrr,
     rlang (>= 0.1.2),
@@ -32,6 +30,7 @@ Imports:
     utils,
     vctrs
 Suggests:
+    cachem,
     config,
     covr,
     fs,
@@ -39,6 +38,7 @@ Suggests:
     future.callr,
     jsonlite,
     lifecycle,
+    memoise,
     mockery,
     preproc.iquizoo (>= 2.4.0),
     roxygen2,
