@@ -56,7 +56,7 @@ insert_where.data.frame <- function(old, ..., replace = TRUE) {
   new |>
     purrr::transpose() |>
     tibble::as_tibble() |>
-    tidyr::unnest(-.data[["values"]])
+    tidyr::unnest(-any_of("values"))
 }
 
 #' @describeIn insert_where Limit old where config to one single game.

@@ -46,9 +46,9 @@ existed one \link[rlang:is_empty]{is_empty()}, the added will be returned as a
 }
 \section{Functions}{
 \itemize{
-\item \code{insert_where_single_game}: Limit old where config to one single game.
-}}
+\item \code{insert_where_single_game()}: Limit old where config to one single game.
 
+}}
 \author{
 Liang Zhang
 }
