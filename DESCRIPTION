@@ -21,6 +21,7 @@ Imports:
     data.iquizoo (>= 0.3.0),
     DBI,
     dplyr,
+    ellipsis,
     odbc,
     purrr,
     rlang (>= 0.1.2),
