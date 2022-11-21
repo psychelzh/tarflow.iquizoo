@@ -18,7 +18,7 @@ Depends:
     R (>= 4.1.0)
 Imports:
     bit64,
-    data.iquizoo (>= 0.2.0),
+    data.iquizoo (>= 0.3.0),
     DBI,
     dplyr,
     odbc,

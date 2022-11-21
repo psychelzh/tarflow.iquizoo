@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["game_id", "game_name", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
+          "value": ["game_id", "game_name", "game_version", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
         },
         "row.names": {
           "type": "integer",
@@ -29,6 +29,11 @@
           "type": "character",
           "attributes": {},
           "value": ["打靶场"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null]
         },
         {
           "type": "character",
@@ -87,7 +92,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["game_id", "game_name", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
+          "value": ["game_id", "game_name", "game_version", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
         },
         "row.names": {
           "type": "integer",
@@ -110,6 +115,11 @@
           "type": "character",
           "attributes": {},
           "value": ["打靶场", null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null]
         },
         {
           "type": "character",
@@ -183,7 +193,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["game_id", "game_name", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
+          "value": ["game_id", "game_name", "game_version", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
         },
         "row.names": {
           "type": "integer",
@@ -206,6 +216,11 @@
           "type": "character",
           "attributes": {},
           "value": ["打靶场"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null]
         },
         {
           "type": "character",
