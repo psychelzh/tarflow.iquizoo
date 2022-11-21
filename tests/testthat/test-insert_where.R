@@ -73,3 +73,18 @@ test_that("Error for invalid where config", {
 test_that("Insert single game", {
   expect_snapshot_value(insert_where_single_game(NULL, "dummy"))
 })
+
+test_that("Can compose after `insert_where()`", {
+  list(
+    list(table = "content", field = "name", values = "test")
+  ) |>
+    insert_where(
+      list(
+        table = "content",
+        field = "name",
+        values = "test_new"
+      )
+    ) |>
+    compose_where() |>
+    expect_snapshot_value()
+})
