@@ -3,6 +3,7 @@
 \name{insert_where}
 \alias{insert_where}
 \alias{insert_where.NULL}
+\alias{insert_where.character}
 \alias{insert_where.list}
 \alias{insert_where.data.frame}
 \alias{insert_where_single_game}
@@ -11,6 +12,8 @@
 insert_where(old, ...)
 
 \method{insert_where}{`NULL`}(old, ...)
+
+\method{insert_where}{character}(old, ...)
 
 \method{insert_where}{list}(old, ..., replace = TRUE)
 
