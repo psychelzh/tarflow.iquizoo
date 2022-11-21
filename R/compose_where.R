@@ -45,13 +45,13 @@ compose_where.NULL <- function(config_where, add_keyword = NULL, ...) {
 
 #' @rdname compose_where
 #' @export
-compose_where.character <- function(config_where, add_keyword = NULL) {
+compose_where.character <- function(config_where, add_keyword = NULL, ...) {
   compose_where.default(config_where, add_keyword)
 }
 
 #' @rdname compose_where
 #' @export
-compose_where.list <- function(config_where, add_keyword = NULL) {
+compose_where.list <- function(config_where, add_keyword = NULL, ...) {
   config_where_tbl <- tibble::tibble(where = config_where) |>
     tidyr::unnest_wider("where")
   compose_where(config_where_tbl, add_keyword)
@@ -59,7 +59,7 @@ compose_where.list <- function(config_where, add_keyword = NULL) {
 
 #' @rdname compose_where
 #' @export
-compose_where.data.frame <- function(config_where, add_keyword = NULL) {
+compose_where.data.frame <- function(config_where, add_keyword = NULL, ...) {
   if (!has_name(config_where, "operator")) {
     config_where$operator <- NA_character_
   }

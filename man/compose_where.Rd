@@ -15,11 +15,11 @@ compose_where(config_where, add_keyword = NULL, ...)
 
 \method{compose_where}{`NULL`}(config_where, add_keyword = NULL, ...)
 
-\method{compose_where}{character}(config_where, add_keyword = NULL)
+\method{compose_where}{character}(config_where, add_keyword = NULL, ...)
 
-\method{compose_where}{list}(config_where, add_keyword = NULL)
+\method{compose_where}{list}(config_where, add_keyword = NULL, ...)
 
-\method{compose_where}{data.frame}(config_where, add_keyword = NULL)
+\method{compose_where}{data.frame}(config_where, add_keyword = NULL, ...)
 }
 \arguments{
 \item{config_where}{Configuration of "where-clause".}
