@@ -24,10 +24,10 @@ preproc_data <- function(data, fn,
   # do not add `possibly()` for early error is needed to check configurations
   fn <- as_function(fn)
   data_with_id <- dplyr::mutate(data, .id = seq_len(dplyr::n()))
-  groups <- dplyr::select(data_with_id, -.data[[name_raw_parsed]])
-  raw_data <- dplyr::select(data_with_id, .data$.id, .data[[name_raw_parsed]])
+  groups <- dplyr::select(data_with_id, -all_of(name_raw_parsed))
+  raw_data <- dplyr::select(data_with_id, all_of(c(".id", name_raw_parsed)))
   data_unnested <- try_fetch(
-    tidyr::unnest(raw_data, .data[[name_raw_parsed]]),
+    tidyr::unnest(raw_data, all_of(name_raw_parsed)),
     error = function(cnd) {
       pattern <- r"(Can't combine `.+\$.+` <.+> and `.+\$.+` <.+>)"
       if (!grepl(pattern, conditionMessage(cnd))) {
@@ -44,7 +44,7 @@ preproc_data <- function(data, fn,
             ~ dplyr::mutate(., dplyr::across(.fns = as.character))
           )
         ) |>
-        tidyr::unnest(.data[[name_raw_parsed]]) |>
+        tidyr::unnest(all_of(name_raw_parsed)) |>
         utils::type.convert(as.is = TRUE) |>
         vctrs::vec_restore(raw_data)
     }
@@ -57,11 +57,11 @@ preproc_data <- function(data, fn,
     data_unnested |>
       fn(.by = ".id", ...) |>
       tidyr::pivot_longer(
-        cols = -.data$.id,
+        cols = -all_of(".id"),
         names_to = out_name_index,
         values_to = out_name_score
       ),
     by = ".id"
   ) |>
-    dplyr::select(-.data$.id)
+    dplyr::select(-all_of(".id"))
 }

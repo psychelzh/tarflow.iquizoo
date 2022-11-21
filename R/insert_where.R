@@ -32,6 +32,13 @@ insert_where.NULL <- function(old, ...) {
 
 #' @rdname insert_where
 #' @export
+insert_where.character <- function(old, ...) {
+  new <- compose_where(parse_where(...), add_keyword = FALSE)
+  paste(old, new, sep = " AND ")
+}
+
+#' @rdname insert_where
+#' @export
 insert_where.list <- function(old, ..., replace = TRUE) {
   if (is_empty(old)) {
     return(insert_where.NULL(old, ...))
@@ -50,13 +57,12 @@ insert_where.data.frame <- function(old, ..., replace = TRUE) {
   if (is_empty(old)) {
     new <- insert_where.NULL(old, ...)
   } else {
-    old <- purrr::transpose(as.list(old))
-    new <- insert_where(old, ..., replace = replace)
+    new <- purrr::map_df(parse_where(...), as.data.frame)
+    if (replace) {
+      new <- dplyr::anti_join(new, old, by = "table")
+    }
   }
-  new |>
-    purrr::transpose() |>
-    tibble::as_tibble() |>
-    tidyr::unnest(-.data[["values"]])
+  dplyr::bind_rows(old, new)
 }
 
 #' @describeIn insert_where Limit old where config to one single game.
@@ -74,6 +80,7 @@ insert_where_single_game <- function(old, game_id) {
 }
 
 parse_where <- function(...) {
+  # TODO: known issue, do not support nested values
   where <- purrr::map(list(...), ~ as.list(unlist(.x)))
   if (!all(purrr::map_lgl(where, ~ has_name(.x, "table")))) {
     abort(

@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 2.4.0
+Version: 2.4.1
 Authors@R: c(
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150")),
@@ -18,15 +18,17 @@ Depends:
     R (>= 4.1.0)
 Imports:
     bit64,
-    data.iquizoo (>= 0.2.0),
+    data.iquizoo (>= 0.3.0),
     DBI,
     dplyr,
+    ellipsis,
     odbc,
     purrr,
     rlang (>= 0.1.2),
     stringr,
     tibble,
     tidyr,
+    tidyselect,
     utils,
     vctrs
 Suggests:
@@ -52,4 +54,4 @@ Remotes:
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.2

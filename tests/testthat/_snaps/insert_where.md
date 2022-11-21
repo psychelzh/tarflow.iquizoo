@@ -1,7 +1,14 @@
 # Check method dispatch works
 
     Code
-      insert_where(config_where, list(table = "content", field = "name", values = "test_new"))
+      insert_where(config_where_chr, to_insert)
+    Output
+      [1] "content.name = 'test' AND content.name = 'test_new'"
+
+---
+
+    Code
+      insert_where(config_where_list, to_insert)
     Output
       [[1]]
       [[1]]$table
@@ -18,18 +25,15 @@
 ---
 
     Code
-      insert_where(config_where, list(table = "content", field = "name", values = "test_new"))
+      insert_where(config_where_df, to_insert)
     Output
-      # A tibble: 1 x 3
-        table   field values   
-        <chr>   <chr> <list>   
-      1 content name  <chr [1]>
+          table field values
+      1 content  name   test
 
 # Check `replace = FALSE`
 
     Code
-      insert_where(config_where, list(table = "content", field = "name", values = "test_new"),
-      replace = FALSE)
+      insert_where(config_where_list, to_insert, replace = FALSE)
     Output
       [[1]]
       [[1]]$table
@@ -57,7 +61,7 @@
 # Works with empty old
 
     Code
-      insert_where(NULL, list(table = "content", field = "name", values = "test_new"))
+      insert_where(NULL, to_insert)
     Output
       [[1]]
       [[1]]$table
@@ -74,7 +78,7 @@
 ---
 
     Code
-      insert_where(list(), list(table = "content", field = "name", values = "test_new"))
+      insert_where(list(), to_insert)
     Output
       [[1]]
       [[1]]$table
@@ -91,12 +95,10 @@
 ---
 
     Code
-      insert_where(data.frame(), list(table = "content", field = "name", values = "test_new"))
+      insert_where(data.frame(), to_insert)
     Output
-      # A tibble: 1 x 3
-        table   field values   
-        <chr>   <chr> <list>   
-      1 content name  <chr [1]>
+          table field   values
+      1 content  name test_new
 
 # Insert single game
 
@@ -107,4 +109,8 @@
         "values": "dummy"
       }
     ]
+
+# Can compose after `insert_where()`
+
+    "WHERE content.name = 'test_new'"
 

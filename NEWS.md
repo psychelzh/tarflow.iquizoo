@@ -1,3 +1,9 @@
+# tarflow.iquizoo 2.4.1
+
+## Breaking Changes
+
+* Added a new argument `add_keyword` to `compose_where()` to allow adding keyword `WHERE` to the where clause. This is useful when you want to compose a where clause for a subquery.
+
 # tarflow.iquizoo 2.4.0
 
 ## Breaking Changes
