@@ -9,20 +9,27 @@
 \alias{compose_where.data.frame}
 \title{Compose where clause for database query}
 \usage{
-compose_where(config_where)
+compose_where(config_where, add_keyword = NULL, ...)
 
-\method{compose_where}{default}(config_where)
+\method{compose_where}{default}(config_where, add_keyword = NULL, ...)
 
-\method{compose_where}{`NULL`}(config_where)
+\method{compose_where}{`NULL`}(config_where, add_keyword = NULL, ...)
 
-\method{compose_where}{character}(config_where)
+\method{compose_where}{character}(config_where, add_keyword = NULL)
 
-\method{compose_where}{list}(config_where)
+\method{compose_where}{list}(config_where, add_keyword = NULL)
 
-\method{compose_where}{data.frame}(config_where)
+\method{compose_where}{data.frame}(config_where, add_keyword = NULL)
 }
 \arguments{
 \item{config_where}{Configuration of "where-clause".}
+
+\item{add_keyword}{Logical value indicates whether to add \code{"WHERE"} keyword
+or not before the result. Default is \code{NULL}, which means \code{TRUE} with an
+exception when \code{config_where} is \code{NULL} (it will error when setting as
+\code{TRUE} in such circumstance).}
+
+\item{...}{For extension use and must be empty.}
 }
 \value{
 A "where-clause" character which is directly used in database query.
