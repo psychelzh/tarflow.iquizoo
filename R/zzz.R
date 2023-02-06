@@ -15,7 +15,8 @@ NULL
     toset <- !(names(op_tarflow) %in% names(op))
     if (any(toset)) options(op_tarflow[toset])
   } else {
-    stop("Neither odbc nor RMariaDB is installed. Please install one of them.")
+    message("Neither odbc nor RMariaDB is installed.",
+            " Please install one of them.")
   }
 
   invisible()
