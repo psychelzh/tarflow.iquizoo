@@ -9,7 +9,7 @@ pickup(
   config_where = NULL,
   dsn = "iquizoo-v3",
   groups = "iquizoo-v3",
-  drv = getOption("tarflow.driver", default = "odbc"),
+  drv = getOption("tarflow.driver"),
   encoding = "utf-8"
 )
 }
@@ -30,8 +30,8 @@ be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 \code{"mariadb"}.}
 
 \item{drv}{The driver used. Set as an option of \code{"tarflow.driver"} and the
-default is currently \code{"odbc"}. Options are \code{"odbc"} and \code{"mariadb"}, both
-of which need pre-configurations.}
+default is currently \code{odbc::odbc()}. Options are \code{odbc::odbc()} and
+\code{RMariaDB::MariaDB()}, both of which need pre-configurations.}
 
 \item{encoding}{Encoding to be assumed for input strings. Default to "UTF-8".}
 }
