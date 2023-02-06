@@ -10,13 +10,13 @@
 #'   be a `list` (mostly from the `config.yml` file) or `data.frame`.
 #' @param dsn The data source name of an **ODBC** database connector. See
 #'   [odbc::dbConnect()] for more information. Used when `drv` is set as
-#'   `"odbc"`.
+#'   [odbc::odbc()].
 #' @param groups Section identifier in the `default.file`. See
 #'   [RMariaDB::MariaDB()] for more information. Used when `drv` is set as
-#'   `"mariadb"`.
+#'   [odbc::odbc()].
 #' @param drv The driver used. Set as an option of `"tarflow.driver"` and the
-#'   default is currently `odbc::odbc()`. Options are `odbc::odbc()` and
-#'   `RMariaDB::MariaDB()`, both of which need pre-configurations.
+#'   default is currently `odbc::odbc()`. Options are [odbc::odbc()] and
+#'   [RMariaDB::MariaDB()], both of which need pre-configurations.
 #' @param encoding Encoding to be assumed for input strings. Default to "UTF-8".
 #' @return A [tibble][tibble::tibble-package] of the downloaded data.
 #' @author Liang Zhang

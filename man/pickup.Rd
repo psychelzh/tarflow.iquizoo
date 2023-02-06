@@ -23,15 +23,15 @@ be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 
 \item{dsn}{The data source name of an \strong{ODBC} database connector. See
 \code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::dbConnect()}} for more information. Used when \code{drv} is set as
-\code{"odbc"}.}
+\code{\link[odbc:odbc]{odbc::odbc()}}.}
 
 \item{groups}{Section identifier in the \code{default.file}. See
 \code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}} for more information. Used when \code{drv} is set as
-\code{"mariadb"}.}
+\code{\link[odbc:odbc]{odbc::odbc()}}.}
 
 \item{drv}{The driver used. Set as an option of \code{"tarflow.driver"} and the
-default is currently \code{odbc::odbc()}. Options are \code{odbc::odbc()} and
-\code{RMariaDB::MariaDB()}, both of which need pre-configurations.}
+default is currently \code{odbc::odbc()}. Options are \code{\link[odbc:odbc]{odbc::odbc()}} and
+\code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}}, both of which need pre-configurations.}
 
 \item{encoding}{Encoding to be assumed for input strings. Default to "UTF-8".}
 }
