@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["game_id", "game_name", "game_version", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
+          "value": ["game_id", "game_name", "game_name_ver", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
         },
         "row.names": {
           "type": "integer",
@@ -92,7 +92,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["game_id", "game_name", "game_version", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
+          "value": ["game_id", "game_name", "game_name_ver", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
         },
         "row.names": {
           "type": "integer",
@@ -193,7 +193,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["game_id", "game_name", "game_version", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
+          "value": ["game_id", "game_name", "game_name_ver", "game_name_en", "game_name_abbr", "prep_fun_name", "input", "extra", "prep_fun"]
         },
         "row.names": {
           "type": "integer",
