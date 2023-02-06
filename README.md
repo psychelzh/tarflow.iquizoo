@@ -7,7 +7,7 @@
 
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![R-CMD-check](https://github.com/psychelzh/tarflow.iquizoo/workflows/R-CMD-check/badge.svg)](https://github.com/psychelzh/tarflow.iquizoo/actions)
+[![R-CMD-check](https://github.com/psychelzh/tarflow.iquizoo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/psychelzh/tarflow.iquizoo/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/psychelzh/tarflow.iquizoo/branch/main/graph/badge.svg)](https://app.codecov.io/gh/psychelzh/tarflow.iquizoo?branch=main)
 <!-- badges: end -->
@@ -48,8 +48,8 @@ to understand how to open a new template.
 
 Currently two templates are provided:
 
--   `"fetch-iquizoo"` (“Fetch Iquizoo Data”): Fetch all the data as a
-    whole, not appropriate for raw data preprocessing.
--   `"fetch-iquizoo-branches"` (“Fetch Iquizoo Data Separately”): Fetch
-    all the data separately by games, appropriate for raw data
-    preprocessing.
+- `"fetch-iquizoo"` (“Fetch Iquizoo Data”): Fetch all the data as a
+  whole, not appropriate for raw data preprocessing.
+- `"fetch-iquizoo-branches"` (“Fetch Iquizoo Data Separately”): Fetch
+  all the data separately by games, appropriate for raw data
+  preprocessing.

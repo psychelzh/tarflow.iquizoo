@@ -4,7 +4,14 @@
 \alias{pickup}
 \title{Download (pick up) datasets from given database}
 \usage{
-pickup(query_file, config_where = NULL, dsn = "iquizoo-v3", encoding = "utf-8")
+pickup(
+  query_file,
+  config_where = NULL,
+  dsn = "iquizoo-v3",
+  groups = "iquizoo-v3",
+  drv = getOption("tarflow.driver"),
+  encoding = "utf-8"
+)
 }
 \arguments{
 \item{query_file}{File name of \code{sql} query. Literal query is acceptable, and
@@ -15,7 +22,16 @@ least one new line.}
 be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 
 \item{dsn}{The data source name of an \strong{ODBC} database connector. See
-\code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::dbConnect()}} for more information.}
+\code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::dbConnect()}} for more information. Used when \code{drv} is set as
+\code{\link[odbc:odbc]{odbc::odbc()}}.}
+
+\item{groups}{Section identifier in the \code{default.file}. See
+\code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}} for more information. Used when \code{drv} is set as
+\code{\link[odbc:odbc]{odbc::odbc()}}.}
+
+\item{drv}{The driver used. Set as an option of \code{"tarflow.driver"} and the
+default is currently \code{odbc::odbc()}. Options are \code{\link[odbc:odbc]{odbc::odbc()}} and
+\code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}}, both of which need pre-configurations.}
 
 \item{encoding}{Encoding to be assumed for input strings. Default to "UTF-8".}
 }

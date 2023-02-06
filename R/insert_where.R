@@ -45,7 +45,7 @@ insert_where.list <- function(old, ..., replace = TRUE) {
   }
   new <- parse_where(...)
   if (replace) {
-    new_tables <- purrr::map_chr(new, ~ .x[["table"]])
+    new_tables <- purrr::map_chr(new, ~ .x[["table"]]) # nolint
     old[purrr::map_lgl(old, ~ .x[["table"]] %in% new_tables)] <- NULL
   }
   return(c(old, new))

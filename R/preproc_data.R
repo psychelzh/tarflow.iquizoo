@@ -39,9 +39,15 @@ preproc_data <- function(data, fn,
       }
       raw_data |>
         dplyr::mutate(
-          "{name_raw_parsed}" := purrr::map(
+          "{name_raw_parsed}" := purrr::map( #nolint
             .data[[name_raw_parsed]],
-            ~ dplyr::mutate(., dplyr::across(.fns = as.character))
+            ~ dplyr::mutate(
+              .,
+              dplyr::across(
+                everything(),
+                as.character
+              )
+            )
           )
         ) |>
         tidyr::unnest(all_of(name_raw_parsed)) |>

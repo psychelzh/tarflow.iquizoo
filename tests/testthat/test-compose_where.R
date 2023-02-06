@@ -12,7 +12,9 @@ test_that("`add_keyword` works properly", {
   config_where <- list(
     list(table = "content", field = "name", values = "test")
   )
-  expect_silent(where_clause <- compose_where(config_where, add_keyword = FALSE))
+  expect_silent(
+    where_clause <- compose_where(config_where, add_keyword = FALSE)
+  )
   expect_false(grepl("^WHERE", where_clause))
   expect_error(compose_where(NULL, add_keyword = TRUE), class = "arg_bad_value")
 })

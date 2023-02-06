@@ -1,3 +1,10 @@
+# tarflow.iquizoo 2.5.0
+
+## Breaking Changes
+
+* Now `pickup()` support `drv` argument to specify the database driver. This is useful when you want to specify which database driver to use. For example, you can use `drv = RMariaDB::MariaDB()`.
+  * The default is from the value of option `"tarflow.driver"`, which will find the first available driver from `odbc` and `RMariaDB`. If neither of them is available, a message will be prompted to inform user to install one.
+
 # tarflow.iquizoo 2.4.1
 
 ## Breaking Changes

@@ -16,7 +16,7 @@
 #' @author Liang Zhang
 #' @export
 compose_where <- function(config_where, add_keyword = NULL, ...) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   UseMethod("compose_where")
 }
 
