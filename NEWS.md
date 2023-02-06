@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Now `pickup()` and `pickup_single_game()` support `drv` argument to specify the database driver. This is useful when you want to use a database driver other than the default one. For example, you can use `drv = "mariadb"` to use `RMariaDB::MariaDB()`. This feature might be enhanced in near future.
+
 # tarflow.iquizoo 2.4.1
 
 ## Breaking Changes
