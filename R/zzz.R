@@ -12,12 +12,20 @@ NULL
     op_tarflow <- list(
       tarflow.driver = RMariaDB::MariaDB()
     )
-    toset <- !(names(op_tarflow) %in% names(op))
-    if (any(toset)) options(op_tarflow[toset])
   } else {
-    message("Neither odbc nor RMariaDB is installed.",
-            " Please install one of them.")
+    op_tarflow <- list()
   }
 
+  toset <- !(names(op_tarflow) %in% names(op))
+  if (any(toset)) options(op_tarflow[toset])
+
   invisible()
+}
+
+.onAttach <- function(libname, pkgname) {
+  if (!requireNamespace("odbc", quietly = TRUE) ||
+      !requireNamespace("RMariaDB", quietly = TRUE)) {
+    packageStartupMessage("Neither odbc nor RMariaDB is installed.",
+                          " Please install one of them.")
+  }
 }

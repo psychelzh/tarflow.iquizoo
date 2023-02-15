@@ -44,18 +44,16 @@ pickup <- function(query_file,
   tibble::tibble(DBI::dbGetQuery(con, query))
 }
 
-connect_to_db <- function(drv, ...) {
-  check_dots_used()
+connect_to_db <- function(drv, dsn, groups) {
   if (!inherits_any(drv, c("OdbcDriver", "MariaDBDriver"))) {
     stop("Driver must be either OdbcDriver or MariaDBDriver.")
   }
-  dots <- list2(...)
   if (inherits(drv, "OdbcDriver")) {
-    dsn <- dots$dsn %||% "iquizoo-v3"
+    dsn <- dsn %||% "iquizoo-v3"
     return(DBI::dbConnect(drv, dsn = dsn))
   }
   if (inherits(drv, "MariaDBDriver")) {
-    groups <- dots$groups %||% "iquizoo-v3"
+    groups <- groups %||% "iquizoo-v3"
     return(DBI::dbConnect(drv, groups = groups))
   }
 }

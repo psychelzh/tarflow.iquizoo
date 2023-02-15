@@ -1,3 +1,10 @@
+# tarflow.iquizoo 2.5.1
+
+## Bug Fixes
+
+* Fixed option `"tarflow.driver"` not working.
+* Removed `...` argument from `connect_to_db()` for it is just an internal function.
+
 # tarflow.iquizoo 2.5.0
 
 ## Breaking Changes
