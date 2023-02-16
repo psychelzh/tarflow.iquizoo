@@ -28,7 +28,17 @@ pickup <- function(query_file,
                    drv = getOption("tarflow.driver"),
                    encoding = "utf-8") {
   # connect to given database which is pre-configured
-  con <- connect_to_db(drv, dsn = dsn, groups = groups)
+  if (!inherits_any(drv, c("OdbcDriver", "MariaDBDriver"))) {
+    stop("Driver must be either OdbcDriver or MariaDBDriver.")
+  }
+  if (inherits(drv, "OdbcDriver")) {
+    dsn <- dsn %||% "iquizoo-v3"
+    con <- DBI::dbConnect(drv, dsn = dsn)
+  }
+  if (inherits(drv, "MariaDBDriver")) {
+    groups <- groups %||% "iquizoo-v3"
+    con <- DBI::dbConnect(drv, groups = groups)
+  }
   on.exit(DBI::dbDisconnect(con))
   query <- ifelse(
     stringr::str_detect(query_file, "\\n"),
@@ -42,18 +52,4 @@ pickup <- function(query_file,
       )
     )
   tibble::tibble(DBI::dbGetQuery(con, query))
-}
-
-connect_to_db <- function(drv, dsn, groups) {
-  if (!inherits_any(drv, c("OdbcDriver", "MariaDBDriver"))) {
-    stop("Driver must be either OdbcDriver or MariaDBDriver.")
-  }
-  if (inherits(drv, "OdbcDriver")) {
-    dsn <- dsn %||% "iquizoo-v3"
-    return(DBI::dbConnect(drv, dsn = dsn))
-  }
-  if (inherits(drv, "MariaDBDriver")) {
-    groups <- groups %||% "iquizoo-v3"
-    return(DBI::dbConnect(drv, groups = groups))
-  }
 }
