@@ -32,11 +32,9 @@ pickup <- function(query_file,
     stop("Driver must be either OdbcDriver or MariaDBDriver.")
   }
   if (inherits(drv, "OdbcDriver")) {
-    dsn <- dsn %||% "iquizoo-v3"
     con <- DBI::dbConnect(drv, dsn = dsn)
   }
   if (inherits(drv, "MariaDBDriver")) {
-    groups <- groups %||% "iquizoo-v3"
     con <- DBI::dbConnect(drv, groups = groups)
   }
   on.exit(DBI::dbDisconnect(con))
