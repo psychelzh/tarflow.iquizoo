@@ -23,7 +23,7 @@ NULL
 }
 
 .onAttach <- function(libname, pkgname) {
-  if (!requireNamespace("odbc", quietly = TRUE) ||
+  if (!requireNamespace("odbc", quietly = TRUE) &&
       !requireNamespace("RMariaDB", quietly = TRUE)) {
     packageStartupMessage("Neither odbc nor RMariaDB is installed.",
                           " Please install one of them.")
