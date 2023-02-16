@@ -1,5 +1,5 @@
 test_that("`pickup()` smoke testing", {
-  mockery::stub(pickup, "DBI::dbConnect", TRUE, 2)
+  mockery::stub(pickup, "DBI::dbConnect", TRUE)
   mockery::stub(pickup, "DBI::dbDisconnect", TRUE)
   mockery::stub(pickup, "DBI::dbGetQuery", data.frame())
   mockery::stub(pickup, "compose_where", "")
