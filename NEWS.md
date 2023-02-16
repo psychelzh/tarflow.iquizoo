@@ -1,5 +1,9 @@
 # tarflow.iquizoo 2.5.2
 
+## Bug Fixes
+
+* Fixed a bug in `.onAttach()` that will display incorrect message when loading the package.
+
 # tarflow.iquizoo 2.5.1
 
 ## Bug Fixes
