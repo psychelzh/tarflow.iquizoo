@@ -2,7 +2,7 @@
 #' @import tidyselect
 NULL
 
-# nocovr start
+# nocov start
 
 .onLoad <- function(libname, pkgname) {
   op <- options()
@@ -32,4 +32,4 @@ NULL
   }
 }
 
-# nocovr end
+# nocov end
