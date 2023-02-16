@@ -2,6 +2,8 @@
 #' @import tidyselect
 NULL
 
+# nocovr start
+
 .onLoad <- function(libname, pkgname) {
   op <- options()
   if (requireNamespace("odbc", quietly = TRUE)) {
@@ -29,3 +31,5 @@ NULL
                           " Please install one of them.")
   }
 }
+
+# nocovr end
