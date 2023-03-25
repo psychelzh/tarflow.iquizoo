@@ -1,5 +1,7 @@
 # tarflow.iquizoo (development version)
 
+* Enhanced templates: now `content_orginal_data_detail` and `content_score_detail` tables lived in `iqizoo_content_db` database.
+
 # tarflow.iquizoo 2.5.3
 
 * Added more tests. No user-level updates.
