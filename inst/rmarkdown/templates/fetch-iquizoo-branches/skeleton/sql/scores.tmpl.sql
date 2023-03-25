@@ -8,7 +8,7 @@ SELECT DISTINCT
 	content_score_detail.ApproximateScore game_score_raw,
 	content_score_detail.StandardScore game_score_std
 FROM
-	iquizoo_datacenter_db.content_score_detail
+	iquizoo_content_db.content_score_detail
 	INNER JOIN iquizoo_content_db.v_organizationuser ON v_organizationuser.OrganizationUserId = content_score_detail.OrganizationUserId
 	INNER JOIN iquizoo_user_db.base_organization ON base_organization.Id = v_organizationuser.OrganizationId -- `base_organization` might be used in "where_clause"
 	INNER JOIN iquizoo_content_db.content ON content.Id = content_score_detail.ContentId -- `content` might be used in "where_clause"

@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Fetch and Pre-process Data"
 output: html_document
 # redirect output to another folder (default is base_dir/output)
 knit: (function(input, ...) {
@@ -38,7 +38,9 @@ targets_data <- tarchetypes::tar_map(
   tar_target(data_parsed, wrangle_data(data)),
   tar_target(
     indices,
-    preproc_data(data_parsed, prep_fun, .input = input, .extra = extra)
+    if (!is.na(prep_fun_name)) {
+      preproc_data(data_parsed, prep_fun, .input = input, .extra = extra)
+    }
   ),
   # configurations
   tar_target(
