@@ -1,8 +1,10 @@
 SELECT DISTINCT
 	v_organizationuser.OrganizationUserId user_id,
+	project_course_config.`Name` project_name,
 	course.`Name` course_name,
 	content.Id game_id,
 	content.`Name` game_name,
+	content.`VersionName` game_name_ver,
 	content_orginal_data_detail.ContentVersion game_version,
 	content_orginal_data_detail.CreateTime game_time,
 	content_orginal_data_detail.TimeConsuming game_duration,
