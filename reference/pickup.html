@@ -12,7 +12,7 @@ extracted from a given database.'><!-- mathjax --><script src="https://cdnjs.clo
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.5.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.5.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,8 +68,8 @@ extracted from a given database.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>query_file</dt>
 <dd><p>File name of <code>sql</code> query. Literal query is acceptable, and
-to be recognized as literal query, the input must be a string containing at
-least one new line.</p></dd>
+to be recognized as literal query, the input must be either wrapped with
+<code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code> or a string containing at least one new line.</p></dd>
 
 
 <dt>config_where</dt>
@@ -86,7 +86,7 @@ be a <code>list</code> (mostly from the <code>config.yml</code> file) or <code>d
 <dt>groups</dt>
 <dd><p>Section identifier in the <code>default.file</code>. See
 <code><a href="https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html" class="external-link">RMariaDB::MariaDB()</a></code> for more information. Used when <code>drv</code> is set as
-<code><a href="https://r-dbi.github.io/odbc/reference/odbc.html" class="external-link">odbc::odbc()</a></code>.</p></dd>
+<code><a href="https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html" class="external-link">RMariaDB::MariaDB()</a></code>.</p></dd>
 
 
 <dt>drv</dt>
