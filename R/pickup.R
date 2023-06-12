@@ -13,7 +13,7 @@
 #'   [odbc::odbc()].
 #' @param groups Section identifier in the `default.file`. See
 #'   [RMariaDB::MariaDB()] for more information. Used when `drv` is set as
-#'   [odbc::odbc()].
+#'   [RMariaDB::MariaDB()].
 #' @param drv The driver used. Set as an option of `"tarflow.driver"` and the
 #'   default is currently `odbc::odbc()`. Options are [odbc::odbc()] and
 #'   [RMariaDB::MariaDB()], both of which need pre-configurations.

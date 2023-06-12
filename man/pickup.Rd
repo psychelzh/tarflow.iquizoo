@@ -27,7 +27,7 @@ be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 
 \item{groups}{Section identifier in the \code{default.file}. See
 \code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}} for more information. Used when \code{drv} is set as
-\code{\link[odbc:odbc]{odbc::odbc()}}.}
+\code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}}.}
 
 \item{drv}{The driver used. Set as an option of \code{"tarflow.driver"} and the
 default is currently \code{odbc::odbc()}. Options are \code{\link[odbc:odbc]{odbc::odbc()}} and
