@@ -1,5 +1,14 @@
 # tarflow.iquizoo (development version)
 
+## New Features
+
+* Supported `I()` to input literal query in `query_file` argument for `pickup()`.
+* Added project names and game version names into data query template.
+
+## Bug Fixes
+
+* Fix some typos in documentation.
+
 # tarflow.iquizoo 2.5.4
 
 * Enhanced templates: now `content_orginal_data_detail` and `content_score_detail` tables lived in `iqizoo_content_db` database.
