@@ -15,8 +15,8 @@ pickup(
 }
 \arguments{
 \item{query_file}{File name of \code{sql} query. Literal query is acceptable, and
-to be recognized as literal query, the input must be a string containing at
-least one new line.}
+to be recognized as literal query, the input must be either wrapped with
+\code{\link[=I]{I()}} or a string containing at least one new line.}
 
 \item{config_where}{Configuration of "where-clause" of the \code{sql} query. Can
 be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
@@ -27,7 +27,7 @@ be a \code{list} (mostly from the \code{config.yml} file) or \code{data.frame}.}
 
 \item{groups}{Section identifier in the \code{default.file}. See
 \code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}} for more information. Used when \code{drv} is set as
-\code{\link[odbc:odbc]{odbc::odbc()}}.}
+\code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}}.}
 
 \item{drv}{The driver used. Set as an option of \code{"tarflow.driver"} and the
 default is currently \code{odbc::odbc()}. Options are \code{\link[odbc:odbc]{odbc::odbc()}} and
