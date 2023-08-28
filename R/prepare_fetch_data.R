@@ -61,6 +61,7 @@ prepare_fetch_data <- function(tbl_params, ...,
         # https://github.com/ropensci/tarchetypes/issues/94
         project_id = bit64::as.character.integer64(.data$project_id),
         game_id = bit64::as.character.integer64(.data$game_id),
+        course_date = as.character(course_date),
         prep_fun = purrr::map(
           .data[["prep_fun_name"]],
           purrr::possibly(sym, NA)
@@ -99,6 +100,7 @@ prepare_fetch_data <- function(tbl_params, ...,
     }
   )
   list(
+    config_tbl,
     targets_data,
     tarchetypes::tar_combine_raw(
       what,

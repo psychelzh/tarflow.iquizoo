@@ -16,7 +16,7 @@ fetch_data <- function(project_id, game_id, course_date, ...,
     scores = "content_ability_score_"
   )
   # name injection in the query
-  tbl_data <- paste0(prefix, format(course_date, "%Y"), "0101")
+  tbl_data <- paste0(prefix, format(as.POSIXct(course_date), "%Y0101"))
   sql_file <- switch(what,
     raw_data = "fetch_raw_data_glue.sql",
     scores = "fetch_scores_glue.sql"
