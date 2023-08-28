@@ -71,7 +71,7 @@ prepare_fetch_data <- function(tbl_params, ...,
           parse_exprs
         )
       ),
-    names = c(.data$project_id, .data$game_id),
+    names = c("project_id", "game_id"),
     if (what %in% c("all", "raw_data")) {
       list(
         targets::tar_target(
