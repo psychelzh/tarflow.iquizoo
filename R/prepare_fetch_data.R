@@ -36,14 +36,17 @@ prepare_fetch_data <- function(tbl_params, ...,
     fetch_config_tbl,
     cache = cachem::cache_disk(cache_dir, max_age = cache_age)
   )
+  # course periods are stored as numeric coding in database
+  if (is.character(tbl_params$course_period)) {
+    course_periods_map <- set_names(
+      course_periods$course_period_code,
+      course_periods$course_period_name
+    )
+    tbl_params$course_period <- course_periods_map[tbl_params$course_period]
+  }
   config_tbl <- tbl_params |>
     purrr::pmap(
       \(course_name, course_period) {
-        if (is.character(course_period)) {
-          course_period <- course_periods |>
-            dplyr::filter(.data[["course_period_name"]] == course_period) |>
-            dplyr::pull(.data[["course_period_code"]])
-        }
         fetch_config_tbl_mem(list(course_name, course_period))
       }
     ) |>
