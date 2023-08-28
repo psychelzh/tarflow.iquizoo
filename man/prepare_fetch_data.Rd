@@ -7,7 +7,7 @@
 prepare_fetch_data(
   tbl_params,
   ...,
-  what = c("raw_data", "scores"),
+  what = c("all", "raw_data", "scores"),
   cache_dir = "~/.cache.tarflow",
   cache_age = Inf
 )
@@ -19,7 +19,7 @@ row is a set of parameters. See details for more information.}
 
 \item{...}{For future usage. Should be empty.}
 
-\item{what}{What to fetch. Can be either "raw_data" or "scores".}
+\item{what}{What to fetch. Can be "all", "raw_data" or "scores".}
 
 \item{cache_dir}{The directory to store cache. Defaults to
 \verb{~/.cache.tarflow}.}

@@ -20,14 +20,14 @@
 #'   query. For now, only `course_name` and `course_period` are supported. Each
 #'   row is a set of parameters. See details for more information.
 #' @param ... For future usage. Should be empty.
-#' @param what What to fetch. Can be either "raw_data" or "scores".
+#' @param what What to fetch. Can be "all", "raw_data" or "scores".
 #' @param cache_dir The directory to store cache. Defaults to
 #'   `~/.cache.tarflow`.
 #' @param cache_age The maximum age of cache in seconds. Defaults to `Inf`.
 #' @return A list of [targets][targets::tar_target()].
 #' @export
 prepare_fetch_data <- function(tbl_params, ...,
-                               what = c("raw_data", "scores"),
+                               what = c("all", "raw_data", "scores"),
                                cache_dir = "~/.cache.tarflow",
                                cache_age = Inf) {
   check_dots_empty()
@@ -72,20 +72,18 @@ prepare_fetch_data <- function(tbl_params, ...,
         )
       ),
     names = c(.data$project_id, .data$game_id),
-    targets::tar_target_raw(
-      what,
-      expr(
-        fetch_data(
-          project_id, game_id, course_date,
-          what = !!what
-        )
-      )
-    ),
-    if (what == "raw_data") {
+    if (what %in% c("all", "raw_data")) {
       list(
-        targets::tar_target_raw(
-          "raw_data_parsed",
-          expr(wrangle_data(!!sym(what)))
+        targets::tar_target(
+          raw_data,
+          fetch_data(
+            project_id, game_id, course_date,
+            what = "raw_data"
+          )
+        ),
+        targets::tar_target(
+          raw_data_parsed,
+          wrangle_data(raw_data)
         ),
         targets::tar_target(
           indices,
@@ -97,25 +95,43 @@ prepare_fetch_data <- function(tbl_params, ...,
           }
         )
       )
+    },
+    if (what %in% c("all", "scores")) {
+      targets::tar_target(
+        scores,
+        fetch_data(
+          project_id, game_id, course_date,
+          what = "scores"
+        )
+      )
     }
   )
   list(
     config_tbl,
     targets_data,
-    tarchetypes::tar_combine_raw(
-      what,
-      targets_data[[what]]
-    ),
-    if (what == "raw_data") {
+    if (what %in% c("all", "raw_data")) {
+      list(
+        tarchetypes::tar_combine(
+          raw_data,
+          targets_data$raw_data
+        ),
+        tarchetypes::tar_combine(
+          indices,
+          targets_data$indices
+        )
+      )
+    },
+    if (what %in% c("all", "scores")) {
       tarchetypes::tar_combine(
-        indices,
-        targets_data$indices
+        scores,
+        targets_data$scores
       )
     }
   )
 }
 
 utils::globalVariables(
-  c("project_id", "game_id", "course_date", "raw_data_parsed",
-    "indices", "prep_fun_name", "prep_fun", "input", "extra")
+  c("scores", "raw_data", "raw_data_parsed", "indices",
+    "project_id", "game_id", "course_date",
+    "prep_fun_name", "prep_fun", "input", "extra")
 )
