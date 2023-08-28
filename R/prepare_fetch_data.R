@@ -17,7 +17,7 @@
 #' | 7    | 高中   |
 #'
 #' @param tbl_params A [data.frame] contains the parameters to be bound to the
-#'   query. For now, only `course_name` and  are supported. Each
+#'   query. For now, only `course_name` and `course_period` are supported. Each
 #'   row is a set of parameters. See details for more information.
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. Can be either "raw_data" or "scores".

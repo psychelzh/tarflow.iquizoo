@@ -14,7 +14,7 @@ prepare_fetch_data(
 }
 \arguments{
 \item{tbl_params}{A \link{data.frame} contains the parameters to be bound to the
-query. For now, only \code{course_name} and  are supported. Each
+query. For now, only \code{course_name} and \code{course_period} are supported. Each
 row is a set of parameters. See details for more information.}
 
 \item{...}{For future usage. Should be empty.}
