@@ -36,7 +36,9 @@ fetch_config_tbl <- function(params) {
   stopifnot("Must specify only course name and course period, in that order." =
               length(params) == 2)
   query <- read_sql_file("course_contents.sql")
-  fetch_parameterized(query, params)
+  fetch_parameterized(query, params) |>
+    dplyr::left_join(course_periods, by = "course_period_code") |>
+    dplyr::left_join(game_types, by = "game_type_code")
 }
 
 #' Fetch data from iQuizoo database based on a parameterized query
