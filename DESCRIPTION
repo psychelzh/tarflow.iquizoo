@@ -24,7 +24,6 @@ Imports:
     purrr,
     rlang (>= 1.0.0),
     stringr,
-    tibble,
     tidyr,
     tidyselect,
     utils,
@@ -47,6 +46,7 @@ Suggests:
     tarchetypes,
     targets,
     testthat (>= 3.0.0),
+    tibble,
     withr
 Remotes:
     psychelzh/data.iquizoo,
