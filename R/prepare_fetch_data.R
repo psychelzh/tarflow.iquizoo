@@ -88,3 +88,8 @@ prepare_fetch_data <- function(tbl_params, ...,
     }
   )
 }
+
+utils::globalVariables(
+  c("project_id", "game_id", "course_date", "raw_data_parsed",
+    "indices", "prep_fun_name", "prep_fun", "input", "extra")
+)
