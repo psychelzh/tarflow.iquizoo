@@ -14,8 +14,8 @@ prepare_fetch_data(
 }
 \arguments{
 \item{tbl_params}{A \link{data.frame} contains the parameters to be bound to the
-query. For now, only \code{course_name} and \code{course_period} are supported. Each
-row is a set of parameters.}
+query. For now, only \code{course_name} and  are supported. Each
+row is a set of parameters. See details for more information.}
 
 \item{...}{For future usage. Should be empty.}
 
@@ -31,4 +31,18 @@ A list of \link[targets:tar_target]{targets}.
 }
 \description{
 Prepare targets pipeline for fetching data
+}
+\details{
+The \code{course_period} in \code{tble_params} could be numeric or character values.
+See the following table for reference:\tabular{ll}{
+   code \tab name \cr
+   0 \tab 未指定 \cr
+   1 \tab 学前 \cr
+   2 \tab 小学低段 \cr
+   3 \tab 小学中段 \cr
+   4 \tab 小学高段 \cr
+   5 \tab 小学 \cr
+   6 \tab 初中 \cr
+   7 \tab 高中 \cr
+}
 }

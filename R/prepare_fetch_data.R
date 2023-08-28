@@ -1,8 +1,24 @@
 #' Prepare targets pipeline for fetching data
 #'
+#' @details
+#'
+#' The `course_period` in `tble_params` could be numeric or character values.
+#' See the following table for reference:
+#'
+#' | code | name |
+#' | ---- | ---- |
+#' | 0    | 未指定  |
+#' | 1    | 学前   |
+#' | 2    | 小学低段 |
+#' | 3    | 小学中段 |
+#' | 4    | 小学高段 |
+#' | 5    | 小学   |
+#' | 6    | 初中   |
+#' | 7    | 高中   |
+#'
 #' @param tbl_params A [data.frame] contains the parameters to be bound to the
-#'   query. For now, only `course_name` and `course_period` are supported. Each
-#'   row is a set of parameters.
+#'   query. For now, only `course_name` and  are supported. Each
+#'   row is a set of parameters. See details for more information.
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. Can be either "raw_data" or "scores".
 #' @param cache_dir The directory to store cache. Defaults to
@@ -23,6 +39,11 @@ prepare_fetch_data <- function(tbl_params, ...,
   config_tbl <- tbl_params |>
     purrr::pmap(
       \(course_name, course_period) {
+        if (is.character(course_period)) {
+          course_period <- course_periods |>
+            dplyr::filter(.data[["course_period_name"]] == course_period) |>
+            dplyr::pull(.data[["course_period_code"]])
+        }
         fetch_config_tbl_mem(list(course_name, course_period))
       }
     ) |>
