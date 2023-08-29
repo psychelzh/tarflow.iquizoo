@@ -41,15 +41,8 @@ devtools::install_github("psychelzh/tarflow.iquizoo")
 
 ## Usage
 
-This package is essentially providing several rmarkdown templates for
-use. See [this
-article](https://rstudio.github.io/rstudio-extensions/rmarkdown_templates.html)
-to understand how to open a new template.
-
-Currently two templates are provided:
-
-- `"fetch-iquizoo"` (“Fetch Iquizoo Data”): Fetch all the data as a
-  whole, not appropriate for raw data preprocessing.
-- `"fetch-iquizoo-branches"` (“Fetch Iquizoo Data Separately”): Fetch
-  all the data separately by games, appropriate for raw data
-  preprocessing.
+This simplest way to use this package is to call
+`tarflow.iquizoo::use_targets()` to generate a
+{[targets](https://docs.ropensci.org/targets/)} pipeline. After some
+basic parameters edit (follow the generated script), then you can run
+`targets::tar_make()` to run the pipeline.
