@@ -51,6 +51,13 @@ prepare_fetch_data <- function(tbl_params, ...,
       }
     ) |>
     purrr::list_rbind()
+  if (nrow(config_tbl) == 0) {
+    warn(
+      "No records found based on the given parameters",
+      class = "tarflow_bad_params"
+    )
+    return()
+  }
   targets_data <- tarchetypes::tar_map(
     config_tbl |>
       dplyr::left_join(
