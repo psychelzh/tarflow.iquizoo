@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 2.5.5
+Version: 3.0.0
 Authors@R: c(
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150")),
@@ -18,35 +18,32 @@ Depends:
     R (>= 4.1.0)
 Imports:
     bit64,
+    cachem,
+    cli,
     data.iquizoo (>= 0.3.0),
     DBI,
     dplyr,
+    jsonlite,
+    memoise,
     purrr,
     rlang (>= 1.0.0),
     stringr,
-    tibble,
+    tarchetypes,
+    targets,
     tidyr,
     tidyselect,
     utils,
     vctrs
 Suggests:
-    cachem,
-    config,
     covr,
-    fs,
-    future,
-    future.callr,
-    jsonlite,
     lifecycle,
-    memoise,
     mockery,
     odbc,
     preproc.iquizoo (>= 2.4.0),
     RMariaDB,
     roxygen2,
-    tarchetypes,
-    targets,
     testthat (>= 3.0.0),
+    tibble,
     withr
 Remotes:
     psychelzh/data.iquizoo,
@@ -55,3 +52,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+BugReports: https://github.com/psychelzh/tarflow.iquizoo/issues

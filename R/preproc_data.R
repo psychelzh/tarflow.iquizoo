@@ -2,7 +2,7 @@
 #'
 #' Calculate indices using data returned by [wrangle_data()].
 #'
-#' @param data A [tibble][tibble::tibble-package] contains raw data.
+#' @param data A [data.frame] contains raw data.
 #' @param fn This can be a function or formula. See [rlang::as_function()] for
 #'   more details.
 #' @param name_raw_parsed The column name in which stores user's raw data in
@@ -12,7 +12,7 @@
 #' @param out_name_score The column name used in output storing the value of
 #'   each calculated index.
 #' @param ... Additional arguments passed to `fn`.
-#' @return A [tibble][tibble::tibble-package] contains the calculated indices.
+#' @return A [data.frame] contains the calculated indices.
 #'   The index names are stored in the column of `out_name_index`, and index
 #'   values are stored in the column of `out_name_score`.
 #' @export

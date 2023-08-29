@@ -1,4 +1,0 @@
-name: Fetch Iquizoo Data
-description: >
-   An ominpotent (i.e., containing all supported targets) rmarkdown integrate targets package to help download data from iquizoo server.
-create_dir: TRUE

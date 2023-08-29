@@ -1,3 +1,11 @@
+# tarflow.iquizoo 3.0.0
+
+## Breaking Changes
+
+* Supported the new database design of IQUIZOO. Now the Rmarkdown templates were removed, and users should call `tarflow.iquizoo::use_targets()` to generate the pipeline.
+* Limited the parameters settings to only `course_name` and `course_period` for now. Other parameters will be added in future.
+* Added `game_stage` and `game_star` to scores data ([#29](https://github.com/psychelzh/tarflow.iquizoo/issues/29)).
+
 # tarflow.iquizoo 2.5.5
 
 ## New Features

@@ -14,7 +14,7 @@ preproc_data(
 )
 }
 \arguments{
-\item{data}{A \link[tibble:tibble-package]{tibble} contains raw data.}
+\item{data}{A \link{data.frame} contains raw data.}
 
 \item{fn}{This can be a function or formula. See \code{\link[rlang:as_function]{rlang::as_function()}} for
 more details.}
@@ -31,7 +31,7 @@ each calculated index.}
 \item{...}{Additional arguments passed to \code{fn}.}
 }
 \value{
-A \link[tibble:tibble-package]{tibble} contains the calculated indices.
+A \link{data.frame} contains the calculated indices.
 The index names are stored in the column of \code{out_name_index}, and index
 values are stored in the column of \code{out_name_score}.
 }

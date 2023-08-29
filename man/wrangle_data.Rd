@@ -15,7 +15,7 @@ format of json string.}
 \item{name_raw_parsed}{The name used to store parsed data.}
 }
 \value{
-A \link[tibble:tibble-package]{tibble} contains the parsed data.
+A \link{data.frame} contains the parsed data.
 }
 \description{
 Data wrangling is the first step for data analysis.
