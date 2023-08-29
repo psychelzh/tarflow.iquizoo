@@ -13,7 +13,7 @@ coverage](https://codecov.io/gh/psychelzh/tarflow.iquizoo/branch/main/graph/badg
 <!-- badges: end -->
 
 The goal of tarflow.iquizoo is to provide workflow auto-generation for
-IQUIZOO data powered by [targets](https://github.com/wlandau/targets)
+IQUIZOO data powered by [targets](https://github.com/ropensci/targets)
 package.
 
 ## Background
