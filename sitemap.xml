@@ -19,22 +19,25 @@
     <loc>https://psychelzh.github.io/tarflow.iquizoo/news/index.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/compose_where.html</loc>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_config_tbl.html</loc>
+  </url>
+  <url>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_data.html</loc>
+  </url>
+  <url>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_parameterized.html</loc>
   </url>
   <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/insert_where.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/pickup.html</loc>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/prepare_fetch_data.html</loc>
   </url>
   <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/preproc_data.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/search_games.html</loc>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/use_targets.html</loc>
   </url>
   <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/wrangle_data.html</loc>

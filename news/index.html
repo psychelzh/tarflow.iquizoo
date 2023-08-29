@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.5.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,10 +45,19 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.0.0" id="tarflowiquizoo-300">tarflow.iquizoo 3.0.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-300"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-3-0-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-0"></a></h3>
+<ul><li>Supported the new database design of IQUIZOO. Now the Rmarkdown templates were removed, and users should call <code><a href="../reference/use_targets.html">tarflow.iquizoo::use_targets()</a></code> to generate the pipeline.</li>
+<li>Limited the parameters settings to only <code>course_name</code> and <code>course_period</code> for now. Other parameters will be added in future.</li>
+<li>Added <code>game_stage</code> and <code>game_star</code> to scores data (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/29" class="external-link">#29</a>).</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.5.5" id="tarflowiquizoo-255">tarflow.iquizoo 2.5.5<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-255"></a></h2>
 <div class="section level3">
 <h3 id="new-features-2-5-5">New Features<a class="anchor" aria-label="anchor" href="#new-features-2-5-5"></a></h3>
-<ul><li>Supported <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code> to input literal query in <code>query_file</code> argument for <code><a href="../reference/pickup.html">pickup()</a></code>.</li>
+<ul><li>Supported <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code> to input literal query in <code>query_file</code> argument for <code>pickup()</code>.</li>
 <li>Added project names and game version names into data query template.</li>
 </ul></div>
 <div class="section level3">
@@ -83,7 +92,7 @@
 <h2 class="pkg-version" data-toc-text="2.5.0" id="tarflowiquizoo-250">tarflow.iquizoo 2.5.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-250"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-2-5-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-2-5-0"></a></h3>
-<ul><li>Now <code><a href="../reference/pickup.html">pickup()</a></code> support <code>drv</code> argument to specify the database driver. This is useful when you want to specify which database driver to use. For example, you can use <code>drv = RMariaDB::MariaDB()</code>.
+<ul><li>Now <code>pickup()</code> support <code>drv</code> argument to specify the database driver. This is useful when you want to specify which database driver to use. For example, you can use <code>drv = RMariaDB::MariaDB()</code>.
 <ul><li>The default is from the value of option <code>"tarflow.driver"</code>, which will find the first available driver from <code>odbc</code> and <code>RMariaDB</code>. If neither of them is available, a message will be prompted to inform user to install one.</li>
 </ul></li>
 </ul></div>
@@ -92,7 +101,7 @@
 <h2 class="pkg-version" data-toc-text="2.4.1" id="tarflowiquizoo-241">tarflow.iquizoo 2.4.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-241"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-2-4-1">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-2-4-1"></a></h3>
-<ul><li>Added a new argument <code>add_keyword</code> to <code><a href="../reference/compose_where.html">compose_where()</a></code> to allow adding keyword <code>WHERE</code> to the where clause. This is useful when you want to compose a where clause for a subquery.</li>
+<ul><li>Added a new argument <code>add_keyword</code> to <code>compose_where()</code> to allow adding keyword <code>WHERE</code> to the where clause. This is useful when you want to compose a where clause for a subquery.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -110,7 +119,7 @@
 <h2 class="pkg-version" data-toc-text="2.3.2" id="tarflowiquizoo-232">tarflow.iquizoo 2.3.2<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-232"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-2-3-2">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-3-2"></a></h3>
-<ul><li>Fixed errors caused by <code>&lt;integer64&gt;</code> class. Now <code><a href="https://rdrr.io/pkg/data.iquizoo/man/game_info.html" class="external-link">data.iquizoo::game_info</a></code> and data returned by <code><a href="../reference/pickup.html">pickup()</a></code> stores <code>game_id</code> as <code>&lt;integer64&gt;</code> class from bit64 package, but <code><a href="https://docs.ropensci.org/tarchetypes/reference/tar_map.html" class="external-link">tarchetypes::tar_map()</a></code> does not support such class, and here we convert it to <code>&lt;character&gt;</code> class as a workaround.</li>
+<ul><li>Fixed errors caused by <code>&lt;integer64&gt;</code> class. Now <code><a href="https://rdrr.io/pkg/data.iquizoo/man/game_info.html" class="external-link">data.iquizoo::game_info</a></code> and data returned by <code>pickup()</code> stores <code>game_id</code> as <code>&lt;integer64&gt;</code> class from bit64 package, but <code><a href="https://docs.ropensci.org/tarchetypes/reference/tar_map.html" class="external-link">tarchetypes::tar_map()</a></code> does not support such class, and here we convert it to <code>&lt;character&gt;</code> class as a workaround.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -148,7 +157,7 @@
 <div class="section level3">
 <h3 id="breaking-changes-2-1-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-2-1-0"></a></h3>
 <ul><li>Now parsed data are nested into the <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> of data, which will be more efficient (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/50" class="external-link">#50</a>).</li>
-<li>Now <code><a href="../reference/pickup.html">pickup()</a></code> support input literal sql query string through argument <code>query_file</code>. To be recognized as literal sql query, the string must contains at least one new line.</li>
+<li>Now <code>pickup()</code> support input literal sql query string through argument <code>query_file</code>. To be recognized as literal sql query, the string must contains at least one new line.</li>
 <li>Now raw data will also fetch <code>"game_version"</code> column.</li>
 </ul></div>
 </div>
@@ -175,7 +184,7 @@
 <ul><li>
 <code>init()</code> and its related functions were totally removed, which were deprecated in <code>"0.2.0"</code> and later.</li>
 <li>
-<code>fetch()</code> and <code>fetch_single_game()</code> were renamed as <code><a href="../reference/pickup.html">pickup()</a></code> and <code>pickup_single_game()</code> to avoid name masking of <code><a href="https://dbi.r-dbi.org/reference/dbFetch.html" class="external-link">DBI::fetch()</a></code> (see <a href="https://github.com/psychelzh/tarflow.iquizoo/issues/45" class="external-link">#45</a>).</li>
+<code>fetch()</code> and <code>fetch_single_game()</code> were renamed as <code>pickup()</code> and <code>pickup_single_game()</code> to avoid name masking of <code><a href="https://dbi.r-dbi.org/reference/dbFetch.html" class="external-link">DBI::fetch()</a></code> (see <a href="https://github.com/psychelzh/tarflow.iquizoo/issues/45" class="external-link">#45</a>).</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-0-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-0"></a></h3>
@@ -183,7 +192,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="internal-1-0-0">Internal<a class="anchor" aria-label="anchor" href="#internal-1-0-0"></a></h3>
-<ul><li>Added more tests for many core functions except <code><a href="../reference/pickup.html">pickup()</a></code> (see <a href="https://github.com/psychelzh/tarflow.iquizoo/issues/41" class="external-link">#41</a>).</li>
+<ul><li>Added more tests for many core functions except <code>pickup()</code> (see <a href="https://github.com/psychelzh/tarflow.iquizoo/issues/41" class="external-link">#41</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -252,7 +261,7 @@
 <h2 class="pkg-version" data-toc-text="0.1.5" id="tarflowiquizoo-015">tarflow.iquizoo 0.1.5<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-015"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-1-5">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-1-5"></a></h3>
-<ul><li>Add <code>known_only</code> argument (default to <code>TRUE</code>) to <code><a href="../reference/search_games.html">search_games()</a></code>, which uses the games in <code>dataproc.iquizoo::game_info</code> only. You cannot set it as <code>FALSE</code> when fetching original data.</li>
+<ul><li>Add <code>known_only</code> argument (default to <code>TRUE</code>) to <code>search_games()</code>, which uses the games in <code>dataproc.iquizoo::game_info</code> only. You cannot set it as <code>FALSE</code> when fetching original data.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -296,7 +305,7 @@
 <div class="section level3">
 <h3 id="enhancements-0-0-7">Enhancements<a class="anchor" aria-label="anchor" href="#enhancements-0-0-7"></a></h3>
 <ul><li>Added <code>fetch_single_game()</code> to treat special case of fetching dataset from a single game. This is used especially when using branches.</li>
-<li>Unexported <code><a href="../reference/compose_where.html">compose_where()</a></code> and <code><a href="../reference/insert_where.html">insert_where()</a></code>, because they are just for usage in current package.</li>
+<li>Unexported <code>compose_where()</code> and <code>insert_where()</code>, because they are just for usage in current package.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -331,7 +340,7 @@
 <h2 class="pkg-version" data-toc-text="0.0.2" id="tarflowiquizoo-002">tarflow.iquizoo 0.0.2<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-002"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-0-2">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-2"></a></h3>
-<ul><li>New feature is introduced with a huge change that <code>use_targets()</code> has been removed. And <code>init()</code> is used to replace it. With this function, we can define many other schemas. Maybe in future, the logic should be modified to better handle schemas.</li>
+<ul><li>New feature is introduced with a huge change that <code><a href="../reference/use_targets.html">use_targets()</a></code> has been removed. And <code>init()</code> is used to replace it. With this function, we can define many other schemas. Maybe in future, the logic should be modified to better handle schemas.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -341,10 +350,10 @@
 <li>Use a new yaml configurations api.</li>
 <li>Support more types of <code>config_where</code> in <code>fetch_from_v3()</code>. Besides the <code>list</code> type, now you can specify a <code>data.frame</code> type and even a <code>character</code> type of <code>config_where</code>. This is most helpful when <code>config_where</code> is generated not by <code>yaml</code> config, but by R code directly.</li>
 <li>Rename <code>fetch_from_v3()</code> as <code>fetch()</code>, and the API is now <code>fetch(query_file, config_where, dsn)</code>. That is to say, you can now pass the data source name of your database to it.</li>
-<li>Export S3 method <code><a href="../reference/compose_where.html">compose_where()</a></code>, which originally was named as <code>compose_where_clause()</code>.</li>
-<li>Support new argument <code>separate</code> in <code>use_targets()</code> to optionally separate fetching into branches by games.</li>
-<li>Support new argument <code>ignore_tar</code> in <code>use_targets()</code> to optionally ignore internal data from targets package in version control system (i.e., “.gitignore”).</li>
-<li>Now <code>use_targets()</code> will skip “config.yml” file silently if there already exists one.</li>
+<li>Export S3 method <code>compose_where()</code>, which originally was named as <code>compose_where_clause()</code>.</li>
+<li>Support new argument <code>separate</code> in <code><a href="../reference/use_targets.html">use_targets()</a></code> to optionally separate fetching into branches by games.</li>
+<li>Support new argument <code>ignore_tar</code> in <code><a href="../reference/use_targets.html">use_targets()</a></code> to optionally ignore internal data from targets package in version control system (i.e., “.gitignore”).</li>
+<li>Now <code><a href="../reference/use_targets.html">use_targets()</a></code> will skip “config.yml” file silently if there already exists one.</li>
 <li>Moved internal data named <code>game_info</code> to “dataproc.iquizoo (&gt;= 0.2.6)” package.</li>
 </ul></div>
     <div class="section level2">

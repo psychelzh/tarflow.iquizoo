@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.5.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of tarflow.iquizoo is to provide workflow auto-generation for IQUIZOO data powered by <a href="https://github.com/wlandau/targets" class="external-link">targets</a> package.</p>
+<p>The goal of tarflow.iquizoo is to provide workflow auto-generation for IQUIZOO data powered by <a href="https://github.com/ropensci/targets" class="external-link">targets</a> package.</p>
 <div class="section level2">
 <h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
 </h2>
@@ -90,20 +90,14 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>This package is essentially providing several rmarkdown templates for use. See <a href="https://rstudio.github.io/rstudio-extensions/rmarkdown_templates.html" class="external-link">this article</a> to understand how to open a new template.</p>
-<p>Currently two templates are provided:</p>
-<ul>
-<li>
-<code>"fetch-iquizoo"</code> (“Fetch Iquizoo Data”): Fetch all the data as a whole, not appropriate for raw data preprocessing.</li>
-<li>
-<code>"fetch-iquizoo-branches"</code> (“Fetch Iquizoo Data Separately”): Fetch all the data separately by games, appropriate for raw data preprocessing.</li>
-</ul>
+<p>This simplest way to use this package is to call <code><a href="reference/use_targets.html">tarflow.iquizoo::use_targets()</a></code> to generate a {<a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>} pipeline. After some basic parameters edit (follow the generated script), then you can run <code><a href="https://docs.ropensci.org/targets/reference/tar_make.html" class="external-link">targets::tar_make()</a></code> to run the pipeline.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/psychelzh/tarflow.iquizoo/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/psychelzh/tarflow.iquizoo/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
