@@ -26,6 +26,7 @@
 #' @param cache_age The maximum age of cache in seconds. Defaults to `Inf`.
 #' @return A list of [targets][targets::tar_target()].
 #' @export
+#' @encoding UTF-8
 prepare_fetch_data <- function(tbl_params, ...,
                                what = c("all", "raw_data", "scores"),
                                cache_dir = "~/.cache.tarflow",
