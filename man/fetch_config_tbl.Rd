@@ -18,4 +18,3 @@ A \link{data.frame} contains the fetched data.
 \description{
 Fetch configuration table from iQuizoo database
 }
-\keyword{internal}

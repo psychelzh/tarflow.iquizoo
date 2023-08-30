@@ -26,7 +26,7 @@ fetch_data <- function(project_id, game_id, course_date, ...,
 #'   length 2, containing course name and course period, in that order.
 #' @param ... Further arguments passed to [fetch_parameterized()].
 #' @return A [data.frame] contains the fetched data.
-#' @keywords internal
+#' @export
 fetch_config_tbl <- function(params, ...) {
   check_dots_used()
   stopifnot("Must specify only course name and course period, in that order." =
