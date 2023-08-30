@@ -6,14 +6,17 @@ NULL
 
 .onLoad <- function(libname, pkgname) {
   op <- options()
+  name_db_src_default <- "iquizoo-v3"
   if (requireNamespace("odbc", quietly = TRUE) &&
-        name_db_src %in% odbc::odbcListDataSources()$name) {
+        name_db_src_default %in% odbc::odbcListDataSources()$name) {
     op_tarflow <- list(
-      tarflow.driver = odbc::odbc()
+      tarflow.driver = odbc::odbc(),
+      tarflow.dsn = name_db_src_default
     )
   } else if (requireNamespace("RMariaDB", quietly = TRUE)) {
     op_tarflow <- list(
-      tarflow.driver = RMariaDB::MariaDB()
+      tarflow.driver = RMariaDB::MariaDB(),
+      tarflow.groups = name_db_src_default
     )
   } else {
     op_tarflow <- list()

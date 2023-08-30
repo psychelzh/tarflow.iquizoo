@@ -1,4 +1,3 @@
-name_db_src <- "iquizoo-v3"
 tbl_data_prefixes <- c(
   raw_data = "content_orginal_data_",
   scores = "content_ability_score_"

@@ -3,13 +3,13 @@
 #' @param project_id The project id.
 #' @param game_id The game id.
 #' @param course_date The course date.
-#' @param ... Leave for future usage. Should be empty.
+#' @param ... Further arguments passed to [fetch_parameterized()].
 #' @param what What to fetch. Can be either "raw_data" or "scores".
 #' @return A [data.frame] contains the fetched data.
 #' @export
 fetch_data <- function(project_id, game_id, course_date, ...,
                        what = c("raw_data", "scores")) {
-  check_dots_empty()
+  check_dots_used()
   what <- match.arg(what)
   prefix <- tbl_data_prefixes[[what]]
   # name injection in the query
@@ -17,20 +17,22 @@ fetch_data <- function(project_id, game_id, course_date, ...,
   sql_file <- name_sql_files[[what]]
   query <- read_sql_file(sql_file) |>
     stringr::str_glue(.envir = env(tbl_data = tbl_data))
-  fetch_parameterized(query, list(project_id, game_id))
+  fetch_parameterized(query, list(project_id, game_id), ...)
 }
 
 #' Fetch configuration table from iQuizoo database
 #'
 #' @param params The parameters to be bound to the query. Must be a list of
 #'   length 2, containing course name and course period, in that order.
+#' @param ... Further arguments passed to [fetch_parameterized()].
 #' @return A [data.frame] contains the fetched data.
 #' @keywords internal
-fetch_config_tbl <- function(params) {
+fetch_config_tbl <- function(params, ...) {
+  check_dots_used()
   stopifnot("Must specify only course name and course period, in that order." =
               length(params) == 2)
   query <- read_sql_file(name_sql_files[["course_contents"]])
-  fetch_parameterized(query, params) |>
+  fetch_parameterized(query, params, ...) |>
     dplyr::left_join(course_periods, by = "course_period_code") |>
     dplyr::left_join(game_types, by = "game_type_code")
 }
@@ -52,8 +54,8 @@ fetch_config_tbl <- function(params) {
 #' @return A [data.frame] contains the fetched data.
 #' @export
 fetch_parameterized <- function(query, params, ...,
-                                dsn = NULL,
-                                groups = NULL,
+                                dsn = getOption("tarflow.dsn"),
+                                groups = getOption("tarflow.groups"),
                                 drv = getOption("tarflow.driver")) {
   check_dots_used()
   # connect to given database which is pre-configured
@@ -61,11 +63,9 @@ fetch_parameterized <- function(query, params, ...,
     stop("Driver must be either OdbcDriver or MariaDBDriver.")
   }
   if (inherits(drv, "OdbcDriver")) {
-    dsn <- dsn %||% name_db_src
     con <- DBI::dbConnect(drv, dsn = dsn, ...)
   }
   if (inherits(drv, "MariaDBDriver")) {
-    groups <- groups %||% name_db_src
     con <- DBI::dbConnect(drv, groups = groups, ...)
   }
   on.exit(DBI::dbDisconnect(con))

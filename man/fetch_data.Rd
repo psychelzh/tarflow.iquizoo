@@ -19,7 +19,7 @@ fetch_data(
 
 \item{course_date}{The course date.}
 
-\item{...}{Leave for future usage. Should be empty.}
+\item{...}{Further arguments passed to \code{\link[=fetch_parameterized]{fetch_parameterized()}}.}
 
 \item{what}{What to fetch. Can be either "raw_data" or "scores".}
 }

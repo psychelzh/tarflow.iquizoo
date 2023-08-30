@@ -8,8 +8,8 @@ fetch_parameterized(
   query,
   params,
   ...,
-  dsn = NULL,
-  groups = NULL,
+  dsn = getOption("tarflow.dsn"),
+  groups = getOption("tarflow.groups"),
   drv = getOption("tarflow.driver")
 )
 }
