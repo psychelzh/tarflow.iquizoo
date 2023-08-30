@@ -1,4 +1,6 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.0.2
+
+* Fix encoding issue in Rd.
 
 # tarflow.iquizoo 3.0.1
 
