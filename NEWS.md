@@ -1,5 +1,13 @@
 # tarflow.iquizoo (development version)
 
+## New Features
+
+* Support specify `dsn` and `groups` in options by `tarflow.dsn` and `tarflow.groups` respectively. This is useful when default values are not suitable for you.
+
+## Bug Fixes
+
+* Fix a bug that targets flow will fail with meaningless message when `odbc` does not configure correctly.
+
 # tarflow.iquizoo 3.0.3
 
 * Remove unicode characters from document.
