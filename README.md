@@ -38,7 +38,7 @@ You can install the development version from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("psychelzh/tarflow.iquizoo")
+devtools::install_github("psychelzh/tarflow.iquizoo@develop")
 ```
 
 Or you can install the stable version from [psychelzh’s
