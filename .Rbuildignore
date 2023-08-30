@@ -10,3 +10,4 @@
 ^README\.Rmd$
 ^codecov\.yml$
 ^data-raw$
+^\.lintr$
