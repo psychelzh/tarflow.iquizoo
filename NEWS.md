@@ -1,5 +1,7 @@
 # tarflow.iquizoo (development version)
 
+* Remove unicode characters from document.
+
 # tarflow.iquizoo 3.0.2
 
 * Fix encoding issue in Rd.

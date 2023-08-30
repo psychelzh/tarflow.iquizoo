@@ -2,19 +2,9 @@
 #'
 #' @details
 #'
-#' The `course_period` in `tble_params` could be numeric or character values.
-#' See the following table for reference:
-#'
-#' | code | name |
-#' | ---- | ---- |
-#' | 0    | 未指定  |
-#' | 1    | 学前   |
-#' | 2    | 小学低段 |
-#' | 3    | 小学中段 |
-#' | 4    | 小学高段 |
-#' | 5    | 小学   |
-#' | 6    | 初中   |
-#' | 7    | 高中   |
+#' The `course_period` in `tble_params` could be numeric or character values. If
+#' you use numeric values, call `tarflow.iquizoo:::course_periods` to see the
+#' mapping.
 #'
 #' @param tbl_params A [data.frame] contains the parameters to be bound to the
 #'   query. For now, only `course_name` and `course_period` are supported. Each
@@ -26,7 +16,6 @@
 #' @param cache_age The maximum age of cache in seconds. Defaults to `Inf`.
 #' @return A list of [targets][targets::tar_target()].
 #' @export
-#' @encoding UTF-8
 prepare_fetch_data <- function(tbl_params, ...,
                                what = c("all", "raw_data", "scores"),
                                cache_dir = "~/.cache.tarflow",
