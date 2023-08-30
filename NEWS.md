@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.0.3
 
 * Remove unicode characters from document.
 
