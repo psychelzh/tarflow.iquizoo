@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.0.1
 
 * Fix internal issues. No user-level updates.
 
