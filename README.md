@@ -7,6 +7,8 @@
 
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![tarflow.iquizoo status
+badge](https://psychelzh.r-universe.dev/badges/tarflow.iquizoo)](https://psychelzh.r-universe.dev/tarflow.iquizoo)
 [![R-CMD-check](https://github.com/psychelzh/tarflow.iquizoo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/psychelzh/tarflow.iquizoo/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/psychelzh/tarflow.iquizoo/branch/main/graph/badge.svg)](https://app.codecov.io/gh/psychelzh/tarflow.iquizoo?branch=main)
@@ -37,6 +39,13 @@ You can install the development version from
 ``` r
 # install.packages("devtools")
 devtools::install_github("psychelzh/tarflow.iquizoo")
+```
+
+Or you can install the stable version from [psychelzh’s
+R-universe](https://psychelzh.r-universe.dev/) with:
+
+``` r
+install.packages("tarflow.iquizoo", repos = "https://psychelzh.r-universe.dev")
 ```
 
 ## Usage
