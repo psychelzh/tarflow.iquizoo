@@ -11,16 +11,10 @@ fetch_data <- function(project_id, game_id, course_date, ...,
                        what = c("raw_data", "scores")) {
   check_dots_empty()
   what <- match.arg(what)
-  prefix <- switch(what,
-    raw_data = "content_orginal_data_",
-    scores = "content_ability_score_"
-  )
+  prefix <- tbl_data_prefixes[[what]]
   # name injection in the query
   tbl_data <- paste0(prefix, format(as.POSIXct(course_date), "%Y0101"))
-  sql_file <- switch(what,
-    raw_data = "fetch_raw_data_glue.sql",
-    scores = "fetch_scores_glue.sql"
-  )
+  sql_file <- name_sql_files[[what]]
   query <- read_sql_file(sql_file) |>
     stringr::str_glue(.envir = env(tbl_data = tbl_data))
   fetch_parameterized(query, list(project_id, game_id))
@@ -35,7 +29,7 @@ fetch_data <- function(project_id, game_id, course_date, ...,
 fetch_config_tbl <- function(params) {
   stopifnot("Must specify only course name and course period, in that order." =
               length(params) == 2)
-  query <- read_sql_file("course_contents.sql")
+  query <- read_sql_file(name_sql_files[["course_contents"]])
   fetch_parameterized(query, params) |>
     dplyr::left_join(course_periods, by = "course_period_code") |>
     dplyr::left_join(game_types, by = "game_type_code")
@@ -58,8 +52,8 @@ fetch_config_tbl <- function(params) {
 #' @return A [data.frame] contains the fetched data.
 #' @export
 fetch_parameterized <- function(query, params, ...,
-                                dsn = "iquizoo-v3",
-                                groups = "iquizoo-v3",
+                                dsn = NULL,
+                                groups = NULL,
                                 drv = getOption("tarflow.driver")) {
   check_dots_used()
   # connect to given database which is pre-configured
@@ -67,9 +61,11 @@ fetch_parameterized <- function(query, params, ...,
     stop("Driver must be either OdbcDriver or MariaDBDriver.")
   }
   if (inherits(drv, "OdbcDriver")) {
+    dsn <- dsn %||% name_db_src
     con <- DBI::dbConnect(drv, dsn = dsn, ...)
   }
   if (inherits(drv, "MariaDBDriver")) {
+    groups <- groups %||% name_db_src
     con <- DBI::dbConnect(drv, groups = groups, ...)
   }
   on.exit(DBI::dbDisconnect(con))

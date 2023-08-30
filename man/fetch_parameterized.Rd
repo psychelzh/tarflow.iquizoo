@@ -8,8 +8,8 @@ fetch_parameterized(
   query,
   params,
   ...,
-  dsn = "iquizoo-v3",
-  groups = "iquizoo-v3",
+  dsn = NULL,
+  groups = NULL,
   drv = getOption("tarflow.driver")
 )
 }

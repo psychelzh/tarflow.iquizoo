@@ -6,7 +6,8 @@ NULL
 
 .onLoad <- function(libname, pkgname) {
   op <- options()
-  if (requireNamespace("odbc", quietly = TRUE)) {
+  if (requireNamespace("odbc", quietly = TRUE) &&
+        name_db_src %in% odbc::odbcListDataSources()$name) {
     op_tarflow <- list(
       tarflow.driver = odbc::odbc()
     )
