@@ -159,7 +159,10 @@ fetch_config_tbl <- function(course_name, course_period, ...) {
   # course periods are numeric coded in database
   if (is.character(course_period)) {
     if (!course_period %in% name_course_periods) {
-      warn("Invalid course period specified.", class = "tarflow_invalid_period")
+      abort(
+        "Invalid course period specified.",
+        class = "tarflow_invalid_period"
+      )
     }
     course_period <- which(name_course_periods == course_period)
   }
@@ -177,7 +180,9 @@ read_sql_file <- function(file) {
 }
 
 utils::globalVariables(
-  c("scores", "raw_data", "raw_data_parsed", "indices",
+  c(
+    "scores", "raw_data", "raw_data_parsed", "indices",
     "project_id", "game_id", "course_date",
-    "prep_fun_name", "prep_fun", "input", "extra")
+    "prep_fun_name", "prep_fun", "input", "extra"
+  )
 )
