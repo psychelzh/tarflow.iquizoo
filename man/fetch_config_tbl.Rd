@@ -4,11 +4,12 @@
 \alias{fetch_config_tbl}
 \title{Fetch configuration table from iQuizoo database}
 \usage{
-fetch_config_tbl(params, ...)
+fetch_config_tbl(course_name, course_period, ...)
 }
 \arguments{
-\item{params}{The parameters to be bound to the query. Must be a list of
-length 2, containing course name and course period, in that order.}
+\item{course_name}{The course name.}
+
+\item{course_period}{The course period.}
 
 \item{...}{Further arguments passed to \code{\link[=fetch_parameterized]{fetch_parameterized()}}.}
 }

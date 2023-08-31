@@ -17,20 +17,8 @@ prepare_fetch_data <- function(tbl_params, ...,
                                what = c("all", "raw_data", "scores")) {
   check_dots_empty()
   what <- match.arg(what)
-  # course periods are stored as numeric coding in database
-  if (is.character(tbl_params$course_period)) {
-    course_periods_map <- set_names(
-      course_periods$course_period_code,
-      course_periods$course_period_name
-    )
-    tbl_params$course_period <- course_periods_map[tbl_params$course_period]
-  }
   config_tbl <- tbl_params |>
-    purrr::pmap(
-      \(course_name, course_period) {
-        fetch_config_tbl_mem(list(course_name, course_period)) # nolint
-      }
-    ) |>
+    purrr::pmap(fetch_config_tbl_mem) |> # nolint
     purrr::list_rbind()
   if (nrow(config_tbl) == 0) {
     warn(
@@ -142,17 +130,23 @@ fetch_data <- function(project_id, game_id, course_date, ...,
 
 #' Fetch configuration table from iQuizoo database
 #'
-#' @param params The parameters to be bound to the query. Must be a list of
-#'   length 2, containing course name and course period, in that order.
+#' @param course_name The course name.
+#' @param course_period The course period.
 #' @param ... Further arguments passed to [fetch_parameterized()].
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_config_tbl <- function(params, ...) {
+fetch_config_tbl <- function(course_name, course_period, ...) {
   check_dots_used()
-  stopifnot("Must specify only course name and course period, in that order." =
-              length(params) == 2)
+  # course periods are stored as numeric coding in database
+  if (is.character(course_period)) {
+    course_periods_map <- set_names(
+      course_periods$course_period_code,
+      course_periods$course_period_name
+    )
+    course_period <- course_periods_map[course_period]
+  }
   query <- read_sql_file(name_sql_files[["course_contents"]])
-  fetch_parameterized(query, params, ...) |>
+  fetch_parameterized(query, list(course_name, course_period), ...) |>
     dplyr::left_join(course_periods, by = "course_period_code") |>
     dplyr::left_join(game_types, by = "game_type_code")
 }
