@@ -16,7 +16,9 @@ row is a set of parameters. See details for more information.}
 \item{what}{What to fetch. Can be "all", "raw_data" or "scores".}
 }
 \value{
-A list of \link[targets:tar_target]{targets}.
+A S3 object of class \code{tarflow_targets}. The main component is a list
+of targets. The other component is a \link{data.frame} contains the parameters
+used to fetch the data.
 }
 \description{
 Prepare targets pipeline for fetching data

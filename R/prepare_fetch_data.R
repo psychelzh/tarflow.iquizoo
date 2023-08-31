@@ -13,7 +13,9 @@
 #'   row is a set of parameters. See details for more information.
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. Can be "all", "raw_data" or "scores".
-#' @return A list of [targets][targets::tar_target()].
+#' @return A S3 object of class `tarflow_targets`. The main component is a list
+#'   of targets. The other component is a [data.frame] contains the parameters
+#'   used to fetch the data.
 #' @export
 prepare_fetch_data <- function(tbl_params, ...,
                                what = c("all", "raw_data", "scores")) {
@@ -27,91 +29,96 @@ prepare_fetch_data <- function(tbl_params, ...,
       "No records found based on the given parameters",
       class = "tarflow_bad_params"
     )
-    return()
-  }
-  targets_data <- tarchetypes::tar_map(
-    config_tbl |>
-      dplyr::left_join(
-        data.iquizoo::game_info,
-        by = "game_id"
-      ) |>
-      dplyr::mutate(
-        # https://github.com/ropensci/tarchetypes/issues/94
-        project_id = bit64::as.character.integer64(.data$project_id),
-        game_id = bit64::as.character.integer64(.data$game_id),
-        course_date = as.character(course_date),
-        prep_fun = purrr::map(
-          .data[["prep_fun_name"]],
-          purrr::possibly(sym, NA)
-        ),
-        dplyr::across(
-          dplyr::all_of(c("input", "extra")),
-          parse_exprs
-        )
-      ),
-    names = c("project_id", "game_id"),
-    if (what %in% c("all", "raw_data")) {
-      list(
-        targets::tar_target(
-          raw_data,
-          fetch_data(
-            project_id, game_id, course_date,
-            what = "raw_data"
+    targets <- list()
+  } else {
+    branches <- tarchetypes::tar_map(
+      config_tbl |>
+        dplyr::left_join(
+          data.iquizoo::game_info,
+          by = "game_id"
+        ) |>
+        dplyr::mutate(
+          # https://github.com/ropensci/tarchetypes/issues/94
+          project_id = bit64::as.character.integer64(.data$project_id),
+          game_id = bit64::as.character.integer64(.data$game_id),
+          course_date = as.character(course_date),
+          prep_fun = purrr::map(
+            .data[["prep_fun_name"]],
+            purrr::possibly(sym, NA)
+          ),
+          dplyr::across(
+            dplyr::all_of(c("input", "extra")),
+            parse_exprs
           )
         ),
-        targets::tar_target(
-          raw_data_parsed,
-          wrangle_data(raw_data)
-        ),
-        targets::tar_target(
-          indices,
-          if (!is.na(prep_fun_name)) {
-            preproc_data(
-              raw_data_parsed, prep_fun,
-              .input = input, .extra = extra
+      names = c("project_id", "game_id"),
+      if (what %in% c("all", "raw_data")) {
+        list(
+          targets::tar_target(
+            raw_data,
+            fetch_data(
+              project_id, game_id, course_date,
+              what = "raw_data"
             )
-          }
+          ),
+          targets::tar_target(
+            raw_data_parsed,
+            wrangle_data(raw_data)
+          ),
+          targets::tar_target(
+            indices,
+            if (!is.na(prep_fun_name)) {
+              preproc_data(
+                raw_data_parsed, prep_fun,
+                .input = input, .extra = extra
+              )
+            }
+          )
         )
-      )
-    },
-    if (what %in% c("all", "scores")) {
-      targets::tar_target(
-        scores,
-        fetch_data(
-          project_id, game_id, course_date,
-          what = "scores"
+      },
+      if (what %in% c("all", "scores")) {
+        targets::tar_target(
+          scores,
+          fetch_data(
+            project_id, game_id, course_date,
+            what = "scores"
+          )
         )
-      )
-    }
-  )
-  list(
-    config_tbl |>
+      }
+    )
+    targets <- list(
+      branches,
+      if (what %in% c("all", "raw_data")) {
+        list(
+          tarchetypes::tar_combine(
+            raw_data,
+            branches$raw_data
+          ),
+          tarchetypes::tar_combine(
+            indices,
+            branches$indices
+          )
+        )
+      },
+      if (what %in% c("all", "scores")) {
+        tarchetypes::tar_combine(
+          scores,
+          branches$scores
+        )
+      }
+    )
+  }
+  structure(
+    targets,
+    class = "tarflow_targets",
+    params = config_tbl |>
       dplyr::mutate(
         course_period_name = dplyr::case_when(
           .data$course_period_code == 0 ~ "",
           .default = name_course_periods[.data$course_period_code]
         ),
         game_type_name = name_game_types[.data$game_type_code]
-      ),
-    targets_data,
-    if (what %in% c("all", "raw_data")) {
-      list(
-        tarchetypes::tar_combine(
-          raw_data,
-          targets_data$raw_data
-        ),
-        tarchetypes::tar_combine(
-          indices,
-          targets_data$indices
-        )
       )
-    },
-    if (what %in% c("all", "scores")) {
-      tarchetypes::tar_combine(
-        scores,
-        targets_data$scores
-      )
-    }
   )
 }
 
