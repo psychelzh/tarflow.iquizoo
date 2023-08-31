@@ -4,13 +4,7 @@
 \alias{prepare_fetch_data}
 \title{Prepare targets pipeline for fetching data}
 \usage{
-prepare_fetch_data(
-  tbl_params,
-  ...,
-  what = c("all", "raw_data", "scores"),
-  cache_dir = "~/.cache.tarflow",
-  cache_age = Inf
-)
+prepare_fetch_data(tbl_params, ..., what = c("all", "raw_data", "scores"))
 }
 \arguments{
 \item{tbl_params}{A \link{data.frame} contains the parameters to be bound to the
@@ -20,11 +14,6 @@ row is a set of parameters. See details for more information.}
 \item{...}{For future usage. Should be empty.}
 
 \item{what}{What to fetch. Can be "all", "raw_data" or "scores".}
-
-\item{cache_dir}{The directory to store cache. Defaults to
-\verb{~/.cache.tarflow}.}
-
-\item{cache_age}{The maximum age of cache in seconds. Defaults to \code{Inf}.}
 }
 \value{
 A list of \link[targets:tar_target]{targets}.

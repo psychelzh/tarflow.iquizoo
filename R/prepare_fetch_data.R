@@ -11,21 +11,12 @@
 #'   row is a set of parameters. See details for more information.
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. Can be "all", "raw_data" or "scores".
-#' @param cache_dir The directory to store cache. Defaults to
-#'   `~/.cache.tarflow`.
-#' @param cache_age The maximum age of cache in seconds. Defaults to `Inf`.
 #' @return A list of [targets][targets::tar_target()].
 #' @export
 prepare_fetch_data <- function(tbl_params, ...,
-                               what = c("all", "raw_data", "scores"),
-                               cache_dir = "~/.cache.tarflow",
-                               cache_age = Inf) {
+                               what = c("all", "raw_data", "scores")) {
   check_dots_empty()
   what <- match.arg(what)
-  fetch_config_tbl_mem <- memoise::memoise(
-    fetch_config_tbl,
-    cache = cachem::cache_disk(cache_dir, max_age = cache_age)
-  )
   # course periods are stored as numeric coding in database
   if (is.character(tbl_params$course_period)) {
     course_periods_map <- set_names(
@@ -37,7 +28,7 @@ prepare_fetch_data <- function(tbl_params, ...,
   config_tbl <- tbl_params |>
     purrr::pmap(
       \(course_name, course_period) {
-        fetch_config_tbl_mem(list(course_name, course_period))
+        fetch_config_tbl_mem(list(course_name, course_period)) # nolint
       }
     ) |>
     purrr::list_rbind()

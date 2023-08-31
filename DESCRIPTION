@@ -18,7 +18,6 @@ Depends:
     R (>= 4.1.0)
 Imports:
     bit64,
-    cachem,
     cli,
     data.iquizoo (>= 0.3.0),
     DBI,
