@@ -118,6 +118,54 @@ prepare_fetch_data <- function(tbl_params, ...,
   )
 }
 
+#' Fetch data from iQuizoo database
+#'
+#' @param project_id The project id.
+#' @param game_id The game id.
+#' @param course_date The course date.
+#' @param ... Further arguments passed to [fetch_parameterized()].
+#' @param what What to fetch. Can be either "raw_data" or "scores".
+#' @return A [data.frame] contains the fetched data.
+#' @export
+fetch_data <- function(project_id, game_id, course_date, ...,
+                       what = c("raw_data", "scores")) {
+  check_dots_used()
+  what <- match.arg(what)
+  prefix <- tbl_data_prefixes[[what]]
+  # name injection in the query
+  tbl_data <- paste0(prefix, format(as.POSIXct(course_date), "%Y0101"))
+  sql_file <- name_sql_files[[what]]
+  query <- read_sql_file(sql_file) |>
+    stringr::str_glue(.envir = env(tbl_data = tbl_data))
+  fetch_parameterized(query, list(project_id, game_id), ...)
+}
+
+#' Fetch configuration table from iQuizoo database
+#'
+#' @param params The parameters to be bound to the query. Must be a list of
+#'   length 2, containing course name and course period, in that order.
+#' @param ... Further arguments passed to [fetch_parameterized()].
+#' @return A [data.frame] contains the fetched data.
+#' @export
+fetch_config_tbl <- function(params, ...) {
+  check_dots_used()
+  stopifnot("Must specify only course name and course period, in that order." =
+              length(params) == 2)
+  query <- read_sql_file(name_sql_files[["course_contents"]])
+  fetch_parameterized(query, params, ...) |>
+    dplyr::left_join(course_periods, by = "course_period_code") |>
+    dplyr::left_join(game_types, by = "game_type_code")
+}
+
+read_sql_file <- function(file) {
+  system.file(
+    "sql", file,
+    package = "tarflow.iquizoo"
+  ) |>
+    readLines() |>
+    paste0(collapse = "\n")
+}
+
 utils::globalVariables(
   c("scores", "raw_data", "raw_data_parsed", "indices",
     "project_id", "game_id", "course_date",
