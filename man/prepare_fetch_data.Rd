@@ -22,7 +22,9 @@ A list of \link[targets:tar_target]{targets}.
 Prepare targets pipeline for fetching data
 }
 \details{
-The \code{course_period} in \code{tble_params} could be numeric or character values. If
-you use numeric values, call \code{tarflow.iquizoo:::course_periods} to see the
-mapping.
+The \code{course_period} in \code{tble_params} could be numeric or character values.
+Call \code{tarflow.iquizoo:::name_course_periods} to see all the possible values.
+You could input numeric index, for example, \code{1} means the first in the
+\code{tarflow.iquizoo:::name_course_periods}. Use \code{0} or \code{NA} if you want to refer
+to older classes with no course periods.
 }

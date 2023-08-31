@@ -12,8 +12,10 @@ test_that("Smoke test", {
     ~course_name, ~course_period,
     "Unexisted", "Malvalue"
   )
+  memoise::drop_cache(fetch_config_tbl_mem)("Unexisted", "Malvalue")
   prepare_fetch_data(tbl_params_bad) |>
     expect_null() |>
+    expect_warning(class = "tarflow_invalid_period") |>
     expect_warning(class = "tarflow_bad_params")
 })
 

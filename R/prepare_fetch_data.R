@@ -2,9 +2,11 @@
 #'
 #' @details
 #'
-#' The `course_period` in `tble_params` could be numeric or character values. If
-#' you use numeric values, call `tarflow.iquizoo:::course_periods` to see the
-#' mapping.
+#' The `course_period` in `tble_params` could be numeric or character values.
+#' Call `tarflow.iquizoo:::name_course_periods` to see all the possible values.
+#' You could input numeric index, for example, `1` means the first in the
+#' `tarflow.iquizoo:::name_course_periods`. Use `0` or `NA` if you want to refer
+#' to older classes with no course periods.
 #'
 #' @param tbl_params A [data.frame] contains the parameters to be bound to the
 #'   query. For now, only `course_name` and `course_period` are supported. Each
@@ -83,7 +85,14 @@ prepare_fetch_data <- function(tbl_params, ...,
     }
   )
   list(
-    config_tbl,
+    config_tbl |>
+      dplyr::mutate(
+        course_period_name = dplyr::case_when(
+          .data$course_period_code == 0 ~ "",
+          .default = name_course_periods[.data$course_period_code]
+        ),
+        game_type_name = name_game_types[.data$game_type_code]
+      ),
     targets_data,
     if (what %in% c("all", "raw_data")) {
       list(
@@ -137,18 +146,18 @@ fetch_data <- function(project_id, game_id, course_date, ...,
 #' @export
 fetch_config_tbl <- function(course_name, course_period, ...) {
   check_dots_used()
-  # course periods are stored as numeric coding in database
+  if (is.na(course_period)) {
+    course_period <- 0
+  }
+  # course periods are numeric coded in database
   if (is.character(course_period)) {
-    course_periods_map <- set_names(
-      course_periods$course_period_code,
-      course_periods$course_period_name
-    )
-    course_period <- course_periods_map[course_period]
+    if (!course_period %in% name_course_periods) {
+      warn("Invalid course period specified.", class = "tarflow_invalid_period")
+    }
+    course_period <- which(name_course_periods == course_period)
   }
   query <- read_sql_file(name_sql_files[["course_contents"]])
-  fetch_parameterized(query, list(course_name, course_period), ...) |>
-    dplyr::left_join(course_periods, by = "course_period_code") |>
-    dplyr::left_join(game_types, by = "game_type_code")
+  fetch_parameterized(query, list(course_name, course_period), ...)
 }
 
 read_sql_file <- function(file) {
