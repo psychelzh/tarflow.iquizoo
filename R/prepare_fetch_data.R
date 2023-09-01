@@ -113,9 +113,9 @@ prepare_fetch_data <- function(tbl_params, ...,
     class = "tarflow_targets",
     params = config_tbl |>
       dplyr::mutate(
-        course_period_name = dplyr::case_when(
-          .data$course_period_code == 0 ~ "",
-          .default = name_course_periods[.data$course_period_code]
+        course_period_name = ifelse(
+          .data$course_period_code == 0, "",
+          name_course_periods[.data$course_period_code]
         ),
         game_type_name = name_game_types[.data$game_type_code]
       )
