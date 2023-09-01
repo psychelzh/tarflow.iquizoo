@@ -32,11 +32,11 @@ tbl_params <- tibble::tribble(
   "# COURSE NAME", "# COURSE PERIOD"
 )
 
+# change what to scores or raw_data if you want to
 targets <- tarflow.iquizoo::prepare_fetch_data(tbl_params, what = "all")
 
 # Replace the target list below with your own:
 list(
-  # change what to scores or raw_data if you want to
   targets,
   tar_target(
     course_contents,
