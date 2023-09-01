@@ -27,11 +27,15 @@ NULL
   if (any(toset)) options(op_tarflow[toset])
 
   # memoise `fetch_config_table()`
-  cache <- switch(Sys.getenv("TARFLOW_CACHE", "disk"),
-    disk = memoise::cache_filesystem("~/.tarflow.cache"),
-    memory = memoise::cache_memory()
+  # https://stackoverflow.com/a/67664852/5996475
+  ns <- topenv()
+  ns$fetch_config_tbl_mem <- memoise::memoise(
+    fetch_config_tbl,
+    cache = switch(Sys.getenv("TARFLOW_CACHE", "disk"),
+      disk = memoise::cache_filesystem("~/.tarflow.cache"),
+      memory = memoise::cache_memory()
+    )
   )
-  fetch_config_tbl_mem <<- memoise::memoise(fetch_config_tbl, cache = cache) # nolint
 
   invisible()
 }
