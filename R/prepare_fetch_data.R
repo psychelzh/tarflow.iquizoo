@@ -22,7 +22,7 @@ prepare_fetch_data <- function(tbl_params, ...,
   check_dots_empty()
   what <- match.arg(what)
   config_tbl <- tbl_params |>
-    purrr::pmap(fetch_config_tbl_mem) |> # nolint
+    purrr::pmap(fetch_preset_mem, what = "project_contents") |>
     purrr::list_rbind()
   if (nrow(config_tbl) == 0) {
     warn(
@@ -87,6 +87,14 @@ prepare_fetch_data <- function(tbl_params, ...,
       }
     )
     targets <- list(
+      targets::tar_target_raw(
+        "project_users",
+        expr(
+          (!!substitute(tbl_params)) |>
+            purrr::pmap(fetch_preset, what = "project_users") |>
+            purrr::list_rbind()
+        )
+      ),
       branches,
       if (what %in% c("all", "raw_data")) {
         list(
@@ -144,17 +152,16 @@ fetch_data <- function(project_id, game_id, course_date, ...,
   fetch_parameterized(query, list(project_id, game_id), ...)
 }
 
-#' Fetch configuration table from iQuizoo database
+#' Fetch data from iQuizoo database with preset SQL query files
 #'
-#' @param organization_name The organization name.
-#' @param project_name The project name.
-#' @param ... Further arguments passed to [fetch_parameterized()].
+#' @param ... The parameters used in the SQL query.
+#' @param what The name of the preset query file to use.
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_config_tbl <- function(organization_name, project_name, ...) {
+fetch_preset <- function(..., what = c("project_contents", "project_users")) {
   check_dots_used()
-  query <- read_sql_file(name_sql_files[["project_contents"]])
-  fetch_parameterized(query, list(organization_name, project_name), ...)
+  query <- read_sql_file(name_sql_files[[what]])
+  fetch_parameterized(query, list(...))
 }
 
 read_sql_file <- function(file) {

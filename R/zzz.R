@@ -29,8 +29,8 @@ NULL
   # memoise `fetch_config_table()`
   # https://stackoverflow.com/a/67664852/5996475
   ns <- topenv()
-  ns$fetch_config_tbl_mem <- memoise::memoise(
-    fetch_config_tbl,
+  ns$fetch_preset_mem <- memoise::memoise(
+    fetch_preset,
     cache = switch(Sys.getenv("TARFLOW_CACHE", "disk"),
       disk = memoise::cache_filesystem("~/.tarflow.cache"),
       memory = memoise::cache_memory()
