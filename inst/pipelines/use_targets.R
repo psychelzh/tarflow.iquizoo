@@ -26,21 +26,21 @@ tar_option_set(
 tar_source()
 # source("other_functions.R") # Source other scripts as needed.
 
-tbl_params <- tibble::tribble(
+params <- tibble::tribble(
   ~organization_name, ~project_name,
   # TODO: replace these with your own
   "# ORGANISATION NAME", "# PROJECT NAME"
 )
 
 # change what to scores or raw_data if you want to
-targets <- tarflow.iquizoo::prepare_fetch_data(tbl_params, what = "all")
+targets <- tarflow.iquizoo::prepare_fetch_data(params, what = "all")
 
 # Replace the target list below with your own:
 list(
   targets,
   tar_target(
-    course_contents,
-    attr(targets, "params")
+    contents,
+    attr(targets, "contents")
   )
   # more targets goes here
 )

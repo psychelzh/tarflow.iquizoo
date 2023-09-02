@@ -1,30 +1,20 @@
 #' Prepare targets pipeline for fetching data
 #'
-#' @details
-#'
-#' The `course_period` in `tble_params` could be numeric or character values.
-#' Call `tarflow.iquizoo:::name_course_periods` to see all the possible values.
-#' You could input numeric index, for example, `1` means the first in the
-#' `tarflow.iquizoo:::name_course_periods`. Use `0` or `NA` if you want to refer
-#' to older classes with no course periods.
-#'
-#' @param tbl_params A [data.frame] contains the parameters to be bound to the
-#'   query. For now, only `course_name` and `course_period` are supported. Each
-#'   row is a set of parameters. See details for more information.
+#' @param params A [data.frame] contains the parameters to be bound to the
+#'   query. For now, only `organization_name` and `project_name` are supported
+#'   and both of them should be specified. Each row is a set of parameters.
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. Can be "all", "raw_data" or "scores".
 #' @return A S3 object of class `tarflow_targets`. The main component is a list
-#'   of targets. The other component is a [data.frame] contains the parameters
-#'   used to fetch the data.
+#'   of targets. The other component is a [data.frame] contains the contents
+#'   based on which data is fetched.
 #' @export
-prepare_fetch_data <- function(tbl_params, ...,
+prepare_fetch_data <- function(params, ...,
                                what = c("all", "raw_data", "scores")) {
   check_dots_empty()
   what <- match.arg(what)
-  config_tbl <- tbl_params |>
-    purrr::pmap(fetch_preset_mem, what = "project_contents") |>
-    purrr::list_rbind()
-  if (nrow(config_tbl) == 0) {
+  contents <- fetch_preset_mem(params, what = "project_contents")
+  if (nrow(contents) == 0) {
     warn(
       "No records found based on the given parameters",
       class = "tarflow_bad_params"
@@ -32,7 +22,7 @@ prepare_fetch_data <- function(tbl_params, ...,
     targets <- list()
   } else {
     branches <- tarchetypes::tar_map(
-      config_tbl |>
+      contents |>
         dplyr::left_join(
           data.iquizoo::game_info,
           by = "game_id"
@@ -90,9 +80,7 @@ prepare_fetch_data <- function(tbl_params, ...,
       targets::tar_target_raw(
         "project_users",
         expr(
-          (!!substitute(tbl_params)) |>
-            purrr::pmap(fetch_preset, what = "project_users") |>
-            purrr::list_rbind()
+          fetch_preset(!!substitute(params), what = "project_users")
         )
       ),
       branches,
@@ -119,7 +107,7 @@ prepare_fetch_data <- function(tbl_params, ...,
   structure(
     targets,
     class = "tarflow_targets",
-    params = config_tbl
+    contents = contents
   )
 }
 
@@ -147,14 +135,22 @@ fetch_data <- function(project_id, game_id, course_date, ...,
 
 #' Fetch data from iQuizoo database with preset SQL query files
 #'
-#' @param ... The parameters used in the SQL query.
+#' @param params The parameters used in the SQL query.
+#' @param ... Further arguments passed to [fetch_parameterized()].
 #' @param what The name of the preset query file to use.
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_preset <- function(..., what = c("project_contents", "project_users")) {
+fetch_preset <- function(params, ...,
+                         what = c("project_contents", "project_users")) {
   check_dots_used()
   query <- read_sql_file(name_sql_files[[what]])
-  fetch_parameterized(query, list(...))
+  params |>
+    purrr::pmap(
+      \(...) {
+        fetch_parameterized(query, list(...))
+      }
+    ) |>
+    purrr::list_rbind()
 }
 
 read_sql_file <- function(file) {

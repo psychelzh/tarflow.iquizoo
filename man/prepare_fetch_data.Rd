@@ -4,12 +4,12 @@
 \alias{prepare_fetch_data}
 \title{Prepare targets pipeline for fetching data}
 \usage{
-prepare_fetch_data(tbl_params, ..., what = c("all", "raw_data", "scores"))
+prepare_fetch_data(params, ..., what = c("all", "raw_data", "scores"))
 }
 \arguments{
-\item{tbl_params}{A \link{data.frame} contains the parameters to be bound to the
-query. For now, only \code{course_name} and \code{course_period} are supported. Each
-row is a set of parameters. See details for more information.}
+\item{params}{A \link{data.frame} contains the parameters to be bound to the
+query. For now, only \code{organization_name} and \code{project_name} are supported
+and both of them should be specified. Each row is a set of parameters.}
 
 \item{...}{For future usage. Should be empty.}
 
@@ -17,16 +17,9 @@ row is a set of parameters. See details for more information.}
 }
 \value{
 A S3 object of class \code{tarflow_targets}. The main component is a list
-of targets. The other component is a \link{data.frame} contains the parameters
-used to fetch the data.
+of targets. The other component is a \link{data.frame} contains the contents
+based on which data is fetched.
 }
 \description{
 Prepare targets pipeline for fetching data
-}
-\details{
-The \code{course_period} in \code{tble_params} could be numeric or character values.
-Call \code{tarflow.iquizoo:::name_course_periods} to see all the possible values.
-You could input numeric index, for example, \code{1} means the first in the
-\code{tarflow.iquizoo:::name_course_periods}. Use \code{0} or \code{NA} if you want to refer
-to older classes with no course periods.
 }
