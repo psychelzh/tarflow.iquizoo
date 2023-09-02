@@ -27,9 +27,9 @@ tar_source()
 # source("other_functions.R") # Source other scripts as needed.
 
 tbl_params <- tibble::tribble(
-  ~course_name, ~course_period,
-  # replace course name and course period with your own
-  "# COURSE NAME", "# COURSE PERIOD"
+  ~organization_name, ~project_name,
+  # TODO: replace these with your own
+  "# ORGANISATION NAME", "# PROJECT NAME"
 )
 
 # change what to scores or raw_data if you want to

@@ -4,12 +4,12 @@
 \alias{fetch_config_tbl}
 \title{Fetch configuration table from iQuizoo database}
 \usage{
-fetch_config_tbl(course_name, course_period, ...)
+fetch_config_tbl(organization_name, project_name, ...)
 }
 \arguments{
-\item{course_name}{The course name.}
+\item{organization_name}{The organization name.}
 
-\item{course_period}{The course period.}
+\item{project_name}{The project name.}
 
 \item{...}{Further arguments passed to \code{\link[=fetch_parameterized]{fetch_parameterized()}}.}
 }

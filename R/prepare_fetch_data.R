@@ -146,28 +146,15 @@ fetch_data <- function(project_id, game_id, course_date, ...,
 
 #' Fetch configuration table from iQuizoo database
 #'
-#' @param course_name The course name.
-#' @param course_period The course period.
+#' @param organization_name The organization name.
+#' @param project_name The project name.
 #' @param ... Further arguments passed to [fetch_parameterized()].
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_config_tbl <- function(course_name, course_period, ...) {
+fetch_config_tbl <- function(organization_name, project_name, ...) {
   check_dots_used()
-  if (is.na(course_period)) {
-    course_period <- 0
-  }
-  # course periods are numeric coded in database
-  if (is.character(course_period)) {
-    if (!course_period %in% name_course_periods) {
-      abort(
-        "Invalid course period specified.",
-        class = "tarflow_invalid_period"
-      )
-    }
-    course_period <- which(name_course_periods == course_period)
-  }
-  query <- read_sql_file(name_sql_files[["course_contents"]])
-  fetch_parameterized(query, list(course_name, course_period), ...)
+  query <- read_sql_file(name_sql_files[["project_contents"]])
+  fetch_parameterized(query, list(organization_name, project_name), ...)
 }
 
 read_sql_file <- function(file) {
