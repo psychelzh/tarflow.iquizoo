@@ -1,3 +1,22 @@
+test_that("Test with mock", {
+  with_mocked_bindings(
+    fetch_preset_mem = \(...) {
+      tibble::tibble(
+        project_id = bit64::as.integer64(1),
+        game_id = data.iquizoo::game_info$game_id[1:2],
+        course_date = as.Date("2023-01-01")
+      )
+    },
+    prepare_fetch_data(data.frame(x = 1)) |>
+      expect_silent()
+  )
+  with_mocked_bindings(
+    fetch_preset_mem = \(...) data.frame(),
+    prepare_fetch_data(data.frame(x = 1)) |>
+      expect_warning(class = "tarflow_bad_params")
+  )
+})
+
 test_that("Smoke test", {
   skip_if_not_installed("odbc")
   skip_if(!"iquizoo-v3" %in% odbc::odbcListDataSources()$name)

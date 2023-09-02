@@ -36,7 +36,6 @@ Imports:
 Suggests:
     covr,
     lifecycle,
-    mockery,
     odbc,
     preproc.iquizoo (>= 2.4.0),
     RMariaDB,
