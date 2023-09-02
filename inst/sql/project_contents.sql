@@ -5,10 +5,10 @@ SELECT
     pcc.Name project_name,
     c.Id course_id,
     c.Name course_name,
-    c.Period course_period_code,
+    c.Period course_period,
     c.CreateTime course_date,
     c2.Id game_id,
-    c2.ContentType game_type_code
+    c2.ContentType game_type
 FROM
     iquizoo_business_db.project_course_config pcc
     INNER JOIN iquizoo_content_db.course c ON c.Id = pcc.CourseId AND c.Deleted <> 1 AND pcc.Deleted <> 1
