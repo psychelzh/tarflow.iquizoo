@@ -1,8 +1,13 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Changed parameters to organization name and project name. Former course specification is removed.
+
 ## New Features
 
 * Support specify `dsn` and `groups` in options by `tarflow.dsn` and `tarflow.groups` respectively. This is useful when default values are not suitable for you.
+* Added project users to pipeline.
 
 ## Bug Fixes
 
