@@ -26,7 +26,6 @@ NULL
   toset <- !(names(op_tarflow) %in% names(op))
   if (any(toset)) options(op_tarflow[toset])
 
-  # memoise `fetch_config_table()`
   # https://stackoverflow.com/a/67664852/5996475
   ns <- topenv()
   ns$fetch_preset_mem <- memoise::memoise(
