@@ -18,6 +18,9 @@ test_that("Test with mock", {
 })
 
 test_that("Smoke test", {
+  prepare_fetch_data(data.frame()) |>
+    expect_warning(class = "tarflow_bad_params")
+
   skip_if_not_installed("odbc")
   skip_if(!"iquizoo-v3" %in% odbc::odbcListDataSources()$name)
   params <- tibble::tribble(

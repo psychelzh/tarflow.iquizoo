@@ -157,13 +157,11 @@ fetch_data <- function(project_id, game_id, course_date, ...,
 fetch_preset <- function(params, what, ...) {
   check_dots_used()
   query <- read_sql_file(name_sql_files[[what]])
-  params |>
-    purrr::pmap(
-      \(...) {
-        fetch_parameterized(query, list(...))
-      }
-    ) |>
-    purrr::list_rbind()
+  fetched <- vector("list", nrow(params))
+  for (i in seq_len(nrow(params))) {
+    fetched[[i]] <- fetch_parameterized(query, as.list(params[i, ]), ...)
+  }
+  as.data.frame(do.call(rbind, fetched))
 }
 
 read_sql_file <- function(file) {
