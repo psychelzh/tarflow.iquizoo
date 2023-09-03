@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,20 +52,19 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prepare_fetch_data</span><span class="op">(</span></span>
-<span>  <span class="va">tbl_params</span>,</span>
+<span>  <span class="va">params</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"raw_data"</span>, <span class="st">"scores"</span><span class="op">)</span>,</span>
-<span>  cache_dir <span class="op">=</span> <span class="st">"~/.cache.tarflow"</span>,</span>
-<span>  cache_age <span class="op">=</span> <span class="cn">Inf</span></span>
+<span>  always_check_hash <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>tbl_params</dt>
+    <dl><dt>params</dt>
 <dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> contains the parameters to be bound to the
-query. For now, only <code>course_name</code> and <code>course_period</code> are supported. Each
-row is a set of parameters. See details for more information.</p></dd>
+query. For now, only <code>organization_name</code> and <code>project_name</code> are supported
+and both of them should be specified. Each row is a set of parameters.</p></dd>
 
 
 <dt>...</dt>
@@ -76,26 +75,18 @@ row is a set of parameters. See details for more information.</p></dd>
 <dd><p>What to fetch. Can be "all", "raw_data" or "scores".</p></dd>
 
 
-<dt>cache_dir</dt>
-<dd><p>The directory to store cache. Defaults to
-<code>~/.cache.tarflow</code>.</p></dd>
-
-
-<dt>cache_age</dt>
-<dd><p>The maximum age of cache in seconds. Defaults to <code>Inf</code>.</p></dd>
+<dt>always_check_hash</dt>
+<dd><p>Whether to always check the project hash. Set to
+<code>FALSE</code> if you are sure the project has been finished. Default to <code>TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A list of <a href="https://docs.ropensci.org/targets/reference/tar_target.html" class="external-link">targets</a>.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The <code>course_period</code> in <code>tble_params</code> could be numeric or character values. If
-you use numeric values, call <code>tarflow.iquizoo:::course_periods</code> to see the
-mapping.</p>
+<p>A S3 object of class <code>tarflow_targets</code>. The main component is a list
+of targets. The other component is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> contains the contents
+based on which data is fetched.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
