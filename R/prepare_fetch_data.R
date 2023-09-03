@@ -5,12 +5,15 @@
 #'   and both of them should be specified. Each row is a set of parameters.
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. Can be "all", "raw_data" or "scores".
+#' @param always_check_hash Whether to always check the project hash. Set to
+#'   `FALSE` if you are sure the project has been finished. Default to `TRUE`.
 #' @return A S3 object of class `tarflow_targets`. The main component is a list
 #'   of targets. The other component is a [data.frame] contains the contents
 #'   based on which data is fetched.
 #' @export
 prepare_fetch_data <- function(params, ...,
-                               what = c("all", "raw_data", "scores")) {
+                               what = c("all", "raw_data", "scores"),
+                               always_check_hash = TRUE) {
   check_dots_empty()
   what <- match.arg(what)
   contents <- fetch_preset_mem(params, what = "project_contents")
@@ -45,11 +48,13 @@ prepare_fetch_data <- function(params, ...,
       if (what %in% c("all", "raw_data")) {
         list(
           targets::tar_target(
-            raw_data,
-            fetch_data(
-              project_id, game_id, course_date,
-              what = "raw_data"
-            )
+            raw_data, {
+              project_hash
+              fetch_data(
+                project_id, game_id, course_date,
+                what = "raw_data"
+              )
+            }
           ),
           targets::tar_target(
             raw_data_parsed,
@@ -68,15 +73,24 @@ prepare_fetch_data <- function(params, ...,
       },
       if (what %in% c("all", "scores")) {
         targets::tar_target(
-          scores,
-          fetch_data(
-            project_id, game_id, course_date,
-            what = "scores"
-          )
+          scores, {
+            project_hash
+            fetch_data(
+              project_id, game_id, course_date,
+              what = "scores"
+            )
+          }
         )
       }
     )
     targets <- list(
+      targets::tar_target_raw(
+        "project_hash",
+        expr(
+          fetch_preset(!!substitute(params), what = "project_hash")
+        ),
+        cue = targets::tar_cue(if (always_check_hash) "always")
+      ),
       targets::tar_target_raw(
         "project_users",
         expr(
@@ -136,12 +150,11 @@ fetch_data <- function(project_id, game_id, course_date, ...,
 #' Fetch data from iQuizoo database with preset SQL query files
 #'
 #' @param params The parameters used in the SQL query.
-#' @param ... Further arguments passed to [fetch_parameterized()].
 #' @param what The name of the preset query file to use.
+#' @param ... Further arguments passed to [fetch_parameterized()].
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_preset <- function(params, ...,
-                         what = c("project_contents", "project_users")) {
+fetch_preset <- function(params, what, ...) {
   check_dots_used()
   query <- read_sql_file(name_sql_files[[what]])
   params |>
@@ -165,7 +178,7 @@ read_sql_file <- function(file) {
 utils::globalVariables(
   c(
     "scores", "raw_data", "raw_data_parsed", "indices",
-    "project_id", "game_id", "course_date",
+    "project_hash", "project_id", "game_id", "course_date",
     "prep_fun_name", "prep_fun", "input", "extra"
   )
 )

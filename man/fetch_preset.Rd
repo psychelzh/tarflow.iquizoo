@@ -4,14 +4,14 @@
 \alias{fetch_preset}
 \title{Fetch data from iQuizoo database with preset SQL query files}
 \usage{
-fetch_preset(params, ..., what = c("project_contents", "project_users"))
+fetch_preset(params, what, ...)
 }
 \arguments{
 \item{params}{The parameters used in the SQL query.}
 
-\item{...}{Further arguments passed to \code{\link[=fetch_parameterized]{fetch_parameterized()}}.}
-
 \item{what}{The name of the preset query file to use.}
+
+\item{...}{Further arguments passed to \code{\link[=fetch_parameterized]{fetch_parameterized()}}.}
 }
 \value{
 A \link{data.frame} contains the fetched data.

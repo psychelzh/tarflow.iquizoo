@@ -48,6 +48,6 @@ test_that("Smoke test", {
       prepare_fetch_data(params)
     })
     targets::tar_make(reporter = "silent", callr_function = NULL)
-    expect_equal(length(targets::tar_objects()), 20L)
+    expect_equal(length(targets::tar_objects()), 21L)
   })
 })

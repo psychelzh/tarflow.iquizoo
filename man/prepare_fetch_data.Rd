@@ -4,7 +4,12 @@
 \alias{prepare_fetch_data}
 \title{Prepare targets pipeline for fetching data}
 \usage{
-prepare_fetch_data(params, ..., what = c("all", "raw_data", "scores"))
+prepare_fetch_data(
+  params,
+  ...,
+  what = c("all", "raw_data", "scores"),
+  always_check_hash = TRUE
+)
 }
 \arguments{
 \item{params}{A \link{data.frame} contains the parameters to be bound to the
@@ -14,6 +19,9 @@ and both of them should be specified. Each row is a set of parameters.}
 \item{...}{For future usage. Should be empty.}
 
 \item{what}{What to fetch. Can be "all", "raw_data" or "scores".}
+
+\item{always_check_hash}{Whether to always check the project hash. Set to
+\code{FALSE} if you are sure the project has been finished. Default to \code{TRUE}.}
 }
 \value{
 A S3 object of class \code{tarflow_targets}. The main component is a list
