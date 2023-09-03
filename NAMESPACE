@@ -2,6 +2,7 @@
 
 export(fetch_data)
 export(fetch_parameterized)
+export(fetch_preset)
 export(prepare_fetch_data)
 export(preproc_data)
 export(use_targets)

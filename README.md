@@ -38,7 +38,7 @@ You can install the development version from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("psychelzh/tarflow.iquizoo")
+devtools::install_github("psychelzh/tarflow.iquizoo@develop")
 ```
 
 Or you can install the stable version from [psychelzh’s
@@ -54,4 +54,5 @@ This simplest way to use this package is to call
 `tarflow.iquizoo::use_targets()` to generate a
 {[targets](https://docs.ropensci.org/targets/)} pipeline. After some
 basic parameters edit (follow the generated script), then you can run
-`targets::tar_make()` to run the pipeline.
+the pipeline by exectuing `targets::tar_make()` in R console. The
+pipeline will be executed in parallel by default.

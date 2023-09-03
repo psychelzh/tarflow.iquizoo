@@ -5,35 +5,29 @@
 \title{Prepare targets pipeline for fetching data}
 \usage{
 prepare_fetch_data(
-  tbl_params,
+  params,
   ...,
   what = c("all", "raw_data", "scores"),
-  cache_dir = "~/.cache.tarflow",
-  cache_age = Inf
+  always_check_hash = TRUE
 )
 }
 \arguments{
-\item{tbl_params}{A \link{data.frame} contains the parameters to be bound to the
-query. For now, only \code{course_name} and \code{course_period} are supported. Each
-row is a set of parameters. See details for more information.}
+\item{params}{A \link{data.frame} contains the parameters to be bound to the
+query. For now, only \code{organization_name} and \code{project_name} are supported
+and both of them should be specified. Each row is a set of parameters.}
 
 \item{...}{For future usage. Should be empty.}
 
 \item{what}{What to fetch. Can be "all", "raw_data" or "scores".}
 
-\item{cache_dir}{The directory to store cache. Defaults to
-\verb{~/.cache.tarflow}.}
-
-\item{cache_age}{The maximum age of cache in seconds. Defaults to \code{Inf}.}
+\item{always_check_hash}{Whether to always check the project hash. Set to
+\code{FALSE} if you are sure the project has been finished. Default to \code{TRUE}.}
 }
 \value{
-A list of \link[targets:tar_target]{targets}.
+A S3 object of class \code{tarflow_targets}. The main component is a list
+of targets. The other component is a \link{data.frame} contains the contents
+based on which data is fetched.
 }
 \description{
 Prepare targets pipeline for fetching data
-}
-\details{
-The \code{course_period} in \code{tble_params} could be numeric or character values. If
-you use numeric values, call \code{tarflow.iquizoo:::course_periods} to see the
-mapping.
 }

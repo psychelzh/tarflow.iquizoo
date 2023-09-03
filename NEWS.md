@@ -1,3 +1,19 @@
+# tarflow.iquizoo 3.1.0
+
+## Breaking Changes
+
+* Changed parameters to organization name and project name. Former course specification is removed.
+
+## New Features
+
+* Support specify `dsn` and `groups` in options by `tarflow.dsn` and `tarflow.groups` respectively. This is useful when default values are not suitable for you.
+* Added project users to pipeline.
+* Added support for auto-check whether the projects data are up-to-date. This turned on by default, and you can turn it off by setting `always_check_hash` to `FALSE` in `use_targets()`.
+
+## Bug Fixes
+
+* Fix a bug that targets flow will fail with meaningless message when `odbc` does not configure correctly.
+
 # tarflow.iquizoo 3.0.3
 
 * Remove unicode characters from document.

@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquzoo" Data Processing
-Version: 3.0.3
+Version: 3.1.0
 Authors@R: c(
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150")),
@@ -18,7 +18,6 @@ Depends:
     R (>= 4.1.0)
 Imports:
     bit64,
-    cachem,
     cli,
     data.iquizoo (>= 0.3.0),
     DBI,
@@ -37,7 +36,6 @@ Imports:
 Suggests:
     covr,
     lifecycle,
-    mockery,
     odbc,
     preproc.iquizoo (>= 2.4.0),
     RMariaDB,
