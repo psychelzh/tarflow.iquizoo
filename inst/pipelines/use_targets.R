@@ -9,15 +9,14 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tarflow.iquizoo", "preproc.iquizoo") # packages that your targets need to run
+  packages = c("tarflow.iquizoo", "preproc.iquizoo"), # packages that your targets need to run
   # format = "qs", # Optionally set the default storage format. qs is fast.
   #
   # For distributed computing in tar_make(), supply a {crew} controller
   # as discussed at https://books.ropensci.org/targets/crew.html.
   # Choose a controller that suits your needs. For example, the following
-  # sets a controller with 2 workers which will run as local R processes:
-  #
-  #   controller = crew::crew_controller_local(workers = 2)
+  # sets a controller with 8 workers which will run as local R processes:
+  controller = crew::crew_controller_local(workers = 8)
   #
   # Set other options as needed.
 )
@@ -32,8 +31,11 @@ params <- tibble::tribble(
   "# ORGANISATION NAME", "# PROJECT NAME"
 )
 
-# change what to scores or raw_data if you want to
-targets <- tarflow.iquizoo::prepare_fetch_data(params, what = "all")
+targets <- tarflow.iquizoo::prepare_fetch_data(
+  params,
+  what = "all", # change to "scores" or "raw_data" if you want to
+  always_check_hash = TRUE # set as `FALSE` if projects finalized
+)
 
 # Replace the target list below with your own:
 list(
