@@ -8,6 +8,7 @@
 
 * Support specify `dsn` and `groups` in options by `tarflow.dsn` and `tarflow.groups` respectively. This is useful when default values are not suitable for you.
 * Added project users to pipeline.
+* Added support for auto-check whether the projects data are up-to-date. This turned on by default, and you can turn it off by setting `always_check_hash` to `FALSE` in `use_targets()`.
 
 ## Bug Fixes
 
