@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.1.1
 
 * Fixed a bug that `fetch_preset()` does not pass `...` to `fetch_parameterized()` correctly.
 
