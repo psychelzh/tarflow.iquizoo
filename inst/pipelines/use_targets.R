@@ -10,6 +10,7 @@ library(targets)
 # Set target options:
 tar_option_set(
   packages = c("tarflow.iquizoo", "preproc.iquizoo"), # packages that your targets need to run
+  imports = "preproc.iquizoo", # comment out this if only "scores" are required
   # format = "qs", # Optionally set the default storage format. qs is fast.
   #
   # For distributed computing in tar_make(), supply a {crew} controller
