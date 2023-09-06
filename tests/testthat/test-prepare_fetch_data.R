@@ -34,6 +34,15 @@ test_that("Smoke test", {
     ~organization_name, ~project_name,
     "Unexisted", "Malvalue"
   )
+  memoise::drop_cache(fetch_preset_mem)(params_bad, what = "project_contents")
+  withr::with_options(
+    list(
+      tarflow.driver = RMariaDB::MariaDB(),
+      tarflow.groups = "iquizoo-v3"
+    ),
+    prepare_fetch_data(params_bad) |>
+      expect_warning(class = "tarflow_bad_params")
+  )
   prepare_fetch_data(params_bad) |>
     expect_warning(class = "tarflow_bad_params")
 
