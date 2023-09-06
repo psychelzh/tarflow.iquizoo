@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.1.2
 
 * Fixed a bug of named parameters when `RMariaDB::MariaDB()` is used.
 
