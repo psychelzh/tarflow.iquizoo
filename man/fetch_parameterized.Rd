@@ -9,7 +9,8 @@ fetch_parameterized(query, params, ..., source = set_source())
 \arguments{
 \item{query}{The query to be executed.}
 
-\item{params}{The parameters to be bound to the query.}
+\item{params}{The parameters to be bound to the query. This parameter could
+be safely omitted if \code{query} does not contain any parameters.}
 
 \item{...}{Further arguments passed to \link[DBI:dbConnect]{DBI::dbConnect()}.}
 

@@ -1,7 +1,8 @@
 #' Fetch data from iQuizoo database based on a parameterized query
 #'
 #' @param query The query to be executed.
-#' @param params The parameters to be bound to the query.
+#' @param params The parameters to be bound to the query. This parameter could
+#'   be safely omitted if `query` does not contain any parameters.
 #' @param ... Further arguments passed to [DBI::dbConnect()][DBI::dbConnect].
 #' @param source The data source from which data is fetched. See [set_source()]
 #'   for details.
@@ -10,6 +11,9 @@
 fetch_parameterized <- function(query, params, ...,
                                 source = set_source()) {
   check_dots_used()
+  if (missing(params)) {
+    params <- list()
+  }
   if (!inherits(source, "tarflow.source")) {
     cli::cli_abort("{.arg source} must be created by {.fun set_source}.")
   }
