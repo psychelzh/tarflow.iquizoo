@@ -1,5 +1,10 @@
 # tarflow.iquizoo (development version)
 
+## New Features
+
+* Added `set_source()` to specify the data source. Arguments `driver`, `dsn` and `groups` of `fetch_parameterized()` now live in this function.
+* Let `params` argument of `fetch_parameterized()` be optional (but not after `...`) when no parameters in `query`. Note this is not checked beforehand, so you should take care of whether there are parameters.
+
 # tarflow.iquizoo 3.1.2
 
 * Fixed a bug of named parameters when `RMariaDB::MariaDB()` is used.
