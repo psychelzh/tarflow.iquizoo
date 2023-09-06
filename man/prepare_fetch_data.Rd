@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepare_fetch_data.R
 \name{prepare_fetch_data}
 \alias{prepare_fetch_data}
-\title{Prepare targets pipeline for fetching data}
+\title{Prepare targets based on parameters}
 \usage{
 prepare_fetch_data(
   params,
@@ -24,10 +24,12 @@ and both of them should be specified. Each row is a set of parameters.}
 \code{FALSE} if you are sure the project has been finished. Default to \code{TRUE}.}
 }
 \value{
-A S3 object of class \code{tarflow_targets}. The main component is a list
-of targets. The other component is a \link{data.frame} contains the contents
-based on which data is fetched.
+A S3 object of class \code{tarflow_targets}. The value is a list of target
+objects, and a \link{data.frame} containing the contents based on which data are
+fetched is included in the \code{"contents"} attribute.
 }
 \description{
-Prepare targets pipeline for fetching data
+Given parameters, this target factory prepares a set of target objects used
+to fetch data from iQuizoo database, separated into static branches so that
+each is for a specific project and task/game combination.
 }

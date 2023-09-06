@@ -1,4 +1,8 @@
-#' Prepare targets pipeline for fetching data
+#' Prepare targets based on parameters
+#'
+#' Given parameters, this target factory prepares a set of target objects used
+#' to fetch data from iQuizoo database, separated into static branches so that
+#' each is for a specific project and task/game combination.
 #'
 #' @param params A [data.frame] contains the parameters to be bound to the
 #'   query. For now, only `organization_name` and `project_name` are supported
@@ -7,9 +11,9 @@
 #' @param what What to fetch. Can be "all", "raw_data" or "scores".
 #' @param always_check_hash Whether to always check the project hash. Set to
 #'   `FALSE` if you are sure the project has been finished. Default to `TRUE`.
-#' @return A S3 object of class `tarflow_targets`. The main component is a list
-#'   of targets. The other component is a [data.frame] contains the contents
-#'   based on which data is fetched.
+#' @return A S3 object of class `tarflow_targets`. The value is a list of target
+#'   objects, and a [data.frame] containing the contents based on which data are
+#'   fetched is included in the `"contents"` attribute.
 #' @export
 prepare_fetch_data <- function(params, ...,
                                what = c("all", "raw_data", "scores"),
