@@ -4,6 +4,14 @@
 
 * Added `set_source()` to specify the data source. Arguments `driver`, `dsn` and `groups` of `fetch_parameterized()` now live in this function.
 * Let `params` argument of `fetch_parameterized()` be optional (but not after `...`) when no parameters in `query`. Note this is not checked beforehand, so you should take care of whether there are parameters.
+* Supported custom SQL templates. When users want to use different parameter names other than the default one, they could support their own paired with SQL templates. See `setup_templates()` for details ([#66](https://github.com/psychelzh/tarflow.iquizoo/issues/66)).
+
+## Improvements
+
+* Enhanced progress hash.
+  * The name is changed from `project_hash` to `progress_hash`, which is more informative.
+  * Now if there are multiple projects, the hash will be separated for each project.
+  * The SQL now is independent of the user's parameters ([#67](https://github.com/psychelzh/tarflow.iquizoo/issues/67)).
 
 # tarflow.iquizoo 3.1.2
 
