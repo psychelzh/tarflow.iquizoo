@@ -9,7 +9,7 @@
 ## Improvements
 
 * Enhanced progress hash.
-  * The name is changed from `project_hash` to `progress_hash`, which is more informative.
+  * The name is changed from `project_hash` to `progress_hash`, which is more informative. So the argument `always_check_hash` of `prepare_fetch_data()` is changed to `check_progress` accordingly.
   * Now if there are multiple projects, the hash will be separated for each project.
   * The SQL now is independent of the user's parameters ([#67](https://github.com/psychelzh/tarflow.iquizoo/issues/67)).
 
