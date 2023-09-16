@@ -4,7 +4,7 @@
 \alias{fetch_parameterized}
 \title{Fetch data from iQuizoo database based on a parameterized query}
 \usage{
-fetch_parameterized(query, params, ..., source = set_source())
+fetch_parameterized(query, params, ..., source = setup_source())
 }
 \arguments{
 \item{query}{A character string containing SQL.}
@@ -14,8 +14,8 @@ be safely omitted if \code{query} does not contain any parameters.}
 
 \item{...}{Further arguments passed to \link[DBI:dbConnect]{DBI::dbConnect()}.}
 
-\item{source}{The data source from which data is fetched. See \code{\link[=set_source]{set_source()}}
-for details.}
+\item{source}{The data source from which data is fetched. See
+\code{\link[=setup_source]{setup_source()}} for details.}
 }
 \value{
 A \link{data.frame} contains the fetched data.

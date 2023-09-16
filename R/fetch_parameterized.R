@@ -4,18 +4,18 @@
 #' @param params The parameters to be bound to the query. This parameter could
 #'   be safely omitted if `query` does not contain any parameters.
 #' @param ... Further arguments passed to [DBI::dbConnect()][DBI::dbConnect].
-#' @param source The data source from which data is fetched. See [set_source()]
-#'   for details.
+#' @param source The data source from which data is fetched. See
+#'   [setup_source()] for details.
 #' @return A [data.frame] contains the fetched data.
 #' @export
 fetch_parameterized <- function(query, params, ...,
-                                source = set_source()) {
+                                source = setup_source()) {
   check_dots_used()
   if (missing(params)) {
     params <- list()
   }
   if (!inherits(source, "tarflow.source")) {
-    cli::cli_abort("{.arg source} must be created by {.fun set_source}.")
+    cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
   }
   # connect to given database which is pre-configured
   if (!inherits_any(source$driver, c("OdbcDriver", "MariaDBDriver"))) {
@@ -47,9 +47,9 @@ fetch_parameterized <- function(query, params, ...,
 #'   [RMariaDB::MariaDB()].
 #' @return An S3 class of `tarflow.source` with the options.
 #' @export
-set_source <- function(driver = getOption("tarflow.driver"),
-                       dsn = getOption("tarflow.dsn"),
-                       groups = getOption("tarflow.groups")) {
+setup_source <- function(driver = getOption("tarflow.driver"),
+                         dsn = getOption("tarflow.dsn"),
+                         groups = getOption("tarflow.groups")) {
   structure(
     list(
       driver = driver,
