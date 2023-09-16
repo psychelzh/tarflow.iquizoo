@@ -7,9 +7,9 @@
 prepare_fetch_data(
   params,
   ...,
-  templates = setup_templates(),
   what = c("all", "raw_data", "scores"),
-  always_check_hash = TRUE
+  templates = setup_templates(),
+  check_progress = TRUE
 )
 }
 \arguments{
@@ -19,13 +19,13 @@ and both of them should be specified. Each row is a set of parameters.}
 
 \item{...}{For future usage. Should be empty.}
 
+\item{what}{What to fetch. Can be "all", "raw_data" or "scores".}
+
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}
 
-\item{what}{What to fetch. Can be "all", "raw_data" or "scores".}
-
-\item{always_check_hash}{Whether to always check the project hash. Set to
-\code{FALSE} if you are sure the project has been finished. Default to \code{TRUE}.}
+\item{check_progress}{Whether to check the progress hash. Set it as \code{FALSE}
+if the project is finalized.}
 }
 \value{
 A S3 object of class \code{tarflow_targets}. The value is a list of target

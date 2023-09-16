@@ -8,19 +8,19 @@
 #'   query. For now, only `organization_name` and `project_name` are supported
 #'   and both of them should be specified. Each row is a set of parameters.
 #' @param ... For future usage. Should be empty.
+#' @param what What to fetch. Can be "all", "raw_data" or "scores".
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
-#' @param what What to fetch. Can be "all", "raw_data" or "scores".
-#' @param always_check_hash Whether to always check the project hash. Set to
-#'   `FALSE` if you are sure the project has been finished. Default to `TRUE`.
+#' @param check_progress Whether to check the progress hash. Set it as `FALSE`
+#'   if the project is finalized.
 #' @return A S3 object of class `tarflow_targets`. The value is a list of target
 #'   objects, and a [data.frame] containing the contents based on which data are
 #'   fetched is included in the `"contents"` attribute.
 #' @export
 prepare_fetch_data <- function(params, ...,
-                               templates = setup_templates(),
                                what = c("all", "raw_data", "scores"),
-                               always_check_hash = TRUE) {
+                               templates = setup_templates(),
+                               check_progress = TRUE) {
   check_dots_empty()
   if (!inherits(templates, "tarflow.template")) {
     cli::cli_abort(
@@ -116,7 +116,7 @@ prepare_fetch_data <- function(params, ...,
               list(project_id)
             )
           ),
-          cue = targets::tar_cue(if (always_check_hash) "always")
+          cue = targets::tar_cue(if (check_progress) "always")
         )
       ),
       targets::tar_target_raw(

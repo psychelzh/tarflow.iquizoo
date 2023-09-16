@@ -35,7 +35,9 @@ params <- tibble::tribble(
 targets <- tarflow.iquizoo::prepare_fetch_data(
   params,
   what = "all", # change to "scores" or "raw_data" if you want to
-  always_check_hash = TRUE # set as `FALSE` if projects finalized
+  # For advanced users, you can set custom templates:
+  templates = setup_templates(),
+  check_progress = TRUE # set as `FALSE` if projects finalized
 )
 
 # Replace the target list below with your own:
