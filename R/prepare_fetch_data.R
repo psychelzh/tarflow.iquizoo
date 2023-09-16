@@ -28,32 +28,34 @@ prepare_fetch_data <- function(params, ...,
     )
     targets <- list()
   } else {
-    branches <- tarchetypes::tar_map(
-      contents |>
-        dplyr::left_join(
-          data.iquizoo::game_info,
-          by = "game_id"
-        ) |>
-        dplyr::mutate(
-          # https://github.com/ropensci/tarchetypes/issues/94
-          project_id = bit64::as.character.integer64(.data$project_id),
-          game_id = bit64::as.character.integer64(.data$game_id),
-          course_date = as.character(course_date),
-          prep_fun = purrr::map(
-            .data[["prep_fun_name"]],
-            purrr::possibly(sym, NA)
-          ),
-          dplyr::across(
-            dplyr::all_of(c("input", "extra")),
-            parse_exprs
-          )
+    config_contents <- contents |>
+      dplyr::left_join(
+        data.iquizoo::game_info,
+        by = "game_id"
+      ) |>
+      dplyr::mutate(
+        # https://github.com/ropensci/tarchetypes/issues/94
+        project_id = bit64::as.character.integer64(.data$project_id),
+        game_id = bit64::as.character.integer64(.data$game_id),
+        course_date = as.character(course_date),
+        prep_fun = purrr::map(
+          .data[["prep_fun_name"]],
+          purrr::possibly(sym, NA)
         ),
+        dplyr::across(
+          dplyr::all_of(c("input", "extra")),
+          parse_exprs
+        ),
+        progress_hash = syms(paste0("progress_hash_", project_id))
+      )
+    branches <- tarchetypes::tar_map(
+      config_contents,
       names = c("project_id", "game_id"),
       if (what %in% c("all", "raw_data")) {
         list(
           targets::tar_target(
             raw_data, {
-              project_hash
+              progress_hash
               fetch_data(
                 project_id, game_id, course_date,
                 what = "raw_data"
@@ -78,7 +80,7 @@ prepare_fetch_data <- function(params, ...,
       if (what %in% c("all", "scores")) {
         targets::tar_target(
           scores, {
-            project_hash
+            progress_hash
             fetch_data(
               project_id, game_id, course_date,
               what = "scores"
@@ -88,12 +90,16 @@ prepare_fetch_data <- function(params, ...,
       }
     )
     targets <- list(
-      targets::tar_target_raw(
-        "project_hash",
-        expr(
-          fetch_preset(!!substitute(params), what = "project_hash")
-        ),
-        cue = targets::tar_cue(if (always_check_hash) "always")
+      tarchetypes::tar_map(
+        dplyr::distinct(config_contents, project_id),
+        targets::tar_target(
+          progress_hash,
+          fetch_preset(
+            data.frame(project_id = project_id),
+            what = "progress_hash"
+          ),
+          cue = targets::tar_cue(if (always_check_hash) "always")
+        )
       ),
       targets::tar_target_raw(
         "project_users",
@@ -185,7 +191,7 @@ read_sql_file <- function(file) {
 utils::globalVariables(
   c(
     "scores", "raw_data", "raw_data_parsed", "indices",
-    "project_hash", "project_id", "game_id", "course_date",
+    "progress_hash", "project_id", "game_id", "course_date",
     "prep_fun_name", "prep_fun", "input", "extra"
   )
 )
