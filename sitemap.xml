@@ -19,13 +19,13 @@
     <loc>https://psychelzh.github.io/tarflow.iquizoo/news/index.html</loc>
   </url>
   <url>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_batch.html</loc>
+  </url>
+  <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_data.html</loc>
   </url>
   <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_parameterized.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_preset.html</loc>
   </url>
   <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/index.html</loc>
@@ -35,6 +35,12 @@
   </url>
   <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/preproc_data.html</loc>
+  </url>
+  <url>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/setup_source.html</loc>
+  </url>
+  <url>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/setup_templates.html</loc>
   </url>
   <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/use_targets.html</loc>

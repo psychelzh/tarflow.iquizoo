@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,6 +52,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fetch_data</span><span class="op">(</span></span>
+<span>  <span class="va">query</span>,</span>
 <span>  <span class="va">project_id</span>,</span>
 <span>  <span class="va">game_id</span>,</span>
 <span>  <span class="va">course_date</span>,</span>
@@ -62,16 +63,22 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>project_id</dt>
-<dd><p>The project id.</p></dd>
+    <dl><dt>query</dt>
+<dd><p>A parameterized SQL query. Note the query should also contain
+a <code>glue</code> expression to inject the table name, i.e., <code>"{ table_name }"</code>.</p></dd>
+
+
+<dt>project_id</dt>
+<dd><p>The project id to be bound to the query.</p></dd>
 
 
 <dt>game_id</dt>
-<dd><p>The game id.</p></dd>
+<dd><p>The game id to be bound to the query.</p></dd>
 
 
 <dt>course_date</dt>
-<dd><p>The course date.</p></dd>
+<dd><p>The course date. This parameter is used to determine the
+table name, not to be bound to the query.</p></dd>
 
 
 <dt>...</dt>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,12 +45,29 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.0" id="tarflowiquizoo-320">tarflow.iquizoo 3.2.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-320"></a></h2>
+<div class="section level3">
+<h3 id="new-features-3-2-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-3-2-0"></a></h3>
+<ul><li>Added <code><a href="../reference/setup_source.html">setup_source()</a></code> to specify the data source. Arguments <code>driver</code>, <code>dsn</code> and <code>groups</code> of <code><a href="../reference/fetch_parameterized.html">fetch_parameterized()</a></code> now live in this function.</li>
+<li>Let <code>params</code> argument of <code><a href="../reference/fetch_parameterized.html">fetch_parameterized()</a></code> be optional (but not after <code>...</code>) when no parameters in <code>query</code>. Note this is not checked beforehand, so you should take care of whether there are parameters.</li>
+<li>Supported custom SQL templates. When users want to use different parameter names other than the default one, they could support their own paired with SQL templates. See <code><a href="../reference/setup_templates.html">setup_templates()</a></code> for details (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/66" class="external-link">#66</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-3-2-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-3-2-0"></a></h3>
+<ul><li>Enhanced progress hash.
+<ul><li>The name is changed from <code>project_hash</code> to <code>progress_hash</code>, which is more informative. So the argument <code>always_check_hash</code> of <code><a href="../reference/prepare_fetch_data.html">prepare_fetch_data()</a></code> is changed to <code>check_progress</code> accordingly.</li>
+<li>Now if there are multiple projects, the hash will be separated for each project.</li>
+<li>The SQL now is independent of the user’s parameters (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/67" class="external-link">#67</a>).</li>
+</ul></li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.1.2" id="tarflowiquizoo-312">tarflow.iquizoo 3.1.2<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-312"></a></h2>
 <ul><li>Fixed a bug of named parameters when <code><a href="https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html" class="external-link">RMariaDB::MariaDB()</a></code> is used.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.1.1" id="tarflowiquizoo-311">tarflow.iquizoo 3.1.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-311"></a></h2>
-<ul><li>Fixed a bug that <code><a href="../reference/fetch_preset.html">fetch_preset()</a></code> does not pass <code>...</code> to <code><a href="../reference/fetch_parameterized.html">fetch_parameterized()</a></code> correctly.</li>
+<ul><li>Fixed a bug that <code>fetch_preset()</code> does not pass <code>...</code> to <code><a href="../reference/fetch_parameterized.html">fetch_parameterized()</a></code> correctly.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.1.0" id="tarflowiquizoo-310">tarflow.iquizoo 3.1.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-310"></a></h2>
