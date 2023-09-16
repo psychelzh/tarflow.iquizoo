@@ -8,6 +8,8 @@
 #'   query. For now, only `organization_name` and `project_name` are supported
 #'   and both of them should be specified. Each row is a set of parameters.
 #' @param ... For future usage. Should be empty.
+#' @param templates The SQL template files used to fetch data. See
+#'   [setup_templates()] for details.
 #' @param what What to fetch. Can be "all", "raw_data" or "scores".
 #' @param always_check_hash Whether to always check the project hash. Set to
 #'   `FALSE` if you are sure the project has been finished. Default to `TRUE`.
@@ -16,11 +18,17 @@
 #'   fetched is included in the `"contents"` attribute.
 #' @export
 prepare_fetch_data <- function(params, ...,
+                               templates = setup_templates(),
                                what = c("all", "raw_data", "scores"),
                                always_check_hash = TRUE) {
   check_dots_empty()
+  if (!inherits(templates, "tarflow.template")) {
+    cli::cli_abort(
+      "{.arg templates} must be created by {.fun setup_templates}."
+    )
+  }
   what <- match.arg(what)
-  contents <- fetch_preset_mem(params, what = "project_contents")
+  contents <- fetch_batch_mem(read_file(templates$contents), params)
   if (nrow(contents) == 0) {
     warn(
       "No records found based on the given parameters",
@@ -92,19 +100,24 @@ prepare_fetch_data <- function(params, ...,
     targets <- list(
       tarchetypes::tar_map(
         dplyr::distinct(config_contents, project_id),
-        targets::tar_target(
-          progress_hash,
-          fetch_preset(
-            data.frame(project_id = project_id),
-            what = "progress_hash"
+        targets::tar_target_raw(
+          "progress_hash",
+          expr(
+            fetch_batch(
+              !!read_file(templates[["progress_hash"]]),
+              data.frame(project_id = project_id)
+            )
           ),
           cue = targets::tar_cue(if (always_check_hash) "always")
         )
       ),
       targets::tar_target_raw(
-        "project_users",
+        "users",
         expr(
-          fetch_preset(!!substitute(params), what = "project_users")
+          fetch_batch(
+            !!read_file(templates[["users"]]),
+            !!substitute(params)
+          )
         )
       ),
       branches,
@@ -135,6 +148,30 @@ prepare_fetch_data <- function(params, ...,
   )
 }
 
+#' Set up templates used to fetch data
+#'
+#' @param contents The SQL template file used to fetch contents. At least
+#'   `project_id`, `game_id` and `course_date` should be included in the
+#'   contents. See [fetch_data()] for details.
+#' @param users The SQL template file used to fetch users. See [fetch_batch()]
+#'   for details.
+#' @param progress_hash The SQL template file used to fetch progress hash. See
+#'   [fetch_batch()] for details. Usually you don't need to change this.
+#' @return A S3 object of class `tarflow.template` with the options.
+#' @export
+setup_templates <- function(contents = NULL, users = NULL,
+                            progress_hash = NULL) {
+  structure(
+    list(
+      contents = contents %||% package_sql_file(name_sql_files["contents"]),
+      users = users %||% package_sql_file(name_sql_files["users"]),
+      progress_hash = progress_hash %||%
+        package_sql_file(name_sql_files["progress_hash"])
+    ),
+    class = "tarflow.template"
+  )
+}
+
 #' Fetch data from iQuizoo database
 #'
 #' @param project_id The project id.
@@ -152,21 +189,22 @@ fetch_data <- function(project_id, game_id, course_date, ...,
   # name injection in the query
   tbl_data <- paste0(prefix, format(as.POSIXct(course_date), "%Y0101"))
   sql_file <- name_sql_files[[what]]
-  query <- read_sql_file(sql_file) |>
-    stringr::str_glue(.envir = env(tbl_data = tbl_data))
+  query <- stringr::str_glue(
+    read_file(package_sql_file(sql_file)),
+    .envir = env(tbl_data = tbl_data)
+  )
   fetch_parameterized(query, list(project_id, game_id), ...)
 }
 
-#' Fetch data from iQuizoo database with preset SQL query files
+#' Fetch results of a parameterized query based on a batch of parameters
 #'
+#' @param query A character string containing parameterized SQL.
 #' @param params The parameters used in the SQL query.
-#' @param what The name of the preset query file to use.
 #' @param ... Further arguments passed to [fetch_parameterized()].
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_preset <- function(params, what, ...) {
+fetch_batch <- function(query, params, ...) {
   check_dots_used()
-  query <- read_sql_file(name_sql_files[[what]])
   fetched <- vector("list", nrow(params))
   for (i in seq_len(nrow(params))) {
     fetched[[i]] <- fetch_parameterized(
@@ -179,15 +217,6 @@ fetch_preset <- function(params, what, ...) {
   as.data.frame(do.call(rbind, fetched))
 }
 
-read_sql_file <- function(file) {
-  system.file(
-    "sql", file,
-    package = "tarflow.iquizoo"
-  ) |>
-    readLines() |>
-    paste0(collapse = "\n")
-}
-
 utils::globalVariables(
   c(
     "scores", "raw_data", "raw_data_parsed", "indices",
@@ -195,3 +224,15 @@ utils::globalVariables(
     "prep_fun_name", "prep_fun", "input", "extra"
   )
 )
+
+# helper functions
+package_sql_file <- function(file) {
+  system.file(
+    "sql", file,
+    package = "tarflow.iquizoo"
+  )
+}
+
+read_file <- function(file) {
+  paste0(readLines(file), collapse = "\n")
+}

@@ -7,7 +7,7 @@
 fetch_parameterized(query, params, ..., source = set_source())
 }
 \arguments{
-\item{query}{The query to be executed.}
+\item{query}{A character string containing SQL.}
 
 \item{params}{The parameters to be bound to the query. This parameter could
 be safely omitted if \code{query} does not contain any parameters.}

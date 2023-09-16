@@ -28,8 +28,8 @@ NULL
 
   # https://stackoverflow.com/a/67664852/5996475
   ns <- topenv()
-  ns$fetch_preset_mem <- memoise::memoise(
-    fetch_preset,
+  ns$fetch_batch_mem <- memoise::memoise(
+    fetch_batch,
     cache = switch(Sys.getenv("TARFLOW_CACHE", "disk"),
       disk = memoise::cache_filesystem("~/.tarflow.cache"),
       memory = memoise::cache_memory()

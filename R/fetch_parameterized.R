@@ -1,6 +1,6 @@
 #' Fetch data from iQuizoo database based on a parameterized query
 #'
-#' @param query The query to be executed.
+#' @param query A character string containing SQL.
 #' @param params The parameters to be bound to the query. This parameter could
 #'   be safely omitted if `query` does not contain any parameters.
 #' @param ... Further arguments passed to [DBI::dbConnect()][DBI::dbConnect].

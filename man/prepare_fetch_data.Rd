@@ -7,6 +7,7 @@
 prepare_fetch_data(
   params,
   ...,
+  templates = setup_templates(),
   what = c("all", "raw_data", "scores"),
   always_check_hash = TRUE
 )
@@ -17,6 +18,9 @@ query. For now, only \code{organization_name} and \code{project_name} are suppor
 and both of them should be specified. Each row is a set of parameters.}
 
 \item{...}{For future usage. Should be empty.}
+
+\item{templates}{The SQL template files used to fetch data. See
+\code{\link[=setup_templates]{setup_templates()}} for details.}
 
 \item{what}{What to fetch. Can be "all", "raw_data" or "scores".}
 
