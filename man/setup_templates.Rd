@@ -4,22 +4,35 @@
 \alias{setup_templates}
 \title{Set up templates used to fetch data}
 \usage{
-setup_templates(contents = NULL, users = NULL, progress_hash = NULL)
+setup_templates(
+  contents = NULL,
+  users = NULL,
+  raw_data = NULL,
+  scores = NULL,
+  progress_hash = NULL
+)
 }
 \arguments{
 \item{contents}{The SQL template file used to fetch contents. At least
 \code{project_id}, \code{game_id} and \code{course_date} should be included in the
-contents. See \code{\link[=fetch_data]{fetch_data()}} for details.}
+contents.}
 
-\item{users}{The SQL template file used to fetch users. See \code{\link[=fetch_batch]{fetch_batch()}}
-for details.}
+\item{users}{The SQL template file used to fetch users.}
 
-\item{progress_hash}{The SQL template file used to fetch progress hash. See
-\code{\link[=fetch_batch]{fetch_batch()}} for details. Usually you don't need to change this.}
+\item{raw_data}{The SQL template file used to fetch raw data. See
+\code{\link[=fetch_data]{fetch_data()}} for details. Usually you don't need to change this.}
+
+\item{scores}{The SQL template file used to fetch scores. See \code{\link[=fetch_data]{fetch_data()}}
+for details. Usually you don't need to change this.}
+
+\item{progress_hash}{The SQL template file used to fetch progress hash.
+Usually you don't need to change this.}
 }
 \value{
 A S3 object of class \code{tarflow.template} with the options.
 }
 \description{
-Set up templates used to fetch data
+If you want to extract data based on your own parameters, you should use this
+function to set up your own SQL templates. Note that the SQL queries should
+be parameterized.
 }

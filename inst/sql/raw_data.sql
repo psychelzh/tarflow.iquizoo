@@ -7,6 +7,6 @@ SELECT
     TimeConsuming game_duration,
     OrginalData game_data
 FROM
-    iquizoo_business_db.{ tbl_data }
+    iquizoo_business_db.{ table_name }
 WHERE
     ProjectCourseConfigId = ? AND ContentId = ?

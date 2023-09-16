@@ -5,6 +5,7 @@
 \title{Fetch data from iQuizoo database}
 \usage{
 fetch_data(
+  query,
   project_id,
   game_id,
   course_date,
@@ -13,11 +14,15 @@ fetch_data(
 )
 }
 \arguments{
-\item{project_id}{The project id.}
+\item{query}{A parameterized SQL query. Note the query should also contain
+a \code{glue} expression to inject the table name, i.e., \code{"{ table_name }"}.}
 
-\item{game_id}{The game id.}
+\item{project_id}{The project id to be bound to the query.}
 
-\item{course_date}{The course date.}
+\item{game_id}{The game id to be bound to the query.}
+
+\item{course_date}{The course date. This parameter is used to determine the
+table name, not to be bound to the query.}
 
 \item{...}{Further arguments passed to \code{\link[=fetch_parameterized]{fetch_parameterized()}}.}
 

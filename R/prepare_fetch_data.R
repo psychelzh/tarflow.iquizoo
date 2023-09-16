@@ -61,14 +61,18 @@ prepare_fetch_data <- function(params, ...,
       names = c("project_id", "game_id"),
       if (what %in% c("all", "raw_data")) {
         list(
-          targets::tar_target(
-            raw_data, {
+          targets::tar_target_raw(
+            "raw_data",
+            expr({
               progress_hash
               fetch_data(
-                project_id, game_id, course_date,
+                !!read_file(templates[["raw_data"]]),
+                project_id,
+                game_id,
+                course_date,
                 what = "raw_data"
               )
-            }
+            })
           ),
           targets::tar_target(
             raw_data_parsed,
@@ -86,14 +90,18 @@ prepare_fetch_data <- function(params, ...,
         )
       },
       if (what %in% c("all", "scores")) {
-        targets::tar_target(
-          scores, {
+        targets::tar_target_raw(
+          "scores",
+          expr({
             progress_hash
             fetch_data(
-              project_id, game_id, course_date,
+              !!read_file(templates[["scores"]]),
+              project_id,
+              game_id,
+              course_date,
               what = "scores"
             )
-          }
+          })
         )
       }
     )
@@ -150,23 +158,35 @@ prepare_fetch_data <- function(params, ...,
 
 #' Set up templates used to fetch data
 #'
+#' If you want to extract data based on your own parameters, you should use this
+#' function to set up your own SQL templates. Note that the SQL queries should
+#' be parameterized.
+#'
 #' @param contents The SQL template file used to fetch contents. At least
 #'   `project_id`, `game_id` and `course_date` should be included in the
-#'   contents. See [fetch_data()] for details.
-#' @param users The SQL template file used to fetch users. See [fetch_batch()]
-#'   for details.
-#' @param progress_hash The SQL template file used to fetch progress hash. See
-#'   [fetch_batch()] for details. Usually you don't need to change this.
+#'   contents.
+#' @param users The SQL template file used to fetch users.
+#' @param raw_data The SQL template file used to fetch raw data. See
+#'   [fetch_data()] for details. Usually you don't need to change this.
+#' @param scores The SQL template file used to fetch scores. See [fetch_data()]
+#'   for details. Usually you don't need to change this.
+#' @param progress_hash The SQL template file used to fetch progress hash.
+#'   Usually you don't need to change this.
 #' @return A S3 object of class `tarflow.template` with the options.
 #' @export
-setup_templates <- function(contents = NULL, users = NULL,
+setup_templates <- function(contents = NULL,
+                            users = NULL,
+                            raw_data = NULL,
+                            scores = NULL,
                             progress_hash = NULL) {
   structure(
     list(
-      contents = contents %||% package_sql_file(name_sql_files["contents"]),
-      users = users %||% package_sql_file(name_sql_files["users"]),
+      contents = contents %||% package_sql_file("contents.sql"),
+      users = users %||% package_sql_file("users.sql"),
+      raw_data = raw_data %||% package_sql_file("raw_data.sql"),
+      scores = scores %||% package_sql_file("scores.sql"),
       progress_hash = progress_hash %||%
-        package_sql_file(name_sql_files["progress_hash"])
+        package_sql_file("progress_hash.sql")
     ),
     class = "tarflow.template"
   )
@@ -174,26 +194,36 @@ setup_templates <- function(contents = NULL, users = NULL,
 
 #' Fetch data from iQuizoo database
 #'
-#' @param project_id The project id.
-#' @param game_id The game id.
-#' @param course_date The course date.
+#' @param query A parameterized SQL query. Note the query should also contain
+#'   a `glue` expression to inject the table name, i.e., `"{ table_name }"`.
+#' @param project_id The project id to be bound to the query.
+#' @param game_id The game id to be bound to the query.
+#' @param course_date The course date. This parameter is used to determine the
+#'    table name, not to be bound to the query.
 #' @param ... Further arguments passed to [fetch_parameterized()].
 #' @param what What to fetch. Can be either "raw_data" or "scores".
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_data <- function(project_id, game_id, course_date, ...,
+fetch_data <- function(query, project_id, game_id, course_date, ...,
                        what = c("raw_data", "scores")) {
   check_dots_used()
   what <- match.arg(what)
-  prefix <- tbl_data_prefixes[[what]]
-  # name injection in the query
-  tbl_data <- paste0(prefix, format(as.POSIXct(course_date), "%Y0101"))
-  sql_file <- name_sql_files[[what]]
-  query <- stringr::str_glue(
-    read_file(package_sql_file(sql_file)),
-    .envir = env(tbl_data = tbl_data)
+  fetch_parameterized(
+    stringr::str_glue(
+      query,
+      .envir = env(
+        table_name = paste0(
+          switch(what,
+            raw_data = "content_orginal_data_",
+            scores = "content_ability_score_"
+          ),
+          format(as.POSIXct(course_date), "%Y0101")
+        )
+      )
+    ),
+    list(project_id, game_id),
+    ...
   )
-  fetch_parameterized(query, list(project_id, game_id), ...)
 }
 
 #' Fetch results of a parameterized query based on a batch of parameters

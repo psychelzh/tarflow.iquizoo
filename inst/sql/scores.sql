@@ -10,6 +10,6 @@ SELECT
     ApproximateScore game_score_raw,
     StandardScore game_score_std
 FROM
-    iquizoo_business_db.{ tbl_data }
+    iquizoo_business_db.{ table_name }
 WHERE
     ProjectCourseConfigId = ? AND ContentId = ?
