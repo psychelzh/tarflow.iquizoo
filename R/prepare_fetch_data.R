@@ -103,9 +103,9 @@ prepare_fetch_data <- function(params, ...,
         targets::tar_target_raw(
           "progress_hash",
           expr(
-            fetch_batch(
+            fetch_parameterized(
               !!read_file(templates[["progress_hash"]]),
-              data.frame(project_id = project_id)
+              list(project_id)
             )
           ),
           cue = targets::tar_cue(if (always_check_hash) "always")
