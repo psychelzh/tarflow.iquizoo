@@ -4,9 +4,12 @@ SELECT
     ContentId game_id,
     ContentVersion game_version,
     CreateTime game_time,
-    TimeConsuming game_duration,
-    OrginalData game_data
+    ContentAbilityId ability_id,
+    Stage game_stage,
+    Star game_star,
+    ApproximateScore game_score_raw,
+    StandardScore game_score_std
 FROM
-    iquizoo_business_db.{ tbl_data }
+    iquizoo_business_db.{ table_name }
 WHERE
     ProjectCourseConfigId = ? AND ContentId = ?

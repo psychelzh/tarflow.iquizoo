@@ -2,13 +2,14 @@
 % Please edit documentation in R/prepare_fetch_data.R
 \name{prepare_fetch_data}
 \alias{prepare_fetch_data}
-\title{Prepare targets pipeline for fetching data}
+\title{Prepare targets based on parameters}
 \usage{
 prepare_fetch_data(
   params,
   ...,
   what = c("all", "raw_data", "scores"),
-  always_check_hash = TRUE
+  templates = setup_templates(),
+  check_progress = TRUE
 )
 }
 \arguments{
@@ -20,14 +21,19 @@ and both of them should be specified. Each row is a set of parameters.}
 
 \item{what}{What to fetch. Can be "all", "raw_data" or "scores".}
 
-\item{always_check_hash}{Whether to always check the project hash. Set to
-\code{FALSE} if you are sure the project has been finished. Default to \code{TRUE}.}
+\item{templates}{The SQL template files used to fetch data. See
+\code{\link[=setup_templates]{setup_templates()}} for details.}
+
+\item{check_progress}{Whether to check the progress hash. Set it as \code{FALSE}
+if the project is finalized.}
 }
 \value{
-A S3 object of class \code{tarflow_targets}. The main component is a list
-of targets. The other component is a \link{data.frame} contains the contents
-based on which data is fetched.
+A S3 object of class \code{tarflow_targets}. The value is a list of target
+objects, and a \link{data.frame} containing the contents based on which data are
+fetched is included in the \code{"contents"} attribute.
 }
 \description{
-Prepare targets pipeline for fetching data
+Given parameters, this target factory prepares a set of target objects used
+to fetch data from iQuizoo database, separated into static branches so that
+each is for a specific project and task/game combination.
 }

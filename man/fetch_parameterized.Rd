@@ -4,33 +4,18 @@
 \alias{fetch_parameterized}
 \title{Fetch data from iQuizoo database based on a parameterized query}
 \usage{
-fetch_parameterized(
-  query,
-  params,
-  ...,
-  dsn = getOption("tarflow.dsn"),
-  groups = getOption("tarflow.groups"),
-  drv = getOption("tarflow.driver")
-)
+fetch_parameterized(query, params, ..., source = setup_source())
 }
 \arguments{
-\item{query}{The query to be executed.}
+\item{query}{A character string containing SQL.}
 
-\item{params}{The parameters to be bound to the query.}
+\item{params}{The parameters to be bound to the query. This parameter could
+be safely omitted if \code{query} does not contain any parameters.}
 
 \item{...}{Further arguments passed to \link[DBI:dbConnect]{DBI::dbConnect()}.}
 
-\item{dsn}{The data source name of an \strong{ODBC} database connector. See
-\code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::dbConnect()}} for more information. Used when \code{drv} is set as
-\code{\link[odbc:odbc]{odbc::odbc()}}.}
-
-\item{groups}{Section identifier in the \code{default.file}. See
-\code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}} for more information. Used when \code{drv} is set as
-\code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}}.}
-
-\item{drv}{The driver used. Set as an option of \code{"tarflow.driver"} and the
-default is currently \code{odbc::odbc()}. Options are \code{\link[odbc:odbc]{odbc::odbc()}} and
-\code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}}, both of which need pre-configurations.}
+\item{source}{The data source from which data is fetched. See
+\code{\link[=setup_source]{setup_source()}} for details.}
 }
 \value{
 A \link{data.frame} contains the fetched data.

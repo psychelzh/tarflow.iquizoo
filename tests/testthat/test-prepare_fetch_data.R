@@ -1,6 +1,6 @@
 test_that("Test with mock", {
   with_mocked_bindings(
-    fetch_preset_mem = \(...) {
+    fetch_batch_mem = \(...) {
       tibble::tibble(
         project_id = bit64::as.integer64(1),
         game_id = data.iquizoo::game_info$game_id[1:2],
@@ -11,7 +11,7 @@ test_that("Test with mock", {
       expect_silent()
   )
   with_mocked_bindings(
-    fetch_preset_mem = \(...) data.frame(),
+    fetch_batch_mem = \(...) data.frame(),
     prepare_fetch_data(data.frame()) |>
       expect_warning(class = "tarflow_bad_params")
   )
@@ -34,7 +34,6 @@ test_that("Smoke test", {
     ~organization_name, ~project_name,
     "Unexisted", "Malvalue"
   )
-  memoise::drop_cache(fetch_preset_mem)(params_bad, what = "project_contents")
   withr::with_options(
     list(
       tarflow.driver = RMariaDB::MariaDB(),
@@ -60,6 +59,6 @@ test_that("Smoke test", {
       prepare_fetch_data(params)
     })
     targets::tar_make(reporter = "silent", callr_function = NULL)
-    expect_equal(length(targets::tar_objects()), 21L)
+    expect_snapshot_value(targets::tar_objects(), style = "json2")
   })
 })
