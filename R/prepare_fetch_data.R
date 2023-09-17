@@ -123,9 +123,11 @@ prepare_fetch_data <- function(params, ...,
       targets::tar_target_raw(
         "users",
         expr(
-          fetch_batch(
-            !!read_file(templates[["users"]]),
-            !!substitute(params)
+          unique(
+            fetch_batch(
+              !!read_file(templates[["users"]]),
+              !!substitute(params)
+            )
           )
         )
       ),
