@@ -29,11 +29,12 @@ prepare_fetch_data <- function(params, ...,
   }
   what <- match.arg(what)
   contents <- fetch_batch_mem(read_file(templates$contents), params)
-  if (nrow(contents) == 0) {
+  if (is.null(contents) || nrow(contents) == 0) {
     warn(
-      "No records found based on the given parameters",
+      "No contents found based on the given parameters",
       class = "tarflow_bad_params"
     )
+    contents <- "No contents found."
     targets <- list()
   } else {
     config_contents <- contents |>
@@ -244,7 +245,7 @@ fetch_batch <- function(query, params, ...) {
       ...
     )
   }
-  as.data.frame(do.call(rbind, fetched))
+  do.call(rbind, fetched)
 }
 
 utils::globalVariables(
