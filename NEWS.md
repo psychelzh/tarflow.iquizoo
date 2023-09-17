@@ -1,3 +1,8 @@
+# tarflow.iquizoo 3.2.1
+
+* Supported to remove duplicates in users. Useful when different projects from the same organization share the same users.
+* Enhance some internal logic.
+
 # tarflow.iquizoo 3.2.0
 
 ## New Features

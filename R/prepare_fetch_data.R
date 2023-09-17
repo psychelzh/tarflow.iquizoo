@@ -24,16 +24,18 @@ prepare_fetch_data <- function(params, ...,
   check_dots_empty()
   if (!inherits(templates, "tarflow.template")) {
     cli::cli_abort(
-      "{.arg templates} must be created by {.fun setup_templates}."
+      "{.arg templates} must be created by {.fun setup_templates}.",
+      class = "tarflow_bad_templates"
     )
   }
   what <- match.arg(what)
   contents <- fetch_batch_mem(read_file(templates$contents), params)
-  if (nrow(contents) == 0) {
-    warn(
-      "No records found based on the given parameters",
+  if (is.null(contents) || nrow(contents) == 0) {
+    cli::cli_warn(
+      "No contents found based on the given parameters",
       class = "tarflow_bad_params"
     )
+    contents <- "No contents found."
     targets <- list()
   } else {
     config_contents <- contents |>
@@ -122,9 +124,11 @@ prepare_fetch_data <- function(params, ...,
       targets::tar_target_raw(
         "users",
         expr(
-          fetch_batch(
-            !!read_file(templates[["users"]]),
-            !!substitute(params)
+          unique(
+            fetch_batch(
+              !!read_file(templates[["users"]]),
+              !!substitute(params)
+            )
           )
         )
       ),
@@ -244,7 +248,7 @@ fetch_batch <- function(query, params, ...) {
       ...
     )
   }
-  as.data.frame(do.call(rbind, fetched))
+  do.call(rbind, fetched)
 }
 
 utils::globalVariables(
