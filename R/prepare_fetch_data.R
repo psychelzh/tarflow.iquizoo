@@ -24,13 +24,14 @@ prepare_fetch_data <- function(params, ...,
   check_dots_empty()
   if (!inherits(templates, "tarflow.template")) {
     cli::cli_abort(
-      "{.arg templates} must be created by {.fun setup_templates}."
+      "{.arg templates} must be created by {.fun setup_templates}.",
+      class = "tarflow_bad_templates"
     )
   }
   what <- match.arg(what)
   contents <- fetch_batch_mem(read_file(templates$contents), params)
   if (is.null(contents) || nrow(contents) == 0) {
-    warn(
+    cli::cli_warn(
       "No contents found based on the given parameters",
       class = "tarflow_bad_params"
     )
