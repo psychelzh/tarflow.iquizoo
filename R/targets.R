@@ -1,3 +1,35 @@
+#' Create standard data fetching targets pipeline script
+#'
+#' This function creates a standard data fetching targets pipeline script
+#' for you to fill in.
+#'
+#' @return NULL (invisible). This function is called for its side effects.
+#' @export
+use_targets <- function() {
+  script <- "_targets.R"
+  if (file.exists(script)) {
+    cli::cli_alert_info(
+      sprintf("File {.file %s} exists. Stash and retry.", script)
+    )
+    return(invisible())
+  }
+  copy_success <- file.copy(
+    system.file(
+      "pipelines", "use_targets.R",
+      package = "tarflow.iquizoo"
+    ),
+    script
+  )
+  if (!copy_success) {
+    cli::cli_alert_danger("Sorry, copy template failed.")
+    return(invisible())
+  }
+  cli::cli_alert_success(
+    sprintf("File {.file %s} crated successfully.", script)
+  )
+  return(invisible())
+}
+
 #' Prepare targets based on parameters
 #'
 #' Given parameters, this target factory prepares a set of target objects used
@@ -29,13 +61,15 @@ prepare_fetch_data <- function(params, ...,
     )
   }
   what <- match.arg(what)
-  contents <- fetch_batch_mem(read_file(templates$contents), params)
-  if (is.null(contents) || nrow(contents) == 0) {
+  contents <- fetch_query_mem(
+    read_file(templates$contents),
+    unname(as.list(params))
+  )
+  if (nrow(contents) == 0) {
     cli::cli_warn(
       "No contents found based on the given parameters",
       class = "tarflow_bad_params"
     )
-    contents <- "No contents found."
     targets <- list()
   } else {
     config_contents <- contents |>
@@ -113,7 +147,7 @@ prepare_fetch_data <- function(params, ...,
         targets::tar_target_raw(
           "progress_hash",
           expr(
-            fetch_parameterized(
+            fetch_query(
               !!read_file(templates[["progress_hash"]]),
               list(project_id)
             )
@@ -125,9 +159,9 @@ prepare_fetch_data <- function(params, ...,
         "users",
         expr(
           unique(
-            fetch_batch(
+            fetch_query(
               !!read_file(templates[["users"]]),
-              !!substitute(params)
+              !!substitute(unname(as.list(params)))
             )
           )
         )
@@ -194,61 +228,6 @@ setup_templates <- function(contents = NULL,
     ),
     class = "tarflow.template"
   )
-}
-
-#' Fetch data from iQuizoo database
-#'
-#' @param query A parameterized SQL query. Note the query should also contain
-#'   a `glue` expression to inject the table name, i.e., `"{ table_name }"`.
-#' @param project_id The project id to be bound to the query.
-#' @param game_id The game id to be bound to the query.
-#' @param course_date The course date. This parameter is used to determine the
-#'    table name, not to be bound to the query.
-#' @param ... Further arguments passed to [fetch_parameterized()].
-#' @param what What to fetch. Can be either "raw_data" or "scores".
-#' @return A [data.frame] contains the fetched data.
-#' @export
-fetch_data <- function(query, project_id, game_id, course_date, ...,
-                       what = c("raw_data", "scores")) {
-  check_dots_used()
-  what <- match.arg(what)
-  fetch_parameterized(
-    stringr::str_glue(
-      query,
-      .envir = env(
-        table_name = paste0(
-          switch(what,
-            raw_data = "content_orginal_data_",
-            scores = "content_ability_score_"
-          ),
-          format(as.POSIXct(course_date), "%Y0101")
-        )
-      )
-    ),
-    list(project_id, game_id),
-    ...
-  )
-}
-
-#' Fetch results of a parameterized query based on a batch of parameters
-#'
-#' @param query A character string containing parameterized SQL.
-#' @param params The parameters used in the SQL query.
-#' @param ... Further arguments passed to [fetch_parameterized()].
-#' @return A [data.frame] contains the fetched data.
-#' @export
-fetch_batch <- function(query, params, ...) {
-  check_dots_used()
-  fetched <- vector("list", nrow(params))
-  for (i in seq_len(nrow(params))) {
-    fetched[[i]] <- fetch_parameterized(
-      query,
-      # RMariaDB accept named parameters but the query is not named
-      unname(as.list(params[i, ])),
-      ...
-    )
-  }
-  do.call(rbind, fetched)
 }
 
 utils::globalVariables(
