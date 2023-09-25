@@ -18,26 +18,20 @@ test_that("Test with mock", {
 })
 
 test_that("Smoke test", {
-  skip_if_not_installed("odbc")
-  skip_if(!"iquizoo-v3" %in% odbc::odbcListDataSources()$name)
+  skip_if_not_installed("RMariaDB")
+  name_db_src <- "iquizoo-v3"
+  skip_if_not(DBI::dbCanConnect(RMariaDB::MariaDB(), groups = name_db_src))
   params <- tibble::tribble(
     ~organization_name, ~project_name,
     "北京师范大学", "认知测评预实验"
   )
   prepare_fetch_data(params) |>
+    expect_s3_class("tarflow_targets") |>
     expect_silent()
 
   params_bad <- tibble::tribble(
     ~organization_name, ~project_name,
     "Unexisted", "Malvalue"
-  )
-  withr::with_options(
-    list(
-      tarflow.driver = RMariaDB::MariaDB(),
-      tarflow.groups = "iquizoo-v3"
-    ),
-    prepare_fetch_data(params_bad) |>
-      expect_warning(class = "tarflow_bad_params")
   )
   prepare_fetch_data(params_bad) |>
     expect_warning(class = "tarflow_bad_params")
