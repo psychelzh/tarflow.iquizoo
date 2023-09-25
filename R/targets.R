@@ -61,9 +61,9 @@ prepare_fetch_data <- function(params, ...,
     )
   }
   what <- match.arg(what)
-  contents <- fetch_query_mem(
+  contents <- fetch_iquizoo_mem(
     read_file(templates$contents),
-    unname(as.list(params))
+    params = unname(as.list(params))
   )
   if (nrow(contents) == 0) {
     cli::cli_warn(
@@ -147,9 +147,9 @@ prepare_fetch_data <- function(params, ...,
         targets::tar_target_raw(
           "progress_hash",
           expr(
-            fetch_query(
+            fetch_iquizoo(
               !!read_file(templates[["progress_hash"]]),
-              list(project_id)
+              params = list(project_id)
             )
           ),
           cue = targets::tar_cue(if (check_progress) "always")
@@ -159,9 +159,9 @@ prepare_fetch_data <- function(params, ...,
         "users",
         expr(
           unique(
-            fetch_query(
+            fetch_iquizoo(
               !!read_file(templates[["users"]]),
-              !!substitute(unname(as.list(params)))
+              params = !!substitute(unname(as.list(params)))
             )
           )
         )

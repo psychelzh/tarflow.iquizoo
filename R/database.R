@@ -1,19 +1,17 @@
-#' Fetch data from iQuizoo database based on a parameterized query
+#' Fetch result of query from iQuizoo database
 #'
 #' @param query A character string containing SQL.
-#' @param params The parameters to be bound to the query. This parameter could
-#'   be safely omitted if `query` does not contain any parameters.
-#' @param ... Further arguments passed to [DBI::dbConnect()][DBI::dbConnect].
+#' @param ... Further arguments passed to [DBI::dbConnect()].
+#' @param params The parameters to be bound to the query. Default to `NULL`, see
+#'   [DBI::dbGetQuery()] for more details.
 #' @param source The data source from which data is fetched. See
 #'   [setup_source()] for details.
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_query <- function(query, params, ...,
-                        source = setup_source()) {
+fetch_iquizoo <- function(query, ...,
+                          params = NULL,
+                          source = setup_source()) {
   check_dots_used()
-  if (missing(params)) {
-    params <- list()
-  }
   if (!inherits(source, "tarflow.source")) {
     cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
   }
@@ -39,7 +37,7 @@ fetch_query <- function(query, params, ...,
 #' @param game_id The game id to be bound to the query.
 #' @param course_date The course date. This parameter is used to determine the
 #'    table name, not to be bound to the query.
-#' @param ... Further arguments passed to [fetch_query()].
+#' @param ... Further arguments passed to [fetch_iquizoo()].
 #' @param what What to fetch. Can be either "raw_data" or "scores".
 #' @return A [data.frame] contains the fetched data.
 #' @export
@@ -47,7 +45,7 @@ fetch_data <- function(query, project_id, game_id, course_date, ...,
                        what = c("raw_data", "scores")) {
   check_dots_used()
   what <- match.arg(what)
-  fetch_query(
+  fetch_iquizoo(
     stringr::str_glue(
       query,
       .envir = env(
@@ -60,8 +58,8 @@ fetch_data <- function(query, project_id, game_id, course_date, ...,
         )
       )
     ),
-    list(project_id, game_id),
-    ...
+    ...,
+    params = list(project_id, game_id)
   )
 }
 

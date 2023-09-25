@@ -1,6 +1,6 @@
 test_that("Test with mock", {
   with_mocked_bindings(
-    fetch_query_mem = \(...) {
+    fetch_iquizoo_mem = \(...) {
       tibble::tibble(
         project_id = bit64::as.integer64(1),
         game_id = data.iquizoo::game_info$game_id[1:2],
@@ -11,7 +11,7 @@ test_that("Test with mock", {
       expect_silent()
   )
   with_mocked_bindings(
-    fetch_query_mem = \(...) data.frame(),
+    fetch_iquizoo_mem = \(...) data.frame(),
     prepare_fetch_data(data.frame()) |>
       expect_warning(class = "tarflow_bad_params")
   )

@@ -3,8 +3,8 @@
 ## Breaking Changes
 
 * The `RMariaDB::MariaDB()` database driver is detected with higher priority, and `odbc::odbc()` is technically deprecated, although still supported (not sure for working) for now ([#68](https://github.com/psychelzh/tarflow.iquizoo/issues/68)).
-* Renamed `fetch_parameterized()` as `fetch_query()` for it also works without parameters and the latter is shorter.
-* Removed `fetch_batch()` as vector parameters are supported by `DBI::dbGetQuery()`. `fetch_query()` handles both vector and scalar parameters.
+* Renamed `fetch_parameterized()` as `fetch_iquizoo()`. The latter is shorter and echoes with the package name.
+* Removed `fetch_batch()` as vector parameters are supported by `DBI::dbGetQuery()`. `fetch_iquizoo()` handles both vector and scalar parameters.
 
 # tarflow.iquizoo 3.2.1
 

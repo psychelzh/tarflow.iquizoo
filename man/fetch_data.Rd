@@ -24,7 +24,7 @@ a \code{glue} expression to inject the table name, i.e., \code{"{ table_name }"}
 \item{course_date}{The course date. This parameter is used to determine the
 table name, not to be bound to the query.}
 
-\item{...}{Further arguments passed to \code{\link[=fetch_query]{fetch_query()}}.}
+\item{...}{Further arguments passed to \code{\link[=fetch_iquizoo]{fetch_iquizoo()}}.}
 
 \item{what}{What to fetch. Can be either "raw_data" or "scores".}
 }
