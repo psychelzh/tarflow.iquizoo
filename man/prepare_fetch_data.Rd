@@ -28,9 +28,7 @@ and both of them should be specified. Each row is a set of parameters.}
 if the project is finalized.}
 }
 \value{
-A S3 object of class \code{tarflow_targets}. The value is a list of target
-objects, and a \link{data.frame} containing the contents based on which data are
-fetched is included in the \code{"contents"} attribute.
+A list of target objects.
 }
 \description{
 Given parameters, this target factory prepares a set of target objects used

@@ -26,7 +26,8 @@ test_that("Smoke test", {
     "北京师范大学", "认知测评预实验"
   )
   prepare_fetch_data(params) |>
-    expect_s3_class("tarflow_targets") |>
+    expect_type("list") |>
+    expect_length(6) |>
     expect_silent()
 
   params_bad <- tibble::tribble(

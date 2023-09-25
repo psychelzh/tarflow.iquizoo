@@ -45,9 +45,7 @@ use_targets <- function() {
 #'   [setup_templates()] for details.
 #' @param check_progress Whether to check the progress hash. Set it as `FALSE`
 #'   if the project is finalized.
-#' @return A S3 object of class `tarflow_targets`. The value is a list of target
-#'   objects, and a [data.frame] containing the contents based on which data are
-#'   fetched is included in the `"contents"` attribute.
+#' @return A list of target objects.
 #' @export
 prepare_fetch_data <- function(params, ...,
                                what = c("all", "raw_data", "scores"),
@@ -141,7 +139,7 @@ prepare_fetch_data <- function(params, ...,
         )
       }
     )
-    targets <- list(
+    list(
       tarchetypes::tar_map(
         dplyr::distinct(config_contents, project_id),
         targets::tar_target_raw(
@@ -154,6 +152,10 @@ prepare_fetch_data <- function(params, ...,
           ),
           cue = targets::tar_cue(if (check_progress) "always")
         )
+      ),
+      targets::tar_target_raw(
+        "contents",
+        rlang::parse_expr(rlang::expr_text(contents))
       ),
       targets::tar_target_raw(
         "users",
@@ -187,11 +189,6 @@ prepare_fetch_data <- function(params, ...,
       }
     )
   }
-  structure(
-    targets,
-    class = "tarflow_targets",
-    contents = contents
-  )
 }
 
 #' Set up templates used to fetch data

@@ -33,20 +33,14 @@ params <- tibble::tribble(
   "Organization2", NA # set as NA if you want to fetch all projects
 )
 
-targets <- tarflow.iquizoo::prepare_fetch_data(
-  params,
-  what = "all", # change to "scores" or "raw_data" if you want to
-  # For advanced users, you can set custom templates:
-  templates = setup_templates(),
-  check_progress = TRUE # set as `FALSE` if projects finalized
-)
-
 # Replace the target list below with your own:
 list(
-  targets,
-  tar_target(
-    contents,
-    attr(targets, "contents")
+  tarflow.iquizoo::prepare_fetch_data(
+    params,
+    what = "all", # change to "scores" or "raw_data" if you want to
+    # For advanced usage, set custom templates by uncommenting next line
+    #  templates = setup_templates(),
+    check_progress = TRUE # set as `FALSE` if projects finalized
   )
   # more targets goes here
 )
