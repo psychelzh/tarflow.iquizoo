@@ -11,4 +11,4 @@ FROM
     INNER JOIN iquizoo_business_db.project_course_user pcu ON pcu.ProjectCourseConfigId = pcc.Id AND pcu.Deleted <>1 AND pcc.Deleted <> 1
     INNER JOIN iquizoo_business_db.v_organizationuser vo ON vo.OrganizationUserId = pcu.OrganizationUserId
 WHERE
-    vo.OrganizationName = ? AND pcc.Name = ?
+    vo.OrganizationName = ? AND pcc.Name = IFNULL(?, pcc.Name)

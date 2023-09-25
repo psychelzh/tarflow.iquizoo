@@ -29,7 +29,8 @@ tar_source()
 params <- tibble::tribble(
   ~organization_name, ~project_name,
   # TODO: replace these with your own
-  "# ORGANISATION NAME", "# PROJECT NAME"
+  "Organization1", "Project1",
+  "Organization2", NA # set as NA if you want to fetch all projects
 )
 
 targets <- tarflow.iquizoo::prepare_fetch_data(
