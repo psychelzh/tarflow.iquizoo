@@ -1,3 +1,33 @@
+#' Wrangle Raw Data
+#'
+#' Data wrangling is the first step for data analysis.
+#'
+#' @param data The raw data.
+#' @param name_raw_json The column name in which stores user's raw data in
+#'   format of json string.
+#' @param name_raw_parsed The name used to store parsed data.
+#' @return A [data.frame] contains the parsed data.
+#' @export
+wrangle_data <- function(data,
+                         name_raw_json = "game_data",
+                         name_raw_parsed = "raw_parsed") {
+  # make it error-proof to avoid trivial errors
+  parse_raw_json <- purrr::possibly(
+    ~ jsonlite::fromJSON(.) |>
+      dplyr::rename_with(tolower) |>
+      dplyr::mutate(dplyr::across(where(is.character), tolower)),
+    otherwise = NULL
+  )
+  data |>
+    dplyr::mutate(
+      "{name_raw_parsed}" := purrr::map( # nolint
+        .data[[name_raw_json]],
+        parse_raw_json
+      ),
+      .keep = "unused"
+    )
+}
+
 #' Feed Raw Data to Pre-processing
 #'
 #' Calculate indices using data returned by [wrangle_data()].
