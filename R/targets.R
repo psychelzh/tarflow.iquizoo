@@ -61,13 +61,15 @@ prepare_fetch_data <- function(params, ...,
     )
   }
   what <- match.arg(what)
-  contents <- fetch_batch_mem(read_file(templates$contents), params)
-  if (is.null(contents) || nrow(contents) == 0) {
+  contents <- fetch_query_mem(
+    read_file(templates$contents),
+    unname(as.list(params))
+  )
+  if (nrow(contents) == 0) {
     cli::cli_warn(
       "No contents found based on the given parameters",
       class = "tarflow_bad_params"
     )
-    contents <- "No contents found."
     targets <- list()
   } else {
     config_contents <- contents |>
@@ -145,7 +147,7 @@ prepare_fetch_data <- function(params, ...,
         targets::tar_target_raw(
           "progress_hash",
           expr(
-            fetch_parameterized(
+            fetch_query(
               !!read_file(templates[["progress_hash"]]),
               list(project_id)
             )
@@ -157,9 +159,9 @@ prepare_fetch_data <- function(params, ...,
         "users",
         expr(
           unique(
-            fetch_batch(
+            fetch_query(
               !!read_file(templates[["users"]]),
-              !!substitute(params)
+              !!substitute(unname(as.list(params)))
             )
           )
         )

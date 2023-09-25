@@ -8,8 +8,8 @@
 #'   [setup_source()] for details.
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_parameterized <- function(query, params, ...,
-                                source = setup_source()) {
+fetch_query <- function(query, params, ...,
+                        source = setup_source()) {
   check_dots_used()
   if (missing(params)) {
     params <- list()
@@ -28,10 +28,7 @@ fetch_parameterized <- function(query, params, ...,
     con <- DBI::dbConnect(source$driver, groups = source$groups, ...)
   }
   on.exit(DBI::dbDisconnect(con))
-  result <- DBI::dbSendQuery(con, query)
-  on.exit(DBI::dbClearResult(result))
-  DBI::dbBind(result, params)
-  DBI::dbFetch(result)
+  DBI::dbGetQuery(con, query, params = params)
 }
 
 #' Fetch data from iQuizoo database
@@ -42,7 +39,7 @@ fetch_parameterized <- function(query, params, ...,
 #' @param game_id The game id to be bound to the query.
 #' @param course_date The course date. This parameter is used to determine the
 #'    table name, not to be bound to the query.
-#' @param ... Further arguments passed to [fetch_parameterized()].
+#' @param ... Further arguments passed to [fetch_query()].
 #' @param what What to fetch. Can be either "raw_data" or "scores".
 #' @return A [data.frame] contains the fetched data.
 #' @export
@@ -50,7 +47,7 @@ fetch_data <- function(query, project_id, game_id, course_date, ...,
                        what = c("raw_data", "scores")) {
   check_dots_used()
   what <- match.arg(what)
-  fetch_parameterized(
+  fetch_query(
     stringr::str_glue(
       query,
       .envir = env(
@@ -66,27 +63,6 @@ fetch_data <- function(query, project_id, game_id, course_date, ...,
     list(project_id, game_id),
     ...
   )
-}
-
-#' Fetch results of a parameterized query based on a batch of parameters
-#'
-#' @param query A character string containing parameterized SQL.
-#' @param params The parameters used in the SQL query.
-#' @param ... Further arguments passed to [fetch_parameterized()].
-#' @return A [data.frame] contains the fetched data.
-#' @export
-fetch_batch <- function(query, params, ...) {
-  check_dots_used()
-  fetched <- vector("list", nrow(params))
-  for (i in seq_len(nrow(params))) {
-    fetched[[i]] <- fetch_parameterized(
-      query,
-      # RMariaDB accept named parameters but the query is not named
-      unname(as.list(params[i, ])),
-      ...
-    )
-  }
-  do.call(rbind, fetched)
 }
 
 #' Set data source
