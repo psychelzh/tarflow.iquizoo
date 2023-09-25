@@ -1,6 +1,6 @@
 test_that("Test with mock", {
   with_mocked_bindings(
-    fetch_batch_mem = \(...) {
+    fetch_query_mem = \(...) {
       tibble::tibble(
         project_id = bit64::as.integer64(1),
         game_id = data.iquizoo::game_info$game_id[1:2],
@@ -11,16 +11,13 @@ test_that("Test with mock", {
       expect_silent()
   )
   with_mocked_bindings(
-    fetch_batch_mem = \(...) data.frame(),
+    fetch_query_mem = \(...) data.frame(),
     prepare_fetch_data(data.frame()) |>
       expect_warning(class = "tarflow_bad_params")
   )
 })
 
 test_that("Smoke test", {
-  prepare_fetch_data(data.frame()) |>
-    expect_warning(class = "tarflow_bad_params")
-
   skip_if_not_installed("odbc")
   skip_if(!"iquizoo-v3" %in% odbc::odbcListDataSources()$name)
   params <- tibble::tribble(
@@ -54,7 +51,8 @@ test_that("Smoke test", {
       )
       params <- tibble::tribble(
         ~organization_name, ~project_name,
-        "北京师范大学测试用账号", "难度测试"
+        "北京师范大学测试用账号", "难度测试",
+        "北京师范大学", "4.19-4.20夜晚睡眠test"
       )
       prepare_fetch_data(params)
     })
