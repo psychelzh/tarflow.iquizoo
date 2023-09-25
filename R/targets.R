@@ -68,127 +68,126 @@ prepare_fetch_data <- function(params, ...,
       "No contents found based on the given parameters",
       class = "tarflow_bad_params"
     )
-    targets <- list()
-  } else {
-    config_contents <- contents |>
-      dplyr::left_join(
-        data.iquizoo::game_info,
-        by = "game_id"
-      ) |>
-      dplyr::mutate(
-        # https://github.com/ropensci/tarchetypes/issues/94
-        project_id = bit64::as.character.integer64(.data$project_id),
-        game_id = bit64::as.character.integer64(.data$game_id),
-        course_date = as.character(course_date),
-        prep_fun = purrr::map(
-          .data[["prep_fun_name"]],
-          purrr::possibly(sym, NA)
-        ),
-        dplyr::across(
-          dplyr::all_of(c("input", "extra")),
-          parse_exprs
-        ),
-        progress_hash = syms(paste0("progress_hash_", project_id))
-      )
-    branches <- tarchetypes::tar_map(
-      config_contents,
-      names = c("project_id", "game_id"),
-      if (what %in% c("all", "raw_data")) {
-        list(
-          targets::tar_target_raw(
-            "raw_data",
-            expr({
-              progress_hash
-              fetch_data(
-                !!read_file(templates[["raw_data"]]),
-                project_id,
-                game_id,
-                course_date,
-                what = "raw_data"
-              )
-            })
-          ),
-          targets::tar_target(
-            raw_data_parsed,
-            wrangle_data(raw_data)
-          ),
-          targets::tar_target(
-            indices,
-            if (!is.na(prep_fun_name)) {
-              preproc_data(
-                raw_data_parsed, prep_fun,
-                .input = input, .extra = extra
-              )
-            }
-          )
-        )
-      },
-      if (what %in% c("all", "scores")) {
+    return(list())
+  }
+  config_contents <- contents |>
+    dplyr::left_join(
+      data.iquizoo::game_info,
+      by = "game_id"
+    ) |>
+    dplyr::mutate(
+      # https://github.com/ropensci/tarchetypes/issues/94
+      project_id = bit64::as.character.integer64(.data$project_id),
+      game_id = bit64::as.character.integer64(.data$game_id),
+      course_date = as.character(course_date),
+      prep_fun = purrr::map(
+        .data[["prep_fun_name"]],
+        purrr::possibly(sym, NA)
+      ),
+      dplyr::across(
+        dplyr::all_of(c("input", "extra")),
+        parse_exprs
+      ),
+      progress_hash = syms(paste0("progress_hash_", project_id))
+    )
+  branches <- tarchetypes::tar_map(
+    config_contents,
+    names = c("project_id", "game_id"),
+    if (what %in% c("all", "raw_data")) {
+      list(
         targets::tar_target_raw(
-          "scores",
+          "raw_data",
           expr({
             progress_hash
             fetch_data(
-              !!read_file(templates[["scores"]]),
+              !!read_file(templates[["raw_data"]]),
               project_id,
               game_id,
               course_date,
-              what = "scores"
+              what = "raw_data"
             )
           })
-        )
-      }
-    )
-    list(
-      tarchetypes::tar_map(
-        dplyr::distinct(config_contents, project_id),
-        targets::tar_target_raw(
-          "progress_hash",
-          expr(
-            fetch_iquizoo(
-              !!read_file(templates[["progress_hash"]]),
-              params = list(project_id)
+        ),
+        targets::tar_target(
+          raw_data_parsed,
+          wrangle_data(raw_data)
+        ),
+        targets::tar_target(
+          indices,
+          if (!is.na(prep_fun_name)) {
+            preproc_data(
+              raw_data_parsed, prep_fun,
+              .input = input, .extra = extra
             )
-          ),
-          cue = targets::tar_cue(if (check_progress) "always")
+          }
         )
-      ),
+      )
+    },
+    if (what %in% c("all", "scores")) {
       targets::tar_target_raw(
-        "contents",
-        rlang::parse_expr(rlang::expr_text(contents))
-      ),
+        "scores",
+        expr({
+          progress_hash
+          fetch_data(
+            !!read_file(templates[["scores"]]),
+            project_id,
+            game_id,
+            course_date,
+            what = "scores"
+          )
+        })
+      )
+    }
+  )
+  list(
+    tarchetypes::tar_map(
+      dplyr::distinct(config_contents, project_id),
       targets::tar_target_raw(
-        "users",
+        "progress_hash",
         expr(
-          unique(
-            fetch_iquizoo(
-              !!read_file(templates[["users"]]),
-              params = !!substitute(unname(as.list(params)))
-            )
+          fetch_iquizoo(
+            !!read_file(templates[["progress_hash"]]),
+            params = list(project_id)
+          )
+        ),
+        cue = targets::tar_cue(if (check_progress) "always")
+      )
+    ),
+    targets::tar_target_raw(
+      "contents",
+      rlang::parse_expr(rlang::expr_text(contents))
+    ),
+    targets::tar_target_raw(
+      "users",
+      expr(
+        unique(
+          fetch_iquizoo(
+            !!read_file(templates[["users"]]),
+            params = !!substitute(unname(as.list(params)))
           )
         )
-      ),
-      branches,
-      if (what %in% c("all", "raw_data")) {
-        list(
-          tarchetypes::tar_combine(
-            raw_data,
-            branches$raw_data
-          ),
-          tarchetypes::tar_combine(
-            indices,
-            branches$indices
-          )
-        )
-      },
-      if (what %in% c("all", "scores")) {
+      )
+    ),
+    branches,
+    if (what %in% c("all", "raw_data")) {
+      list(
         tarchetypes::tar_combine(
-          scores,
-          branches$scores
+          raw_data,
+          branches$raw_data
+        ),
+        tarchetypes::tar_combine(
+          indices,
+          branches$indices
         )
-      }
-    )
-  }
+      )
+    },
+    if (what %in% c("all", "scores")) {
+      tarchetypes::tar_combine(
+        scores,
+        branches$scores
+      )
+    }
+  )
 }
 
 #' Set up templates used to fetch data
