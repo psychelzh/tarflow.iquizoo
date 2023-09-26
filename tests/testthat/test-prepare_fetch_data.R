@@ -1,6 +1,6 @@
 test_that("Test with mock", {
   with_mocked_bindings(
-    fetch_batch_mem = \(...) {
+    fetch_iquizoo_mem = \(...) {
       tibble::tibble(
         project_id = bit64::as.integer64(1),
         game_id = data.iquizoo::game_info$game_id[1:2],
@@ -11,36 +11,28 @@ test_that("Test with mock", {
       expect_silent()
   )
   with_mocked_bindings(
-    fetch_batch_mem = \(...) data.frame(),
+    fetch_iquizoo_mem = \(...) data.frame(),
     prepare_fetch_data(data.frame()) |>
       expect_warning(class = "tarflow_bad_params")
   )
 })
 
 test_that("Smoke test", {
-  prepare_fetch_data(data.frame()) |>
-    expect_warning(class = "tarflow_bad_params")
-
-  skip_if_not_installed("odbc")
-  skip_if(!"iquizoo-v3" %in% odbc::odbcListDataSources()$name)
+  skip_if_not_installed("RMariaDB")
+  name_db_src <- "iquizoo-v3"
+  skip_if_not(DBI::dbCanConnect(RMariaDB::MariaDB(), groups = name_db_src))
   params <- tibble::tribble(
     ~organization_name, ~project_name,
     "北京师范大学", "认知测评预实验"
   )
   prepare_fetch_data(params) |>
+    expect_type("list") |>
+    expect_length(6) |>
     expect_silent()
 
   params_bad <- tibble::tribble(
     ~organization_name, ~project_name,
     "Unexisted", "Malvalue"
-  )
-  withr::with_options(
-    list(
-      tarflow.driver = RMariaDB::MariaDB(),
-      tarflow.groups = "iquizoo-v3"
-    ),
-    prepare_fetch_data(params_bad) |>
-      expect_warning(class = "tarflow_bad_params")
   )
   prepare_fetch_data(params_bad) |>
     expect_warning(class = "tarflow_bad_params")
@@ -54,7 +46,8 @@ test_that("Smoke test", {
       )
       params <- tibble::tribble(
         ~organization_name, ~project_name,
-        "北京师范大学测试用账号", "难度测试"
+        "北京师范大学测试用账号", "难度测试",
+        "北京师范大学", "4.19-4.20夜晚睡眠test"
       )
       prepare_fetch_data(params)
     })

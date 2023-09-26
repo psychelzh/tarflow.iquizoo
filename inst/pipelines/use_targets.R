@@ -29,23 +29,18 @@ tar_source()
 params <- tibble::tribble(
   ~organization_name, ~project_name,
   # TODO: replace these with your own
-  "# ORGANISATION NAME", "# PROJECT NAME"
-)
-
-targets <- tarflow.iquizoo::prepare_fetch_data(
-  params,
-  what = "all", # change to "scores" or "raw_data" if you want to
-  # For advanced users, you can set custom templates:
-  templates = setup_templates(),
-  check_progress = TRUE # set as `FALSE` if projects finalized
+  "Organization1", "Project1",
+  "Organization2", NA # set as NA if you want to fetch all projects
 )
 
 # Replace the target list below with your own:
 list(
-  targets,
-  tar_target(
-    contents,
-    attr(targets, "contents")
+  tarflow.iquizoo::prepare_fetch_data(
+    params,
+    what = "all", # change to "scores" or "raw_data" if you want to
+    # For advanced usage, set custom templates by uncommenting next line
+    #  templates = setup_templates(),
+    check_progress = TRUE # set as `FALSE` if projects finalized
   )
   # more targets goes here
 )

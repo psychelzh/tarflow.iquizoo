@@ -20,7 +20,7 @@ package.
 
 ## Background
 
-The preprocessing of IQUIZOO data used to be very harduous because the
+The preprocessing of IQUIZOO data used to be very laborious because the
 datasets were very disorganized. Newer version of database and games
 make things much better. Now there is a package called
 [preproc.iquizoo](https://github.com/psychelzh/preproc.iquizoo),
@@ -54,5 +54,5 @@ This simplest way to use this package is to call
 `tarflow.iquizoo::use_targets()` to generate a
 {[targets](https://docs.ropensci.org/targets/)} pipeline. After some
 basic parameters edit (follow the generated script), then you can run
-the pipeline by exectuing `targets::tar_make()` in R console. The
+the pipeline by exectuting `targets::tar_make()` in R console. The
 pipeline will be executed in parallel by default.

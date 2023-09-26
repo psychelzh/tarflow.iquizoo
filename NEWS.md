@@ -1,3 +1,11 @@
+# tarflow.iquizoo 3.3.0
+
+## Breaking Changes
+
+* The `RMariaDB::MariaDB()` database driver is detected with higher priority, and `odbc::odbc()` is technically deprecated, although still supported (not sure for working) for now ([#68](https://github.com/psychelzh/tarflow.iquizoo/issues/68)).
+* Renamed `fetch_parameterized()` as `fetch_iquizoo()`. The latter is shorter and echoes with the package name.
+* Removed `fetch_batch()` as vector parameters are supported by `DBI::dbGetQuery()`. `fetch_iquizoo()` handles both vector and scalar parameters.
+
 # tarflow.iquizoo 3.2.1
 
 * Supported to remove duplicates in users. Useful when different projects from the same organization share the same users.
@@ -133,7 +141,7 @@
 
 ## Breaking Changes
 
-* Implemented new udpations of data.iquizoo package, and now `input` and `extra` should be configured in `game_info` data from that package.
+* Implemented new updates of data.iquizoo package, and now `input` and `extra` should be configured in `game_info` data from that package.
 * Suggests {preproc.iquizoo} 2.4.0 or higher now, because we require the preprocessing functions support `.by` again.
 
 ## New Features
@@ -181,7 +189,7 @@
 
 ## Bug Fixes
 
-* Fix a bug of `preproc_data()` occured when using complex dplyr verbs (see #43).
+* Fix a bug of `preproc_data()` occurred when using complex dplyr verbs (see #43).
 
 ## Internal
 
