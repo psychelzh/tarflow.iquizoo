@@ -8,9 +8,9 @@
 <meta name="description" content='For "iquizoo" data processing, there is already a package
     called "preproc.iquizoo", but eventually the use of it is relied on a
     workflow. This package is used to build such workflows based on tools
-    provided by "targets" package which mimicks the logic of "make",
+    provided by "targets" package which mimics the logic of "make",
     automating the building processes.'>
-<title>Setup "targets" Workflows for "iquzoo" Data Processing • tarflow.iquizoo</title>
+<title>Setup "targets" Workflows for "iquizoo" Data Processing • tarflow.iquizoo</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -19,7 +19,7 @@
 <meta property="og:description" content='For "iquizoo" data processing, there is already a package
     called "preproc.iquizoo", but eventually the use of it is relied on a
     workflow. This package is used to build such workflows based on tools
-    provided by "targets" package which mimicks the logic of "make",
+    provided by "targets" package which mimics the logic of "make",
     automating the building processes.'>
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@
 <div class="section level2">
 <h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
 </h2>
-<p>The preprocessing of IQUIZOO data used to be very harduous because the datasets were very disorganized. Newer version of database and games make things much better. Now there is a package called <a href="https://github.com/psychelzh/preproc.iquizoo" class="external-link">preproc.iquizoo</a>, containing all the required functions used in preprocessing. It facilitates analysis significantly. For now, with the advent of <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>, we can easily setup workflows to automate all the preprocessing! This is what this package does. Hopefully, it will make the analysis of IQUIZOO data a favorable thing.</p>
+<p>The preprocessing of IQUIZOO data used to be very laborious because the datasets were very disorganized. Newer version of database and games make things much better. Now there is a package called <a href="https://github.com/psychelzh/preproc.iquizoo" class="external-link">preproc.iquizoo</a>, containing all the required functions used in preprocessing. It facilitates analysis significantly. For now, with the advent of <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>, we can easily setup workflows to automate all the preprocessing! This is what this package does. Hopefully, it will make the analysis of IQUIZOO data a favorable thing.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -93,7 +93,7 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>This simplest way to use this package is to call <code><a href="reference/use_targets.html">tarflow.iquizoo::use_targets()</a></code> to generate a {<a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>} pipeline. After some basic parameters edit (follow the generated script), then you can run the pipeline by exectuing <code><a href="https://docs.ropensci.org/targets/reference/tar_make.html" class="external-link">targets::tar_make()</a></code> in R console. The pipeline will be executed in parallel by default.</p>
+<p>This simplest way to use this package is to call <code><a href="reference/use_targets.html">tarflow.iquizoo::use_targets()</a></code> to generate a {<a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>} pipeline. After some basic parameters edit (follow the generated script), then you can run the pipeline by exectuting <code><a href="https://docs.ropensci.org/targets/reference/tar_make.html" class="external-link">targets::tar_make()</a></code> in R console. The pipeline will be executed in parallel by default.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

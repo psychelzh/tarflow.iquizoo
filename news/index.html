@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,15 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.3.0" id="tarflowiquizoo-330">tarflow.iquizoo 3.3.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-330"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-3-3-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-3-0"></a></h3>
+<ul><li>The <code><a href="https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html" class="external-link">RMariaDB::MariaDB()</a></code> database driver is detected with higher priority, and <code><a href="https://r-dbi.github.io/odbc/reference/odbc.html" class="external-link">odbc::odbc()</a></code> is technically deprecated, although still supported (not sure for working) for now (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/68" class="external-link">#68</a>).</li>
+<li>Renamed <code>fetch_parameterized()</code> as <code><a href="../reference/fetch_iquizoo.html">fetch_iquizoo()</a></code>. The latter is shorter and echoes with the package name.</li>
+<li>Removed <code>fetch_batch()</code> as vector parameters are supported by <code><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html" class="external-link">DBI::dbGetQuery()</a></code>. <code><a href="../reference/fetch_iquizoo.html">fetch_iquizoo()</a></code> handles both vector and scalar parameters.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.2.1" id="tarflowiquizoo-321">tarflow.iquizoo 3.2.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-321"></a></h2>
 <ul><li>Supported to remove duplicates in users. Useful when different projects from the same organization share the same users.</li>
 <li>Enhance some internal logic.</li>
@@ -53,8 +62,8 @@
 <h2 class="pkg-version" data-toc-text="3.2.0" id="tarflowiquizoo-320">tarflow.iquizoo 3.2.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-320"></a></h2>
 <div class="section level3">
 <h3 id="new-features-3-2-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-3-2-0"></a></h3>
-<ul><li>Added <code><a href="../reference/setup_source.html">setup_source()</a></code> to specify the data source. Arguments <code>driver</code>, <code>dsn</code> and <code>groups</code> of <code><a href="../reference/fetch_parameterized.html">fetch_parameterized()</a></code> now live in this function.</li>
-<li>Let <code>params</code> argument of <code><a href="../reference/fetch_parameterized.html">fetch_parameterized()</a></code> be optional (but not after <code>...</code>) when no parameters in <code>query</code>. Note this is not checked beforehand, so you should take care of whether there are parameters.</li>
+<ul><li>Added <code><a href="../reference/setup_source.html">setup_source()</a></code> to specify the data source. Arguments <code>driver</code>, <code>dsn</code> and <code>groups</code> of <code>fetch_parameterized()</code> now live in this function.</li>
+<li>Let <code>params</code> argument of <code>fetch_parameterized()</code> be optional (but not after <code>...</code>) when no parameters in <code>query</code>. Note this is not checked beforehand, so you should take care of whether there are parameters.</li>
 <li>Supported custom SQL templates. When users want to use different parameter names other than the default one, they could support their own paired with SQL templates. See <code><a href="../reference/setup_templates.html">setup_templates()</a></code> for details (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/66" class="external-link">#66</a>).</li>
 </ul></div>
 <div class="section level3">
@@ -72,7 +81,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.1.1" id="tarflowiquizoo-311">tarflow.iquizoo 3.1.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-311"></a></h2>
-<ul><li>Fixed a bug that <code>fetch_preset()</code> does not pass <code>...</code> to <code><a href="../reference/fetch_parameterized.html">fetch_parameterized()</a></code> correctly.</li>
+<ul><li>Fixed a bug that <code>fetch_preset()</code> does not pass <code>...</code> to <code>fetch_parameterized()</code> correctly.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.1.0" id="tarflowiquizoo-310">tarflow.iquizoo 3.1.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-310"></a></h2>
@@ -192,7 +201,7 @@
 <h2 class="pkg-version" data-toc-text="2.3.0" id="tarflowiquizoo-230">tarflow.iquizoo 2.3.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-230"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-2-3-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-2-3-0"></a></h3>
-<ul><li>Implemented new udpations of data.iquizoo package, and now <code>input</code> and <code>extra</code> should be configured in <code>game_info</code> data from that package.</li>
+<ul><li>Implemented new updates of data.iquizoo package, and now <code>input</code> and <code>extra</code> should be configured in <code>game_info</code> data from that package.</li>
 <li>Suggests {preproc.iquizoo} 2.4.0 or higher now, because we require the preprocessing functions support <code>.by</code> again.</li>
 </ul></div>
 <div class="section level3">
@@ -247,7 +256,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-0-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-0"></a></h3>
-<ul><li>Fix a bug of <code><a href="../reference/preproc_data.html">preproc_data()</a></code> occured when using complex dplyr verbs (see <a href="https://github.com/psychelzh/tarflow.iquizoo/issues/43" class="external-link">#43</a>).</li>
+<ul><li>Fix a bug of <code><a href="../reference/preproc_data.html">preproc_data()</a></code> occurred when using complex dplyr verbs (see <a href="https://github.com/psychelzh/tarflow.iquizoo/issues/43" class="external-link">#43</a>).</li>
 </ul></div>
 <div class="section level3">
 <h3 id="internal-1-0-0">Internal<a class="anchor" aria-label="anchor" href="#internal-1-0-0"></a></h3>
