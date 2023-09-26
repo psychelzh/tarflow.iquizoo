@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.3.0
 
 ## Breaking Changes
 
@@ -141,7 +141,7 @@
 
 ## Breaking Changes
 
-* Implemented new udpations of data.iquizoo package, and now `input` and `extra` should be configured in `game_info` data from that package.
+* Implemented new updates of data.iquizoo package, and now `input` and `extra` should be configured in `game_info` data from that package.
 * Suggests {preproc.iquizoo} 2.4.0 or higher now, because we require the preprocessing functions support `.by` again.
 
 ## New Features
@@ -189,7 +189,7 @@
 
 ## Bug Fixes
 
-* Fix a bug of `preproc_data()` occured when using complex dplyr verbs (see #43).
+* Fix a bug of `preproc_data()` occurred when using complex dplyr verbs (see #43).
 
 ## Internal
 

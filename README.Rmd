@@ -26,7 +26,7 @@ The goal of tarflow.iquizoo is to provide workflow auto-generation for IQUIZOO d
 
 ## Background
 
-The preprocessing of IQUIZOO data used to be very harduous because the datasets were very disorganized. Newer version of database and games make things much better. Now there is a package called [preproc.iquizoo](https://github.com/psychelzh/preproc.iquizoo), containing all the required functions used in preprocessing. It facilitates analysis significantly. For now, with the advent of [targets](https://docs.ropensci.org/targets/), we can easily setup workflows to automate all the preprocessing! This is what this package does. Hopefully, it will make the analysis of IQUIZOO data a favorable thing.
+The preprocessing of IQUIZOO data used to be very laborious because the datasets were very disorganized. Newer version of database and games make things much better. Now there is a package called [preproc.iquizoo](https://github.com/psychelzh/preproc.iquizoo), containing all the required functions used in preprocessing. It facilitates analysis significantly. For now, with the advent of [targets](https://docs.ropensci.org/targets/), we can easily setup workflows to automate all the preprocessing! This is what this package does. Hopefully, it will make the analysis of IQUIZOO data a favorable thing.
 
 ## Installation
 
@@ -45,4 +45,4 @@ install.packages("tarflow.iquizoo", repos = "https://psychelzh.r-universe.dev")
 
 ## Usage
 
-This simplest way to use this package is to call `tarflow.iquizoo::use_targets()` to generate a {[targets](https://docs.ropensci.org/targets/)} pipeline. After some basic parameters edit (follow the generated script), then you can run the pipeline by exectuing `targets::tar_make()` in R console. The pipeline will be executed in parallel by default.
+This simplest way to use this package is to call `tarflow.iquizoo::use_targets()` to generate a {[targets](https://docs.ropensci.org/targets/)} pipeline. After some basic parameters edit (follow the generated script), then you can run the pipeline by exectuting `targets::tar_make()` in R console. The pipeline will be executed in parallel by default.
