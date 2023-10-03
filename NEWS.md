@@ -1,3 +1,7 @@
+# tarflow.iquizoo 3.3.1
+
+* Let `users` template be independent of input parameters. This means advanced users could minimally specify the `contents` template only.
+
 # tarflow.iquizoo 3.3.0
 
 ## Breaking Changes

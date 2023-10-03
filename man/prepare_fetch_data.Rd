@@ -13,9 +13,10 @@ prepare_fetch_data(
 )
 }
 \arguments{
-\item{params}{A \link{data.frame} contains the parameters to be bound to the
-query. For now, only \code{organization_name} and \code{project_name} are supported
-and both of them should be specified. Each row is a set of parameters.}
+\item{params}{A \link{data.frame} or \link{list} contains the parameters to be bound to
+the query. Default templates require specifying \code{organization_name} and
+\code{project_name}, in that order. If \code{contents} template is specified without
+any parameters, set this as \code{NULL} or 0-row \link{data.frame}.}
 
 \item{...}{For future usage. Should be empty.}
 

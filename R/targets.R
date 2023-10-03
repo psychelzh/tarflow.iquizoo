@@ -36,9 +36,10 @@ use_targets <- function() {
 #' to fetch data from iQuizoo database, separated into static branches so that
 #' each is for a specific project and task/game combination.
 #'
-#' @param params A [data.frame] contains the parameters to be bound to the
-#'   query. For now, only `organization_name` and `project_name` are supported
-#'   and both of them should be specified. Each row is a set of parameters.
+#' @param params A [data.frame] or [list] contains the parameters to be bound to
+#'   the query. Default templates require specifying `organization_name` and
+#'   `project_name`, in that order. If `contents` template is specified without
+#'   any parameters, set this as `NULL` or 0-row [data.frame].
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. Can be "all", "raw_data" or "scores".
 #' @param templates The SQL template files used to fetch data. See
@@ -59,9 +60,16 @@ prepare_fetch_data <- function(params, ...,
     )
   }
   what <- match.arg(what)
+  if (inherits(params, "data.frame")) {
+    if (nrow(params) == 0) {
+      params <- NULL
+    } else {
+      params <- as.list(params)
+    }
+  }
   contents <- fetch_iquizoo_mem(
     read_file(templates$contents),
-    params = unname(as.list(params))
+    params = unname(params)
   )
   if (nrow(contents) == 0) {
     cli::cli_warn(
@@ -90,7 +98,31 @@ prepare_fetch_data <- function(params, ...,
       ),
       progress_hash = syms(paste0("progress_hash_", project_id))
     )
-  branches <- tarchetypes::tar_map(
+  projects_info <- tarchetypes::tar_map(
+    dplyr::distinct(config_contents, project_id),
+    list(
+      targets::tar_target_raw(
+        "progress_hash",
+        expr(
+          fetch_iquizoo(
+            !!read_file(templates[["progress_hash"]]),
+            params = list(project_id)
+          )
+        ),
+        cue = targets::tar_cue(if (check_progress) "always")
+      ),
+      targets::tar_target_raw(
+        "users",
+        expr(
+          fetch_iquizoo(
+            !!read_file(templates[["users"]]),
+            params = list(project_id)
+          )
+        )
+      )
+    )
+  )
+  projects_data <- tarchetypes::tar_map(
     config_contents,
     names = c("project_id", "game_id"),
     if (what %in% c("all", "raw_data")) {
@@ -140,51 +172,33 @@ prepare_fetch_data <- function(params, ...,
     }
   )
   list(
-    tarchetypes::tar_map(
-      dplyr::distinct(config_contents, project_id),
-      targets::tar_target_raw(
-        "progress_hash",
-        expr(
-          fetch_iquizoo(
-            !!read_file(templates[["progress_hash"]]),
-            params = list(project_id)
-          )
-        ),
-        cue = targets::tar_cue(if (check_progress) "always")
-      )
-    ),
     targets::tar_target_raw(
       "contents",
       rlang::parse_expr(rlang::expr_text(contents))
     ),
-    targets::tar_target_raw(
-      "users",
-      expr(
-        unique(
-          fetch_iquizoo(
-            !!read_file(templates[["users"]]),
-            params = !!substitute(unname(as.list(params)))
-          )
-        )
-      )
+    projects_info,
+    projects_data,
+    tarchetypes::tar_combine(
+      users,
+      projects_info$users,
+      command = unique(vctrs::vec_c(!!!.x))
     ),
-    branches,
     if (what %in% c("all", "raw_data")) {
       list(
         tarchetypes::tar_combine(
           raw_data,
-          branches$raw_data
+          projects_data$raw_data
         ),
         tarchetypes::tar_combine(
           indices,
-          branches$indices
+          projects_data$indices
         )
       )
     },
     if (what %in% c("all", "scores")) {
       tarchetypes::tar_combine(
         scores,
-        branches$scores
+        projects_data$scores
       )
     }
   )
@@ -198,8 +212,11 @@ prepare_fetch_data <- function(params, ...,
 #'
 #' @param contents The SQL template file used to fetch contents. At least
 #'   `project_id`, `game_id` and `course_date` should be included in the
-#'   contents.
-#' @param users The SQL template file used to fetch users.
+#'   contents. `project_id` will be used as the only parameter in `users` and
+#'   `project` templates, while all three will be used in `raw_data` and
+#'   `scores` templates.
+#' @param users The SQL template file used to fetch users. Usually you don't
+#'   need to change this.
 #' @param raw_data The SQL template file used to fetch raw data. See
 #'   [fetch_data()] for details. Usually you don't need to change this.
 #' @param scores The SQL template file used to fetch scores. See [fetch_data()]
@@ -230,7 +247,7 @@ utils::globalVariables(
   c(
     "scores", "raw_data", "raw_data_parsed", "indices",
     "progress_hash", "project_id", "game_id", "course_date",
-    "prep_fun_name", "prep_fun", "input", "extra"
+    "prep_fun_name", "prep_fun", "input", "extra", "users", ".x"
   )
 )
 
