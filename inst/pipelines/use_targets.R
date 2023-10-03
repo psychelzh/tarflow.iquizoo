@@ -39,7 +39,7 @@ list(
     params,
     what = "all", # change to "scores" or "raw_data" if you want to
     # For advanced usage, set custom templates by uncommenting next line
-    #  templates = setup_templates(),
+    #  templates = tarflow.iquizoo::setup_templates(),
     check_progress = TRUE # set as `FALSE` if projects finalized
   )
   # more targets goes here
