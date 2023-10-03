@@ -36,9 +36,10 @@ use_targets <- function() {
 #' to fetch data from iQuizoo database, separated into static branches so that
 #' each is for a specific project and task/game combination.
 #'
-#' @param params A [data.frame] contains the parameters to be bound to the
-#'   query. For now, only `organization_name` and `project_name` are supported
-#'   and both of them should be specified. Each row is a set of parameters.
+#' @param params A [data.frame] or [list] contains the parameters to be bound to
+#'   the query. Default templates require specifying `organization_name` and
+#'   `project_name`, in that order. If `contents` template is specified without
+#'   any parameters, set this as `NULL` or 0-row [data.frame].
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. Can be "all", "raw_data" or "scores".
 #' @param templates The SQL template files used to fetch data. See
@@ -59,9 +60,16 @@ prepare_fetch_data <- function(params, ...,
     )
   }
   what <- match.arg(what)
+  if (inherits(params, "data.frame")) {
+    if (nrow(params) == 0) {
+      params <- NULL
+    } else {
+      params <- as.list(params)
+    }
+  }
   contents <- fetch_iquizoo_mem(
     read_file(templates$contents),
-    params = unname(as.list(params))
+    params = unname(params)
   )
   if (nrow(contents) == 0) {
     cli::cli_warn(
