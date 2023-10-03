@@ -124,4 +124,5 @@ db_is_ready <- function(source = setup_source()) {
   if (inherits(source$driver, "MariaDBDriver")) {
     return(DBI::dbCanConnect(source$driver, groups = source$groups))
   }
+  return(FALSE)
 }
