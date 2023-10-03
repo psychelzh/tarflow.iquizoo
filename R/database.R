@@ -105,7 +105,7 @@ setup_option_file <- function(path = NULL) {
       path <- "~/.my.cnf"
     }
   }
-  writeLines(stringr::str_glue(my_cnf_tmpl), file)
+  writeLines(stringr::str_glue(my_cnf_tmpl), path)
 }
 
 #' Check if the database is ready
