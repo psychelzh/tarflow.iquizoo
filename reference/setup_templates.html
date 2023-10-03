@@ -14,7 +14,7 @@ be parameterized."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aja
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.3.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,11 +71,14 @@ be parameterized.</p>
     <dl><dt>contents</dt>
 <dd><p>The SQL template file used to fetch contents. At least
 <code>project_id</code>, <code>game_id</code> and <code>course_date</code> should be included in the
-contents.</p></dd>
+contents. <code>project_id</code> will be used as the only parameter in <code>users</code> and
+<code>project</code> templates, while all three will be used in <code>raw_data</code> and
+<code>scores</code> templates.</p></dd>
 
 
 <dt>users</dt>
-<dd><p>The SQL template file used to fetch users.</p></dd>
+<dd><p>The SQL template file used to fetch users. Usually you don't
+need to change this.</p></dd>
 
 
 <dt>raw_data</dt>

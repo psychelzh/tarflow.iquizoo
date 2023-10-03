@@ -14,7 +14,7 @@ each is for a specific project and task/game combination."><!-- mathjax --><scri
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.3.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,9 +69,10 @@ each is for a specific project and task/game combination.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>params</dt>
-<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> contains the parameters to be bound to the
-query. For now, only <code>organization_name</code> and <code>project_name</code> are supported
-and both of them should be specified. Each row is a set of parameters.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> or <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> contains the parameters to be bound to
+the query. Default templates require specifying <code>organization_name</code> and
+<code>project_name</code>, in that order. If <code>contents</code> template is specified without
+any parameters, set this as <code>NULL</code> or 0-row <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>.</p></dd>
 
 
 <dt>...</dt>
