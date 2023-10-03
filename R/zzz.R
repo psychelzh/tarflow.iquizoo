@@ -25,6 +25,10 @@ NULL
   toset <- !(names(op_tarflow) %in% names(op))
   if (any(toset)) options(op_tarflow[toset])
 
+  if (!db_is_ready()) {
+    tryCatch(setup_option_file(), error = \(e) {})
+  }
+
   # https://stackoverflow.com/a/67664852/5996475
   ns <- topenv()
   ns$fetch_iquizoo_mem <- memoise::memoise(

@@ -27,6 +27,10 @@ jobs:
           needs: coverage
 
       - name: Test coverage
+        env:
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
         run: |
           covr::codecov(
             quiet = FALSE,

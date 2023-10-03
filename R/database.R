@@ -88,3 +88,40 @@ setup_source <- function(driver = getOption("tarflow.driver"),
     class = "tarflow.source"
   )
 }
+
+#' Setup MySQL database connection option file
+#'
+#' @param path The path to the option file. Default location is operating system
+#'   dependent. On Windows, it is `C:/my.cnf`. On other systems, it is
+#'   `~/.my.cnf`.
+#' @return NULL (invisible).
+#' @export
+setup_option_file <- function(path = NULL) {
+  my_cnf_tmpl <- read_file(system.file("database", "my.cnf.tmpl"))
+  if (is.null(path)) {
+    if (Sys.info()["sysname"] == "Windows") {
+      path <- "C:/my.cnf"
+    } else {
+      path <- "~/.my.cnf"
+    }
+  }
+  writeLines(stringr::str_glue(my_cnf_tmpl), file)
+}
+
+#' Check if the database is ready
+#'
+#' @param source The data source from which data is fetched. See
+#'    [setup_source()] for details.
+#' @return TRUE if the database is ready, FALSE otherwise.
+#' @export
+db_is_ready <- function(source = setup_source()) {
+  if (!inherits(source, "tarflow.source")) {
+    cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
+  }
+  if (inherits(source$driver, "OdbcDriver")) {
+    return(DBI::dbCanConnect(source$driver, dsn = source$dsn))
+  }
+  if (inherits(source$driver, "MariaDBDriver")) {
+    return(DBI::dbCanConnect(source$driver, groups = source$groups))
+  }
+}
