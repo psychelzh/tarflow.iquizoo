@@ -97,7 +97,7 @@ setup_source <- function(driver = getOption("tarflow.driver"),
 #' @return NULL (invisible).
 #' @export
 setup_option_file <- function(path = NULL) {
-  my_cnf_tmpl <- read_file(system.file("database", "my.cnf.tmpl"))
+  my_cnf_tmpl <- read_file(package_file("database", "my.cnf.tmpl"))
   if (is.null(path)) {
     if (Sys.info()["sysname"] == "Windows") {
       path <- "C:/my.cnf"
