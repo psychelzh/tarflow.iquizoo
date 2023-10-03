@@ -90,7 +90,31 @@ prepare_fetch_data <- function(params, ...,
       ),
       progress_hash = syms(paste0("progress_hash_", project_id))
     )
-  branches <- tarchetypes::tar_map(
+  projects_info <- tarchetypes::tar_map(
+    dplyr::distinct(config_contents, project_id),
+    list(
+      targets::tar_target_raw(
+        "progress_hash",
+        expr(
+          fetch_iquizoo(
+            !!read_file(templates[["progress_hash"]]),
+            params = list(project_id)
+          )
+        ),
+        cue = targets::tar_cue(if (check_progress) "always")
+      ),
+      targets::tar_target_raw(
+        "users",
+        expr(
+          fetch_iquizoo(
+            !!read_file(templates[["users"]]),
+            params = list(project_id)
+          )
+        )
+      )
+    )
+  )
+  projects_data <- tarchetypes::tar_map(
     config_contents,
     names = c("project_id", "game_id"),
     if (what %in% c("all", "raw_data")) {
@@ -140,51 +164,33 @@ prepare_fetch_data <- function(params, ...,
     }
   )
   list(
-    tarchetypes::tar_map(
-      dplyr::distinct(config_contents, project_id),
-      targets::tar_target_raw(
-        "progress_hash",
-        expr(
-          fetch_iquizoo(
-            !!read_file(templates[["progress_hash"]]),
-            params = list(project_id)
-          )
-        ),
-        cue = targets::tar_cue(if (check_progress) "always")
-      )
-    ),
     targets::tar_target_raw(
       "contents",
       rlang::parse_expr(rlang::expr_text(contents))
     ),
-    targets::tar_target_raw(
-      "users",
-      expr(
-        unique(
-          fetch_iquizoo(
-            !!read_file(templates[["users"]]),
-            params = !!substitute(unname(as.list(params)))
-          )
-        )
-      )
+    projects_info,
+    projects_data,
+    tarchetypes::tar_combine(
+      users,
+      projects_info$users,
+      command = unique(vctrs::vec_c(!!!.x))
     ),
-    branches,
     if (what %in% c("all", "raw_data")) {
       list(
         tarchetypes::tar_combine(
           raw_data,
-          branches$raw_data
+          projects_data$raw_data
         ),
         tarchetypes::tar_combine(
           indices,
-          branches$indices
+          projects_data$indices
         )
       )
     },
     if (what %in% c("all", "scores")) {
       tarchetypes::tar_combine(
         scores,
-        branches$scores
+        projects_data$scores
       )
     }
   )
@@ -198,8 +204,11 @@ prepare_fetch_data <- function(params, ...,
 #'
 #' @param contents The SQL template file used to fetch contents. At least
 #'   `project_id`, `game_id` and `course_date` should be included in the
-#'   contents.
-#' @param users The SQL template file used to fetch users.
+#'   contents. `project_id` will be used as the only parameter in `users` and
+#'   `project` templates, while all three will be used in `raw_data` and
+#'   `scores` templates.
+#' @param users The SQL template file used to fetch users. Usually you don't
+#'   need to change this.
 #' @param raw_data The SQL template file used to fetch raw data. See
 #'   [fetch_data()] for details. Usually you don't need to change this.
 #' @param scores The SQL template file used to fetch scores. See [fetch_data()]

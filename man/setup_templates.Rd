@@ -15,9 +15,12 @@ setup_templates(
 \arguments{
 \item{contents}{The SQL template file used to fetch contents. At least
 \code{project_id}, \code{game_id} and \code{course_date} should be included in the
-contents.}
+contents. \code{project_id} will be used as the only parameter in \code{users} and
+\code{project} templates, while all three will be used in \code{raw_data} and
+\code{scores} templates.}
 
-\item{users}{The SQL template file used to fetch users.}
+\item{users}{The SQL template file used to fetch users. Usually you don't
+need to change this.}
 
 \item{raw_data}{The SQL template file used to fetch raw data. See
 \code{\link[=fetch_data]{fetch_data()}} for details. Usually you don't need to change this.}
