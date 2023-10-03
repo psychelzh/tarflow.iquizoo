@@ -1,5 +1,11 @@
 # tarflow.iquizoo (development version)
 
+## New Features
+
+* Added two functions `setup_option_file()` and `db_is_ready()` to help setup the database connection option file and check if the database is ready ([#71](https://github.com/psychelzh/tarflow.iquizoo/issues/71)).
+  * To ensure option file is correctly set up, you should specify these three environment variables: `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PASSWORD`. See [option file template](inst/database/my.cnf.tmpl) for details.
+  * Note if `db_is_ready()` returns `FALSE`, this package will call `setup_option_file()` once to setup the option file in loading phase. You should check if the option file is correctly set up.
+
 # tarflow.iquizoo 3.3.1
 
 * Let `users` template be independent of input parameters. This means advanced users could minimally specify the `contents` template only.
