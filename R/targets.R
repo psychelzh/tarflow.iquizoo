@@ -239,7 +239,7 @@ utils::globalVariables(
   c(
     "scores", "raw_data", "raw_data_parsed", "indices",
     "progress_hash", "project_id", "game_id", "course_date",
-    "prep_fun_name", "prep_fun", "input", "extra"
+    "prep_fun_name", "prep_fun", "input", "extra", "users", ".x"
   )
 )
 
