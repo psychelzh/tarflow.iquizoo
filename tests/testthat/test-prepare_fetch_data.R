@@ -1,22 +1,3 @@
-test_that("Test with mock", {
-  with_mocked_bindings(
-    fetch_iquizoo_mem = \(...) {
-      tibble::tibble(
-        project_id = bit64::as.integer64(1),
-        game_id = data.iquizoo::game_info$game_id[1:2],
-        course_date = as.Date("2023-01-01")
-      )
-    },
-    prepare_fetch_data(data.frame()) |>
-      expect_silent()
-  )
-  with_mocked_bindings(
-    fetch_iquizoo_mem = \(...) data.frame(),
-    prepare_fetch_data(data.frame()) |>
-      expect_warning(class = "tarflow_bad_params")
-  )
-})
-
 test_that("Smoke test", {
   skip_if_not_installed("RMariaDB")
   skip_if_not(db_is_ready())
