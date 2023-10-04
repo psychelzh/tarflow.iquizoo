@@ -52,7 +52,8 @@ NULL
   } else if (!check_source()) {
     packageStartupMessage(
       "The default database source is not working.",
-      " Please check your database settings first."
+      " Please check your database settings first.",
+      " See `?setup_option_file` for more details."
     )
   }
 }

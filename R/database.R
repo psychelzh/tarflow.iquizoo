@@ -91,6 +91,12 @@ setup_source <- function(driver = getOption("tarflow.driver"),
 
 #' Setup MySQL database connection option file
 #'
+#' This function will create a MySQL option file at the given path. To ensure it
+#' works, set these environment variables before calling this function:
+#' - `MYSQL_HOST`: The host name of the MySQL server.
+#' - `MYSQL_USER`: The user name of the MySQL server.
+#' - `MYSQL_PASSWORD`: The password of the MySQL server.
+#'
 #' @param path The path to the option file. Default location is operating system
 #'   dependent. On Windows, it is `C:/my.cnf`. On other systems, it is
 #'   `~/.my.cnf`.

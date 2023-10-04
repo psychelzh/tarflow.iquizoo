@@ -17,5 +17,11 @@ dependent. On Windows, it is \verb{C:/my.cnf}. On other systems, it is
 NULL (invisible).
 }
 \description{
-Setup MySQL database connection option file
+This function will create a MySQL option file at the given path. To ensure it
+works, set these environment variables before calling this function:
+\itemize{
+\item \code{MYSQL_HOST}: The host name of the MySQL server.
+\item \code{MYSQL_USER}: The user name of the MySQL server.
+\item \code{MYSQL_PASSWORD}: The password of the MySQL server.
+}
 }
