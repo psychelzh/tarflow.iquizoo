@@ -94,9 +94,10 @@ setup_source <- function(driver = getOption("tarflow.driver"),
 #' @param path The path to the option file. Default location is operating system
 #'   dependent. On Windows, it is `C:/my.cnf`. On other systems, it is
 #'   `~/.my.cnf`.
+#' @param overwrite Whether to overwrite the existing option file.
 #' @return NULL (invisible).
 #' @export
-setup_option_file <- function(path = NULL) {
+setup_option_file <- function(path = NULL, overwrite = FALSE) {
   my_cnf_tmpl <- read_file(package_file("database", "my.cnf.tmpl"))
   if (is.null(path)) {
     if (Sys.info()["sysname"] == "Windows") {
@@ -104,6 +105,13 @@ setup_option_file <- function(path = NULL) {
     } else {
       path <- "~/.my.cnf"
     }
+  }
+  if (file.exists(path) && !overwrite) {
+    cli::cli_alert_warning(
+      "Option file already exists. Use {.arg overwrite = TRUE} to overwrite.",
+      class = "tarflow_option_file_exists"
+    )
+    return(invisible())
   }
   writeLines(stringr::str_glue(my_cnf_tmpl), path)
 }
