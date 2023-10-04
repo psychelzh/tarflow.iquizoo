@@ -25,6 +25,10 @@ NULL
   toset <- !(names(op_tarflow) %in% names(op))
   if (any(toset)) options(op_tarflow[toset])
 
+  if (!check_source()) {
+    tryCatch(setup_option_file(), error = \(e) {})
+  }
+
   # https://stackoverflow.com/a/67664852/5996475
   ns <- topenv()
   ns$fetch_iquizoo_mem <- memoise::memoise(
@@ -44,6 +48,12 @@ NULL
     packageStartupMessage(
       "Neither odbc nor RMariaDB is installed.",
       " Please install one of them."
+    )
+  } else if (!check_source()) {
+    packageStartupMessage(
+      "The default database source is not working.",
+      " Please check your database settings first.",
+      " See `?setup_option_file` for more details."
     )
   }
 }

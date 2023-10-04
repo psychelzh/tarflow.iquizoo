@@ -88,3 +88,58 @@ setup_source <- function(driver = getOption("tarflow.driver"),
     class = "tarflow.source"
   )
 }
+
+#' Setup MySQL database connection option file
+#'
+#' This function will create a MySQL option file at the given path. To ensure it
+#' works, set these environment variables before calling this function:
+#' - `MYSQL_HOST`: The host name of the MySQL server.
+#' - `MYSQL_USER`: The user name of the MySQL server.
+#' - `MYSQL_PASSWORD`: The password of the MySQL server.
+#'
+#' @param path The path to the option file. Default location is operating system
+#'   dependent. On Windows, it is `C:/my.cnf`. On other systems, it is
+#'   `~/.my.cnf`.
+#' @param overwrite Whether to overwrite the existing option file.
+#' @return NULL (invisible).
+#' @export
+setup_option_file <- function(path = NULL, overwrite = FALSE) {
+  my_cnf_tmpl <- read_file(package_file("database", "my.cnf.tmpl"))
+  path <- path %||% default_file()
+  if (file.exists(path) && !overwrite) {
+    cli::cli_alert_warning(
+      "Option file already exists. Use {.arg overwrite = TRUE} to overwrite.",
+      class = "tarflow_option_file_exists"
+    )
+    return(invisible())
+  }
+  writeLines(stringr::str_glue(my_cnf_tmpl), path)
+}
+
+#' Check if the database based on the given data source is ready
+#'
+#' @param source The data source from which data is fetched. See
+#'    [setup_source()] for details.
+#' @return TRUE if the database is ready, FALSE otherwise.
+#' @export
+check_source <- function(source = setup_source()) {
+  if (!inherits(source, "tarflow.source")) {
+    cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
+  }
+  if (inherits(source$driver, "OdbcDriver")) {
+    return(DBI::dbCanConnect(source$driver, dsn = source$dsn))
+  }
+  if (inherits(source$driver, "MariaDBDriver")) {
+    return(DBI::dbCanConnect(source$driver, groups = source$groups))
+  }
+  return(FALSE)
+}
+
+# helper functions
+default_file <- function() {
+  if (Sys.info()["sysname"] == "Windows") {
+    return("C:/my.cnf")
+  } else {
+    return("~/.my.cnf")
+  }
+}

@@ -1,26 +1,5 @@
-test_that("Test with mock", {
-  with_mocked_bindings(
-    fetch_iquizoo_mem = \(...) {
-      tibble::tibble(
-        project_id = bit64::as.integer64(1),
-        game_id = data.iquizoo::game_info$game_id[1:2],
-        course_date = as.Date("2023-01-01")
-      )
-    },
-    prepare_fetch_data(data.frame()) |>
-      expect_silent()
-  )
-  with_mocked_bindings(
-    fetch_iquizoo_mem = \(...) data.frame(),
-    prepare_fetch_data(data.frame()) |>
-      expect_warning(class = "tarflow_bad_params")
-  )
-})
-
-test_that("Smoke test", {
-  skip_if_not_installed("RMariaDB")
-  name_db_src <- "iquizoo-v3"
-  skip_if_not(DBI::dbCanConnect(RMariaDB::MariaDB(), groups = name_db_src))
+skip_if_not(check_source())
+test_that("Default templates work", {
   params <- tibble::tribble(
     ~organization_name, ~project_name,
     "北京师范大学", "认知测评预实验"
@@ -29,14 +8,30 @@ test_that("Smoke test", {
     expect_type("list") |>
     expect_length(6) |>
     expect_silent()
+})
 
+test_that("Custom templates work", {
+  prepare_fetch_data(
+    data.frame(),
+    templates = tarflow.iquizoo::setup_templates(
+      contents = "sql/contents.sql"
+    )
+  ) |>
+    expect_type("list") |>
+    expect_length(6) |>
+    expect_silent()
+})
+
+test_that("Bad params show warning", {
   params_bad <- tibble::tribble(
     ~organization_name, ~project_name,
     "Unexisted", "Malvalue"
   )
   prepare_fetch_data(params_bad) |>
     expect_warning(class = "tarflow_bad_params")
+})
 
+test_that("Workflow works", {
   skip_if_not_installed("preproc.iquizoo")
   targets::tar_dir({
     targets::tar_script({

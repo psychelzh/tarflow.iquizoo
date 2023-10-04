@@ -61,11 +61,10 @@ prepare_fetch_data <- function(params, ...,
   }
   what <- match.arg(what)
   if (inherits(params, "data.frame")) {
-    if (nrow(params) == 0) {
-      params <- NULL
-    } else {
-      params <- as.list(params)
-    }
+    params <- as.list(params)
+  }
+  if (is_empty(params)) {
+    params <- NULL
   }
   contents <- fetch_iquizoo_mem(
     read_file(templates$contents),
@@ -232,12 +231,12 @@ setup_templates <- function(contents = NULL,
                             progress_hash = NULL) {
   structure(
     list(
-      contents = contents %||% package_sql_file("contents.sql"),
-      users = users %||% package_sql_file("users.sql"),
-      raw_data = raw_data %||% package_sql_file("raw_data.sql"),
-      scores = scores %||% package_sql_file("scores.sql"),
+      contents = contents %||% package_file("sql", "contents.sql"),
+      users = users %||% package_file("sql", "users.sql"),
+      raw_data = raw_data %||% package_file("sql", "raw_data.sql"),
+      scores = scores %||% package_file("sql", "scores.sql"),
       progress_hash = progress_hash %||%
-        package_sql_file("progress_hash.sql")
+        package_file("sql", "progress_hash.sql")
     ),
     class = "tarflow.template"
   )
@@ -250,15 +249,3 @@ utils::globalVariables(
     "prep_fun_name", "prep_fun", "input", "extra", "users", ".x"
   )
 )
-
-# helper functions
-package_sql_file <- function(file) {
-  system.file(
-    "sql", file,
-    package = "tarflow.iquizoo"
-  )
-}
-
-read_file <- function(file) {
-  paste0(readLines(file), collapse = "\n")
-}
