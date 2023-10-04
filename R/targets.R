@@ -61,11 +61,10 @@ prepare_fetch_data <- function(params, ...,
   }
   what <- match.arg(what)
   if (inherits(params, "data.frame")) {
-    if (nrow(params) == 0) {
-      params <- NULL
-    } else {
-      params <- as.list(params)
-    }
+    params <- as.list(params)
+  }
+  if (is_empty(params)) {
+    params <- NULL
   }
   contents <- fetch_iquizoo_mem(
     read_file(templates$contents),
