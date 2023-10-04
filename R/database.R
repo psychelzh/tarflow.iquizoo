@@ -99,13 +99,7 @@ setup_source <- function(driver = getOption("tarflow.driver"),
 #' @export
 setup_option_file <- function(path = NULL, overwrite = FALSE) {
   my_cnf_tmpl <- read_file(package_file("database", "my.cnf.tmpl"))
-  if (is.null(path)) {
-    if (Sys.info()["sysname"] == "Windows") {
-      path <- "C:/my.cnf"
-    } else {
-      path <- "~/.my.cnf"
-    }
-  }
+  path <- path %||% default_file()
   if (file.exists(path) && !overwrite) {
     cli::cli_alert_warning(
       "Option file already exists. Use {.arg overwrite = TRUE} to overwrite.",
@@ -133,4 +127,13 @@ db_is_ready <- function(source = setup_source()) {
     return(DBI::dbCanConnect(source$driver, groups = source$groups))
   }
   return(FALSE)
+}
+
+# helper functions
+default_file <- function() {
+  if (Sys.info()["sysname"] == "Windows") {
+    return("C:/my.cnf")
+  } else {
+    return("~/.my.cnf")
+  }
 }
