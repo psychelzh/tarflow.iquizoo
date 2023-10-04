@@ -110,13 +110,13 @@ setup_option_file <- function(path = NULL, overwrite = FALSE) {
   writeLines(stringr::str_glue(my_cnf_tmpl), path)
 }
 
-#' Check if the database is ready
+#' Check if the database based on the given data source is ready
 #'
 #' @param source The data source from which data is fetched. See
 #'    [setup_source()] for details.
 #' @return TRUE if the database is ready, FALSE otherwise.
 #' @export
-db_is_ready <- function(source = setup_source()) {
+check_source <- function(source = setup_source()) {
   if (!inherits(source, "tarflow.source")) {
     cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
   }

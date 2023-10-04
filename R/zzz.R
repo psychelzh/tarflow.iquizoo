@@ -25,7 +25,7 @@ NULL
   toset <- !(names(op_tarflow) %in% names(op))
   if (any(toset)) options(op_tarflow[toset])
 
-  if (!db_is_ready()) {
+  if (!check_source()) {
     tryCatch(setup_option_file(), error = \(e) {})
   }
 

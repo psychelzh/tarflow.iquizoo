@@ -1,6 +1,6 @@
 test_that("Smoke test", {
   skip_if_not_installed("RMariaDB")
-  skip_if_not(db_is_ready())
+  skip_if_not(check_source())
   params <- tibble::tribble(
     ~organization_name, ~project_name,
     "北京师范大学", "认知测评预实验"
