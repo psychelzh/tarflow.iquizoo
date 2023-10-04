@@ -49,6 +49,11 @@ NULL
       "Neither odbc nor RMariaDB is installed.",
       " Please install one of them."
     )
+  } else if (!check_source()) {
+    packageStartupMessage(
+      "The default database source is not working.",
+      " Please check your database settings first."
+    )
   }
 }
 
