@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.3.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,16 @@
       <small>Source: <a href="https://github.com/psychelzh/tarflow.iquizoo/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.3.2" id="tarflowiquizoo-332">tarflow.iquizoo 3.3.2<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-332"></a></h2>
+<div class="section level3">
+<h3 id="new-features-3-3-2">New Features<a class="anchor" aria-label="anchor" href="#new-features-3-3-2"></a></h3>
+<ul><li>Added two functions <code><a href="../reference/setup_option_file.html">setup_option_file()</a></code> and <code><a href="../reference/check_source.html">check_source()</a></code> to help setup the database connection option file and check if the database is ready (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/71" class="external-link">#71</a>).
+<ul><li>To ensure option file is correctly set up, you should specify these three environment variables: <code>MYSQL_HOST</code>, <code>MYSQL_USER</code>, <code>MYSQL_PASSWORD</code>. See <a href="inst/database/my.cnf.tmpl">option file template</a> for details.</li>
+<li>Note if <code><a href="../reference/check_source.html">check_source()</a></code> returns <code>FALSE</code>, this package will call <code><a href="../reference/setup_option_file.html">setup_option_file()</a></code> once to setup the option file in loading phase. You should check if the option file is correctly set up.</li>
+</ul></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.3.1" id="tarflowiquizoo-331">tarflow.iquizoo 3.3.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-331"></a></h2>
 <ul><li>Let <code>users</code> template be independent of input parameters. This means advanced users could minimally specify the <code>contents</code> template only.</li>
