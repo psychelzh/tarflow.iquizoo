@@ -1,4 +1,4 @@
-# Smoke test
+# Workflow works
 
     {
       "type": "character",
