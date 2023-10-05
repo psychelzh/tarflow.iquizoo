@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.3.3
 
 * Ensure `tarchetypes::tar_map()` only rely on columns of `project_id`, `game_id` and `course_date` from template SQL output.
 
