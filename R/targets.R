@@ -78,10 +78,8 @@ prepare_fetch_data <- function(params, ...,
     return(list())
   }
   config_contents <- contents |>
-    dplyr::left_join(
-      data.iquizoo::game_info,
-      by = "game_id"
-    ) |>
+    dplyr::distinct(.data$project_id, .data$game_id, .data$course_date) |>
+    dplyr::left_join(data.iquizoo::game_info, by = "game_id") |>
     dplyr::mutate(
       # https://github.com/ropensci/tarchetypes/issues/94
       project_id = bit64::as.character.integer64(.data$project_id),
@@ -98,7 +96,7 @@ prepare_fetch_data <- function(params, ...,
       progress_hash = syms(paste0("progress_hash_", project_id))
     )
   projects_info <- tarchetypes::tar_map(
-    dplyr::distinct(config_contents, project_id),
+    dplyr::distinct(config_contents, .data$project_id),
     list(
       targets::tar_target_raw(
         "progress_hash",
