@@ -171,7 +171,7 @@ prepare_fetch_data <- function(params, ...,
   list(
     targets::tar_target_raw(
       "contents",
-      rlang::parse_expr(rlang::expr_text(contents))
+      expr(unserialize(!!serialize(contents, NULL)))
     ),
     projects_info,
     projects_data,

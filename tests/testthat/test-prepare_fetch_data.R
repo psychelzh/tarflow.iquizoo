@@ -50,3 +50,32 @@ test_that("Workflow works", {
     expect_snapshot_value(targets::tar_objects(), style = "json2")
   })
 })
+
+test_that("Serialize check (no roundtrip error)", {
+  targets::tar_dir({
+    targets::tar_script({
+      library(targets)
+      tar_option_set(
+        packages = c("tarflow.iquizoo", "preproc.iquizoo")
+      )
+      params <- tibble::tribble(
+        ~organization_name, ~project_name,
+        "四川省双流棠湖中学高中部", "棠湖中学英才计划测训体验账号"
+      )
+      prepare_fetch_data(params)[1]
+    })
+    targets::tar_make(reporter = "silent", callr_function = NULL)
+    expect_identical(
+      targets::tar_read(contents),
+      fetch_iquizoo_mem(
+        read_file(setup_templates()$contents),
+        params = unname(as.list(
+          tibble::tribble(
+            ~organization_name, ~project_name,
+            "四川省双流棠湖中学高中部", "棠湖中学英才计划测训体验账号"
+          )
+        ))
+      )
+    )
+  })
+})
