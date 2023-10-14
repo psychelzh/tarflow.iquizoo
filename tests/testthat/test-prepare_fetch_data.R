@@ -32,6 +32,20 @@ test_that("Bad params show warning", {
 })
 
 test_that("Workflow works", {
+  targets::tar_dir({
+    targets::tar_script({
+      library(targets)
+      tar_option_set(packages = "tarflow.iquizoo")
+      params <- tibble::tribble(
+        ~organization_name, ~project_name,
+        "北京师范大学测试用账号", "难度测试",
+        "北京师范大学", "4.19-4.20夜晚睡眠test"
+      )
+      prepare_fetch_data(params, action_raw_data = "parse")
+    })
+    targets::tar_make(reporter = "silent", callr_function = NULL)
+    expect_snapshot_value(targets::tar_objects(), style = "json2")
+  })
   skip_if_not_installed("preproc.iquizoo")
   targets::tar_dir({
     targets::tar_script({
