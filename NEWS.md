@@ -1,5 +1,10 @@
 # tarflow.iquizoo (development version)
 
+## New Features
+
+* Support `action_raw_data` argument in `prepare_fetch_data()` to specify the action of raw data. This is useful when you want only the parsed raw data and not the indices, e.g., `action_raw_data = "parse"` will not perform indices calculation.
+* Added `raw_data_parsed` targets combination and removed `raw_data` targets combination, which should be a potential bug for the unparsed `raw_data` targets combination is not really the intent.
+
 # tarflow.iquizoo 3.3.4
 
 * Fix a roundtrip issue, see [this isue](https://github.com/truecluster/bit64/issues/27) from {bit64} package.
