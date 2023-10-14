@@ -8,6 +8,7 @@ prepare_fetch_data(
   params,
   ...,
   what = c("all", "raw_data", "scores"),
+  action_raw_data = c("all", "parse", "none"),
   templates = setup_templates(),
   check_progress = TRUE
 )
@@ -20,7 +21,15 @@ any parameters, set this as \code{NULL} or 0-row \link{data.frame}.}
 
 \item{...}{For future usage. Should be empty.}
 
-\item{what}{What to fetch. Can be "all", "raw_data" or "scores".}
+\item{what}{What to fetch. If set as "all", both raw data and scores will be
+fetched. If set as "raw_data", only raw data will be fetched. If set as
+"scores", only scores will be fetched. Further actions on the fetched raw
+data can be specified by \code{action_raw_data}.}
+
+\item{action_raw_data}{The action to be taken on the fetched raw data. If set
+as "all", both wrangling and pre-processing will be done. If set as
+"parse", only wrangling will be done. If set as "none", neither will be
+done. If \code{what} is "scores", this argument will be ignored.}
 
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}

@@ -38,6 +38,7 @@ list(
   tarflow.iquizoo::prepare_fetch_data(
     params,
     what = "all", # change to "scores" or "raw_data" if you want to
+    action_raw_data = "all", # change to "parse" or "none" if you want to
     # For advanced usage, set custom templates by uncommenting next line
     #  templates = tarflow.iquizoo::setup_templates(),
     check_progress = TRUE # set as `FALSE` if projects finalized
