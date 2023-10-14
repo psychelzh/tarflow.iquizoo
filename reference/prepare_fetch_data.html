@@ -14,7 +14,7 @@ each is for a specific project and task/game combination."><!-- mathjax --><scri
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.3.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,7 @@ each is for a specific project and task/game combination.</p>
 <span>  <span class="va">params</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"raw_data"</span>, <span class="st">"scores"</span><span class="op">)</span>,</span>
+<span>  action_raw_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"parse"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  templates <span class="op">=</span> <span class="fu"><a href="setup_templates.html">setup_templates</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  check_progress <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -80,7 +81,17 @@ any parameters, set this as <code>NULL</code> or 0-row <a href="https://rdrr.io/
 
 
 <dt>what</dt>
-<dd><p>What to fetch. Can be "all", "raw_data" or "scores".</p></dd>
+<dd><p>What to fetch. If set as "all", both raw data and scores will be
+fetched. If set as "raw_data", only raw data will be fetched. If set as
+"scores", only scores will be fetched. Further actions on the fetched raw
+data can be specified by <code>action_raw_data</code>.</p></dd>
+
+
+<dt>action_raw_data</dt>
+<dd><p>The action to be taken on the fetched raw data. If set
+as "all", both wrangling and pre-processing will be done. If set as
+"parse", only wrangling will be done. If set as "none", neither will be
+done. If <code>what</code> is "scores", this argument will be ignored.</p></dd>
 
 
 <dt>templates</dt>
