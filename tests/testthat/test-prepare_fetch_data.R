@@ -6,7 +6,7 @@ test_that("Default templates work", {
   )
   prepare_fetch_data(params) |>
     expect_type("list") |>
-    expect_length(6) |>
+    expect_length(3) |>
     expect_silent()
 })
 
@@ -18,7 +18,7 @@ test_that("Custom templates work", {
     )
   ) |>
     expect_type("list") |>
-    expect_length(6) |>
+    expect_length(3) |>
     expect_silent()
 })
 
