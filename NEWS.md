@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Let pipeline perform raw data parsing and indices calculation on combined raw data from single tasks ([#73](https://github.com/psychelzh/tarflow.iquizoo/issues/73)).
+
 # tarflow.iquizoo 3.4.0
 
 ## New Features
