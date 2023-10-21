@@ -152,6 +152,45 @@ setup_templates <- function(contents = NULL,
 }
 
 # helper functions
+prepare_pipeline_info <- function(contents, templates, check_progress) {
+  targets <- tarchetypes::tar_map(
+    contents |>
+      dplyr::distinct(.data$project_id) |>
+      dplyr::mutate(
+        project_id = bit64::as.character.integer64(.data$project_id)
+      ),
+    list(
+      targets::tar_target_raw(
+        "progress_hash",
+        expr(
+          fetch_iquizoo(
+            !!read_file(templates[["progress_hash"]]),
+            params = list(project_id)
+          )
+        ),
+        cue = targets::tar_cue(if (check_progress) "always")
+      ),
+      targets::tar_target_raw(
+        "users",
+        expr(
+          fetch_iquizoo(
+            !!read_file(templates[["users"]]),
+            params = list(project_id)
+          )
+        )
+      )
+    )
+  )
+  c(
+    targets,
+    tarchetypes::tar_combine(
+      users,
+      targets$users,
+      command = unique(vctrs::vec_c(!!!.x))
+    )
+  )
+}
+
 prepare_pipeline_data <- function(contents, templates,
                                   what, action_raw_data) {
   contents <- contents |>
@@ -270,45 +309,6 @@ set_pipeline_fetch <- function(contents, templates, what) {
           )
         })
       )
-    )
-  )
-}
-
-prepare_pipeline_info <- function(contents, templates, check_progress) {
-  targets <- tarchetypes::tar_map(
-    contents |>
-      dplyr::distinct(.data$project_id) |>
-      dplyr::mutate(
-        project_id = bit64::as.character.integer64(.data$project_id)
-      ),
-    list(
-      targets::tar_target_raw(
-        "progress_hash",
-        expr(
-          fetch_iquizoo(
-            !!read_file(templates[["progress_hash"]]),
-            params = list(project_id)
-          )
-        ),
-        cue = targets::tar_cue(if (check_progress) "always")
-      ),
-      targets::tar_target_raw(
-        "users",
-        expr(
-          fetch_iquizoo(
-            !!read_file(templates[["users"]]),
-            params = list(project_id)
-          )
-        )
-      )
-    )
-  )
-  c(
-    targets,
-    tarchetypes::tar_combine(
-      users,
-      targets$users,
-      command = unique(vctrs::vec_c(!!!.x))
     )
   )
 }
