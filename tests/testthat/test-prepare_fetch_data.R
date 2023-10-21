@@ -5,30 +5,40 @@ test_that("Default templates work", {
     "北京师范大学", "认知测评预实验"
   )
   prepare_fetch_data(params) |>
-    expect_type("list") |>
-    expect_length(6) |>
+    expect_targets_list() |>
     expect_silent()
 })
 
 test_that("Custom templates work", {
   prepare_fetch_data(
     data.frame(),
-    templates = tarflow.iquizoo::setup_templates(
+    templates = setup_templates(
       contents = "sql/contents.sql"
     )
   ) |>
-    expect_type("list") |>
-    expect_length(6) |>
+    expect_targets_list() |>
     expect_silent()
 })
 
-test_that("Bad params show warning", {
+test_that("Support `data.frame` contents", {
+  prepare_fetch_data(
+    contents = data.frame(
+      project_id = bit64::as.integer64(599627356946501),
+      game_id = bit64::as.integer64(581943246745925),
+      course_date = "2023-08-02 14:55:23"
+    )
+  ) |>
+    expect_targets_list() |>
+    expect_silent()
+})
+
+test_that("Signal error if `contents` contains no data", {
   params_bad <- tibble::tribble(
     ~organization_name, ~project_name,
     "Unexisted", "Malvalue"
   )
   prepare_fetch_data(params_bad) |>
-    expect_warning(class = "tarflow_bad_params")
+    expect_error(class = "tarflow_bad_contents")
 })
 
 test_that("Workflow works", {
@@ -80,7 +90,7 @@ test_that("Serialize check (no roundtrip error)", {
     })
     targets::tar_make(reporter = "silent", callr_function = NULL)
     expect_identical(
-      targets::tar_read(contents),
+      targets::tar_read(contents_origin),
       fetch_iquizoo_mem(
         read_file(setup_templates()$contents),
         params = unname(as.list(

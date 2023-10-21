@@ -45,7 +45,7 @@ Or you can install the stable version from [psychelzh’s
 R-universe](https://psychelzh.r-universe.dev/) with:
 
 ``` r
-install.packages("tarflow.iquizoo", repos = "https://psychelzh.r-universe.dev")
+install.packages("tarflow.iquizoo", repos = c(options("repos"), "https://psychelzh.r-universe.dev"))
 ```
 
 ## Usage

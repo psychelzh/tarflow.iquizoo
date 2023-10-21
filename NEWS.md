@@ -1,3 +1,15 @@
+# tarflow.iquizoo 3.5.0
+
+## Breaking Changes
+
+* Let pipeline perform raw data parsing and indices calculation on combined raw data from single tasks ([#73](https://github.com/psychelzh/tarflow.iquizoo/issues/73)).
+* Let `prepare_fetch_data()` signal error when `contents` contains no data.
+* Rename the target `contents` as `contents_origin` to avoid possible name conflict with `contents` input argument. This is a limitation of {targets} package.
+
+## New Features
+
+* Added `contents` argument in `prepare_fetch_data()` to support pre-fetched `contents` as contents configuration. This is useful if you have already fetched the contents data and want to use it directly.
+
 # tarflow.iquizoo 3.4.0
 
 ## New Features

@@ -39,8 +39,14 @@ use_targets <- function() {
 #' @param params A [data.frame] or [list] contains the parameters to be bound to
 #'   the query. Default templates require specifying `organization_name` and
 #'   `project_name`, in that order. If `contents` template is specified without
-#'   any parameters, set this as `NULL` or 0-row [data.frame].
+#'   any parameters, set it as empty vector or `NULL`. If `contents` argument is
+#'   specified, this argument is omitted.
 #' @param ... For future usage. Should be empty.
+#' @param contents The contents used as the configuration of data fetching. This
+#'   is typically automatically fetched from database based on the `contents`
+#'   template from `templates`. If not `NULL`, it will be used directly and
+#'   ignore that specified in `templates`. Note `contents` should at least
+#'   contains `project_id`, `game_id` and `course_date` names.
 #' @param what What to fetch. If set as "all", both raw data and scores will be
 #'   fetched. If set as "raw_data", only raw data will be fetched. If set as
 #'   "scores", only scores will be fetched. Further actions on the fetched raw
@@ -56,6 +62,7 @@ use_targets <- function() {
 #' @return A list of target objects.
 #' @export
 prepare_fetch_data <- function(params, ...,
+                               contents = NULL,
                                what = c("all", "raw_data", "scores"),
                                action_raw_data = c("all", "parse", "none"),
                                templates = setup_templates(),
@@ -68,87 +75,40 @@ prepare_fetch_data <- function(params, ...,
     )
   }
   what <- match.arg(what)
+  if (what == "all") what <- c("raw_data", "scores")
   action_raw_data <- match.arg(action_raw_data)
-  if (inherits(params, "data.frame")) {
-    params <- as.list(params)
+  if (is.null(contents)) {
+    contents <- fetch_iquizoo_mem(
+      read_file(templates$contents),
+      params = unname(
+        if (!is_empty(params)) as.list(params)
+      )
+    )
   }
-  if (is_empty(params)) {
-    params <- NULL
-  }
-  contents <- fetch_iquizoo_mem(
-    read_file(templates$contents),
-    params = unname(params)
-  )
   if (nrow(contents) == 0) {
-    cli::cli_warn(
-      "No contents found based on the given parameters",
-      class = "tarflow_bad_params"
+    cli::cli_abort(
+      "No contents to fetch.",
+      class = "tarflow_bad_contents"
     )
-    return(list())
   }
-  config_contents <- contents |>
-    dplyr::distinct(.data$project_id, .data$game_id, .data$course_date) |>
-    dplyr::left_join(data.iquizoo::game_info, by = "game_id") |>
-    dplyr::mutate(
-      # https://github.com/ropensci/tarchetypes/issues/94
-      project_id = bit64::as.character.integer64(.data$project_id),
-      game_id = bit64::as.character.integer64(.data$game_id),
-      course_date = as.character(course_date),
-      prep_fun = purrr::map(
-        .data[["prep_fun_name"]],
-        purrr::possibly(sym, NA)
-      ),
-      dplyr::across(
-        dplyr::all_of(c("input", "extra")),
-        parse_exprs
-      ),
-      progress_hash = syms(paste0("progress_hash_", project_id))
-    )
   projects_info <- prepare_pipeline_info(
-    config_contents,
+    contents,
     templates,
     check_progress
   )
   projects_data <- prepare_pipeline_data(
-    config_contents,
+    contents,
     templates,
     what,
     action_raw_data
   )
   list(
     targets::tar_target_raw(
-      "contents",
+      "contents_origin",
       expr(unserialize(!!serialize(contents, NULL)))
     ),
     projects_info,
-    projects_data,
-    tarchetypes::tar_combine(
-      users,
-      projects_info$users,
-      command = unique(vctrs::vec_c(!!!.x))
-    ),
-    if (what %in% c("all", "raw_data")) {
-      list(
-        if (action_raw_data %in% c("all", "parse")) {
-          tarchetypes::tar_combine(
-            raw_data_parsed,
-            projects_data$raw_data_parsed
-          )
-        },
-        if (action_raw_data %in% "all") {
-          tarchetypes::tar_combine(
-            indices,
-            projects_data$indices
-          )
-        }
-      )
-    },
-    if (what %in% c("all", "scores")) {
-      tarchetypes::tar_combine(
-        scores,
-        projects_data$scores
-      )
-    }
+    projects_data
   )
 }
 
@@ -159,10 +119,10 @@ prepare_fetch_data <- function(params, ...,
 #' be parameterized.
 #'
 #' @param contents The SQL template file used to fetch contents. At least
-#'   `project_id`, `game_id` and `course_date` should be included in the
-#'   contents. `project_id` will be used as the only parameter in `users` and
-#'   `project` templates, while all three will be used in `raw_data` and
-#'   `scores` templates.
+#'   `project_id`, `game_id` and `course_date` should be included in the fetched
+#'   data based on the template. `project_id` will be used as the only parameter
+#'   in `users` and `project` templates, while all three will be used in
+#'   `raw_data` and `scores` templates.
 #' @param users The SQL template file used to fetch users. Usually you don't
 #'   need to change this.
 #' @param raw_data The SQL template file used to fetch raw data. See
@@ -192,66 +152,135 @@ setup_templates <- function(contents = NULL,
 }
 
 # helper functions
-prepare_pipeline_data <- function(config_contents, templates,
+prepare_pipeline_data <- function(contents, templates,
                                   what, action_raw_data) {
-  tarchetypes::tar_map(
-    config_contents,
-    names = c("project_id", "game_id"),
-    if (what %in% c("all", "raw_data")) {
-      list(
-        targets::tar_target_raw(
-          "raw_data",
-          expr({
-            progress_hash
-            fetch_data(
-              !!read_file(templates[["raw_data"]]),
-              project_id,
-              game_id,
-              course_date,
-              what = "raw_data"
-            )
-          })
-        ),
-        if (action_raw_data %in% c("all", "parse")) {
+  contents <- contents |>
+    dplyr::distinct(.data$project_id, .data$game_id, .data$course_date)
+  targets_fetch <- lapply(
+    what,
+    set_pipeline_fetch,
+    contents = contents,
+    templates = templates
+  )
+  c(
+    targets_fetch,
+    if ("scores" %in% what) {
+      tarchetypes::tar_combine(
+        scores,
+        targets_fetch[[which(what == "scores")]]$scores
+      )
+    },
+    if ("raw_data" %in% what) {
+      contents_preproc <- contents |>
+        dplyr::summarise(
+          tar_raw_data = stringr::str_glue(
+            "raw_data_{project_id}_{game_id}"
+          ) |>
+            syms() |>
+            list(),
+          .by = .data$game_id
+        ) |>
+        dplyr::left_join(data.iquizoo::game_info, by = "game_id") |>
+        dplyr::mutate(
+          game_id = bit64::as.character.integer64(.data$game_id),
+          prep_fun = purrr::map(
+            .data[["prep_fun_name"]],
+            purrr::possibly(sym, NA)
+          ),
+          dplyr::across(
+            dplyr::all_of(c("input", "extra")),
+            parse_exprs
+          )
+        )
+      targets_raw_data_preproc <- tarchetypes::tar_map(
+        values = contents_preproc,
+        names = game_id,
+        list(
           targets::tar_target(
+            raw_data,
+            dplyr::bind_rows(tar_raw_data)
+          ),
+          if (action_raw_data %in% c("all", "parse")) {
+            targets::tar_target(
+              raw_data_parsed,
+              wrangle_data(raw_data)
+            )
+          },
+          if (action_raw_data %in% "all") {
+            targets::tar_target(
+              indices,
+              if (!is.na(prep_fun_name)) {
+                preproc_data(
+                  raw_data_parsed, prep_fun,
+                  .input = input, .extra = extra
+                )
+              }
+            )
+          }
+        )
+      )
+      targets_raw_data_combine <- c(
+        if (action_raw_data %in% c("all", "parse")) {
+          tarchetypes::tar_combine(
             raw_data_parsed,
-            wrangle_data(raw_data)
+            targets_raw_data_preproc$raw_data_parsed
           )
         },
-        if (action_raw_data %in% "all") {
-          targets::tar_target(
+        if (action_raw_data %in% c("all")) {
+          tarchetypes::tar_combine(
             indices,
-            if (!is.na(prep_fun_name)) {
-              preproc_data(
-                raw_data_parsed, prep_fun,
-                .input = input, .extra = extra
-              )
-            }
+            targets_raw_data_preproc$indices
           )
         }
       )
-    },
-    if (what %in% c("all", "scores")) {
-      targets::tar_target_raw(
-        "scores",
-        expr({
-          progress_hash
-          fetch_data(
-            !!read_file(templates[["scores"]]),
-            project_id,
-            game_id,
-            course_date,
-            what = "scores"
-          )
-        })
+      c(
+        targets_raw_data_preproc,
+        targets_raw_data_combine
       )
     }
   )
 }
 
-prepare_pipeline_info <- function(config_contents, templates, check_progress) {
+set_pipeline_fetch <- function(contents, templates, what) {
+  key_ids <- c("project_id", "game_id")
   tarchetypes::tar_map(
-    dplyr::distinct(config_contents, .data$project_id),
+    contents |>
+      dplyr::mutate(
+        dplyr::across(
+          dplyr::all_of(key_ids),
+          bit64::as.character.integer64
+        ),
+        course_date = as.character(course_date),
+        progress_hash = syms(
+          paste0("progress_hash_", .data$project_id)
+        )
+      ),
+    names = key_ids,
+    list(
+      targets::tar_target_raw(
+        what,
+        expr({
+          progress_hash
+          fetch_data(
+            !!read_file(templates[[what]]),
+            project_id,
+            game_id,
+            course_date,
+            what = !!what
+          )
+        })
+      )
+    )
+  )
+}
+
+prepare_pipeline_info <- function(contents, templates, check_progress) {
+  targets <- tarchetypes::tar_map(
+    contents |>
+      dplyr::distinct(.data$project_id) |>
+      dplyr::mutate(
+        project_id = bit64::as.character.integer64(.data$project_id)
+      ),
     list(
       targets::tar_target_raw(
         "progress_hash",
@@ -274,11 +303,19 @@ prepare_pipeline_info <- function(config_contents, templates, check_progress) {
       )
     )
   )
+  c(
+    targets,
+    tarchetypes::tar_combine(
+      users,
+      targets$users,
+      command = unique(vctrs::vec_c(!!!.x))
+    )
+  )
 }
 
 utils::globalVariables(
   c(
-    "scores", "raw_data", "raw_data_parsed", "indices",
+    "scores", "raw_data", "tar_raw_data", "raw_data_parsed", "indices",
     "progress_hash", "project_id", "game_id", "course_date",
     "prep_fun_name", "prep_fun", "input", "extra", "users", ".x"
   )
