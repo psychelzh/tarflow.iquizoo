@@ -104,7 +104,7 @@ prepare_fetch_data <- function(params, ...,
   )
   list(
     targets::tar_target_raw(
-      "contents",
+      "contents_origin",
       expr(unserialize(!!serialize(contents, NULL)))
     ),
     projects_info,

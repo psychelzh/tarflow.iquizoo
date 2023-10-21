@@ -90,7 +90,7 @@ test_that("Serialize check (no roundtrip error)", {
     })
     targets::tar_make(reporter = "silent", callr_function = NULL)
     expect_identical(
-      targets::tar_read(contents),
+      targets::tar_read(contents_origin),
       fetch_iquizoo_mem(
         read_file(setup_templates()$contents),
         params = unname(as.list(
