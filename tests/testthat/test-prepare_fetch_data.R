@@ -5,8 +5,7 @@ test_that("Default templates work", {
     "北京师范大学", "认知测评预实验"
   )
   prepare_fetch_data(params) |>
-    expect_type("list") |>
-    expect_length(3) |>
+    expect_targets_list() |>
     expect_silent()
 })
 
@@ -17,8 +16,7 @@ test_that("Custom templates work", {
       contents = "sql/contents.sql"
     )
   ) |>
-    expect_type("list") |>
-    expect_length(3) |>
+    expect_targets_list() |>
     expect_silent()
 })
 
@@ -30,8 +28,7 @@ test_that("Support `data.frame` contents", {
       course_date = "2023-08-02 14:55:23"
     )
   ) |>
-    expect_type("list") |>
-    expect_length(3) |>
+    expect_targets_list() |>
     expect_silent()
 })
 
