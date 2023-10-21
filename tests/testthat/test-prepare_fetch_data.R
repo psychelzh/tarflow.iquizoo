@@ -13,8 +13,25 @@ test_that("Default templates work", {
 test_that("Custom templates work", {
   prepare_fetch_data(
     data.frame(),
-    templates = tarflow.iquizoo::setup_templates(
+    templates = setup_templates(
       contents = "sql/contents.sql"
+    )
+  ) |>
+    expect_type("list") |>
+    expect_length(3) |>
+    expect_silent()
+})
+
+test_that("Support `data.frame` contents", {
+  prepare_fetch_data(
+    templates = setup_templates(
+      contents = I(
+        data.frame(
+          project_id = bit64::as.integer64(599627356946501),
+          game_id = bit64::as.integer64(581943246745925),
+          course_date = "2023-08-02 14:55:23"
+        )
+      )
     )
   ) |>
     expect_type("list") |>

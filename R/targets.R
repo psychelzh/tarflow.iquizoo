@@ -39,7 +39,8 @@ use_targets <- function() {
 #' @param params A [data.frame] or [list] contains the parameters to be bound to
 #'   the query. Default templates require specifying `organization_name` and
 #'   `project_name`, in that order. If `contents` template is specified without
-#'   any parameters, set this as `NULL` or 0-row [data.frame].
+#'   any parameters, set it as empty vector or `NULL`. If `contents` template is
+#'   specified as a [data.frame] as is, this parameter is omitted.
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. If set as "all", both raw data and scores will be
 #'   fetched. If set as "raw_data", only raw data will be fetched. If set as
@@ -70,16 +71,16 @@ prepare_fetch_data <- function(params, ...,
   what <- match.arg(what)
   if (what == "all") what <- c("raw_data", "scores")
   action_raw_data <- match.arg(action_raw_data)
-  if (inherits(params, "data.frame")) {
-    params <- as.list(params)
+  if (inherits(templates$contents, "AsIs")) {
+    contents <- templates$contents
+  } else {
+    contents <- fetch_iquizoo_mem(
+      read_file(templates$contents),
+      params = unname(
+        if (!is_empty(params)) as.list(params)
+      )
+    )
   }
-  if (is_empty(params)) {
-    params <- NULL
-  }
-  contents <- fetch_iquizoo_mem(
-    read_file(templates$contents),
-    params = unname(params)
-  )
   if (nrow(contents) == 0) {
     cli::cli_abort(
       "No contents to fetch.",
@@ -114,10 +115,11 @@ prepare_fetch_data <- function(params, ...,
 #' be parameterized.
 #'
 #' @param contents The SQL template file used to fetch contents. At least
-#'   `project_id`, `game_id` and `course_date` should be included in the
-#'   contents. `project_id` will be used as the only parameter in `users` and
-#'   `project` templates, while all three will be used in `raw_data` and
-#'   `scores` templates.
+#'   `project_id`, `game_id` and `course_date` should be included in the fetched
+#'   data based on the template. `project_id` will be used as the only parameter
+#'   in `users` and `project` templates, while all three will be used in
+#'   `raw_data` and `scores` templates. Call [I()] to specify a [data.frame] if
+#'   you have pre-fetched contents.
 #' @param users The SQL template file used to fetch users. Usually you don't
 #'   need to change this.
 #' @param raw_data The SQL template file used to fetch raw data. See

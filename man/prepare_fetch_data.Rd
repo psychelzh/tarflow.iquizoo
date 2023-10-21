@@ -17,7 +17,8 @@ prepare_fetch_data(
 \item{params}{A \link{data.frame} or \link{list} contains the parameters to be bound to
 the query. Default templates require specifying \code{organization_name} and
 \code{project_name}, in that order. If \code{contents} template is specified without
-any parameters, set this as \code{NULL} or 0-row \link{data.frame}.}
+any parameters, set it as empty vector or \code{NULL}. If \code{contents} template is
+specified as a \link{data.frame} as is, this parameter is omitted.}
 
 \item{...}{For future usage. Should be empty.}
 
