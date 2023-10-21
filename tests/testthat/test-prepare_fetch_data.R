@@ -22,13 +22,13 @@ test_that("Custom templates work", {
     expect_silent()
 })
 
-test_that("Bad params show warning", {
+test_that("Signal error if `contents` contains no data", {
   params_bad <- tibble::tribble(
     ~organization_name, ~project_name,
     "Unexisted", "Malvalue"
   )
   prepare_fetch_data(params_bad) |>
-    expect_warning(class = "tarflow_bad_params")
+    expect_error(class = "tarflow_bad_contents")
 })
 
 test_that("Workflow works", {

@@ -81,11 +81,10 @@ prepare_fetch_data <- function(params, ...,
     params = unname(params)
   )
   if (nrow(contents) == 0) {
-    cli::cli_warn(
-      "No contents found based on the given parameters",
-      class = "tarflow_bad_params"
+    cli::cli_abort(
+      "No contents to fetch.",
+      class = "tarflow_bad_contents"
     )
-    return(list())
   }
   projects_info <- prepare_pipeline_info(
     contents,
