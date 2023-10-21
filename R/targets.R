@@ -219,17 +219,9 @@ prepare_pipeline_data <- function(contents, templates,
             list(),
           .by = .data$game_id
         ) |>
-        dplyr::left_join(data.iquizoo::game_info, by = "game_id") |>
+        data.iquizoo::match_preproc() |>
         dplyr::mutate(
-          game_id = bit64::as.character.integer64(.data$game_id),
-          prep_fun = purrr::map(
-            .data[["prep_fun_name"]],
-            purrr::possibly(sym, NA)
-          ),
-          dplyr::across(
-            dplyr::all_of(c("input", "extra")),
-            parse_exprs
-          )
+          game_id = bit64::as.character.integer64(.data$game_id)
         )
       targets_raw_data_preproc <- tarchetypes::tar_map(
         values = contents_preproc,
@@ -248,7 +240,7 @@ prepare_pipeline_data <- function(contents, templates,
           if (action_raw_data %in% "all") {
             targets::tar_target(
               indices,
-              if (!is.na(prep_fun_name)) {
+              if (!is.null(prep_fun)) {
                 preproc_data(
                   raw_data_parsed, prep_fun,
                   .input = input, .extra = extra

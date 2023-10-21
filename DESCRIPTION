@@ -20,7 +20,7 @@ Depends:
 Imports:
     bit64,
     cli,
-    data.iquizoo (>= 0.3.0),
+    data.iquizoo (>= 2023.10.22),
     DBI,
     dplyr,
     jsonlite,
