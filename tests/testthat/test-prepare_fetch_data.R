@@ -24,14 +24,10 @@ test_that("Custom templates work", {
 
 test_that("Support `data.frame` contents", {
   prepare_fetch_data(
-    templates = setup_templates(
-      contents = I(
-        data.frame(
-          project_id = bit64::as.integer64(599627356946501),
-          game_id = bit64::as.integer64(581943246745925),
-          course_date = "2023-08-02 14:55:23"
-        )
-      )
+    contents = data.frame(
+      project_id = bit64::as.integer64(599627356946501),
+      game_id = bit64::as.integer64(581943246745925),
+      course_date = "2023-08-02 14:55:23"
     )
   ) |>
     expect_type("list") |>

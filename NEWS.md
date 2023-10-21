@@ -7,7 +7,7 @@
 
 ## New Features
 
-* Support pre-fetched `contents` as contents template. Call `I()` to input literal `data.frame` in `contents` template. This is useful if you have already fetched the contents data and want to use it directly.
+* Added `contents` argument in `prepare_fetch_data()` to support pre-fetched `contents` as contents configuration. This is useful if you have already fetched the contents data and want to use it directly.
 
 # tarflow.iquizoo 3.4.0
 

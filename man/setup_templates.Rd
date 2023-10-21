@@ -17,8 +17,7 @@ setup_templates(
 \code{project_id}, \code{game_id} and \code{course_date} should be included in the fetched
 data based on the template. \code{project_id} will be used as the only parameter
 in \code{users} and \code{project} templates, while all three will be used in
-\code{raw_data} and \code{scores} templates. Call \code{\link[=I]{I()}} to specify a \link{data.frame} if
-you have pre-fetched contents.}
+\code{raw_data} and \code{scores} templates.}
 
 \item{users}{The SQL template file used to fetch users. Usually you don't
 need to change this.}

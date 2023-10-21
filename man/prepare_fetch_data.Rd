@@ -7,6 +7,7 @@
 prepare_fetch_data(
   params,
   ...,
+  contents = NULL,
   what = c("all", "raw_data", "scores"),
   action_raw_data = c("all", "parse", "none"),
   templates = setup_templates(),
@@ -17,10 +18,16 @@ prepare_fetch_data(
 \item{params}{A \link{data.frame} or \link{list} contains the parameters to be bound to
 the query. Default templates require specifying \code{organization_name} and
 \code{project_name}, in that order. If \code{contents} template is specified without
-any parameters, set it as empty vector or \code{NULL}. If \code{contents} template is
-specified as a \link{data.frame} as is, this parameter is omitted.}
+any parameters, set it as empty vector or \code{NULL}. If \code{contents} argument is
+specified, this argument is omitted.}
 
 \item{...}{For future usage. Should be empty.}
+
+\item{contents}{The contents used as the configuration of data fetching. This
+is typically automatically fetched from database based on the \code{contents}
+template from \code{templates}. If not \code{NULL}, it will be used directly and
+ignore that specified in \code{templates}. Note \code{contents} should at least
+contains \code{project_id}, \code{game_id} and \code{course_date} names.}
 
 \item{what}{What to fetch. If set as "all", both raw data and scores will be
 fetched. If set as "raw_data", only raw data will be fetched. If set as
