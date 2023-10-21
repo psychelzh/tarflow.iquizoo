@@ -14,7 +14,7 @@ each is for a specific project and task/game combination."><!-- mathjax --><scri
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,6 +60,7 @@ each is for a specific project and task/game combination.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prepare_fetch_data</span><span class="op">(</span></span>
 <span>  <span class="va">params</span>,</span>
 <span>  <span class="va">...</span>,</span>
+<span>  contents <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"raw_data"</span>, <span class="st">"scores"</span><span class="op">)</span>,</span>
 <span>  action_raw_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"parse"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  templates <span class="op">=</span> <span class="fu"><a href="setup_templates.html">setup_templates</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -73,11 +74,20 @@ each is for a specific project and task/game combination.</p>
 <dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> or <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> contains the parameters to be bound to
 the query. Default templates require specifying <code>organization_name</code> and
 <code>project_name</code>, in that order. If <code>contents</code> template is specified without
-any parameters, set this as <code>NULL</code> or 0-row <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>.</p></dd>
+any parameters, set it as empty vector or <code>NULL</code>. If <code>contents</code> argument is
+specified, this argument is omitted.</p></dd>
 
 
 <dt>...</dt>
 <dd><p>For future usage. Should be empty.</p></dd>
+
+
+<dt>contents</dt>
+<dd><p>The contents used as the configuration of data fetching. This
+is typically automatically fetched from database based on the <code>contents</code>
+template from <code>templates</code>. If not <code>NULL</code>, it will be used directly and
+ignore that specified in <code>templates</code>. Note <code>contents</code> should at least
+contains <code>project_id</code>, <code>game_id</code> and <code>course_date</code> names.</p></dd>
 
 
 <dt>what</dt>

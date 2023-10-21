@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,19 @@
       <small>Source: <a href="https://github.com/psychelzh/tarflow.iquizoo/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.5.0" id="tarflowiquizoo-350">tarflow.iquizoo 3.5.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-350"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-3-5-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-5-0"></a></h3>
+<ul><li>Let pipeline perform raw data parsing and indices calculation on combined raw data from single tasks (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/73" class="external-link">#73</a>).</li>
+<li>Let <code><a href="../reference/prepare_fetch_data.html">prepare_fetch_data()</a></code> signal error when <code>contents</code> contains no data.</li>
+<li>Rename the target <code>contents</code> as <code>contents_origin</code> to avoid possible name conflict with <code>contents</code> input argument. This is a limitation of {targets} package.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-3-5-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-3-5-0"></a></h3>
+<ul><li>Added <code>contents</code> argument in <code><a href="../reference/prepare_fetch_data.html">prepare_fetch_data()</a></code> to support pre-fetched <code>contents</code> as contents configuration. This is useful if you have already fetched the contents data and want to use it directly.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.4.0" id="tarflowiquizoo-340">tarflow.iquizoo 3.4.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-340"></a></h2>
 <div class="section level3">
