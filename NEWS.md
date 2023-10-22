@@ -1,6 +1,8 @@
 # tarflow.iquizoo 3.6.0
 
-* Let `fetch_data()` extract `course_date` automatically.
+## Breaking Changes
+
+* Let `fetch_data()` extract `course_date` automatically. In this way, the `contents` (regardless based on template or feeding directly) does not require the `course_date` column from now on.
 
 # tarflow.iquizoo 3.5.1
 
