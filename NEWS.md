@@ -1,4 +1,6 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.6.2
+
+* Enhance the organization of pkgdown reference.
 
 # tarflow.iquizoo 3.6.1
 
