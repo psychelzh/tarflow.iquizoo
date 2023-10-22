@@ -1,3 +1,5 @@
+# nocov start
+
 #' Create standard data fetching targets pipeline script
 #'
 #' This function creates a standard data fetching targets pipeline script
@@ -29,6 +31,8 @@ use_targets <- function() {
   )
   return(invisible())
 }
+
+# nocov end
 
 #' Prepare targets based on parameters
 #'
@@ -152,6 +156,43 @@ setup_templates <- function(contents = NULL,
 }
 
 # helper functions
+prepare_pipeline_info <- function(contents, templates, check_progress) {
+  targets <- tarchetypes::tar_map(
+    contents |>
+      dplyr::distinct(.data$project_id) |>
+      dplyr::mutate(project_id = as.character(.data$project_id)),
+    list(
+      targets::tar_target_raw(
+        "progress_hash",
+        expr(
+          fetch_iquizoo(
+            !!read_file(templates[["progress_hash"]]),
+            params = list(project_id)
+          )
+        ),
+        cue = targets::tar_cue(if (check_progress) "always")
+      ),
+      targets::tar_target_raw(
+        "users",
+        expr(
+          fetch_iquizoo(
+            !!read_file(templates[["users"]]),
+            params = list(project_id)
+          )
+        )
+      )
+    )
+  )
+  c(
+    targets,
+    tarchetypes::tar_combine(
+      users,
+      targets$users,
+      command = unique(vctrs::vec_c(!!!.x))
+    )
+  )
+}
+
 prepare_pipeline_data <- function(contents, templates,
                                   what, action_raw_data) {
   contents <- contents |>
@@ -180,18 +221,8 @@ prepare_pipeline_data <- function(contents, templates,
             list(),
           .by = .data$game_id
         ) |>
-        dplyr::left_join(data.iquizoo::game_info, by = "game_id") |>
-        dplyr::mutate(
-          game_id = bit64::as.character.integer64(.data$game_id),
-          prep_fun = purrr::map(
-            .data[["prep_fun_name"]],
-            purrr::possibly(sym, NA)
-          ),
-          dplyr::across(
-            dplyr::all_of(c("input", "extra")),
-            parse_exprs
-          )
-        )
+        data.iquizoo::match_preproc() |>
+        dplyr::mutate(game_id = as.character(.data$game_id))
       targets_raw_data_preproc <- tarchetypes::tar_map(
         values = contents_preproc,
         names = game_id,
@@ -209,7 +240,7 @@ prepare_pipeline_data <- function(contents, templates,
           if (action_raw_data %in% "all") {
             targets::tar_target(
               indices,
-              if (!is.na(prep_fun_name)) {
+              if (!is.null(prep_fun)) {
                 preproc_data(
                   raw_data_parsed, prep_fun,
                   .input = input, .extra = extra
@@ -247,10 +278,9 @@ set_pipeline_fetch <- function(contents, templates, what) {
     contents |>
       dplyr::mutate(
         dplyr::across(
-          dplyr::all_of(key_ids),
-          bit64::as.character.integer64
+          dplyr::all_of(c(key_ids, "course_date")),
+          as.character
         ),
-        course_date = as.character(course_date),
         progress_hash = syms(
           paste0("progress_hash_", .data$project_id)
         )
@@ -270,45 +300,6 @@ set_pipeline_fetch <- function(contents, templates, what) {
           )
         })
       )
-    )
-  )
-}
-
-prepare_pipeline_info <- function(contents, templates, check_progress) {
-  targets <- tarchetypes::tar_map(
-    contents |>
-      dplyr::distinct(.data$project_id) |>
-      dplyr::mutate(
-        project_id = bit64::as.character.integer64(.data$project_id)
-      ),
-    list(
-      targets::tar_target_raw(
-        "progress_hash",
-        expr(
-          fetch_iquizoo(
-            !!read_file(templates[["progress_hash"]]),
-            params = list(project_id)
-          )
-        ),
-        cue = targets::tar_cue(if (check_progress) "always")
-      ),
-      targets::tar_target_raw(
-        "users",
-        expr(
-          fetch_iquizoo(
-            !!read_file(templates[["users"]]),
-            params = list(project_id)
-          )
-        )
-      )
-    )
-  )
-  c(
-    targets,
-    tarchetypes::tar_combine(
-      users,
-      targets$users,
-      command = unique(vctrs::vec_c(!!!.x))
     )
   )
 }

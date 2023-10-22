@@ -26,7 +26,7 @@ NULL
   if (any(toset)) options(op_tarflow[toset])
 
   if (!check_source()) {
-    tryCatch(setup_option_file(), error = \(e) {})
+    tryCatch(setup_option_file(quietly = TRUE), error = \(e) {})
   }
 
   # https://stackoverflow.com/a/67664852/5996475

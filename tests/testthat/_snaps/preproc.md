@@ -3,20 +3,20 @@
     {
       "type": "list",
       "attributes": {
-        "class": {
+        "names": {
           "type": "character",
           "attributes": {},
-          "value": ["tbl_df", "tbl", "data.frame"]
+          "value": ["user_id", "index_name", "score"]
         },
         "row.names": {
           "type": "integer",
           "attributes": {},
           "value": [1, 2]
         },
-        "names": {
+        "class": {
           "type": "character",
           "attributes": {},
-          "value": ["user_id", "index_name", "score"]
+          "value": ["tbl_df", "tbl", "data.frame"]
         }
       },
       "value": [

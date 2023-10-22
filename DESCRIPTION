@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquizoo" Data Processing
-Version: 3.5.0
+Version: 3.5.1
 Authors@R: c(
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150")),
@@ -18,9 +18,8 @@ BugReports: https://github.com/psychelzh/tarflow.iquizoo/issues
 Depends:
     R (>= 4.1.0)
 Imports:
-    bit64,
     cli,
-    data.iquizoo (>= 0.3.0),
+    data.iquizoo (>= 2023.10.22),
     DBI,
     dplyr,
     jsonlite,
@@ -35,6 +34,7 @@ Imports:
     utils,
     vctrs
 Suggests:
+    bit64,
     covr,
     lifecycle,
     odbc,

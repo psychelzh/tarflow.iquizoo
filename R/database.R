@@ -13,15 +13,23 @@ fetch_iquizoo <- function(query, ...,
                           source = setup_source()) {
   check_dots_used()
   if (!inherits(source, "tarflow.source")) {
-    cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
+    cli::cli_abort(
+      "{.arg source} must be created by {.fun setup_source}.",
+      class = "tarflow_bad_source"
+    )
   }
   # connect to given database which is pre-configured
   if (!inherits_any(source$driver, c("OdbcDriver", "MariaDBDriver"))) {
-    stop("Driver must be either OdbcDriver or MariaDBDriver.")
+    cli::cli_abort(
+      "Driver must be either OdbcDriver or MariaDBDriver.",
+      class = "tarflow_bad_driver"
+    )
   }
+  # nocov start
   if (inherits(source$driver, "OdbcDriver")) {
     con <- DBI::dbConnect(source$driver, dsn = source$dsn, ...)
   }
+  # nocov end
   if (inherits(source$driver, "MariaDBDriver")) {
     con <- DBI::dbConnect(source$driver, groups = source$groups, ...)
   }
@@ -89,6 +97,32 @@ setup_source <- function(driver = getOption("tarflow.driver"),
   )
 }
 
+#' Check if the database based on the given data source is ready
+#'
+#' @param source The data source from which data is fetched. See
+#'    [setup_source()] for details.
+#' @return TRUE if the database is ready, FALSE otherwise.
+#' @export
+check_source <- function(source = setup_source()) {
+  if (!inherits(source, "tarflow.source")) {
+    cli::cli_abort(
+      "{.arg source} must be created by {.fun setup_source}.",
+      class = "tarflow_bad_source"
+    )
+  }
+  # nocov start
+  if (inherits(source$driver, "OdbcDriver")) {
+    return(DBI::dbCanConnect(source$driver, dsn = source$dsn))
+  }
+  # nocov end
+  if (inherits(source$driver, "MariaDBDriver")) {
+    return(DBI::dbCanConnect(source$driver, groups = source$groups))
+  }
+  return(FALSE)
+}
+
+# nocov start
+
 #' Setup MySQL database connection option file
 #'
 #' This function will create a MySQL option file at the given path. To ensure it
@@ -101,38 +135,22 @@ setup_source <- function(driver = getOption("tarflow.driver"),
 #'   dependent. On Windows, it is `C:/my.cnf`. On other systems, it is
 #'   `~/.my.cnf`.
 #' @param overwrite Whether to overwrite the existing option file.
+#' @param quietly A logical indicates whether message should be suppressed.
 #' @return NULL (invisible).
 #' @export
-setup_option_file <- function(path = NULL, overwrite = FALSE) {
+setup_option_file <- function(path = NULL, overwrite = FALSE, quietly = FALSE) {
   my_cnf_tmpl <- read_file(package_file("database", "my.cnf.tmpl"))
   path <- path %||% default_file()
   if (file.exists(path) && !overwrite) {
-    cli::cli_alert_warning(
-      "Option file already exists. Use {.arg overwrite = TRUE} to overwrite.",
-      class = "tarflow_option_file_exists"
-    )
+    if (!quietly) {
+      cli::cli_alert_warning(
+        "Option file already exists. Use {.arg overwrite = TRUE} to overwrite.",
+        class = "tarflow_option_file_exists"
+      )
+    }
     return(invisible())
   }
   writeLines(stringr::str_glue(my_cnf_tmpl), path)
-}
-
-#' Check if the database based on the given data source is ready
-#'
-#' @param source The data source from which data is fetched. See
-#'    [setup_source()] for details.
-#' @return TRUE if the database is ready, FALSE otherwise.
-#' @export
-check_source <- function(source = setup_source()) {
-  if (!inherits(source, "tarflow.source")) {
-    cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
-  }
-  if (inherits(source$driver, "OdbcDriver")) {
-    return(DBI::dbCanConnect(source$driver, dsn = source$dsn))
-  }
-  if (inherits(source$driver, "MariaDBDriver")) {
-    return(DBI::dbCanConnect(source$driver, groups = source$groups))
-  }
-  return(FALSE)
 }
 
 # helper functions
@@ -143,3 +161,5 @@ default_file <- function() {
     return("~/.my.cnf")
   }
 }
+
+# nocov end
