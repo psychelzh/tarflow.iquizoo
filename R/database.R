@@ -13,15 +13,23 @@ fetch_iquizoo <- function(query, ...,
                           source = setup_source()) {
   check_dots_used()
   if (!inherits(source, "tarflow.source")) {
-    cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
+    cli::cli_abort(
+      "{.arg source} must be created by {.fun setup_source}.",
+      class = "tarflow_bad_source"
+    )
   }
   # connect to given database which is pre-configured
   if (!inherits_any(source$driver, c("OdbcDriver", "MariaDBDriver"))) {
-    stop("Driver must be either OdbcDriver or MariaDBDriver.")
+    cli::cli_abort(
+      "Driver must be either OdbcDriver or MariaDBDriver.",
+      class = "tarflow_bad_driver"
+    )
   }
+  # nocov start
   if (inherits(source$driver, "OdbcDriver")) {
     con <- DBI::dbConnect(source$driver, dsn = source$dsn, ...)
   }
+  # nocov end
   if (inherits(source$driver, "MariaDBDriver")) {
     con <- DBI::dbConnect(source$driver, groups = source$groups, ...)
   }
@@ -97,11 +105,16 @@ setup_source <- function(driver = getOption("tarflow.driver"),
 #' @export
 check_source <- function(source = setup_source()) {
   if (!inherits(source, "tarflow.source")) {
-    cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
+    cli::cli_abort(
+      "{.arg source} must be created by {.fun setup_source}.",
+      class = "tarflow_bad_source"
+    )
   }
+  # nocov start
   if (inherits(source$driver, "OdbcDriver")) {
     return(DBI::dbCanConnect(source$driver, dsn = source$dsn))
   }
+  # nocov end
   if (inherits(source$driver, "MariaDBDriver")) {
     return(DBI::dbCanConnect(source$driver, groups = source$groups))
   }
