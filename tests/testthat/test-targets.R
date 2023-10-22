@@ -9,6 +9,12 @@ test_that("Default templates work", {
     expect_silent()
 })
 
+test_that("Signal error if templates not created correctly", {
+  templates <- list(contents = "myfile")
+  prepare_fetch_data(templates = templates) |>
+    expect_error(class = "tarflow_bad_templates")
+})
+
 test_that("Custom templates work", {
   prepare_fetch_data(
     data.frame(),
