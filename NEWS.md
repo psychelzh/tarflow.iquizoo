@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.6.0
 
 * Let `fetch_data()` extract `course_date` automatically.
 
