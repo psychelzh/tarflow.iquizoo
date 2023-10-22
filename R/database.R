@@ -52,8 +52,8 @@ fetch_data <- function(query, project_id, game_id, ...,
   check_dots_used()
   what <- match.arg(what)
   # the database stores data from each year into a separate table with the
-  # date suffix of format "%Y0101"
-  curse_date <- package_file("sql", "project_course_date.sql") |>
+  # suffix of course date with the format "<year>0101"
+  suffix <- package_file("sql", "project_course_date.sql") |>
     read_file() |>
     fetch_iquizoo(params = project_id) |>
     _[["course_date"]] |>
@@ -63,7 +63,7 @@ fetch_data <- function(query, project_id, game_id, ...,
       raw_data = "content_orginal_data_",
       scores = "content_ability_score_"
     ),
-    curse_date
+    suffix
   )
   fetch_iquizoo(
     stringr::str_glue(

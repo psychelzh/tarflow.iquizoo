@@ -27,7 +27,7 @@ use_targets <- function() {
     return(invisible())
   }
   cli::cli_alert_success(
-    sprintf("File {.file %s} crated successfully.", script)
+    sprintf("File {.file %s} created successfully.", script)
   )
   return(invisible())
 }
@@ -36,9 +36,9 @@ use_targets <- function() {
 
 #' Prepare targets based on parameters
 #'
-#' Given parameters, this target factory prepares a set of target objects used
-#' to fetch data from iQuizoo database, separated into static branches so that
-#' each is for a specific project and task/game combination.
+#' This target factory prepares a set of target objects used to fetch data from
+#' iQuizoo database, separated into static branches so that each is for a
+#' specific project and task/game combination.
 #'
 #' @param params A [data.frame] or [list] contains the parameters to be bound to
 #'   the query. Default templates require specifying `organization_name` and
@@ -46,19 +46,23 @@ use_targets <- function() {
 #'   any parameters, set it as empty vector or `NULL`. If `contents` argument is
 #'   specified, this argument is omitted.
 #' @param ... For future usage. Should be empty.
-#' @param contents The contents used as the configuration of data fetching. This
-#'   is typically automatically fetched from database based on the `contents`
-#'   template from `templates`. If not `NULL`, it will be used directly and
-#'   ignore that specified in `templates`. Note `contents` should at least
+#' @param contents The contents structure used as the configuration of data
+#'   fetching. It is typically automatically fetched from database based on the
+#'   `contents` template in `templates`. If not `NULL`, it will be used directly
+#'   and ignore that specified in `templates`. Note `contents` should at least
 #'   contains `project_id` and `game_id` names.
-#' @param what What to fetch. If set as "all", both raw data and scores will be
-#'   fetched. If set as "raw_data", only raw data will be fetched. If set as
-#'   "scores", only scores will be fetched. Further actions on the fetched raw
-#'   data can be specified by `action_raw_data`.
-#' @param action_raw_data The action to be taken on the fetched raw data. If set
-#'   as "all", both wrangling and pre-processing will be done. If set as
-#'   "parse", only wrangling will be done. If set as "none", neither will be
-#'   done. If `what` is "scores", this argument will be ignored.
+#' @param what What to fetch. There are basically two types of data, i.e., raw
+#'   data and scores. The former is the logged raw data for each trial of the
+#'   tasks/games, while the latter is the scores calculated by iQuizoo server.
+#'   If set as "all", both raw data and scores will be fetched. Further actions
+#'   on the fetched raw data can be specified by `action_raw_data`.
+#' @param action_raw_data The action to be taken on the fetched raw data. There
+#'   are two consecutive actions, i.e., wrangling and pre-processing. The former
+#'   will parse the raw data into a tidy format, while the latter will calculate
+#'   indices based on the parsed data. If set as "all", both wrangling and
+#'   pre-processing will be done. If set as "parse", only wrangling will be
+#'   done. If set as "none", neither will be done. If `what` is "scores", this
+#'   argument will be ignored.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
 #' @param check_progress Whether to check the progress hash. Set it as `FALSE`
