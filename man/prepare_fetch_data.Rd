@@ -23,21 +23,25 @@ specified, this argument is omitted.}
 
 \item{...}{For future usage. Should be empty.}
 
-\item{contents}{The contents used as the configuration of data fetching. This
-is typically automatically fetched from database based on the \code{contents}
-template from \code{templates}. If not \code{NULL}, it will be used directly and
-ignore that specified in \code{templates}. Note \code{contents} should at least
+\item{contents}{The contents structure used as the configuration of data
+fetching. It is typically automatically fetched from database based on the
+\code{contents} template in \code{templates}. If not \code{NULL}, it will be used directly
+and ignore that specified in \code{templates}. Note \code{contents} should at least
 contains \code{project_id} and \code{game_id} names.}
 
-\item{what}{What to fetch. If set as "all", both raw data and scores will be
-fetched. If set as "raw_data", only raw data will be fetched. If set as
-"scores", only scores will be fetched. Further actions on the fetched raw
-data can be specified by \code{action_raw_data}.}
+\item{what}{What to fetch. There are basically two types of data, i.e., raw
+data and scores. The former is the logged raw data for each trial of the
+tasks/games, while the latter is the scores calculated by iQuizoo server.
+If set as "all", both raw data and scores will be fetched. Further actions
+on the fetched raw data can be specified by \code{action_raw_data}.}
 
-\item{action_raw_data}{The action to be taken on the fetched raw data. If set
-as "all", both wrangling and pre-processing will be done. If set as
-"parse", only wrangling will be done. If set as "none", neither will be
-done. If \code{what} is "scores", this argument will be ignored.}
+\item{action_raw_data}{The action to be taken on the fetched raw data. There
+are two consecutive actions, i.e., wrangling and pre-processing. The former
+will parse the raw data into a tidy format, while the latter will calculate
+indices based on the parsed data. If set as "all", both wrangling and
+pre-processing will be done. If set as "parse", only wrangling will be
+done. If set as "none", neither will be done. If \code{what} is "scores", this
+argument will be ignored.}
 
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}
@@ -49,7 +53,7 @@ if the project is finalized.}
 A list of target objects.
 }
 \description{
-Given parameters, this target factory prepares a set of target objects used
-to fetch data from iQuizoo database, separated into static branches so that
-each is for a specific project and task/game combination.
+This target factory prepares a set of target objects used to fetch data from
+iQuizoo database, separated into static branches so that each is for a
+specific project and task/game combination.
 }
