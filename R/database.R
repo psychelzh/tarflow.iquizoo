@@ -101,16 +101,19 @@ setup_source <- function(driver = getOption("tarflow.driver"),
 #'   dependent. On Windows, it is `C:/my.cnf`. On other systems, it is
 #'   `~/.my.cnf`.
 #' @param overwrite Whether to overwrite the existing option file.
+#' @param quietly A logical indicates whether message should be suppressed.
 #' @return NULL (invisible).
 #' @export
-setup_option_file <- function(path = NULL, overwrite = FALSE) {
+setup_option_file <- function(path = NULL, overwrite = FALSE, quietly = FALSE) {
   my_cnf_tmpl <- read_file(package_file("database", "my.cnf.tmpl"))
   path <- path %||% default_file()
   if (file.exists(path) && !overwrite) {
-    cli::cli_alert_warning(
-      "Option file already exists. Use {.arg overwrite = TRUE} to overwrite.",
-      class = "tarflow_option_file_exists"
-    )
+    if (!quietly) {
+      cli::cli_alert_warning(
+        "Option file already exists. Use {.arg overwrite = TRUE} to overwrite.",
+        class = "tarflow_option_file_exists"
+      )
+    }
     return(invisible())
   }
   writeLines(stringr::str_glue(my_cnf_tmpl), path)

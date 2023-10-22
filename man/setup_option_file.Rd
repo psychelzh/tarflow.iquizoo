@@ -4,7 +4,7 @@
 \alias{setup_option_file}
 \title{Setup MySQL database connection option file}
 \usage{
-setup_option_file(path = NULL, overwrite = FALSE)
+setup_option_file(path = NULL, overwrite = FALSE, quietly = FALSE)
 }
 \arguments{
 \item{path}{The path to the option file. Default location is operating system
@@ -12,6 +12,8 @@ dependent. On Windows, it is \verb{C:/my.cnf}. On other systems, it is
 \verb{~/.my.cnf}.}
 
 \item{overwrite}{Whether to overwrite the existing option file.}
+
+\item{quietly}{A logical indicates whether message should be suppressed.}
 }
 \value{
 NULL (invisible).
