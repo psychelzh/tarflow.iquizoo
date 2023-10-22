@@ -34,11 +34,12 @@ use_targets <- function() {
 
 # nocov end
 
-#' Prepare targets based on parameters
+#' Generate a set of targets for pre-processing of iQuizoo data
 #'
 #' This target factory prepares a set of target objects used to fetch data from
 #' iQuizoo database, separated into static branches so that each is for a
-#' specific project and task/game combination.
+#' specific project and task/game combination. Further pre-processing on the
+#' fetched data can also be added if requested.
 #'
 #' @param params A [data.frame] or [list] contains the parameters to be bound to
 #'   the query. Default templates require specifying `organization_name` and
@@ -69,12 +70,12 @@ use_targets <- function() {
 #'   if the project is finalized.
 #' @return A list of target objects.
 #' @export
-prepare_fetch_data <- function(params, ...,
-                               contents = NULL,
-                               what = c("all", "raw_data", "scores"),
-                               action_raw_data = c("all", "parse", "none"),
-                               templates = setup_templates(),
-                               check_progress = TRUE) {
+tar_prep_iquizoo <- function(params, ...,
+                             contents = NULL,
+                             what = c("all", "raw_data", "scores"),
+                             action_raw_data = c("all", "parse", "none"),
+                             templates = setup_templates(),
+                             check_progress = TRUE) {
   check_dots_empty()
   if (!inherits(templates, "tarflow.template")) {
     cli::cli_abort(
@@ -99,24 +100,22 @@ prepare_fetch_data <- function(params, ...,
       class = "tarflow_bad_contents"
     )
   }
-  projects_info <- prepare_pipeline_info(
-    contents,
-    templates,
-    check_progress
-  )
-  projects_data <- prepare_pipeline_data(
-    contents,
-    templates,
-    what,
-    action_raw_data
-  )
   list(
     targets::tar_target_raw(
       "contents_origin",
       expr(unserialize(!!serialize(contents, NULL)))
     ),
-    projects_info,
-    projects_data
+    tar_projects_info(
+      contents,
+      templates,
+      check_progress
+    ),
+    tar_projects_data(
+      contents,
+      templates,
+      what,
+      action_raw_data
+    )
   )
 }
 
@@ -160,7 +159,7 @@ setup_templates <- function(contents = NULL,
 }
 
 # helper functions
-prepare_pipeline_info <- function(contents, templates, check_progress) {
+tar_projects_info <- function(contents, templates, check_progress) {
   targets <- tarchetypes::tar_map(
     contents |>
       dplyr::distinct(.data$project_id) |>
@@ -174,6 +173,7 @@ prepare_pipeline_info <- function(contents, templates, check_progress) {
             params = list(project_id)
           )
         ),
+        packages = "tarflow.iquizoo",
         cue = targets::tar_cue(if (check_progress) "always")
       ),
       targets::tar_target_raw(
@@ -183,7 +183,8 @@ prepare_pipeline_info <- function(contents, templates, check_progress) {
             !!read_file(templates[["users"]]),
             params = list(project_id)
           )
-        )
+        ),
+        packages = "tarflow.iquizoo"
       )
     )
   )
@@ -197,13 +198,12 @@ prepare_pipeline_info <- function(contents, templates, check_progress) {
   )
 }
 
-prepare_pipeline_data <- function(contents, templates,
-                                  what, action_raw_data) {
+tar_projects_data <- function(contents, templates, what, action_raw_data) {
   contents <- contents |>
     dplyr::distinct(.data$project_id, .data$game_id)
   targets_fetch <- lapply(
     what,
-    set_pipeline_fetch,
+    tar_fetch_data,
     contents = contents,
     templates = templates
   )
@@ -238,7 +238,8 @@ prepare_pipeline_data <- function(contents, templates,
           if (action_raw_data %in% c("all", "parse")) {
             targets::tar_target(
               raw_data_parsed,
-              wrangle_data(raw_data)
+              wrangle_data(raw_data),
+              packages = "tarflow.iquizoo"
             )
           },
           if (action_raw_data %in% "all") {
@@ -249,7 +250,8 @@ prepare_pipeline_data <- function(contents, templates,
                   raw_data_parsed, prep_fun,
                   .input = input, .extra = extra
                 )
-              }
+              },
+              packages = c("tarflow.iquizoo", "preproc.iquizoo")
             )
           }
         )
@@ -276,7 +278,7 @@ prepare_pipeline_data <- function(contents, templates,
   )
 }
 
-set_pipeline_fetch <- function(contents, templates, what) {
+tar_fetch_data <- function(contents, templates, what) {
   key_ids <- c("project_id", "game_id")
   tarchetypes::tar_map(
     contents |>
@@ -301,7 +303,8 @@ set_pipeline_fetch <- function(contents, templates, what) {
             game_id,
             what = !!what
           )
-        })
+        }),
+        packages = "tarflow.iquizoo"
       )
     )
   )

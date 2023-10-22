@@ -6,7 +6,7 @@ reference:
   desc: "A collection of functions to help you build targets."
   contents:
   - use_targets
-  - prepare_fetch_data
+  - tar_prep_iquizoo
 - title: "Functions Used for Actions on Raw-data"
   desc: >
     Data parsing and pre-processing. Typically used in combination with

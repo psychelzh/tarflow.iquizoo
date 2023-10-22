@@ -9,8 +9,8 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tarflow.iquizoo", "preproc.iquizoo"), # packages that your targets need to run
-  imports = "preproc.iquizoo", # comment out this if only "scores" are required
+  # packages = "base", # uncomment this if you want to use more packages
+  # imports = "preproc.iquizoo", # uncomment this if indices will be calculated
   # format = "qs", # Optionally set the default storage format. qs is fast.
   #
   # For distributed computing in tar_make(), supply a {crew} controller
@@ -35,8 +35,9 @@ params <- tibble::tribble(
 
 # Replace the target list below with your own:
 list(
-  tarflow.iquizoo::prepare_fetch_data(
+  tarflow.iquizoo::tar_prep_iquizoo(
     params,
+    # contents = NULL, # uncomment this if you want to use custom contents
     what = "all", # change to "scores" or "raw_data" if you want to
     action_raw_data = "all", # change to "parse" or "none" if you want to
     # For advanced usage, set custom templates by uncommenting next line
