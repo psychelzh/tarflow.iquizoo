@@ -1,5 +1,7 @@
 # tarflow.iquizoo 3.6.2
 
+* Enhance the organization of pkgdown reference.
+
 # tarflow.iquizoo 3.6.1
 
 * Enhanced documentations for `prepare_fetch_data()`.
