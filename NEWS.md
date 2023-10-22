@@ -1,5 +1,7 @@
 # tarflow.iquizoo 3.7.1
 
+* Fix a compatibility issue with R 4.2.0 which was introduced since 3.6.0.
+
 # tarflow.iquizoo 3.7.0
 
 ## Breaking Changes
