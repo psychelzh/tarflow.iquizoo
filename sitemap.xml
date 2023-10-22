@@ -31,9 +31,6 @@
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/prepare_fetch_data.html</loc>
-  </url>
-  <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/preproc_data.html</loc>
   </url>
   <url>
@@ -46,7 +43,10 @@
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/setup_templates.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/use_targets.html</loc>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_iquizoo.html</loc>
+  </url>
+  <url>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/use_targets_template.html</loc>
   </url>
   <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/wrangle_data.html</loc>

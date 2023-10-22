@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,12 +45,20 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.7.0" id="tarflowiquizoo-370">tarflow.iquizoo 3.7.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-370"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-3-7-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-7-0"></a></h3>
+<ul><li>Renamed <code>use_targets()</code> as <code>use_targets_template</code> to avoid name masking with <code><a href="https://docs.ropensci.org/targets/reference/use_targets.html" class="external-link">targets::use_targets()</a></code>.</li>
+<li>Renamed <code>prepare_fetch_data()</code> as <code><a href="../reference/tar_prep_iquizoo.html">tar_prep_iquizoo()</a></code> to obey the name convention of targets factory.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.6.2" id="tarflowiquizoo-362">tarflow.iquizoo 3.6.2<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-362"></a></h2>
 <ul><li>Enhance the organization of pkgdown reference.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.6.1" id="tarflowiquizoo-361">tarflow.iquizoo 3.6.1<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-361"></a></h2>
-<ul><li>Enhanced documentations for <code><a href="../reference/prepare_fetch_data.html">prepare_fetch_data()</a></code>.</li>
+<ul><li>Enhanced documentations for <code>prepare_fetch_data()</code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.6.0" id="tarflowiquizoo-360">tarflow.iquizoo 3.6.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-360"></a></h2>
@@ -70,19 +78,19 @@
 <div class="section level3">
 <h3 id="breaking-changes-3-5-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-5-0"></a></h3>
 <ul><li>Let pipeline perform raw data parsing and indices calculation on combined raw data from single tasks (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/73" class="external-link">#73</a>).</li>
-<li>Let <code><a href="../reference/prepare_fetch_data.html">prepare_fetch_data()</a></code> signal error when <code>contents</code> contains no data.</li>
+<li>Let <code>prepare_fetch_data()</code> signal error when <code>contents</code> contains no data.</li>
 <li>Rename the target <code>contents</code> as <code>contents_origin</code> to avoid possible name conflict with <code>contents</code> input argument. This is a limitation of {targets} package.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-3-5-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-3-5-0"></a></h3>
-<ul><li>Added <code>contents</code> argument in <code><a href="../reference/prepare_fetch_data.html">prepare_fetch_data()</a></code> to support pre-fetched <code>contents</code> as contents configuration. This is useful if you have already fetched the contents data and want to use it directly.</li>
+<ul><li>Added <code>contents</code> argument in <code>prepare_fetch_data()</code> to support pre-fetched <code>contents</code> as contents configuration. This is useful if you have already fetched the contents data and want to use it directly.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.4.0" id="tarflowiquizoo-340">tarflow.iquizoo 3.4.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-340"></a></h2>
 <div class="section level3">
 <h3 id="new-features-3-4-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-3-4-0"></a></h3>
-<ul><li>Support <code>action_raw_data</code> argument in <code><a href="../reference/prepare_fetch_data.html">prepare_fetch_data()</a></code> to specify the action of raw data. This is useful when you want only the parsed raw data and not the indices, e.g., <code>action_raw_data = "parse"</code> will not perform indices calculation.</li>
+<ul><li>Support <code>action_raw_data</code> argument in <code>prepare_fetch_data()</code> to specify the action of raw data. This is useful when you want only the parsed raw data and not the indices, e.g., <code>action_raw_data = "parse"</code> will not perform indices calculation.</li>
 <li>Added <code>raw_data_parsed</code> targets combination and removed <code>raw_data</code> targets combination, which should be a potential bug for the unparsed <code>raw_data</code> targets combination is not really the intent.</li>
 </ul></div>
 </div>
@@ -133,7 +141,7 @@
 <div class="section level3">
 <h3 id="improvements-3-2-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-3-2-0"></a></h3>
 <ul><li>Enhanced progress hash.
-<ul><li>The name is changed from <code>project_hash</code> to <code>progress_hash</code>, which is more informative. So the argument <code>always_check_hash</code> of <code><a href="../reference/prepare_fetch_data.html">prepare_fetch_data()</a></code> is changed to <code>check_progress</code> accordingly.</li>
+<ul><li>The name is changed from <code>project_hash</code> to <code>progress_hash</code>, which is more informative. So the argument <code>always_check_hash</code> of <code>prepare_fetch_data()</code> is changed to <code>check_progress</code> accordingly.</li>
 <li>Now if there are multiple projects, the hash will be separated for each project.</li>
 <li>The SQL now is independent of the user’s parameters (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/67" class="external-link">#67</a>).</li>
 </ul></li>
@@ -157,7 +165,7 @@
 <h3 id="new-features-3-1-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-3-1-0"></a></h3>
 <ul><li>Support specify <code>dsn</code> and <code>groups</code> in options by <code>tarflow.dsn</code> and <code>tarflow.groups</code> respectively. This is useful when default values are not suitable for you.</li>
 <li>Added project users to pipeline.</li>
-<li>Added support for auto-check whether the projects data are up-to-date. This turned on by default, and you can turn it off by setting <code>always_check_hash</code> to <code>FALSE</code> in <code><a href="../reference/use_targets.html">use_targets()</a></code>.</li>
+<li>Added support for auto-check whether the projects data are up-to-date. This turned on by default, and you can turn it off by setting <code>always_check_hash</code> to <code>FALSE</code> in <code>use_targets()</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-3-1-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-1-0"></a></h3>
@@ -180,7 +188,7 @@
 <h2 class="pkg-version" data-toc-text="3.0.0" id="tarflowiquizoo-300">tarflow.iquizoo 3.0.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-300"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-3-0-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-0"></a></h3>
-<ul><li>Supported the new database design of IQUIZOO. Now the Rmarkdown templates were removed, and users should call <code><a href="../reference/use_targets.html">tarflow.iquizoo::use_targets()</a></code> to generate the pipeline.</li>
+<ul><li>Supported the new database design of IQUIZOO. Now the Rmarkdown templates were removed, and users should call <code>tarflow.iquizoo::use_targets()</code> to generate the pipeline.</li>
 <li>Limited the parameters settings to only <code>course_name</code> and <code>course_period</code> for now. Other parameters will be added in future.</li>
 <li>Added <code>game_stage</code> and <code>game_star</code> to scores data (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/29" class="external-link">#29</a>).</li>
 </ul></div>
@@ -472,7 +480,7 @@
 <h2 class="pkg-version" data-toc-text="0.0.2" id="tarflowiquizoo-002">tarflow.iquizoo 0.0.2<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-002"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-0-2">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-2"></a></h3>
-<ul><li>New feature is introduced with a huge change that <code><a href="../reference/use_targets.html">use_targets()</a></code> has been removed. And <code>init()</code> is used to replace it. With this function, we can define many other schemas. Maybe in future, the logic should be modified to better handle schemas.</li>
+<ul><li>New feature is introduced with a huge change that <code>use_targets()</code> has been removed. And <code>init()</code> is used to replace it. With this function, we can define many other schemas. Maybe in future, the logic should be modified to better handle schemas.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -483,9 +491,9 @@
 <li>Support more types of <code>config_where</code> in <code>fetch_from_v3()</code>. Besides the <code>list</code> type, now you can specify a <code>data.frame</code> type and even a <code>character</code> type of <code>config_where</code>. This is most helpful when <code>config_where</code> is generated not by <code>yaml</code> config, but by R code directly.</li>
 <li>Rename <code>fetch_from_v3()</code> as <code>fetch()</code>, and the API is now <code>fetch(query_file, config_where, dsn)</code>. That is to say, you can now pass the data source name of your database to it.</li>
 <li>Export S3 method <code>compose_where()</code>, which originally was named as <code>compose_where_clause()</code>.</li>
-<li>Support new argument <code>separate</code> in <code><a href="../reference/use_targets.html">use_targets()</a></code> to optionally separate fetching into branches by games.</li>
-<li>Support new argument <code>ignore_tar</code> in <code><a href="../reference/use_targets.html">use_targets()</a></code> to optionally ignore internal data from targets package in version control system (i.e., “.gitignore”).</li>
-<li>Now <code><a href="../reference/use_targets.html">use_targets()</a></code> will skip “config.yml” file silently if there already exists one.</li>
+<li>Support new argument <code>separate</code> in <code>use_targets()</code> to optionally separate fetching into branches by games.</li>
+<li>Support new argument <code>ignore_tar</code> in <code>use_targets()</code> to optionally ignore internal data from targets package in version control system (i.e., “.gitignore”).</li>
+<li>Now <code>use_targets()</code> will skip “config.yml” file silently if there already exists one.</li>
 <li>Moved internal data named <code>game_info</code> to “dataproc.iquizoo (&gt;= 0.2.6)” package.</li>
 </ul></div>
     <div class="section level2">
