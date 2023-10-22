@@ -89,6 +89,27 @@ setup_source <- function(driver = getOption("tarflow.driver"),
   )
 }
 
+#' Check if the database based on the given data source is ready
+#'
+#' @param source The data source from which data is fetched. See
+#'    [setup_source()] for details.
+#' @return TRUE if the database is ready, FALSE otherwise.
+#' @export
+check_source <- function(source = setup_source()) {
+  if (!inherits(source, "tarflow.source")) {
+    cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
+  }
+  if (inherits(source$driver, "OdbcDriver")) {
+    return(DBI::dbCanConnect(source$driver, dsn = source$dsn))
+  }
+  if (inherits(source$driver, "MariaDBDriver")) {
+    return(DBI::dbCanConnect(source$driver, groups = source$groups))
+  }
+  return(FALSE)
+}
+
+# nocov start
+
 #' Setup MySQL database connection option file
 #'
 #' This function will create a MySQL option file at the given path. To ensure it
@@ -119,25 +140,6 @@ setup_option_file <- function(path = NULL, overwrite = FALSE, quietly = FALSE) {
   writeLines(stringr::str_glue(my_cnf_tmpl), path)
 }
 
-#' Check if the database based on the given data source is ready
-#'
-#' @param source The data source from which data is fetched. See
-#'    [setup_source()] for details.
-#' @return TRUE if the database is ready, FALSE otherwise.
-#' @export
-check_source <- function(source = setup_source()) {
-  if (!inherits(source, "tarflow.source")) {
-    cli::cli_abort("{.arg source} must be created by {.fun setup_source}.")
-  }
-  if (inherits(source$driver, "OdbcDriver")) {
-    return(DBI::dbCanConnect(source$driver, dsn = source$dsn))
-  }
-  if (inherits(source$driver, "MariaDBDriver")) {
-    return(DBI::dbCanConnect(source$driver, groups = source$groups))
-  }
-  return(FALSE)
-}
-
 # helper functions
 default_file <- function() {
   if (Sys.info()["sysname"] == "Windows") {
@@ -146,3 +148,5 @@ default_file <- function() {
     return("~/.my.cnf")
   }
 }
+
+# nocov end

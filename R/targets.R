@@ -1,3 +1,5 @@
+# nocov start
+
 #' Create standard data fetching targets pipeline script
 #'
 #' This function creates a standard data fetching targets pipeline script
@@ -29,6 +31,8 @@ use_targets <- function() {
   )
   return(invisible())
 }
+
+# nocov end
 
 #' Prepare targets based on parameters
 #'
