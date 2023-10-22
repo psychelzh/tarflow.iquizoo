@@ -6,7 +6,6 @@ SELECT
     c.Id course_id,
     c.Name course_name,
     c.Period course_period,
-    c.CreateTime course_date,
     c2.Id game_id,
     c2.ContentType game_type
 FROM

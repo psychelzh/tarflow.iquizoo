@@ -1,5 +1,7 @@
 # tarflow.iquizoo (development version)
 
+* Let `fetch_data()` extract `course_date` automatically.
+
 # tarflow.iquizoo 3.5.1
 
 * Use `data.iquizoo::match_preproc()`.

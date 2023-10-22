@@ -27,7 +27,7 @@ specified, this argument is omitted.}
 is typically automatically fetched from database based on the \code{contents}
 template from \code{templates}. If not \code{NULL}, it will be used directly and
 ignore that specified in \code{templates}. Note \code{contents} should at least
-contains \code{project_id}, \code{game_id} and \code{course_date} names.}
+contains \code{project_id} and \code{game_id} names.}
 
 \item{what}{What to fetch. If set as "all", both raw data and scores will be
 fetched. If set as "raw_data", only raw data will be fetched. If set as

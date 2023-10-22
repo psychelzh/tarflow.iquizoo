@@ -50,7 +50,7 @@ use_targets <- function() {
 #'   is typically automatically fetched from database based on the `contents`
 #'   template from `templates`. If not `NULL`, it will be used directly and
 #'   ignore that specified in `templates`. Note `contents` should at least
-#'   contains `project_id`, `game_id` and `course_date` names.
+#'   contains `project_id` and `game_id` names.
 #' @param what What to fetch. If set as "all", both raw data and scores will be
 #'   fetched. If set as "raw_data", only raw data will be fetched. If set as
 #'   "scores", only scores will be fetched. Further actions on the fetched raw
@@ -123,10 +123,10 @@ prepare_fetch_data <- function(params, ...,
 #' be parameterized.
 #'
 #' @param contents The SQL template file used to fetch contents. At least
-#'   `project_id`, `game_id` and `course_date` should be included in the fetched
-#'   data based on the template. `project_id` will be used as the only parameter
-#'   in `users` and `project` templates, while all three will be used in
-#'   `raw_data` and `scores` templates.
+#'   `project_id` and `game_id` columns should be included in the fetched data
+#'   based on the template. `project_id` will be used as the only parameter in
+#'   `users` and `project` templates, while all three will be used in `raw_data`
+#'   and `scores` templates.
 #' @param users The SQL template file used to fetch users. Usually you don't
 #'   need to change this.
 #' @param raw_data The SQL template file used to fetch raw data. See
@@ -196,7 +196,7 @@ prepare_pipeline_info <- function(contents, templates, check_progress) {
 prepare_pipeline_data <- function(contents, templates,
                                   what, action_raw_data) {
   contents <- contents |>
-    dplyr::distinct(.data$project_id, .data$game_id, .data$course_date)
+    dplyr::distinct(.data$project_id, .data$game_id)
   targets_fetch <- lapply(
     what,
     set_pipeline_fetch,
@@ -219,7 +219,7 @@ prepare_pipeline_data <- function(contents, templates,
           ) |>
             syms() |>
             list(),
-          .by = .data$game_id
+          .by = "game_id"
         ) |>
         data.iquizoo::match_preproc() |>
         dplyr::mutate(game_id = as.character(.data$game_id))
@@ -278,14 +278,14 @@ set_pipeline_fetch <- function(contents, templates, what) {
     contents |>
       dplyr::mutate(
         dplyr::across(
-          dplyr::all_of(c(key_ids, "course_date")),
+          dplyr::all_of(key_ids),
           as.character
         ),
         progress_hash = syms(
-          paste0("progress_hash_", .data$project_id)
+          stringr::str_glue("progress_hash_{project_id}")
         )
       ),
-    names = key_ids,
+    names = dplyr::all_of(key_ids),
     list(
       targets::tar_target_raw(
         what,
@@ -295,7 +295,6 @@ set_pipeline_fetch <- function(contents, templates, what) {
             !!read_file(templates[[what]]),
             project_id,
             game_id,
-            course_date,
             what = !!what
           )
         })
@@ -307,7 +306,7 @@ set_pipeline_fetch <- function(contents, templates, what) {
 utils::globalVariables(
   c(
     "scores", "raw_data", "tar_raw_data", "raw_data_parsed", "indices",
-    "progress_hash", "project_id", "game_id", "course_date",
+    "progress_hash", "project_id", "game_id",
     "prep_fun_name", "prep_fun", "input", "extra", "users", ".x"
   )
 )
