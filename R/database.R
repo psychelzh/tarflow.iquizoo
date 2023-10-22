@@ -56,7 +56,7 @@ fetch_data <- function(query, project_id, game_id, ...,
   suffix <- package_file("sql", "project_course_date.sql") |>
     read_file() |>
     fetch_iquizoo(params = project_id) |>
-    _[["course_date"]] |>
+    .subset2("course_date") |>
     format("%Y0101")
   table_name <- paste0(
     switch(what,
