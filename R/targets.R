@@ -156,9 +156,7 @@ prepare_pipeline_info <- function(contents, templates, check_progress) {
   targets <- tarchetypes::tar_map(
     contents |>
       dplyr::distinct(.data$project_id) |>
-      dplyr::mutate(
-        project_id = bit64::as.character.integer64(.data$project_id)
-      ),
+      dplyr::mutate(project_id = as.character(.data$project_id)),
     list(
       targets::tar_target_raw(
         "progress_hash",
@@ -220,9 +218,7 @@ prepare_pipeline_data <- function(contents, templates,
           .by = .data$game_id
         ) |>
         data.iquizoo::match_preproc() |>
-        dplyr::mutate(
-          game_id = bit64::as.character.integer64(.data$game_id)
-        )
+        dplyr::mutate(game_id = as.character(.data$game_id))
       targets_raw_data_preproc <- tarchetypes::tar_map(
         values = contents_preproc,
         names = game_id,
@@ -278,10 +274,9 @@ set_pipeline_fetch <- function(contents, templates, what) {
     contents |>
       dplyr::mutate(
         dplyr::across(
-          dplyr::all_of(key_ids),
-          bit64::as.character.integer64
+          dplyr::all_of(c(key_ids, "course_date")),
+          as.character
         ),
-        course_date = as.character(course_date),
         progress_hash = syms(
           paste0("progress_hash_", .data$project_id)
         )
