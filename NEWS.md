@@ -1,11 +1,13 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.6.0
 
-* Let `fetch_data()` extract `course_date` automatically.
+## Breaking Changes
+
+* Let `fetch_data()` extract `course_date` automatically. In this way, the `contents` (regardless based on template or feeding directly) does not require the `course_date` column from now on.
 
 # tarflow.iquizoo 3.5.1
 
 * Use `data.iquizoo::match_preproc()`.
-* Added `quietly` argument to `setup_option_file()`, so now messages are supressed when loading package.
+* Added `quietly` argument to `setup_option_file()`, so now messages are suppressed when loading package.
 * Added more test cases against database settings. Note test cases do not cover odbc driver for now.
 
 # tarflow.iquizoo 3.5.0
@@ -29,7 +31,7 @@
 
 # tarflow.iquizoo 3.3.4
 
-* Fix a roundtrip issue, see [this isue](https://github.com/truecluster/bit64/issues/27) from {bit64} package.
+* Fix a roundtrip issue, see [this issue](https://github.com/truecluster/bit64/issues/27) from {bit64} package.
 
 # tarflow.iquizoo 3.3.3
 

@@ -51,6 +51,8 @@ fetch_data <- function(query, project_id, game_id, ...,
                        what = c("raw_data", "scores")) {
   check_dots_used()
   what <- match.arg(what)
+  # the database stores data from each year into a separate table with the
+  # date suffix of format "%Y0101"
   curse_date <- package_file("sql", "project_course_date.sql") |>
     read_file() |>
     fetch_iquizoo(params = project_id) |>
