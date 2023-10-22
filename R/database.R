@@ -43,28 +43,32 @@ fetch_iquizoo <- function(query, ...,
 #'   a `glue` expression to inject the table name, i.e., `"{ table_name }"`.
 #' @param project_id The project id to be bound to the query.
 #' @param game_id The game id to be bound to the query.
-#' @param course_date The course date. This parameter is used to determine the
-#'    table name, not to be bound to the query.
 #' @param ... Further arguments passed to [fetch_iquizoo()].
 #' @param what What to fetch. Can be either "raw_data" or "scores".
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_data <- function(query, project_id, game_id, course_date, ...,
+fetch_data <- function(query, project_id, game_id, ...,
                        what = c("raw_data", "scores")) {
   check_dots_used()
   what <- match.arg(what)
+  # the database stores data from each year into a separate table with the
+  # date suffix of format "%Y0101"
+  curse_date <- package_file("sql", "project_course_date.sql") |>
+    read_file() |>
+    fetch_iquizoo(params = project_id) |>
+    _[["course_date"]] |>
+    format("%Y0101")
+  table_name <- paste0(
+    switch(what,
+      raw_data = "content_orginal_data_",
+      scores = "content_ability_score_"
+    ),
+    curse_date
+  )
   fetch_iquizoo(
     stringr::str_glue(
       query,
-      .envir = env(
-        table_name = paste0(
-          switch(what,
-            raw_data = "content_orginal_data_",
-            scores = "content_ability_score_"
-          ),
-          format(as.POSIXct(course_date), "%Y0101")
-        )
-      )
+      .envir = env(table_name = table_name)
     ),
     ...,
     params = list(project_id, game_id)

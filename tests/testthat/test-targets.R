@@ -30,8 +30,7 @@ test_that("Support `data.frame` contents", {
   prepare_fetch_data(
     contents = data.frame(
       project_id = bit64::as.integer64(599627356946501),
-      game_id = bit64::as.integer64(581943246745925),
-      course_date = "2023-08-02 14:55:23"
+      game_id = bit64::as.integer64(581943246745925)
     )
   ) |>
     expect_targets_list() |>

@@ -54,5 +54,5 @@ This simplest way to use this package is to call
 `tarflow.iquizoo::use_targets()` to generate a
 {[targets](https://docs.ropensci.org/targets/)} pipeline. After some
 basic parameters edit (follow the generated script), then you can run
-the pipeline by exectuting `targets::tar_make()` in R console. The
+the pipeline by executing `targets::tar_make()` in R console. The
 pipeline will be executed in parallel by default.
