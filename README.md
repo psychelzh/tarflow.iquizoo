@@ -51,7 +51,7 @@ install.packages("tarflow.iquizoo", repos = c(options("repos"), "https://psychel
 ## Usage
 
 This simplest way to use this package is to call
-`tarflow.iquizoo::use_targets()` to generate a
+`tarflow.iquizoo::use_targets_template()` to generate a
 {[targets](https://docs.ropensci.org/targets/)} pipeline. After some
 basic parameters edit (follow the generated script), then you can run
 the pipeline by executing `targets::tar_make()` in R console. The

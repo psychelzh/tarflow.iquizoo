@@ -1,3 +1,10 @@
+# tarflow.iquizoo 3.7.0
+
+## Breaking Changes
+
+* Renamed `use_targets()` as `use_targets_template()` to avoid name masking with `targets::use_targets()`.
+* Renamed `prepare_fetch_data()` as `tar_prep_iquizoo()` to obey the name convention of targets factory.
+
 # tarflow.iquizoo 3.6.2
 
 * Enhance the organization of pkgdown reference.
