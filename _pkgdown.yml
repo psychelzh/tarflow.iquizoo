@@ -5,7 +5,7 @@ reference:
 - title: "Targets Factory Related Functions"
   desc: "A collection of functions to help you build targets."
   contents:
-  - use_targets
+  - use_targets_template
   - tar_prep_iquizoo
 - title: "Functions Used for Actions on Raw-data"
   desc: >

@@ -7,7 +7,7 @@
 #'
 #' @return NULL (invisible). This function is called for its side effects.
 #' @export
-use_targets <- function() {
+use_targets_template <- function() {
   script <- "_targets.R"
   if (file.exists(script)) {
     cli::cli_alert_info(
