@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.5.1
 
 * Use `data.iquizoo::match_preproc()`.
 * Added `quietly` argument to `setup_option_file()`, so now messages are supressed when loading package.
