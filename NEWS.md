@@ -1,5 +1,7 @@
 # tarflow.iquizoo (development version)
 
+* Use `data.iquizoo::match_preproc()`.
+
 # tarflow.iquizoo 3.5.0
 
 ## Breaking Changes
