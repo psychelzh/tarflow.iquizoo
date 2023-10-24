@@ -1,5 +1,13 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Renamed `use_targets_template()` as `use_targets_pipeline()`. Although arbitary, `"pipeline"` is a little more accurate than `"template"`.
+
+## Misc
+
+* Used Apache License 2.0 instead of MIT License now.
+
 # tarflow.iquizoo 3.7.1
 
 * Fix a compatibility issue with R 4.2.0 which was introduced since 3.6.0.
