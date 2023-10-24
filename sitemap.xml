@@ -4,9 +4,6 @@
     <loc>https://psychelzh.github.io/tarflow.iquizoo/404.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/LICENSE-text.html</loc>
-  </url>
-  <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/LICENSE.html</loc>
   </url>
   <url>
@@ -46,7 +43,7 @@
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_iquizoo.html</loc>
   </url>
   <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/use_targets_template.html</loc>
+    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/use_targets_pipeline.html</loc>
   </url>
   <url>
     <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/wrangle_data.html</loc>
