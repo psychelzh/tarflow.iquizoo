@@ -214,65 +214,9 @@ tar_projects_data <- function(contents, templates, what, action_raw_data) {
         targets_fetch[[which(what == "scores")]]$scores
       )
     },
-    if ("raw_data" %in% what) {
-      contents_preproc <- contents |>
-        dplyr::summarise(
-          tar_raw_data = stringr::str_glue(
-            "raw_data_{project_id}_{game_id}"
-          ) |>
-            syms() |>
-            list(),
-          .by = "game_id"
-        ) |>
-        data.iquizoo::match_preproc() |>
-        dplyr::mutate(game_id = as.character(.data$game_id))
-      targets_raw_data_preproc <- tarchetypes::tar_map(
-        values = contents_preproc,
-        names = game_id,
-        list(
-          targets::tar_target(
-            raw_data,
-            dplyr::bind_rows(tar_raw_data)
-          ),
-          if (action_raw_data %in% c("all", "parse")) {
-            targets::tar_target(
-              raw_data_parsed,
-              wrangle_data(raw_data),
-              packages = "tarflow.iquizoo"
-            )
-          },
-          if (action_raw_data %in% "all") {
-            targets::tar_target(
-              indices,
-              if (!is.null(prep_fun)) {
-                preproc_data(
-                  raw_data_parsed, prep_fun,
-                  .input = input, .extra = extra
-                )
-              },
-              packages = c("tarflow.iquizoo", "preproc.iquizoo")
-            )
-          }
-        )
-      )
-      targets_raw_data_combine <- c(
-        if (action_raw_data %in% c("all", "parse")) {
-          tarchetypes::tar_combine(
-            raw_data_parsed,
-            targets_raw_data_preproc$raw_data_parsed
-          )
-        },
-        if (action_raw_data %in% c("all")) {
-          tarchetypes::tar_combine(
-            indices,
-            targets_raw_data_preproc$indices
-          )
-        }
-      )
-      c(
-        targets_raw_data_preproc,
-        targets_raw_data_combine
-      )
+    if ("raw_data" %in% what && action_raw_data != "none") {
+      if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
+      tar_action_raw_data(contents, action_raw_data)
     }
   )
 }
@@ -306,6 +250,82 @@ tar_fetch_data <- function(contents, templates, what) {
         packages = "tarflow.iquizoo"
       )
     )
+  )
+}
+
+tar_action_raw_data <- function(contents,
+                                action_raw_data = c("parse", "preproc"),
+                                name_data = "raw_data",
+                                name_parsed = "raw_data_parsed",
+                                name_indices = "indices",
+                                add_combine_pre = TRUE,
+                                add_combine_post = TRUE) {
+  action_raw_data <- match.arg(action_raw_data, several.ok = TRUE)
+  if (add_combine_pre) {
+    stopifnot(
+      "`project_id` is required when adding combine step" =
+        utils::hasName(contents, "project_id")
+    )
+    contents <- contents |>
+      dplyr::summarise(
+        tar_raw_data = stringr::str_glue(
+          "raw_data_{project_id}_{game_id}"
+        ) |>
+          syms() |>
+          list(),
+        .by = "game_id"
+      )
+  }
+  contents <- contents |>
+    data.iquizoo::match_preproc() |>
+    dplyr::mutate(game_id = as.character(.data$game_id))
+  targets <- tarchetypes::tar_map(
+    values = contents,
+    names = game_id,
+    list(
+      if (add_combine_pre) {
+        targets::tar_target_raw(
+          name_data,
+          expr(dplyr::bind_rows(tar_raw_data))
+        )
+      },
+      if ("parse" %in% action_raw_data) {
+        targets::tar_target_raw(
+          name_parsed,
+          expr(wrangle_data(!!ensym(name_data))),
+          packages = "tarflow.iquizoo"
+        )
+      },
+      if ("preproc" %in% action_raw_data) {
+        targets::tar_target_raw(
+          name_indices,
+          expr(
+            if (!is.null(prep_fun)) {
+              preproc_data(
+                !!ensym(name_parsed), prep_fun,
+                .input = input, .extra = extra
+              )
+            }
+          ),
+          packages = c("tarflow.iquizoo", "preproc.iquizoo")
+        )
+      }
+    )
+  )
+  c(
+    targets,
+    if (add_combine_post && "parse" %in% action_raw_data) {
+      tarchetypes::tar_combine_raw(
+        name_parsed,
+        targets[[name_parsed]]
+      )
+    },
+    if (add_combine_post && "preproc" %in% action_raw_data) {
+      tarchetypes::tar_combine_raw(
+        name_indices,
+        targets[[name_indices]]
+      )
+    }
   )
 }
 
