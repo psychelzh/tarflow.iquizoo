@@ -275,11 +275,10 @@ tar_action_raw_data <- function(contents,
         .by = "game_id"
       )
   }
-  contents <- contents |>
-    data.iquizoo::match_preproc() |>
-    dplyr::mutate(game_id = as.character(.data$game_id))
   targets <- tarchetypes::tar_map(
-    values = contents,
+    values = contents |>
+      data.iquizoo::match_preproc() |>
+      dplyr::mutate(game_id = as.character(.data$game_id)),
     names = game_id,
     list(
       if (add_combine_pre) {
