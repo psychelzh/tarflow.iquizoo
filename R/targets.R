@@ -214,8 +214,7 @@ tar_projects_data <- function(contents, templates, what, action_raw_data) {
         targets_fetch[[which(what == "scores")]]$scores
       )
     },
-    if ("raw_data" %in% what && action_raw_data != "none") {
-      if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
+    if ("raw_data" %in% what) {
       tar_action_raw_data(contents, action_raw_data)
     }
   )
@@ -254,13 +253,13 @@ tar_fetch_data <- function(contents, templates, what) {
 }
 
 tar_action_raw_data <- function(contents,
-                                action_raw_data = c("parse", "preproc"),
+                                action_raw_data,
                                 name_data = "raw_data",
                                 name_parsed = "raw_data_parsed",
                                 name_indices = "indices",
                                 add_combine_pre = TRUE,
                                 add_combine_post = TRUE) {
-  action_raw_data <- match.arg(action_raw_data, several.ok = TRUE)
+  if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
   if (add_combine_pre) {
     stopifnot(
       "`project_id` is required when adding combine step" =
