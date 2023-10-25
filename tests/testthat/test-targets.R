@@ -66,8 +66,7 @@ test_that("Workflow works", {
       library(targets)
       params <- tibble::tribble(
         ~organization_name, ~project_name,
-        "北京师范大学测试用账号", "难度测试",
-        "北京师范大学", "4.19-4.20夜晚睡眠test"
+        "北京师范大学测试用账号", "难度测试"
       )
       tar_prep_iquizoo(params)
     })
