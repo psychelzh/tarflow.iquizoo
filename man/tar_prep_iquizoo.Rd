@@ -8,7 +8,7 @@ tar_prep_iquizoo(
   params,
   ...,
   contents = NULL,
-  what = c("all", "raw_data", "scores"),
+  what = c("raw_data", "scores"),
   action_raw_data = c("all", "parse", "none"),
   templates = setup_templates(),
   check_progress = TRUE

@@ -72,7 +72,7 @@ use_targets_pipeline <- function() {
 #' @export
 tar_prep_iquizoo <- function(params, ...,
                              contents = NULL,
-                             what = c("all", "raw_data", "scores"),
+                             what = c("raw_data", "scores"),
                              action_raw_data = c("all", "parse", "none"),
                              templates = setup_templates(),
                              check_progress = TRUE) {
@@ -83,8 +83,7 @@ tar_prep_iquizoo <- function(params, ...,
       class = "tarflow_bad_templates"
     )
   }
-  what <- match.arg(what)
-  if (what == "all") what <- c("raw_data", "scores")
+  what <- match.arg(what, several.ok = TRUE)
   action_raw_data <- match.arg(action_raw_data)
   if (is.null(contents)) {
     contents <- fetch_iquizoo_mem(

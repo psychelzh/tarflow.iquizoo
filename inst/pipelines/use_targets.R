@@ -38,7 +38,7 @@ list(
   tarflow.iquizoo::tar_prep_iquizoo(
     params,
     # contents = NULL, # uncomment this if you want to use custom contents
-    what = "all", # change to "scores" or "raw_data" if you want to
+    what = c("raw_data", "scores"), # change to "scores" or "raw_data" if you want to
     action_raw_data = "all", # change to "parse" or "none" if you want to
     # For advanced usage, set custom templates by uncommenting next line
     #  templates = tarflow.iquizoo::setup_templates(),

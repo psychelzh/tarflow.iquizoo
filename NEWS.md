@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## Improvements
+
+* Remove `"all"` option from `what` argument. Specify multiple values if you want to fetch multiple types of data.
+
 # tarflow.iquizoo 3.7.2
 
 ## Breaking Changes
