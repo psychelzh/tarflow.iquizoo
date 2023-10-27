@@ -36,6 +36,7 @@ Imports:
 Suggests:
     bit64,
     covr,
+    digest,
     lifecycle,
     odbc,
     preproc.iquizoo (>= 2.4.0),
