@@ -1,4 +1,4 @@
-# Created by tarflow.iquizoo::use_targets().
+# Created by tarflow.iquizoo::use_targets_pipeline().
 # Follow the comments below to fill in this target script.
 # Then follow the manual to check and run the pipeline:
 #   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
@@ -38,7 +38,7 @@ list(
   tarflow.iquizoo::tar_prep_iquizoo(
     params,
     # contents = NULL, # uncomment this if you want to use custom contents
-    what = "all", # change to "scores" or "raw_data" if you want to
+    what = c("raw_data", "scores"), # change to "scores" or "raw_data" if you want to
     action_raw_data = "all", # change to "parse" or "none" if you want to
     # For advanced usage, set custom templates by uncommenting next line
     #  templates = tarflow.iquizoo::setup_templates(),

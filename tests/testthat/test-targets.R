@@ -66,8 +66,7 @@ test_that("Workflow works", {
       library(targets)
       params <- tibble::tribble(
         ~organization_name, ~project_name,
-        "北京师范大学测试用账号", "难度测试",
-        "北京师范大学", "4.19-4.20夜晚睡眠test"
+        "北京师范大学测试用账号", "难度测试"
       )
       tar_prep_iquizoo(params)
     })
@@ -97,6 +96,29 @@ test_that("Serialize check (no roundtrip error)", {
             "四川省双流棠湖中学高中部", "棠湖中学英才计划测训体验账号"
           )
         ))
+      )
+    )
+  })
+})
+
+test_that("Ensure `action_raw_data = 'none'` work properly", {
+  targets::tar_dir({
+    targets::tar_script({
+      library(targets)
+      library(tarflow.iquizoo)
+      params <- tibble::tribble(
+        ~organization_name, ~project_name,
+        "北京师范大学测试用账号", "难度测试"
+      )
+      tar_prep_iquizoo(params, what = "raw_data", action_raw_data = "none")
+    })
+    expect_contains(
+      targets::tar_manifest()$name,
+      c(
+        "raw_data_386196539900677",
+        "raw_data_375916542735109",
+        "raw_data_381576542159749",
+        "raw_data_380173961339781"
       )
     )
   })
