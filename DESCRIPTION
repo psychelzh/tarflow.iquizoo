@@ -40,15 +40,14 @@ Suggests:
     lifecycle,
     odbc,
     preproc.iquizoo (>= 2.4.0),
-    RMariaDB (>= 1.2.2.9010),
+    RMariaDB (>= 1.3.1),
     roxygen2,
     testthat (>= 3.0.0),
     tibble,
     withr
 Remotes:
     psychelzh/data.iquizoo,
-    psychelzh/preproc.iquizoo,
-    r-dbi/RMariaDB
+    psychelzh/preproc.iquizoo
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
