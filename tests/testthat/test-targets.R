@@ -123,3 +123,19 @@ test_that("Ensure `action_raw_data = 'none'` work properly", {
     )
   })
 })
+
+test_that("Ensure project date is used", {
+  targets::tar_dir({
+    targets::tar_script({
+      library(targets)
+      library(tarflow.iquizoo)
+      params <- tibble::tribble(
+        ~organization_name, ~project_name,
+        "北京师范大学测试用账号", "专注度-基础"
+      )
+      tar_prep_iquizoo(params, what = "scores")
+    })
+    targets::tar_make(reporter = "silent", callr_function = NULL)
+    nrow(targets::tar_read(scores)) |> expect_gt(0)
+  })
+})

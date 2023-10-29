@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## Bug fixes
+
+* Fix a bug in `fetch_data()` because the data table name in the database is actually based on the project creation time.
+
 # tarflow.iquizoo 3.7.3
 
 ## Improvements

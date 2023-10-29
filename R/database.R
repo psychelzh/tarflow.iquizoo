@@ -53,10 +53,10 @@ fetch_data <- function(query, project_id, game_id, ...,
   what <- match.arg(what)
   # the database stores data from each year into a separate table with the
   # suffix of course date with the format "<year>0101"
-  suffix <- package_file("sql", "project_course_date.sql") |>
+  suffix <- package_file("sql", "project_date.sql") |>
     read_file() |>
     fetch_iquizoo(params = project_id) |>
-    .subset2("course_date") |>
+    .subset2("project_date") |>
     format("%Y0101")
   table_name <- paste0(
     switch(what,
