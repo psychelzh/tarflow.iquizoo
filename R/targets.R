@@ -338,8 +338,8 @@ tar_action_raw_data <- function(contents,
 
 utils::globalVariables(
   c(
-    "scores", "raw_data", "tar_raw_data", "raw_data_parsed", "indices",
+    "scores", "tar_raw_data", "tar_parsed",
     "progress_hash", "project_id", "game_id",
-    "prep_fun_name", "prep_fun", "input", "extra", "users", ".x"
+    "prep_fun", "input", "extra", "users", ".x"
   )
 )
