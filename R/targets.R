@@ -275,40 +275,49 @@ tar_action_raw_data <- function(contents,
         .by = "game_id"
       )
   }
-  targets <- tarchetypes::tar_map(
-    values = contents |>
-      data.iquizoo::match_preproc() |>
-      dplyr::mutate(game_id = as.character(.data$game_id)),
-    names = game_id,
-    list(
-      if (add_combine_pre) {
-        targets::tar_target_raw(
-          name_data,
-          expr(dplyr::bind_rows(tar_raw_data))
-        )
-      },
-      if ("parse" %in% action_raw_data) {
-        targets::tar_target_raw(
-          name_parsed,
-          expr(wrangle_data(!!ensym(name_data))),
-          packages = "tarflow.iquizoo"
-        )
-      },
-      if ("preproc" %in% action_raw_data) {
+  config_preproc <- contents |>
+    data.iquizoo::match_preproc() |>
+    dplyr::mutate(game_id = as.character(.data$game_id))
+  targets <- c(
+    tarchetypes::tar_map(
+      values = config_preproc,
+      names = game_id,
+      list(
+        if (add_combine_pre) {
+          targets::tar_target_raw(
+            name_data,
+            expr(dplyr::bind_rows(tar_raw_data))
+          )
+        },
+        if ("parse" %in% action_raw_data) {
+          targets::tar_target_raw(
+            name_parsed,
+            expr(wrangle_data(!!ensym(name_data))),
+            packages = "tarflow.iquizoo"
+          )
+        }
+      )
+    ),
+    if ("preproc" %in% action_raw_data) {
+      tarchetypes::tar_map(
+        values = config_preproc |>
+          dplyr::filter(!purrr::map_lgl(.data$prep_fun, is.null)) |>
+          dplyr::mutate(
+            tar_parsed = syms(stringr::str_glue("{name_parsed}_{game_id}"))
+          ),
+        names = game_id,
         targets::tar_target_raw(
           name_indices,
           expr(
-            if (!is.null(prep_fun)) {
-              preproc_data(
-                !!ensym(name_parsed), prep_fun,
-                .input = input, .extra = extra
-              )
-            }
+            preproc_data(
+              tar_parsed, prep_fun,
+              .input = input, .extra = extra
+            )
           ),
           packages = c("tarflow.iquizoo", "preproc.iquizoo")
         )
-      }
-    )
+      )
+    }
   )
   c(
     targets,
