@@ -268,7 +268,7 @@ tar_action_raw_data <- function(contents,
     contents <- contents |>
       dplyr::summarise(
         tar_raw_data = stringr::str_glue(
-          "raw_data_{project_id}_{game_id}"
+          "{name_data}_{project_id}_{game_id}"
         ) |>
           syms() |>
           list(),
