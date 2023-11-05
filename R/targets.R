@@ -163,28 +163,26 @@ tar_projects_info <- function(contents, templates, check_progress) {
     contents |>
       dplyr::distinct(.data$project_id) |>
       dplyr::mutate(project_id = as.character(.data$project_id)),
-    list(
-      targets::tar_target_raw(
-        "progress_hash",
-        expr(
-          fetch_iquizoo(
-            !!read_file(templates[["progress_hash"]]),
-            params = list(project_id)
-          )
-        ),
-        packages = "tarflow.iquizoo",
-        cue = targets::tar_cue(if (check_progress) "always")
+    targets::tar_target_raw(
+      "progress_hash",
+      expr(
+        fetch_iquizoo(
+          !!read_file(templates[["progress_hash"]]),
+          params = list(project_id)
+        )
       ),
-      targets::tar_target_raw(
-        "users",
-        expr(
-          fetch_iquizoo(
-            !!read_file(templates[["users"]]),
-            params = list(project_id)
-          )
-        ),
-        packages = "tarflow.iquizoo"
-      )
+      packages = "tarflow.iquizoo",
+      cue = targets::tar_cue(if (check_progress) "always")
+    ),
+    targets::tar_target_raw(
+      "users",
+      expr(
+        fetch_iquizoo(
+          !!read_file(templates[["users"]]),
+          params = list(project_id)
+        )
+      ),
+      packages = "tarflow.iquizoo"
     )
   )
   c(
@@ -234,20 +232,18 @@ tar_fetch_data <- function(contents, templates, what) {
         )
       ),
     names = dplyr::all_of(key_ids),
-    list(
-      targets::tar_target_raw(
-        what,
-        expr({
-          progress_hash
-          fetch_data(
-            !!read_file(templates[[what]]),
-            project_id,
-            game_id,
-            what = !!what
-          )
-        }),
-        packages = "tarflow.iquizoo"
-      )
+    targets::tar_target_raw(
+      what,
+      expr({
+        progress_hash
+        fetch_data(
+          !!read_file(templates[[what]]),
+          project_id,
+          game_id,
+          what = !!what
+        )
+      }),
+      packages = "tarflow.iquizoo"
     )
   )
 }
@@ -280,21 +276,19 @@ tar_action_raw_data <- function(contents,
       values = contents |>
         dplyr::mutate(game_id = as.character(.data$game_id)),
       names = game_id,
-      list(
-        if (add_combine_pre) {
-          targets::tar_target_raw(
-            name_data,
-            expr(dplyr::bind_rows(tar_raw_data))
-          )
-        },
-        if ("parse" %in% action_raw_data) {
-          targets::tar_target_raw(
-            name_parsed,
-            expr(wrangle_data(!!ensym(name_data))),
-            packages = "tarflow.iquizoo"
-          )
-        }
-      )
+      if (add_combine_pre) {
+        targets::tar_target_raw(
+          name_data,
+          expr(dplyr::bind_rows(tar_raw_data))
+        )
+      },
+      if ("parse" %in% action_raw_data) {
+        targets::tar_target_raw(
+          name_parsed,
+          expr(wrangle_data(!!ensym(name_data))),
+          packages = "tarflow.iquizoo"
+        )
+      }
     ),
     if ("preproc" %in% action_raw_data) {
       tarchetypes::tar_map(
