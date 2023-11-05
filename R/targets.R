@@ -29,7 +29,7 @@
 #'   done. If set as "none", neither will be done. If `what` is "scores", this
 #'   argument will be ignored.
 #' @param combine Specify which targets to be combined. Note you should only
-#'   specify names from `c("users", "scores", "raw_data", "raw_data_parsed",
+#'   specify names from `c("scores", "raw_data", "raw_data_parsed",
 #'   "indices")`. If `NULL`, none will be combined.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
@@ -147,28 +147,31 @@ setup_templates <- function(contents = NULL,
 
 # helper functions
 tar_projects_info <- function(contents, templates, check_progress) {
-  tarchetypes::tar_map(
-    contents |>
-      dplyr::distinct(.data$project_id) |>
-      dplyr::mutate(project_id = as.character(.data$project_id)),
-    targets::tar_target_raw(
-      "progress_hash",
-      expr(
-        fetch_iquizoo(
-          !!read_file(templates[["progress_hash"]]),
-          params = list(project_id)
-        )
-      ),
-      packages = "tarflow.iquizoo",
-      cue = targets::tar_cue(if (check_progress) "always")
+  c(
+    tarchetypes::tar_map(
+      contents |>
+        dplyr::distinct(.data$project_id) |>
+        dplyr::mutate(project_id = as.character(.data$project_id)),
+      targets::tar_target_raw(
+        "progress_hash",
+        expr(
+          fetch_iquizoo(
+            !!read_file(templates[["progress_hash"]]),
+            params = list(project_id)
+          )
+        ),
+        packages = "tarflow.iquizoo",
+        cue = targets::tar_cue(if (check_progress) "always")
+      )
     ),
     targets::tar_target_raw(
       "users",
       expr(
         fetch_iquizoo(
           !!read_file(templates[["users"]]),
-          params = list(project_id)
-        )
+          params = list(!!unique(contents$project_id))
+        ) |>
+          unique()
       ),
       packages = "tarflow.iquizoo"
     )
@@ -178,27 +181,29 @@ tar_projects_info <- function(contents, templates, check_progress) {
 tar_fetch_data <- function(contents, templates, what) {
   tarchetypes::tar_map(
     contents |>
+      dplyr::distinct(.data$project_id, .data$game_id) |>
+      dplyr::mutate(
+        dplyr::across(c("project_id", "game_id"), as.character)
+      ) |>
       dplyr::summarise(
-        game_id_chr = unique(as.character(.data$game_id)),
-        project_id_list = list(as.character(.data$project_id)),
-        game_id_list = list(as.character(.data$game_id)),
-        progress_hash_list = list(
+        project_id = list(.data$project_id),
+        progress_hash = list(
           syms(
             stringr::str_glue("progress_hash_{project_id}")
           )
         ),
         .by = "game_id"
       ),
-    names = "game_id_chr",
+    names = "game_id",
     targets::tar_target_raw(
       what,
       expr({
-        progress_hash_list
+        progress_hash
         purrr::pmap(
           list(
             query = !!read_file(templates[[what]]),
-            project_id = project_id_list,
-            game_id = game_id_list,
+            project_id = project_id,
+            game_id = game_id,
             what = !!what
           ),
           fetch_data
@@ -216,6 +221,7 @@ tar_action_raw_data <- function(contents,
                                 name_parsed = "raw_data_parsed",
                                 name_indices = "indices") {
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
+  contents <- dplyr::distinct(contents, .data$game_id)
   c(
     tarchetypes::tar_map(
       values = contents |>
@@ -259,15 +265,13 @@ tar_action_raw_data <- function(contents,
 }
 
 objects <- function() {
-  c("users", "scores", "raw_data", "raw_data_parsed", "indices")
+  c("scores", "raw_data", "raw_data_parsed", "indices")
 }
 
 utils::globalVariables(
   c(
     "tar_raw_data", "tar_parsed",
-    "progress_hash", "progress_hash_list",
-    "project_id", "project_id_list",
-    "game_id", "game_id_list",
+    "progress_hash", "project_id", "game_id",
     "prep_fun", "input", "extra", "users", ".x"
   )
 )
