@@ -78,11 +78,7 @@ tar_prep_iquizoo <- function(params, ...,
       "contents_origin",
       expr(unserialize(!!serialize(contents, NULL)))
     ),
-    tar_projects_info(
-      contents,
-      templates,
-      check_progress
-    ),
+    tar_projects_info(contents, templates, check_progress),
     purrr::map(
       what,
       \(what) tar_fetch_data(contents, templates, what)
