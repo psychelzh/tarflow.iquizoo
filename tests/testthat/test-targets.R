@@ -137,7 +137,7 @@ test_that("Ensure project date is used", {
         ~organization_name, ~project_name,
         "北京师范大学测试用账号", "专注度-基础"
       )
-      tar_prep_iquizoo(params, what = "scores")
+      tar_prep_iquizoo(params, what = "scores", combine = "scores")
     })
     targets::tar_make(reporter = "silent", callr_function = NULL)
     nrow(targets::tar_read(scores)) |> expect_gt(0)
