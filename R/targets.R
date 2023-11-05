@@ -275,12 +275,10 @@ tar_action_raw_data <- function(contents,
         .by = "game_id"
       )
   }
-  config_preproc <- contents |>
-    data.iquizoo::match_preproc() |>
-    dplyr::mutate(game_id = as.character(.data$game_id))
   targets <- c(
     tarchetypes::tar_map(
-      values = config_preproc,
+      values = contents |>
+        dplyr::mutate(game_id = as.character(.data$game_id)),
       names = game_id,
       list(
         if (add_combine_pre) {
@@ -300,9 +298,10 @@ tar_action_raw_data <- function(contents,
     ),
     if ("preproc" %in% action_raw_data) {
       tarchetypes::tar_map(
-        values = config_preproc |>
-          dplyr::filter(!purrr::map_lgl(.data$prep_fun, is.null)) |>
+        values = contents |>
+          data.iquizoo::match_preproc(type = "inner") |>
           dplyr::mutate(
+            game_id = as.character(.data$game_id),
             tar_parsed = syms(stringr::str_glue("{name_parsed}_{game_id}"))
           ),
         names = game_id,
