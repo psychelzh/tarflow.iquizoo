@@ -73,7 +73,7 @@ tar_prep_iquizoo <- function(params, ...,
       class = "tarflow_bad_contents"
     )
   }
-  targets <- list(
+  targets <- c(
     targets::tar_target_raw(
       "contents_origin",
       expr(unserialize(!!serialize(contents, NULL)))
@@ -83,12 +83,15 @@ tar_prep_iquizoo <- function(params, ...,
       templates,
       check_progress
     ),
-    lapply(what, \(what) tar_fetch_data(contents, templates, what)),
+    purrr::map(
+      what,
+      \(what) tar_fetch_data(contents, templates, what)
+    ) |>
+      purrr::list_flatten(),
     if ("raw_data" %in% what && action_raw_data != "none") {
       tar_action_raw_data(contents, action_raw_data)
     }
-  ) |>
-    purrr::list_flatten()
+  )
   c(
     targets,
     lapply(
