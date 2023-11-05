@@ -45,7 +45,7 @@ done. If set as "none", neither will be done. If \code{what} is "scores", this
 argument will be ignored.}
 
 \item{combine}{Specify which targets to be combined. Note you should only
-specify names from \code{c("users", "scores", "raw_data", "raw_data_parsed", "indices")}. If \code{NULL}, all targets from branches will be combined.}
+specify names from \code{c("users", "scores", "raw_data", "raw_data_parsed", "indices")}. If \code{NULL}, none will be combined.}
 
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}

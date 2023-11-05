@@ -30,7 +30,7 @@
 #'   argument will be ignored.
 #' @param combine Specify which targets to be combined. Note you should only
 #'   specify names from `c("users", "scores", "raw_data", "raw_data_parsed",
-#'   "indices")`. If `NULL`, all targets from branches will be combined.
+#'   "indices")`. If `NULL`, none will be combined.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
 #' @param check_progress Whether to check the progress hash. Set it as `FALSE`
@@ -53,15 +53,11 @@ tar_prep_iquizoo <- function(params, ...,
   }
   what <- match.arg(what, several.ok = TRUE)
   action_raw_data <- match.arg(action_raw_data)
-  if (is.null(combine)) {
-    combine <- objects()
-  } else {
-    if (!all(combine %in% objects())) {
-      cli::cli_abort(
-        "{.arg combine} must be a subset of {vctrs::vec_c({objects()})}.",
-        class = "tarflow_bad_combine"
-      )
-    }
+  if (!is.null(combine) && !all(combine %in% objects())) {
+    cli::cli_abort(
+      "{.arg combine} must be a subset of {vctrs::vec_c({objects()})}.",
+      class = "tarflow_bad_combine"
+    )
   }
   if (is.null(contents)) {
     contents <- fetch_iquizoo_mem(
@@ -196,7 +192,7 @@ tar_fetch_data <- function(contents, templates, what, combine) {
         game_id_chr = unique(as.character(.data$game_id)),
         project_id_list = list(as.character(.data$project_id)),
         game_id_list = list(as.character(.data$game_id)),
-        project_hash_list = list(
+        progress_hash_list = list(
           syms(
             stringr::str_glue("progress_hash_{project_id}")
           )
@@ -207,7 +203,7 @@ tar_fetch_data <- function(contents, templates, what, combine) {
     targets::tar_target_raw(
       what,
       expr({
-        project_hash_list
+        progress_hash_list
         purrr::pmap(
           list(
             query = !!read_file(templates[[what]]),
@@ -304,8 +300,10 @@ objects <- function() {
 
 utils::globalVariables(
   c(
-    "scores", "tar_raw_data", "tar_parsed",
-    "progress_hash", "project_id", "game_id",
+    "tar_raw_data", "tar_parsed",
+    "progress_hash", "progress_hash_list",
+    "project_id", "project_id_list",
+    "game_id", "game_id_list",
     "prep_fun", "input", "extra", "users", ".x"
   )
 )
