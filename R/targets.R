@@ -178,6 +178,7 @@ tar_projects_info <- function(contents, templates, check_progress) {
 tar_fetch_data <- function(contents, templates, what) {
   tarchetypes::tar_map(
     contents |>
+      dplyr::distinct(.data$project_id, .data$game_id) |>
       dplyr::summarise(
         game_id_chr = unique(as.character(.data$game_id)),
         project_id_list = list(as.character(.data$project_id)),
@@ -216,6 +217,7 @@ tar_action_raw_data <- function(contents,
                                 name_parsed = "raw_data_parsed",
                                 name_indices = "indices") {
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
+  contents <- dplyr::distinct(contents, .data$game_id)
   c(
     tarchetypes::tar_map(
       values = contents |>
