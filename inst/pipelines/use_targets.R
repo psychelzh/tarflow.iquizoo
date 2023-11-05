@@ -40,7 +40,7 @@ list(
     # contents = NULL, # uncomment this if you want to use custom contents
     what = c("raw_data", "scores"), # change to "scores" or "raw_data" if you want to
     action_raw_data = "all", # change to "parse" or "none" if you want to
-    combine = "users", # change to the names you want to combine
+    combine = NULL, # change to the names you want to combine
     # For advanced usage, set custom templates by uncommenting next line
     #  templates = tarflow.iquizoo::setup_templates(),
     check_progress = TRUE # set as `FALSE` if projects finalized

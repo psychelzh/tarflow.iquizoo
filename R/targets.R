@@ -29,7 +29,7 @@
 #'   done. If set as "none", neither will be done. If `what` is "scores", this
 #'   argument will be ignored.
 #' @param combine Specify which targets to be combined. Note you should only
-#'   specify names from `c("users", "scores", "raw_data", "raw_data_parsed",
+#'   specify names from `c("scores", "raw_data", "raw_data_parsed",
 #'   "indices")`. If `NULL`, none will be combined.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
@@ -147,28 +147,31 @@ setup_templates <- function(contents = NULL,
 
 # helper functions
 tar_projects_info <- function(contents, templates, check_progress) {
-  tarchetypes::tar_map(
-    contents |>
-      dplyr::distinct(.data$project_id) |>
-      dplyr::mutate(project_id = as.character(.data$project_id)),
-    targets::tar_target_raw(
-      "progress_hash",
-      expr(
-        fetch_iquizoo(
-          !!read_file(templates[["progress_hash"]]),
-          params = list(project_id)
-        )
-      ),
-      packages = "tarflow.iquizoo",
-      cue = targets::tar_cue(if (check_progress) "always")
+  c(
+    tarchetypes::tar_map(
+      contents |>
+        dplyr::distinct(.data$project_id) |>
+        dplyr::mutate(project_id = as.character(.data$project_id)),
+      targets::tar_target_raw(
+        "progress_hash",
+        expr(
+          fetch_iquizoo(
+            !!read_file(templates[["progress_hash"]]),
+            params = list(project_id)
+          )
+        ),
+        packages = "tarflow.iquizoo",
+        cue = targets::tar_cue(if (check_progress) "always")
+      )
     ),
     targets::tar_target_raw(
       "users",
       expr(
         fetch_iquizoo(
           !!read_file(templates[["users"]]),
-          params = list(project_id)
-        )
+          params = list(!!unique(contents$project_id))
+        ) |>
+          unique()
       ),
       packages = "tarflow.iquizoo"
     )
@@ -261,7 +264,7 @@ tar_action_raw_data <- function(contents,
 }
 
 objects <- function() {
-  c("users", "scores", "raw_data", "raw_data_parsed", "indices")
+  c("scores", "raw_data", "raw_data_parsed", "indices")
 }
 
 utils::globalVariables(
