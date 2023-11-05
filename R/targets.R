@@ -182,27 +182,28 @@ tar_fetch_data <- function(contents, templates, what) {
   tarchetypes::tar_map(
     contents |>
       dplyr::distinct(.data$project_id, .data$game_id) |>
+      dplyr::mutate(
+        dplyr::across(c("project_id", "game_id"), as.character)
+      ) |>
       dplyr::summarise(
-        game_id_chr = unique(as.character(.data$game_id)),
-        project_id_list = list(as.character(.data$project_id)),
-        game_id_list = list(as.character(.data$game_id)),
-        progress_hash_list = list(
+        project_id = list(.data$project_id),
+        progress_hash = list(
           syms(
             stringr::str_glue("progress_hash_{project_id}")
           )
         ),
         .by = "game_id"
       ),
-    names = "game_id_chr",
+    names = "game_id",
     targets::tar_target_raw(
       what,
       expr({
-        progress_hash_list
+        progress_hash
         purrr::pmap(
           list(
             query = !!read_file(templates[[what]]),
-            project_id = project_id_list,
-            game_id = game_id_list,
+            project_id = project_id,
+            game_id = game_id,
             what = !!what
           ),
           fetch_data
@@ -270,9 +271,7 @@ objects <- function() {
 utils::globalVariables(
   c(
     "tar_raw_data", "tar_parsed",
-    "progress_hash", "progress_hash_list",
-    "project_id", "project_id_list",
-    "game_id", "game_id_list",
+    "progress_hash", "project_id", "game_id",
     "prep_fun", "input", "extra", "users", ".x"
   )
 )
