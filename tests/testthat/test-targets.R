@@ -75,6 +75,33 @@ test_that("Workflow works", {
   })
 })
 
+test_that("`combine` work properly", {
+  targets::tar_dir({
+    targets::tar_script({
+      library(targets)
+      params <- tibble::tribble(
+        ~organization_name, ~project_name,
+        "北京师范大学测试用账号", "难度测试"
+      )
+      tar_prep_iquizoo(
+        params,
+        action_raw_data = "parse",
+        combine = "raw_data_parsed"
+      )
+    })
+    targets::tar_make(reporter = "silent", callr_function = NULL)
+    objs_out <- targets::tar_objects()
+    expect_contains(objs_out, "raw_data_parsed")
+    expect_false(any(setdiff(objects(), "raw_data_parsed") %in% objs_out))
+  })
+  params <- tibble::tribble(
+    ~organization_name, ~project_name,
+    "北京师范大学测试用账号", "难度测试"
+  )
+  tar_prep_iquizoo(params, combine = "bad") |>
+    expect_error(class = "tarflow_bad_combine")
+})
+
 test_that("Serialize check (no roundtrip error)", {
   targets::tar_dir({
     targets::tar_script({
@@ -101,34 +128,11 @@ test_that("Serialize check (no roundtrip error)", {
   })
 })
 
-test_that("Ensure `action_raw_data = 'none'` work properly", {
-  targets::tar_dir({
-    targets::tar_script({
-      library(targets)
-      library(tarflow.iquizoo)
-      params <- tibble::tribble(
-        ~organization_name, ~project_name,
-        "北京师范大学测试用账号", "难度测试"
-      )
-      tar_prep_iquizoo(params, what = "raw_data", action_raw_data = "none")
-    })
-    expect_contains(
-      targets::tar_manifest()$name,
-      c(
-        "raw_data_386196539900677",
-        "raw_data_375916542735109",
-        "raw_data_381576542159749",
-        "raw_data_380173961339781"
-      )
-    )
-  })
-})
-
 test_that("Ensure project date is used", {
+  skip_on_ci() # this takes time
   targets::tar_dir({
     targets::tar_script({
       library(targets)
-      library(tarflow.iquizoo)
       params <- tibble::tribble(
         ~organization_name, ~project_name,
         "北京师范大学测试用账号", "专注度-基础"

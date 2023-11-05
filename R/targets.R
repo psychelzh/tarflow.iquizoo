@@ -28,6 +28,9 @@
 #'   pre-processing will be done. If set as "parse", only wrangling will be
 #'   done. If set as "none", neither will be done. If `what` is "scores", this
 #'   argument will be ignored.
+#' @param combine Specify which targets to be combined. Note you should only
+#'   specify names from `c("users", "scores", "raw_data", "raw_data_parsed",
+#'   "indices")`. If `NULL`, all targets from branches will be combined.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
 #' @param check_progress Whether to check the progress hash. Set it as `FALSE`
@@ -38,6 +41,7 @@ tar_prep_iquizoo <- function(params, ...,
                              contents = NULL,
                              what = c("raw_data", "scores"),
                              action_raw_data = c("all", "parse", "none"),
+                             combine = NULL,
                              templates = setup_templates(),
                              check_progress = TRUE) {
   check_dots_empty()
@@ -49,6 +53,16 @@ tar_prep_iquizoo <- function(params, ...,
   }
   what <- match.arg(what, several.ok = TRUE)
   action_raw_data <- match.arg(action_raw_data)
+  if (is.null(combine)) {
+    combine <- objects()
+  } else {
+    if (!all(combine %in% objects())) {
+      cli::cli_abort(
+        "{.arg combine} must be a subset of {vctrs::vec_c({objects()})}.",
+        class = "tarflow_bad_combine"
+      )
+    }
+  }
   if (is.null(contents)) {
     contents <- fetch_iquizoo_mem(
       read_file(templates$contents),
@@ -71,14 +85,28 @@ tar_prep_iquizoo <- function(params, ...,
     tar_projects_info(
       contents,
       templates,
-      check_progress
+      check_progress,
+      combine
     ),
-    tar_projects_data(
+    tar_fetch_data(
       contents,
       templates,
-      what,
-      action_raw_data
-    )
+      "scores",
+      combine
+    ),
+    tar_fetch_data(
+      contents,
+      templates,
+      "raw_data",
+      combine
+    ),
+    if (action_raw_data != "none") {
+      tar_action_raw_data(
+        contents,
+        action_raw_data,
+        combine = combine
+      )
+    }
   )
 }
 
@@ -122,7 +150,7 @@ setup_templates <- function(contents = NULL,
 }
 
 # helper functions
-tar_projects_info <- function(contents, templates, check_progress) {
+tar_projects_info <- function(contents, templates, check_progress, combine) {
   targets <- tarchetypes::tar_map(
     contents |>
       dplyr::distinct(.data$project_id) |>
@@ -151,39 +179,18 @@ tar_projects_info <- function(contents, templates, check_progress) {
   )
   c(
     targets,
-    tarchetypes::tar_combine(
-      users,
-      targets$users,
-      command = unique(vctrs::vec_c(!!!.x))
-    )
-  )
-}
-
-tar_projects_data <- function(contents, templates, what, action_raw_data) {
-  contents <- contents |>
-    dplyr::distinct(.data$project_id, .data$game_id)
-  targets_fetch <- lapply(
-    what,
-    tar_fetch_data,
-    contents = contents,
-    templates = templates
-  )
-  c(
-    targets_fetch,
-    if ("scores" %in% what) {
+    if ("users" %in% combine) {
       tarchetypes::tar_combine(
-        scores,
-        targets_fetch[[which(what == "scores")]]$scores
+        users,
+        targets$users,
+        command = unique(vctrs::vec_c(!!!.x))
       )
-    },
-    if ("raw_data" %in% what) {
-      tar_action_raw_data(contents, action_raw_data)
     }
   )
 }
 
-tar_fetch_data <- function(contents, templates, what) {
-  tarchetypes::tar_map(
+tar_fetch_data <- function(contents, templates, what, combine) {
+  targets <- tarchetypes::tar_map(
     contents |>
       dplyr::summarise(
         game_id_chr = unique(as.character(.data$game_id)),
@@ -201,15 +208,28 @@ tar_fetch_data <- function(contents, templates, what) {
       what,
       expr({
         project_hash_list
-        fetch_data(
-          !!read_file(templates[[what]]),
-          project_id_list,
-          game_id_list,
-          what = !!what
-        )
+        purrr::pmap(
+          list(
+            query = !!read_file(templates[[what]]),
+            project_id = project_id_list,
+            game_id = game_id_list,
+            what = !!what
+          ),
+          fetch_data
+        ) |>
+          purrr::list_rbind()
       }),
       packages = "tarflow.iquizoo"
     )
+  )
+  c(
+    targets,
+    if (what %in% combine) {
+      tarchetypes::tar_combine_raw(
+        what,
+        targets[[what]]
+      )
+    }
   )
 }
 
@@ -218,8 +238,9 @@ tar_action_raw_data <- function(contents,
                                 name_data = "raw_data",
                                 name_parsed = "raw_data_parsed",
                                 name_indices = "indices",
-                                add_combine = TRUE) {
+                                combine = c(name_parsed, name_indices)) {
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
+  combine <- match.arg(combine, several.ok = TRUE)
   targets <- c(
     tarchetypes::tar_map(
       values = contents |>
@@ -262,19 +283,23 @@ tar_action_raw_data <- function(contents,
   )
   c(
     targets,
-    if (add_combine && "parse" %in% action_raw_data) {
+    if (name_parsed %in% combine && "parse" %in% action_raw_data) {
       tarchetypes::tar_combine_raw(
         name_parsed,
         targets[[name_parsed]]
       )
     },
-    if (add_combine && "preproc" %in% action_raw_data) {
+    if (name_indices %in% combine && "preproc" %in% action_raw_data) {
       tarchetypes::tar_combine_raw(
         name_indices,
         targets[[name_indices]]
       )
     }
   )
+}
+
+objects <- function() {
+  c("users", "scores", "raw_data", "raw_data_parsed", "indices")
 }
 
 utils::globalVariables(
