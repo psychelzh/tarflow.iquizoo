@@ -219,27 +219,28 @@ tar_projects_data <- function(contents, templates, what, action_raw_data) {
 }
 
 tar_fetch_data <- function(contents, templates, what) {
-  key_ids <- c("project_id", "game_id")
   tarchetypes::tar_map(
     contents |>
-      dplyr::mutate(
-        dplyr::across(
-          dplyr::all_of(key_ids),
-          as.character
+      dplyr::summarise(
+        game_id_chr = unique(as.character(.data$game_id)),
+        project_id_list = list(as.character(.data$project_id)),
+        game_id_list = list(as.character(.data$game_id)),
+        project_hash_list = list(
+          syms(
+            stringr::str_glue("progress_hash_{project_id}")
+          )
         ),
-        progress_hash = syms(
-          stringr::str_glue("progress_hash_{project_id}")
-        )
+        .by = "game_id"
       ),
-    names = dplyr::all_of(key_ids),
+    names = "game_id_chr",
     targets::tar_target_raw(
       what,
       expr({
-        progress_hash
+        project_hash_list
         fetch_data(
           !!read_file(templates[[what]]),
-          project_id,
-          game_id,
+          project_id_list,
+          game_id_list,
           what = !!what
         )
       }),
@@ -253,39 +254,22 @@ tar_action_raw_data <- function(contents,
                                 name_data = "raw_data",
                                 name_parsed = "raw_data_parsed",
                                 name_indices = "indices",
-                                add_combine_pre = TRUE,
-                                add_combine_post = TRUE) {
+                                add_combine = TRUE) {
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
-  if (add_combine_pre) {
-    stopifnot(
-      "`project_id` is required when adding combine step" =
-        utils::hasName(contents, "project_id")
-    )
-    contents <- contents |>
-      dplyr::summarise(
-        tar_raw_data = stringr::str_glue(
-          "{name_data}_{project_id}_{game_id}"
-        ) |>
-          syms() |>
-          list(),
-        .by = "game_id"
-      )
-  }
   targets <- c(
     tarchetypes::tar_map(
       values = contents |>
-        dplyr::mutate(game_id = as.character(.data$game_id)),
+        dplyr::mutate(
+          game_id = as.character(.data$game_id),
+          tar_raw_data = syms(
+            stringr::str_glue("{name_data}_{game_id}")
+          )
+        ),
       names = game_id,
-      if (add_combine_pre) {
-        targets::tar_target_raw(
-          name_data,
-          expr(dplyr::bind_rows(tar_raw_data))
-        )
-      },
       if ("parse" %in% action_raw_data) {
         targets::tar_target_raw(
           name_parsed,
-          expr(wrangle_data(!!ensym(name_data))),
+          expr(wrangle_data(tar_raw_data)),
           packages = "tarflow.iquizoo"
         )
       }
@@ -314,13 +298,13 @@ tar_action_raw_data <- function(contents,
   )
   c(
     targets,
-    if (add_combine_post && "parse" %in% action_raw_data) {
+    if (add_combine && "parse" %in% action_raw_data) {
       tarchetypes::tar_combine_raw(
         name_parsed,
         targets[[name_parsed]]
       )
     },
-    if (add_combine_post && "preproc" %in% action_raw_data) {
+    if (add_combine && "preproc" %in% action_raw_data) {
       tarchetypes::tar_combine_raw(
         name_indices,
         targets[[name_indices]]
