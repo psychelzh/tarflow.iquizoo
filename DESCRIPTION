@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquizoo" Data Processing
-Version: 3.7.4
+Version: 3.8.0
 Authors@R: c(
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150")),
@@ -49,6 +49,8 @@ Remotes:
     psychelzh/data.iquizoo,
     psychelzh/preproc.iquizoo
 Config/testthat/edition: 3
+Config/testthat/parallel: true
+Config/testthat/start-first: targets
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3

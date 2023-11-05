@@ -10,6 +10,7 @@ tar_prep_iquizoo(
   contents = NULL,
   what = c("raw_data", "scores"),
   action_raw_data = c("all", "parse", "none"),
+  combine = NULL,
   templates = setup_templates(),
   check_progress = TRUE
 )
@@ -42,6 +43,9 @@ indices based on the parsed data. If set as "all", both wrangling and
 pre-processing will be done. If set as "parse", only wrangling will be
 done. If set as "none", neither will be done. If \code{what} is "scores", this
 argument will be ignored.}
+
+\item{combine}{Specify which targets to be combined. Note you should only
+specify names from \code{c("scores", "raw_data", "raw_data_parsed", "indices")}. If \code{NULL}, none will be combined.}
 
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}

@@ -1,3 +1,13 @@
+# tarflow.iquizoo 3.8.0
+
+## New Features
+
+* Added `combine` argument in `tar_prep_iquizoo()`. This will enable users to specify freely how to combine the data from branches. See `?tar_prep_iquizoo` for details.
+
+## Enhancements
+
+* Let data from single games be fetched into one targets so that the total targets number could be reduced.
+
 # tarflow.iquizoo 3.7.4
 
 ## Bug fixes
