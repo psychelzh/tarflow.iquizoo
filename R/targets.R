@@ -100,7 +100,7 @@ tar_prep_iquizoo <- function(params, ...,
       tar_action_raw_data(
         contents,
         action_raw_data,
-        combine = combine
+        combine
       )
     }
   )
@@ -231,12 +231,11 @@ tar_fetch_data <- function(contents, templates, what, combine) {
 
 tar_action_raw_data <- function(contents,
                                 action_raw_data,
+                                combine,
                                 name_data = "raw_data",
                                 name_parsed = "raw_data_parsed",
-                                name_indices = "indices",
-                                combine = c(name_parsed, name_indices)) {
+                                name_indices = "indices") {
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
-  combine <- match.arg(combine, several.ok = TRUE)
   targets <- c(
     tarchetypes::tar_map(
       values = contents |>
