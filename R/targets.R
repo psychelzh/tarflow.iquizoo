@@ -84,7 +84,7 @@ tar_prep_iquizoo <- function(params, ...,
       check_progress
     ),
     lapply(what, \(what) tar_fetch_data(contents, templates, what)),
-    if (action_raw_data != "none") {
+    if ("raw_data" %in% what && action_raw_data != "none") {
       tar_action_raw_data(contents, action_raw_data)
     }
   ) |>
