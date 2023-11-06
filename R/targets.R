@@ -78,11 +78,7 @@ tar_prep_iquizoo <- function(params, ...,
       "contents_origin",
       expr(unserialize(!!serialize(contents, NULL)))
     ),
-    tar_projects_info(
-      contents,
-      templates,
-      check_progress
-    ),
+    tar_projects_info(contents, templates, check_progress),
     purrr::map(
       what,
       \(what) tar_fetch_data(contents, templates, what)
@@ -186,12 +182,12 @@ tar_fetch_data <- function(contents, templates, what) {
         dplyr::across(c("project_id", "game_id"), as.character)
       ) |>
       dplyr::summarise(
-        project_id = list(.data$project_id),
         progress_hash = list(
           syms(
             stringr::str_glue("progress_hash_{project_id}")
           )
         ),
+        project_id = list(.data$project_id),
         .by = "game_id"
       ),
     names = "game_id",
@@ -223,23 +219,21 @@ tar_action_raw_data <- function(contents,
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
   contents <- dplyr::distinct(contents, .data$game_id)
   c(
-    tarchetypes::tar_map(
-      values = contents |>
-        dplyr::mutate(
-          game_id = as.character(.data$game_id),
-          tar_raw_data = syms(
-            stringr::str_glue("{name_data}_{game_id}")
-          )
-        ),
-      names = game_id,
-      if ("parse" %in% action_raw_data) {
+    if ("parse" %in% action_raw_data) {
+      tarchetypes::tar_map(
+        values = contents |>
+          dplyr::mutate(
+            game_id = as.character(.data$game_id),
+            tar_data = syms(stringr::str_glue("{name_data}_{game_id}"))
+          ),
+        names = game_id,
         targets::tar_target_raw(
           name_parsed,
-          expr(wrangle_data(tar_raw_data)),
+          expr(wrangle_data(tar_data)),
           packages = "tarflow.iquizoo"
         )
-      }
-    ),
+      )
+    },
     if ("preproc" %in% action_raw_data) {
       tarchetypes::tar_map(
         values = contents |>
@@ -270,8 +264,8 @@ objects <- function() {
 
 utils::globalVariables(
   c(
-    "tar_raw_data", "tar_parsed",
     "progress_hash", "project_id", "game_id",
-    "prep_fun", "input", "extra", "users", ".x"
+    "tar_data", "tar_parsed",
+    "prep_fun", "input", "extra"
   )
 )
