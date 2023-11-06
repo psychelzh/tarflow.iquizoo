@@ -264,8 +264,8 @@ objects <- function() {
 
 utils::globalVariables(
   c(
-    "tar_data", "tar_parsed",
     "progress_hash", "project_id", "game_id",
-    "prep_fun", "input", "extra", "users", ".x"
+    "tar_data", "tar_parsed",
+    "prep_fun", "input", "extra"
   )
 )
