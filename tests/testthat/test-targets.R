@@ -47,6 +47,7 @@ test_that("Signal error if `contents` contains no data", {
 })
 
 test_that("Workflow works", {
+  skip_if_not_installed("preproc.iquizoo")
   targets::tar_dir({
     targets::tar_script({
       library(targets)
@@ -55,20 +56,23 @@ test_that("Workflow works", {
         "北京师范大学测试用账号", "难度测试",
         "北京师范大学", "4.19-4.20夜晚睡眠test"
       )
-      tar_prep_iquizoo(params, action_raw_data = "parse")
+      tar_prep_iquizoo(params)
     })
     targets::tar_make(reporter = "silent", callr_function = NULL)
     expect_snapshot_value(targets::tar_objects(), style = "json2")
   })
-  skip_if_not_installed("preproc.iquizoo")
+})
+
+test_that("Works when single game on different projects", {
   targets::tar_dir({
     targets::tar_script({
       library(targets)
-      params <- tibble::tribble(
-        ~organization_name, ~project_name,
-        "北京师范大学测试用账号", "难度测试"
+      tar_prep_iquizoo(
+        contents = tibble::tibble(
+          project_id = bit64::as.integer64(c(519355469824389, 519355011072389)),
+          game_id = bit64::as.integer64(238239294447813)
+        )
       )
-      tar_prep_iquizoo(params)
     })
     targets::tar_make(reporter = "silent", callr_function = NULL)
     expect_snapshot_value(targets::tar_objects(), style = "json2")
@@ -85,14 +89,14 @@ test_that("`combine` work properly", {
       )
       tar_prep_iquizoo(
         params,
-        action_raw_data = "parse",
-        combine = "raw_data_parsed"
+        what = "scores",
+        combine = "scores"
       )
     })
     targets::tar_make(reporter = "silent", callr_function = NULL)
     objs_out <- targets::tar_objects()
-    expect_contains(objs_out, "raw_data_parsed")
-    expect_false(any(setdiff(objects(), "raw_data_parsed") %in% objs_out))
+    expect_contains(objs_out, "scores")
+    expect_false(any(setdiff(objects(), "scores") %in% objs_out))
   })
   params <- tibble::tribble(
     ~organization_name, ~project_name,
@@ -129,15 +133,17 @@ test_that("Serialize check (no roundtrip error)", {
 })
 
 test_that("Ensure project date is used", {
-  skip_on_ci() # this takes time
   targets::tar_dir({
     targets::tar_script({
       library(targets)
-      params <- tibble::tribble(
-        ~organization_name, ~project_name,
-        "北京师范大学测试用账号", "专注度-基础"
+      tar_prep_iquizoo(
+        contents = data.frame(
+          project_id = bit64::as.integer64(132121231360389),
+          game_id = bit64::as.integer64(268008982646879)
+        ),
+        what = "scores",
+        combine = "scores"
       )
-      tar_prep_iquizoo(params, what = "scores", combine = "scores")
     })
     targets::tar_make(reporter = "silent", callr_function = NULL)
     nrow(targets::tar_read(scores)) |> expect_gt(0)
