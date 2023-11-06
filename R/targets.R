@@ -182,12 +182,12 @@ tar_fetch_data <- function(contents, templates, what) {
         dplyr::across(c("project_id", "game_id"), as.character)
       ) |>
       dplyr::summarise(
-        project_id = list(.data$project_id),
         progress_hash = list(
           syms(
             stringr::str_glue("progress_hash_{project_id}")
           )
         ),
+        project_id = list(.data$project_id),
         .by = "game_id"
       ),
     names = "game_id",
