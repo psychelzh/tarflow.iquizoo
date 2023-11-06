@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## Bug Fixes
+
+* Fixed an issue of fetching data when games were distributed on different projects. A regression issue introduced by 3.8.0.
+
 # tarflow.iquizoo 3.8.0
 
 ## New Features
