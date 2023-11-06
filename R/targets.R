@@ -224,14 +224,12 @@ tar_action_raw_data <- function(contents,
         values = contents |>
           dplyr::mutate(
             game_id = as.character(.data$game_id),
-            tar_raw_data = syms(
-              stringr::str_glue("{name_data}_{game_id}")
-            )
+            tar_data = syms(stringr::str_glue("{name_data}_{game_id}"))
           ),
         names = game_id,
         targets::tar_target_raw(
           name_parsed,
-          expr(wrangle_data(tar_raw_data)),
+          expr(wrangle_data(tar_data)),
           packages = "tarflow.iquizoo"
         )
       )
@@ -266,7 +264,7 @@ objects <- function() {
 
 utils::globalVariables(
   c(
-    "tar_raw_data", "tar_parsed",
+    "tar_data", "tar_parsed",
     "progress_hash", "project_id", "game_id",
     "prep_fun", "input", "extra", "users", ".x"
   )
