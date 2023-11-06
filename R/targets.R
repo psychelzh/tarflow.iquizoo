@@ -219,23 +219,23 @@ tar_action_raw_data <- function(contents,
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
   contents <- dplyr::distinct(contents, .data$game_id)
   c(
-    tarchetypes::tar_map(
-      values = contents |>
-        dplyr::mutate(
-          game_id = as.character(.data$game_id),
-          tar_raw_data = syms(
-            stringr::str_glue("{name_data}_{game_id}")
-          )
-        ),
-      names = game_id,
-      if ("parse" %in% action_raw_data) {
+    if ("parse" %in% action_raw_data) {
+      tarchetypes::tar_map(
+        values = contents |>
+          dplyr::mutate(
+            game_id = as.character(.data$game_id),
+            tar_raw_data = syms(
+              stringr::str_glue("{name_data}_{game_id}")
+            )
+          ),
+        names = game_id,
         targets::tar_target_raw(
           name_parsed,
           expr(wrangle_data(tar_raw_data)),
           packages = "tarflow.iquizoo"
         )
-      }
-    ),
+      )
+    },
     if ("preproc" %in% action_raw_data) {
       tarchetypes::tar_map(
         values = contents |>
