@@ -35,22 +35,21 @@ wrangle_data <- function(data,
 #' @param data A [data.frame] contains raw data.
 #' @param fn This can be a function or formula. See [rlang::as_function()] for
 #'   more details.
+#' @param ... Additional arguments passed to `fn`.
 #' @param name_raw_parsed The column name in which stores user's raw data in
 #'   format of a list of [data.frame][data.frame()]s.
 #' @param out_name_index The column name used in output storing the name of each
 #'   calculated index.
 #' @param out_name_score The column name used in output storing the value of
 #'   each calculated index.
-#' @param ... Additional arguments passed to `fn`.
 #' @return A [data.frame] contains the calculated indices.
 #'   The index names are stored in the column of `out_name_index`, and index
 #'   values are stored in the column of `out_name_score`.
 #' @export
-preproc_data <- function(data, fn,
+preproc_data <- function(data, fn, ...,
                          name_raw_parsed = "raw_parsed",
                          out_name_index = "index_name",
-                         out_name_score = "score",
-                         ...) {
+                         out_name_score = "score") {
   # do not add `possibly()` for early error is needed to check configurations
   fn <- as_function(fn)
   data_with_id <- dplyr::mutate(data, .id = seq_len(dplyr::n()))

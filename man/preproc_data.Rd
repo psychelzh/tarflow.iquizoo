@@ -7,10 +7,10 @@
 preproc_data(
   data,
   fn,
+  ...,
   name_raw_parsed = "raw_parsed",
   out_name_index = "index_name",
-  out_name_score = "score",
-  ...
+  out_name_score = "score"
 )
 }
 \arguments{
@@ -18,6 +18,8 @@ preproc_data(
 
 \item{fn}{This can be a function or formula. See \code{\link[rlang:as_function]{rlang::as_function()}} for
 more details.}
+
+\item{...}{Additional arguments passed to \code{fn}.}
 
 \item{name_raw_parsed}{The column name in which stores user's raw data in
 format of a list of \link[=data.frame]{data.frame}s.}
@@ -27,8 +29,6 @@ calculated index.}
 
 \item{out_name_score}{The column name used in output storing the value of
 each calculated index.}
-
-\item{...}{Additional arguments passed to \code{fn}.}
 }
 \value{
 A \link{data.frame} contains the calculated indices.
