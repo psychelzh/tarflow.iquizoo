@@ -57,10 +57,18 @@ preproc_data <- function(data, fn, ...,
   raw_data <- dplyr::select(data_with_id, all_of(c(".id", name_raw_parsed)))
   data_unnested <- try_fetch(
     tidyr::unnest(raw_data, all_of(name_raw_parsed)),
-    error = function(...) {
+    error = function(cnd) {
+      warn(
+        c(
+          "Failed to unnest raw data with the following error: ",
+          conditionMessage(cnd),
+          i = "Will try using tidytable package to unnest."
+        ),
+        class = "tarflow_err_unnest"
+      )
       check_installed(
         "tidytable",
-        "Please install `tidytable` for tidyr's strict type check fails."
+        "because tidyr package fails to unnest."
       )
       raw_data |>
         tidytable::unnest(all_of(name_raw_parsed)) |>

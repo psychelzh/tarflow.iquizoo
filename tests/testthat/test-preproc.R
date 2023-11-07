@@ -59,6 +59,6 @@ test_that("Can deal with mismatch column types in raw data", {
     )
   )
   preproc_data(data, fn = prep_fun) |>
-    expect_silent() |>
-    expect_snapshot_value(style = "json2")
+    expect_snapshot_value(style = "json2") |>
+    expect_warning(class = "tarflow_err_unnest")
 })
