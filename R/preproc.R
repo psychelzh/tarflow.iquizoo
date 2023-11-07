@@ -18,14 +18,8 @@ wrangle_data <- function(data,
       dplyr::mutate(dplyr::across(where(is.character), tolower)),
     otherwise = NULL
   )
-  data |>
-    dplyr::mutate(
-      "{name_raw_parsed}" := purrr::map( # nolint
-        .data[[name_raw_json]],
-        parse_raw_json
-      ),
-      .keep = "unused"
-    )
+  data[[name_raw_parsed]] <- purrr::map(data[[name_raw_json]], parse_raw_json)
+  dplyr::select(data, !all_of(name_raw_json))
 }
 
 #' Feed Raw Data to Pre-processing
