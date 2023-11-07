@@ -57,29 +57,13 @@ preproc_data <- function(data, fn, ...,
   raw_data <- dplyr::select(data_with_id, all_of(c(".id", name_raw_parsed)))
   data_unnested <- try_fetch(
     tidyr::unnest(raw_data, all_of(name_raw_parsed)),
-    error = function(cnd) {
-      pattern <- r"(Can't combine `.+\$.+` <.+> and `.+\$.+` <.+>)"
-      if (!grepl(pattern, conditionMessage(cnd))) {
-        abort(
-          "Don't know how to handle this error.",
-          class = "tarflow/unnest_incompatible",
-          parent = cnd
-        )
-      }
+    error = function(...) {
+      check_installed(
+        "tidytable",
+        "Please install `tidytable` for tidyr's strict type check fails."
+      )
       raw_data |>
-        dplyr::mutate(
-          "{name_raw_parsed}" := purrr::map( # nolint
-            .data[[name_raw_parsed]],
-            ~ dplyr::mutate(
-              .,
-              dplyr::across(
-                everything(),
-                as.character
-              )
-            )
-          )
-        ) |>
-        tidyr::unnest(all_of(name_raw_parsed)) |>
+        tidytable::unnest(all_of(name_raw_parsed)) |>
         utils::type.convert(as.is = TRUE)
     }
   ) |>
