@@ -54,7 +54,7 @@ preproc_data <- function(data, fn,
   # do not add `possibly()` for early error is needed to check configurations
   fn <- as_function(fn)
   data_with_id <- dplyr::mutate(data, .id = seq_len(dplyr::n()))
-  groups <- dplyr::select(data_with_id, -all_of(name_raw_parsed))
+  groups <- dplyr::select(data_with_id, !all_of(name_raw_parsed))
   raw_data <- dplyr::select(data_with_id, all_of(c(".id", name_raw_parsed)))
   data_unnested <- try_fetch(
     tidyr::unnest(raw_data, all_of(name_raw_parsed)),
@@ -93,11 +93,11 @@ preproc_data <- function(data, fn,
     data_unnested |>
       fn(.by = ".id", ...) |>
       tidyr::pivot_longer(
-        cols = -all_of(".id"),
+        cols = !".id",
         names_to = out_name_index,
         values_to = out_name_score
       ),
     by = ".id"
   ) |>
-    dplyr::select(-all_of(".id"))
+    dplyr::select(!".id")
 }
