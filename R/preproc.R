@@ -80,10 +80,10 @@ preproc_data <- function(data, fn, ...,
           )
         ) |>
         tidyr::unnest(all_of(name_raw_parsed)) |>
-        utils::type.convert(as.is = TRUE) |>
-        vctrs::vec_restore(raw_data)
+        utils::type.convert(as.is = TRUE)
     }
-  )
+  ) |>
+    vctrs::vec_restore(raw_data)
   if (nrow(data_unnested) == 0) {
     return()
   }
