@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## Enhancements
+
+* Added workaround of `tidyr::unnest()` using `tidytable::unnest()` when the type compatibility triggers an error in `preproc_data()`. In addition, when the error triggers, the error was catched and turned into a warning instead.
+
 # tarflow.iquizoo 3.8.1
 
 ## Bug Fixes
