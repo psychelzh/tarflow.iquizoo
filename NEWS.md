@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## New Features
+
+* Added `pivot_results` argument in `preproc_data()` to opt in the original wide format results. This is useful especially when you want to calculate and glimpse indices for a single task. Note the original arguments `out_name_index` and `out_name_score` were also renamed as `pivot_names_to` and `pivot_values_to` respectively. For the low usage of these two arguments, they were now defunct.
+
 # tarflow.iquizoo 3.8.2
 
 ## Enhancements
