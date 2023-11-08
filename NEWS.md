@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Ensure all internal SQL query templates end with semicolon. This will unavoidably invalidate existing targets for old pipelines.
+
 ## New Features
 
 * Added `pivot_results` argument in `preproc_data()` to opt in the original wide format results. This is useful especially when you want to calculate and glimpse indices for a single task. Note the original arguments `out_name_index` and `out_name_score` were also renamed as `pivot_names_to` and `pivot_values_to` respectively. For the low usage of these two arguments, they were now defunct.
