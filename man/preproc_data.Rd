@@ -9,8 +9,9 @@ preproc_data(
   fn,
   ...,
   name_raw_parsed = "raw_parsed",
-  out_name_index = "index_name",
-  out_name_score = "score"
+  pivot_results = TRUE,
+  pivot_names_to = "index_name",
+  pivot_values_to = "score"
 )
 }
 \arguments{
@@ -22,18 +23,20 @@ more details.}
 \item{...}{Additional arguments passed to \code{fn}.}
 
 \item{name_raw_parsed}{The column name in which stores user's raw data in
-format of a list of \link[=data.frame]{data.frame}s.}
+format of a list of \link{data.frame}s.}
 
-\item{out_name_index}{The column name used in output storing the name of each
-calculated index.}
+\item{pivot_results}{Whether to pivot the calculated indices. If \code{TRUE}, the
+calculated indices are pivoted into long format, with each index name
+stored in the column of \code{pivot_names_to}, and each index value stored in
+the column of \code{pivot_values_to}. If \code{FALSE}, the calculated indices are
+stored in the same format as returned by \code{fn}.}
 
-\item{out_name_score}{The column name used in output storing the value of
-each calculated index.}
+\item{pivot_names_to, pivot_values_to}{The column names used to store index
+names and values if \code{pivot_results} is \code{TRUE}. See \code{\link[tidyr:pivot_longer]{tidyr::pivot_longer()}}
+for more details.}
 }
 \value{
-A \link{data.frame} contains the calculated indices. The index names are
-stored in the column of \code{out_name_index}, and index values are stored in
-the column of \code{out_name_score}.
+A \link{data.frame} contains the calculated indices.
 }
 \description{
 Calculate indices using data typically returned by \code{\link[=wrangle_data]{wrangle_data()}}.

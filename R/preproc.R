@@ -34,36 +34,43 @@ wrangle_data <- function(data,
 #'   more details.
 #' @param ... Additional arguments passed to `fn`.
 #' @param name_raw_parsed The column name in which stores user's raw data in
-#'   format of a list of [data.frame][data.frame()]s.
-#' @param out_name_index The column name used in output storing the name of each
-#'   calculated index.
-#' @param out_name_score The column name used in output storing the value of
-#'   each calculated index.
-#' @return A [data.frame] contains the calculated indices. The index names are
-#'   stored in the column of `out_name_index`, and index values are stored in
-#'   the column of `out_name_score`.
+#'   format of a list of [data.frame]s.
+#' @param pivot_results Whether to pivot the calculated indices. If `TRUE`, the
+#'   calculated indices are pivoted into long format, with each index name
+#'   stored in the column of `pivot_names_to`, and each index value stored in
+#'   the column of `pivot_values_to`. If `FALSE`, the calculated indices are
+#'   stored in the same format as returned by `fn`.
+#' @param pivot_names_to,pivot_values_to The column names used to store index
+#'   names and values if `pivot_results` is `TRUE`. See [tidyr::pivot_longer()]
+#'   for more details.
+#' @return A [data.frame] contains the calculated indices.
 #' @export
 preproc_data <- function(data, fn, ...,
                          name_raw_parsed = "raw_parsed",
-                         out_name_index = "index_name",
-                         out_name_score = "score") {
+                         pivot_results = TRUE,
+                         pivot_names_to = "index_name",
+                         pivot_values_to = "score") {
   data <- filter(data, !purrr::map_lgl(.data[[name_raw_parsed]], is_empty))
   if (nrow(data) == 0) {
     warn("No non-empty data found.")
     return()
   }
   fn <- as_function(fn)
-  data |>
+  results <- data |>
     mutate(
       calc_indices(.data[[name_raw_parsed]], fn, ...),
       .keep = "unused"
-    ) |>
-    pivot_longer(
-      cols = !any_of(names(data)),
-      names_to = out_name_index,
-      values_to = out_name_score
-    ) |>
-    vctrs::vec_restore(data)
+    )
+  if (pivot_results) {
+    results <- results |>
+      pivot_longer(
+        cols = !any_of(names(data)),
+        names_to = pivot_names_to,
+        values_to = pivot_values_to
+      ) |>
+      vctrs::vec_restore(data)
+  }
+  results
 }
 
 # helper functions

@@ -38,6 +38,41 @@
       ]
     }
 
+---
+
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["user_id", "nhit"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["tbl_df", "tbl", "data.frame"]
+        }
+      },
+      "value": [
+        {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": ["NaN", 1]
+        }
+      ]
+    }
+
 # Deal with `NULL` in parsed data
 
     {

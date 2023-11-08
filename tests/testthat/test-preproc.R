@@ -40,8 +40,9 @@ test_that("Basic situation in `preproc_data()`", {
       data.frame(nhit = 1, feedback = 1)
     )
   )
-  preproc_data(data, fn = prep_fun) |>
-    expect_silent() |>
+  preproc_data(data, prep_fun) |>
+    expect_snapshot_value(style = "json2")
+  preproc_data(data, prep_fun, pivot_results = FALSE) |>
     expect_snapshot_value(style = "json2")
 })
 
@@ -58,7 +59,7 @@ test_that("Deal with `NULL` in parsed data", {
       data.frame(nhit = 1, feedback = 1)
     )
   ) |>
-    preproc_data(fn = prep_fun) |>
+    preproc_data(prep_fun) |>
     expect_snapshot_value(style = "json2")
 })
 
@@ -72,7 +73,7 @@ test_that("Can deal with mismatch column types in raw data", {
       data.frame(nhit = "3", feedback = 1)
     )
   )
-  preproc_data(data, fn = prep_fun) |>
+  preproc_data(data, prep_fun) |>
     expect_snapshot_value(style = "json2") |>
     expect_warning("Failed to bind raw data")
 })
