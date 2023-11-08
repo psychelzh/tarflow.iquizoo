@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.8.2
 
 ## Enhancements
 
