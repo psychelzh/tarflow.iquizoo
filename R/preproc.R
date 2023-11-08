@@ -1,6 +1,6 @@
 #' Wrangle Raw Data
 #'
-#' Data wrangling is the first step for data analysis.
+#' Parse raw json string data as [data.frame()] and store them in a list column.
 #'
 #' @param data The raw data.
 #' @param name_raw_json The column name in which stores user's raw data in

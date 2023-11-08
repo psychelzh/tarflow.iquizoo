@@ -18,5 +18,5 @@ format of json string.}
 A \link{data.frame} contains the parsed data.
 }
 \description{
-Data wrangling is the first step for data analysis.
+Parse raw json string data as \code{\link[=data.frame]{data.frame()}} and store them in a list column.
 }
