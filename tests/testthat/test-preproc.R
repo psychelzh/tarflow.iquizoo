@@ -12,15 +12,15 @@ test_that("Basic situation for `wrangle_data()`", {
 })
 
 test_that("Can deal with invalid or empty json", {
-  data_case_invalid <- tibble::tibble(
-    game_data = c("[1", "[]", "{}")
-  )
+  data_case_invalid <- data.frame(game_data = "[1")
   wrangle_data(data_case_invalid) |>
-    expect_silent() |>
+    expect_warning("Failed to parse json string") |>
+    purrr::pluck("raw_parsed", 1) |>
+    expect_null()
+  data_case_empty <- data.frame(game_data = c("[]", "{}"))
+  wrangle_data(data_case_empty) |>
     purrr::pluck("raw_parsed") |>
-    purrr::map_lgl(is.null) |>
-    all() |>
-    expect_true()
+    purrr::walk(expect_null)
 })
 
 test_that("Change names and values to lowercase", {

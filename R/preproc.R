@@ -13,8 +13,7 @@ wrangle_data <- function(data,
                          name_raw_parsed = "raw_parsed") {
   data[[name_raw_parsed]] <- purrr::map(
     data[[name_raw_json]],
-    # make it error-proof to avoid trivial errors
-    purrr::possibly(parse_raw_json)
+    parse_raw_json
   )
   select(data, !all_of(name_raw_json))
 }
@@ -69,7 +68,23 @@ preproc_data <- function(data, fn, ...,
 
 # helper functions
 parse_raw_json <- function(jstr) {
-  jsonlite::fromJSON(jstr) |>
+  parsed <- tryCatch(
+    jsonlite::fromJSON(jstr),
+    error = function(cnd) {
+      warn(
+        c(
+          "Failed to parse json string with the following error:",
+          conditionMessage(cnd),
+          i = "Will parse it as `NULL` instead."
+        )
+      )
+      return()
+    }
+  )
+  if (is_empty(parsed)) {
+    return()
+  }
+  parsed |>
     rename_with(tolower) |>
     mutate(across(where(is.character), tolower))
 }
@@ -82,7 +97,7 @@ calc_indices <- function(l, fn, ...) {
     error = function(cnd) {
       warn(
         c(
-          "Failed to bind raw data with the following error: ",
+          "Failed to bind raw data with the following error:",
           conditionMessage(cnd),
           i = "Will try using tidytable package."
         )
