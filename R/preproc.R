@@ -56,7 +56,7 @@ preproc_data <- function(data, fn, ...,
   fn <- as_function(fn)
   data |>
     mutate(
-      extract_indices(.data[[name_raw_parsed]], fn, ...),
+      calc_indices(.data[[name_raw_parsed]], fn, ...),
       .keep = "unused"
     ) |>
     pivot_longer(
@@ -74,7 +74,7 @@ parse_raw_json <- function(jstr) {
     mutate(across(where(is.character), tolower))
 }
 
-extract_indices <- function(l, fn, ...) {
+calc_indices <- function(l, fn, ...) {
   # used as a temporary id for each element
   name_id <- ".id"
   tryCatch(
