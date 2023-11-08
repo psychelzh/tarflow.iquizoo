@@ -11,14 +11,11 @@
 wrangle_data <- function(data,
                          name_raw_json = "game_data",
                          name_raw_parsed = "raw_parsed") {
-  # make it error-proof to avoid trivial errors
-  parse_raw_json <- purrr::possibly(
-    ~ jsonlite::fromJSON(.) |>
-      dplyr::rename_with(tolower) |>
-      dplyr::mutate(dplyr::across(where(is.character), tolower)),
-    otherwise = NULL
+  data[[name_raw_parsed]] <- purrr::map(
+    data[[name_raw_json]],
+    # make it error-proof to avoid trivial errors
+    purrr::possibly(parse_raw_json)
   )
-  data[[name_raw_parsed]] <- purrr::map(data[[name_raw_json]], parse_raw_json)
   dplyr::select(data, !all_of(name_raw_json))
 }
 
@@ -85,4 +82,16 @@ preproc_data <- function(data, fn, ...,
     by = ".id"
   ) |>
     dplyr::select(!".id")
+}
+
+# helper functions
+parse_raw_json <- function(jstr) {
+  jsonlite::fromJSON(jstr) |>
+    dplyr::rename_with(tolower) |>
+    dplyr::mutate(
+      dplyr::across(
+        dplyr::where(is.character),
+        tolower
+      )
+    )
 }
