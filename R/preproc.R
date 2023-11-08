@@ -21,7 +21,14 @@ wrangle_data <- function(data,
 
 #' Feed Raw Data to Pre-processing
 #'
-#' Calculate indices using data returned by [wrangle_data()].
+#' Calculate indices using data typically returned by [wrangle_data()].
+#'
+#' @details
+#'
+#' Observations with empty raw data (empty vector, e.g. `NULL`, in
+#' `name_raw_parsed` column) are removed before calculating indices. If no
+#' observations left after removing, a warning is signaled and `NULL` is
+#' returned.
 #'
 #' @param data A [data.frame] contains raw data.
 #' @param fn This can be a function or formula. See [rlang::as_function()] for
@@ -33,21 +40,20 @@ wrangle_data <- function(data,
 #'   calculated index.
 #' @param out_name_score The column name used in output storing the value of
 #'   each calculated index.
-#' @return A [data.frame] contains the calculated indices.
-#'   The index names are stored in the column of `out_name_index`, and index
-#'   values are stored in the column of `out_name_score`.
+#' @return A [data.frame] contains the calculated indices. The index names are
+#'   stored in the column of `out_name_index`, and index values are stored in
+#'   the column of `out_name_score`.
 #' @export
 preproc_data <- function(data, fn, ...,
                          name_raw_parsed = "raw_parsed",
                          out_name_index = "index_name",
                          out_name_score = "score") {
-  # do not add `possibly()` for early error is needed to check configurations
-  fn <- as_function(fn)
-  data <- data |>
-    filter(!purrr::map_lgl(.data[[name_raw_parsed]], is_empty))
+  data <- filter(data, !purrr::map_lgl(.data[[name_raw_parsed]], is_empty))
   if (nrow(data) == 0) {
+    warn("No non-empty data found.")
     return()
   }
+  fn <- as_function(fn)
   data |>
     mutate(
       extract_indices(.data[[name_raw_parsed]], fn, ...),

@@ -31,10 +31,16 @@ calculated index.}
 each calculated index.}
 }
 \value{
-A \link{data.frame} contains the calculated indices.
-The index names are stored in the column of \code{out_name_index}, and index
-values are stored in the column of \code{out_name_score}.
+A \link{data.frame} contains the calculated indices. The index names are
+stored in the column of \code{out_name_index}, and index values are stored in
+the column of \code{out_name_score}.
 }
 \description{
-Calculate indices using data returned by \code{\link[=wrangle_data]{wrangle_data()}}.
+Calculate indices using data typically returned by \code{\link[=wrangle_data]{wrangle_data()}}.
+}
+\details{
+Observations with empty raw data (empty vector, e.g. \code{NULL}, in
+\code{name_raw_parsed} column) are removed before calculating indices. If no
+observations left after removing, a warning is signaled and \code{NULL} is
+returned.
 }

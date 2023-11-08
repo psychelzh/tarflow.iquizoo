@@ -48,7 +48,8 @@ test_that("Basic situation in `preproc_data()`", {
 test_that("Deal with `NULL` in parsed data", {
   tibble::tibble(raw_parsed = list(NULL)) |>
     preproc_data(prep_fun) |>
-    expect_null()
+    expect_null() |>
+    expect_warning("No non-empty data found.")
   tibble::tibble(
     user_id = 1:3,
     raw_parsed = list(
@@ -73,5 +74,5 @@ test_that("Can deal with mismatch column types in raw data", {
   )
   preproc_data(data, fn = prep_fun) |>
     expect_snapshot_value(style = "json2") |>
-    expect_warning(regexp = "Failed to bind raw data")
+    expect_warning("Failed to bind raw data")
 })
