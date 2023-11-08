@@ -43,9 +43,22 @@ test_that("Basic situation in `preproc_data()`", {
   preproc_data(data, fn = prep_fun) |>
     expect_silent() |>
     expect_snapshot_value(style = "json2")
+})
+
+test_that("Deal with `NULL` in parsed data", {
   tibble::tibble(raw_parsed = list(NULL)) |>
     preproc_data(prep_fun) |>
     expect_null()
+  tibble::tibble(
+    user_id = 1:3,
+    raw_parsed = list(
+      data.frame(nhit = 1, feedback = 0),
+      NULL,
+      data.frame(nhit = 1, feedback = 1)
+    )
+  ) |>
+    preproc_data(fn = prep_fun) |>
+    expect_snapshot_value(style = "json2")
 })
 
 test_that("Can deal with mismatch column types in raw data", {
@@ -60,5 +73,5 @@ test_that("Can deal with mismatch column types in raw data", {
   )
   preproc_data(data, fn = prep_fun) |>
     expect_snapshot_value(style = "json2") |>
-    expect_warning(class = "tarflow_err_unnest")
+    expect_warning(regexp = "Failed to bind raw data")
 })

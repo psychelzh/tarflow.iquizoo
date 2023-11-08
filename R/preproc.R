@@ -43,45 +43,22 @@ preproc_data <- function(data, fn, ...,
                          out_name_score = "score") {
   # do not add `possibly()` for early error is needed to check configurations
   fn <- as_function(fn)
-  data_with_id <- mutate(data, .id = seq_len(n()))
-  groups <- select(data_with_id, !all_of(name_raw_parsed))
-  raw_data <- select(data_with_id, all_of(c(".id", name_raw_parsed)))
-  data_unnested <- tryCatch(
-    unnest(raw_data, all_of(name_raw_parsed)),
-    error = function(cnd) {
-      warn(
-        c(
-          "Failed to unnest raw data with the following error: ",
-          conditionMessage(cnd),
-          i = "Will try using tidytable package to unnest."
-        ),
-        class = "tarflow_err_unnest"
-      )
-      check_installed(
-        "tidytable",
-        "because tidyr package fails to unnest."
-      )
-      raw_data |>
-        tidytable::unnest(all_of(name_raw_parsed)) |>
-        utils::type.convert(as.is = TRUE)
-    }
-  ) |>
-    vctrs::vec_restore(raw_data)
-  if (nrow(data_unnested) == 0) {
+  data <- data |>
+    filter(!purrr::map_lgl(.data[[name_raw_parsed]], is_empty))
+  if (nrow(data) == 0) {
     return()
   }
-  inner_join(
-    groups,
-    data_unnested |>
-      fn(.by = ".id", ...) |>
-      pivot_longer(
-        cols = !".id",
-        names_to = out_name_index,
-        values_to = out_name_score
-      ),
-    by = ".id"
-  ) |>
-    select(!".id")
+  data |>
+    mutate(
+      extract_indices(.data[[name_raw_parsed]], fn, ...),
+      .keep = "unused"
+    ) |>
+    pivot_longer(
+      cols = !any_of(names(data)),
+      names_to = out_name_index,
+      values_to = out_name_score
+    ) |>
+    vctrs::vec_restore(data)
 }
 
 # helper functions
@@ -89,4 +66,29 @@ parse_raw_json <- function(jstr) {
   jsonlite::fromJSON(jstr) |>
     rename_with(tolower) |>
     mutate(across(where(is.character), tolower))
+}
+
+extract_indices <- function(l, fn, ...) {
+  # used as a temporary id for each element
+  name_id <- ".id"
+  tryCatch(
+    bind_rows(l, .id = name_id),
+    error = function(cnd) {
+      warn(
+        c(
+          "Failed to bind raw data with the following error: ",
+          conditionMessage(cnd),
+          i = "Will try using tidytable package."
+        )
+      )
+      check_installed(
+        "tidytable",
+        "because tidyr package fails to bind raw data."
+      )
+      tidytable::bind_rows(l, .id = name_id) |>
+        utils::type.convert(as.is = TRUE)
+    }
+  ) |>
+    fn(.by = name_id, ...) |>
+    select(!all_of(name_id))
 }
