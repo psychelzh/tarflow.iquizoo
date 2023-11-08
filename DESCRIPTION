@@ -30,7 +30,6 @@ Imports:
     tarchetypes,
     targets,
     tidyr,
-    tidyselect,
     utils,
     vctrs
 Suggests:

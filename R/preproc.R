@@ -16,7 +16,7 @@ wrangle_data <- function(data,
     # make it error-proof to avoid trivial errors
     purrr::possibly(parse_raw_json)
   )
-  dplyr::select(data, !all_of(name_raw_json))
+  select(data, !all_of(name_raw_json))
 }
 
 #' Feed Raw Data to Pre-processing
@@ -43,11 +43,11 @@ preproc_data <- function(data, fn, ...,
                          out_name_score = "score") {
   # do not add `possibly()` for early error is needed to check configurations
   fn <- as_function(fn)
-  data_with_id <- dplyr::mutate(data, .id = seq_len(dplyr::n()))
-  groups <- dplyr::select(data_with_id, !all_of(name_raw_parsed))
-  raw_data <- dplyr::select(data_with_id, all_of(c(".id", name_raw_parsed)))
+  data_with_id <- mutate(data, .id = seq_len(n()))
+  groups <- select(data_with_id, !all_of(name_raw_parsed))
+  raw_data <- select(data_with_id, all_of(c(".id", name_raw_parsed)))
   data_unnested <- tryCatch(
-    tidyr::unnest(raw_data, all_of(name_raw_parsed)),
+    unnest(raw_data, all_of(name_raw_parsed)),
     error = function(cnd) {
       warn(
         c(
@@ -70,28 +70,23 @@ preproc_data <- function(data, fn, ...,
   if (nrow(data_unnested) == 0) {
     return()
   }
-  dplyr::inner_join(
+  inner_join(
     groups,
     data_unnested |>
       fn(.by = ".id", ...) |>
-      tidyr::pivot_longer(
+      pivot_longer(
         cols = !".id",
         names_to = out_name_index,
         values_to = out_name_score
       ),
     by = ".id"
   ) |>
-    dplyr::select(!".id")
+    select(!".id")
 }
 
 # helper functions
 parse_raw_json <- function(jstr) {
   jsonlite::fromJSON(jstr) |>
-    dplyr::rename_with(tolower) |>
-    dplyr::mutate(
-      dplyr::across(
-        dplyr::where(is.character),
-        tolower
-      )
-    )
+    rename_with(tolower) |>
+    mutate(across(where(is.character), tolower))
 }

@@ -1,5 +1,6 @@
 #' @import rlang
-#' @import tidyselect
+#' @import dplyr
+#' @import tidyr
 NULL
 
 # nocov start
