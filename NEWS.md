@@ -2,7 +2,8 @@
 
 ## Enhancements
 
-* Added workaround of `tidyr::unnest()` using `tidytable::unnest()` when the type compatibility triggers an error in `preproc_data()`. In addition, when the error triggers, the error was catched and turned into a warning instead.
+* Added workaround using tidytable package when the type compatibility triggers an error in `preproc_data()`. In addition, when the error triggers, the error was catched and turned into a warning instead.
+* Added a warning when no non-empty raw data found in `preproc_data()`.
 
 # tarflow.iquizoo 3.8.1
 
