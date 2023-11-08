@@ -12,15 +12,15 @@ test_that("Basic situation for `wrangle_data()`", {
 })
 
 test_that("Can deal with invalid or empty json", {
-  data_case_invalid <- tibble::tibble(
-    game_data = c("[1", "[]", "{}")
-  )
+  data_case_invalid <- data.frame(game_data = "[1")
   wrangle_data(data_case_invalid) |>
-    expect_silent() |>
+    expect_warning("Failed to parse json string") |>
+    purrr::pluck("raw_parsed", 1) |>
+    expect_null()
+  data_case_empty <- data.frame(game_data = c("[]", "{}"))
+  wrangle_data(data_case_empty) |>
     purrr::pluck("raw_parsed") |>
-    purrr::map_lgl(is.null) |>
-    all() |>
-    expect_true()
+    purrr::walk(expect_null)
 })
 
 test_that("Change names and values to lowercase", {
@@ -43,12 +43,27 @@ test_that("Basic situation in `preproc_data()`", {
   preproc_data(data, fn = prep_fun) |>
     expect_silent() |>
     expect_snapshot_value(style = "json2")
+})
+
+test_that("Deal with `NULL` in parsed data", {
   tibble::tibble(raw_parsed = list(NULL)) |>
     preproc_data(prep_fun) |>
-    expect_null()
+    expect_null() |>
+    expect_warning("No non-empty data found.")
+  tibble::tibble(
+    user_id = 1:3,
+    raw_parsed = list(
+      data.frame(nhit = 1, feedback = 0),
+      NULL,
+      data.frame(nhit = 1, feedback = 1)
+    )
+  ) |>
+    preproc_data(fn = prep_fun) |>
+    expect_snapshot_value(style = "json2")
 })
 
 test_that("Can deal with mismatch column types in raw data", {
+  skip_if_not_installed("tidytable")
   data <- tibble::tibble(
     user_id = 1:3,
     raw_parsed = list(
@@ -58,18 +73,6 @@ test_that("Can deal with mismatch column types in raw data", {
     )
   )
   preproc_data(data, fn = prep_fun) |>
-    expect_silent() |>
-    expect_snapshot_value(style = "json2")
-})
-
-test_that("Abort if unrecognized error occured", {
-  data <- tibble::tibble(
-    user_id = 1:2,
-    raw_parsed = list(
-      data.frame(nhit = 1, feedback = 0),
-      1
-    )
-  )
-  preproc_data(data, fn = prep_fun) |>
-    expect_error(class = "tarflow/unnest_incompatible")
+    expect_snapshot_value(style = "json2") |>
+    expect_warning("Failed to bind raw data")
 })

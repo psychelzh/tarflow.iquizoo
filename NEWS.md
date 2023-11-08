@@ -1,3 +1,11 @@
+# tarflow.iquizoo 3.8.2
+
+## Enhancements
+
+* Added workaround using tidytable package when the type compatibility triggers an error in `preproc_data()`.
+* Added a warning when no non-empty raw data found in `preproc_data()`.
+* Added support for triggering a warning for `wrangle_data()` parsing error and `preproc_data()` data binding error.
+
 # tarflow.iquizoo 3.8.1
 
 ## Bug Fixes

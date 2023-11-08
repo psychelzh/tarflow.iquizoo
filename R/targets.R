@@ -146,8 +146,8 @@ tar_projects_info <- function(contents, templates, check_progress) {
   c(
     tarchetypes::tar_map(
       contents |>
-        dplyr::distinct(.data$project_id) |>
-        dplyr::mutate(project_id = as.character(.data$project_id)),
+        distinct(.data$project_id) |>
+        mutate(project_id = as.character(.data$project_id)),
       targets::tar_target_raw(
         "progress_hash",
         expr(
@@ -177,11 +177,11 @@ tar_projects_info <- function(contents, templates, check_progress) {
 tar_fetch_data <- function(contents, templates, what) {
   tarchetypes::tar_map(
     contents |>
-      dplyr::distinct(.data$project_id, .data$game_id) |>
-      dplyr::mutate(
-        dplyr::across(c("project_id", "game_id"), as.character)
+      distinct(.data$project_id, .data$game_id) |>
+      mutate(
+        across(c("project_id", "game_id"), as.character)
       ) |>
-      dplyr::summarise(
+      summarise(
         progress_hash = list(
           syms(
             stringr::str_glue("progress_hash_{project_id}")
@@ -217,12 +217,12 @@ tar_action_raw_data <- function(contents,
                                 name_parsed = "raw_data_parsed",
                                 name_indices = "indices") {
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
-  contents <- dplyr::distinct(contents, .data$game_id)
+  contents <- distinct(contents, .data$game_id)
   c(
     if ("parse" %in% action_raw_data) {
       tarchetypes::tar_map(
         values = contents |>
-          dplyr::mutate(
+          mutate(
             game_id = as.character(.data$game_id),
             tar_data = syms(stringr::str_glue("{name_data}_{game_id}"))
           ),
@@ -238,7 +238,7 @@ tar_action_raw_data <- function(contents,
       tarchetypes::tar_map(
         values = contents |>
           data.iquizoo::match_preproc(type = "inner") |>
-          dplyr::mutate(
+          mutate(
             game_id = as.character(.data$game_id),
             tar_parsed = syms(stringr::str_glue("{name_parsed}_{game_id}"))
           ),

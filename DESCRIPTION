@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquizoo" Data Processing
-Version: 3.8.1
+Version: 3.8.2
 Authors@R: c(
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150")),
@@ -30,7 +30,6 @@ Imports:
     tarchetypes,
     targets,
     tidyr,
-    tidyselect,
     utils,
     vctrs
 Suggests:
@@ -44,6 +43,7 @@ Suggests:
     roxygen2,
     testthat (>= 3.0.0),
     tibble,
+    tidytable,
     withr
 Remotes:
     psychelzh/data.iquizoo,
