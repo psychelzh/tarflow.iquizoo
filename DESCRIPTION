@@ -22,16 +22,13 @@ Imports:
     data.iquizoo (>= 2023.10.22),
     DBI,
     dplyr,
-    jsonlite,
     memoise,
     purrr,
     rlang (>= 1.0.0),
     stringr,
     tarchetypes,
     targets,
-    tidyr,
-    utils,
-    vctrs
+    tidyr
 Suggests:
     bit64,
     covr,
