@@ -1,3 +1,10 @@
+# tarflow.iquizoo 3.9.0
+
+## Breaking Changes
+
+* Ensure all internal SQL query templates end with semicolon. This will unavoidably invalidate existing targets for old pipelines.
+* Removed `preproc_data()` and `wrangle_data()` functions. Now all data preprocessing are done in `preproc.iquizoo` package.
+
 # tarflow.iquizoo 3.8.2
 
 ## Enhancements

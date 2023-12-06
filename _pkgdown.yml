@@ -7,13 +7,6 @@ reference:
   contents:
   - use_targets_pipeline
   - tar_prep_iquizoo
-- title: "Functions Used for Actions on Raw-data"
-  desc: >
-    Data parsing and pre-processing. Typically used in combination with
-    [preproc.iquizoo](https://psychelzh.github.io/preproc.iquizoo/) package.
-  contents:
-  - wrangle_data
-  - preproc_data
 - title: "Low-level Database operations"
   desc: Functions to help you interact with database.
   contents:

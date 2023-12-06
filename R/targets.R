@@ -230,7 +230,7 @@ tar_action_raw_data <- function(contents,
         targets::tar_target_raw(
           name_parsed,
           expr(wrangle_data(tar_data)),
-          packages = "tarflow.iquizoo"
+          packages = "preproc.iquizoo"
         )
       )
     },
@@ -251,7 +251,7 @@ tar_action_raw_data <- function(contents,
               .input = input, .extra = extra
             )
           ),
-          packages = c("tarflow.iquizoo", "preproc.iquizoo")
+          packages = "preproc.iquizoo"
         )
       )
     }
@@ -266,6 +266,7 @@ utils::globalVariables(
   c(
     "progress_hash", "project_id", "game_id",
     "tar_data", "tar_parsed",
+    "wrangle_data", "preproc_data",
     "prep_fun", "input", "extra"
   )
 )
