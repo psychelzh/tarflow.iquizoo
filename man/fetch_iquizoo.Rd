@@ -29,6 +29,7 @@ Fetch result of query from iQuizoo database
 \section{Functions}{
 \itemize{
 \item \code{fetch_iquizoo_mem()}: The same as \code{\link[=fetch_iquizoo]{fetch_iquizoo()}} except that the
-result is cached.
+result is cached. The cache is stored in disk by default, but can be
+changed by setting the environment variable \code{TARFLOW_CACHE} to \code{"memory"}.
 
 }}

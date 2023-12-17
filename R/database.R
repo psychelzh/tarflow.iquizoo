@@ -158,7 +158,8 @@ setup_option_file <- function(path = NULL, overwrite = FALSE, quietly = FALSE) {
 }
 
 #' @describeIn fetch_iquizoo The same as [fetch_iquizoo()] except that the
-#'   result is cached.
+#'   result is cached. The cache is stored in disk by default, but can be
+#'   changed by setting the environment variable `TARFLOW_CACHE` to `"memory"`.
 #' @export
 fetch_iquizoo_mem <- memoise::memoise(
   fetch_iquizoo,
