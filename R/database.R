@@ -157,6 +157,18 @@ setup_option_file <- function(path = NULL, overwrite = FALSE, quietly = FALSE) {
   writeLines(stringr::str_glue(my_cnf_tmpl), path)
 }
 
+#' @describeIn fetch_iquizoo The same as [fetch_iquizoo()] except that the
+#'   result is cached. The cache is stored in disk by default, but can be
+#'   changed by setting the environment variable `TARFLOW_CACHE` to `"memory"`.
+#' @export
+fetch_iquizoo_mem <- memoise(
+  fetch_iquizoo,
+  cache = switch(Sys.getenv("TARFLOW_CACHE", "disk"),
+    disk = cache_filesystem("~/.tarflow.cache"),
+    memory = cache_memory()
+  )
+)
+
 # helper functions
 default_file <- function() {
   if (Sys.info()["sysname"] == "Windows") {

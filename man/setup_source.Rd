@@ -12,12 +12,12 @@ setup_source(
 }
 \arguments{
 \item{driver}{The driver used. Set as an option of \code{"tarflow.driver"}.
-Options are \code{\link[odbc:odbc]{odbc::odbc()}} and \code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}}, both of which need
+Options are \code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::odbc()}} and \code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}}, both of which need
 pre-configurations. Default to first available one.}
 
 \item{dsn}{The data source name of an \strong{ODBC} database connector. See
 \code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::dbConnect()}} for more information. Used when \code{driver} is set as
-\code{\link[odbc:odbc]{odbc::odbc()}}.}
+\code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::odbc()}}.}
 
 \item{groups}{Section identifier in the \code{default.file}. See
 \code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}} for more information. Used when \code{driver} is set as
