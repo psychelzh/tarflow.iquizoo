@@ -161,11 +161,11 @@ setup_option_file <- function(path = NULL, overwrite = FALSE, quietly = FALSE) {
 #'   result is cached. The cache is stored in disk by default, but can be
 #'   changed by setting the environment variable `TARFLOW_CACHE` to `"memory"`.
 #' @export
-fetch_iquizoo_mem <- memoise::memoise(
+fetch_iquizoo_mem <- memoise(
   fetch_iquizoo,
   cache = switch(Sys.getenv("TARFLOW_CACHE", "disk"),
-    disk = memoise::cache_filesystem("~/.tarflow.cache"),
-    memory = memoise::cache_memory()
+    disk = cache_filesystem("~/.tarflow.cache"),
+    memory = cache_memory()
   )
 )
 
