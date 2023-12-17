@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## New Features
+
+* Exported `fetch_iquizoo_mem()`, which is a cached version of `fetch_iquizoo()`, i.e., the results of `fetch_iquizoo()` will be cached.
+
 # tarflow.iquizoo 3.9.0
 
 ## Breaking Changes
