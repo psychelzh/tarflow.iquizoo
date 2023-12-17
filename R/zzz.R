@@ -38,7 +38,8 @@ NULL
         !requireNamespace("RMariaDB", quietly = TRUE)) {
     packageStartupMessage(
       "Neither odbc nor RMariaDB is installed.",
-      " Please install one of them."
+      " For better support, it is recommended to install RMariaDB.",
+      " Please install it with `install.packages('RMariaDB')`."
     )
   } else if (!check_source()) {
     packageStartupMessage(
