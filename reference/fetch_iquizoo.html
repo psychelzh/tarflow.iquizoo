@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.9.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fetch_iquizoo</span><span class="op">(</span><span class="va">query</span>, <span class="va">...</span>, params <span class="op">=</span> <span class="cn">NULL</span>, source <span class="op">=</span> <span class="fu"><a href="setup_source.html">setup_source</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fetch_iquizoo</span><span class="op">(</span><span class="va">query</span>, <span class="va">...</span>, params <span class="op">=</span> <span class="cn">NULL</span>, source <span class="op">=</span> <span class="fu"><a href="setup_source.html">setup_source</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">fetch_iquizoo_mem</span><span class="op">(</span><span class="va">query</span>, <span class="va">...</span>, params <span class="op">=</span> <span class="cn">NULL</span>, source <span class="op">=</span> <span class="fu"><a href="setup_source.html">setup_source</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,6 +82,13 @@
 
 <p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> contains the fetched data.</p>
     </div>
+    <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+    
+<ul><li><p><code>fetch_iquizoo_mem()</code>: The same as <code>fetch_iquizoo()</code> except that the
+result is cached. The cache is stored in disk by default, but can be
+changed by setting the environment variable <code>TARFLOW_CACHE</code> to <code>"memory"</code>.</p></li>
+</ul></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
