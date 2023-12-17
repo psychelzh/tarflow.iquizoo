@@ -30,18 +30,6 @@ NULL
     tryCatch(setup_option_file(quietly = TRUE), error = \(e) {})
   }
 
-  # https://stackoverflow.com/a/67664852/5996475
-  ns <- topenv()
-  # suppress message of loading digest package when loading memoise package
-  requireNamespace("digest", quietly = TRUE)
-  ns$fetch_iquizoo_mem <- memoise::memoise(
-    fetch_iquizoo,
-    cache = switch(Sys.getenv("TARFLOW_CACHE", "disk"),
-      disk = memoise::cache_filesystem("~/.tarflow.cache"),
-      memory = memoise::cache_memory()
-    )
-  )
-
   invisible()
 }
 

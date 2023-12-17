@@ -3,6 +3,7 @@
 export(check_source)
 export(fetch_data)
 export(fetch_iquizoo)
+export(fetch_iquizoo_mem)
 export(setup_option_file)
 export(setup_source)
 export(setup_templates)
