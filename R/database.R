@@ -174,6 +174,7 @@ setup_option_file <- function(path = NULL, overwrite = FALSE, quietly = FALSE) {
 #' @seealso [fetch_iquizoo()] for the original function.
 #' @export
 fetch_iquizoo_mem <- function(cache = NULL) {
+  requireNamespace("digest", quietly = TRUE)
   if (is.null(cache)) {
     cache <- switch(Sys.getenv("TARFLOW_CACHE", "disk"),
       disk = memoise::cache_filesystem("~/.tarflow.cache"),
