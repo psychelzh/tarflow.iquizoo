@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Convert `fetch_iquizoo_mem()` as a function factory to avoid cache location error.
+
 # tarflow.iquizoo 3.9.1
 
 ## New Features
