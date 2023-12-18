@@ -7,6 +7,7 @@
 #' @param source The data source from which data is fetched. See
 #'   [setup_source()] for details.
 #' @return A [data.frame] contains the fetched data.
+#' @seealso [fetch_iquizoo_mem()] for a memoised version of this function.
 #' @export
 fetch_iquizoo <- function(query, ...,
                           params = NULL,
@@ -157,17 +158,30 @@ setup_option_file <- function(path = NULL, overwrite = FALSE, quietly = FALSE) {
   writeLines(stringr::str_glue(my_cnf_tmpl), path)
 }
 
-#' @describeIn fetch_iquizoo The same as [fetch_iquizoo()] except that the
-#'   result is cached. The cache is stored in disk by default, but can be
-#'   changed by setting the environment variable `TARFLOW_CACHE` to `"memory"`.
+#' Memoised version of [fetch_iquizoo()]
+#'
+#' This function is a memoised version of [fetch_iquizoo()]. It is useful when
+#' the same query is called multiple times or you want to cache the result. See
+#' [memoise::memoise()] and [fetch_iquizoo()] for more details.
+#'
+#' @param cache The cache to be used. Default cache could be configured by
+#'   setting the environment variable `TARFLOW_CACHE` to `"disk"` or `"memory"`.
+#'   If set `TARFLOW_CACHE` to `"disk"`, the cache will be stored in disk at
+#'   `~/.tarflow.cache`. If set `TARFLOW_CACHE` to `"memory"`, the cache will be
+#'   stored in memory. You can also set `cache` to a custom cache, see
+#'   [memoise::memoise()] for more details.
+#' @return A memoised version of [fetch_iquizoo()].
+#' @seealso [fetch_iquizoo()] for the original function.
 #' @export
-fetch_iquizoo_mem <- memoise(
-  fetch_iquizoo,
-  cache = switch(Sys.getenv("TARFLOW_CACHE", "disk"),
-    disk = cache_filesystem("~/.tarflow.cache"),
-    memory = cache_memory()
-  )
-)
+fetch_iquizoo_mem <- function(cache = NULL) {
+  if (is.null(cache)) {
+    cache <- switch(Sys.getenv("TARFLOW_CACHE", "disk"),
+      disk = memoise::cache_filesystem("~/.tarflow.cache"),
+      memory = memoise::cache_memory()
+    )
+  }
+  memoise::memoise(fetch_iquizoo, cache = cache)
+}
 
 # helper functions
 default_file <- function() {

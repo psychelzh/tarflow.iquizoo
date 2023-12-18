@@ -1,7 +1,6 @@
 #' @import rlang
 #' @import dplyr
 #' @import tidyr
-#' @import memoise
 NULL
 
 # nocov start

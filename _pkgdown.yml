@@ -11,6 +11,7 @@ reference:
   desc: Functions to help you interact with database.
   contents:
   - fetch_iquizoo
+  - fetch_iquizoo_mem
   - fetch_data
   - check_source
   - setup_option_file

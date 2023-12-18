@@ -60,7 +60,7 @@ tar_prep_iquizoo <- function(params, ...,
     )
   }
   if (is.null(contents)) {
-    contents <- fetch_iquizoo_mem(
+    contents <- fetch_iquizoo_mem()(
       read_file(templates$contents),
       params = unname(
         if (!is_empty(params)) as.list(params)
