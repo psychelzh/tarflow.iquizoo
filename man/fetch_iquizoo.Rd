@@ -2,12 +2,9 @@
 % Please edit documentation in R/database.R
 \name{fetch_iquizoo}
 \alias{fetch_iquizoo}
-\alias{fetch_iquizoo_mem}
 \title{Fetch result of query from iQuizoo database}
 \usage{
 fetch_iquizoo(query, ..., params = NULL, source = setup_source())
-
-fetch_iquizoo_mem(query, ..., params = NULL, source = setup_source())
 }
 \arguments{
 \item{query}{A character string containing SQL.}
@@ -26,10 +23,6 @@ A \link{data.frame} contains the fetched data.
 \description{
 Fetch result of query from iQuizoo database
 }
-\section{Functions}{
-\itemize{
-\item \code{fetch_iquizoo_mem()}: The same as \code{\link[=fetch_iquizoo]{fetch_iquizoo()}} except that the
-result is cached. The cache is stored in disk by default, but can be
-changed by setting the environment variable \code{TARFLOW_CACHE} to \code{"memory"}.
-
-}}
+\seealso{
+\code{\link[=fetch_iquizoo_mem]{fetch_iquizoo_mem()}} for a memoised version of this function.
+}
