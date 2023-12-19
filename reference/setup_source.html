@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.9.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.9.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,14 +62,14 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>driver</dt>
 <dd><p>The driver used. Set as an option of <code>"tarflow.driver"</code>.
-Options are <code><a href="https://r-dbi.github.io/odbc/reference/odbc.html" class="external-link">odbc::odbc()</a></code> and <code><a href="https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html" class="external-link">RMariaDB::MariaDB()</a></code>, both of which need
+Options are <code><a href="https://r-dbi.github.io/odbc/reference/dbConnect-OdbcDriver-method.html" class="external-link">odbc::odbc()</a></code> and <code><a href="https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html" class="external-link">RMariaDB::MariaDB()</a></code>, both of which need
 pre-configurations. Default to first available one.</p></dd>
 
 
 <dt>dsn</dt>
 <dd><p>The data source name of an <strong>ODBC</strong> database connector. See
 <code><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">odbc::dbConnect()</a></code> for more information. Used when <code>driver</code> is set as
-<code><a href="https://r-dbi.github.io/odbc/reference/odbc.html" class="external-link">odbc::odbc()</a></code>.</p></dd>
+<code><a href="https://r-dbi.github.io/odbc/reference/dbConnect-OdbcDriver-method.html" class="external-link">odbc::odbc()</a></code>.</p></dd>
 
 
 <dt>groups</dt>
