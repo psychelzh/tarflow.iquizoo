@@ -67,11 +67,15 @@ test_that("Works when single game on different projects", {
         contents = tibble::tibble(
           project_id = bit64::as.integer64(c(519355469824389, 519355011072389)),
           game_id = bit64::as.integer64(238239294447813)
-        )
+        ),
+        what = "scores"
       )
     })
     targets::tar_make(reporter = "silent", callr_function = NULL)
-    expect_snapshot_value(targets::tar_objects(), style = "json2")
+    expect_equal(
+      unique(targets::tar_read(scores_238239294447813)$project_id),
+      bit64::as.integer64(c(519355469824389, 519355011072389))
+    )
   })
 })
 
@@ -85,14 +89,13 @@ test_that("`combine` work properly", {
       )
       tar_prep_iquizoo(
         params,
-        what = "scores",
-        combine = "scores"
+        combine = objects()
       )
     })
-    targets::tar_make(reporter = "silent", callr_function = NULL)
-    objs_out <- targets::tar_objects()
-    expect_contains(objs_out, "scores")
-    expect_false(any(setdiff(objects(), "scores") %in% objs_out))
+    expect_contains(
+      targets::tar_manifest(callr_function = NULL)$name,
+      objects()
+    )
   })
   params <- tibble::tribble(
     ~organization_name, ~project_name,
