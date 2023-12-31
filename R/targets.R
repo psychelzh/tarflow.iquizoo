@@ -223,8 +223,8 @@ tar_action_raw_data <- function(contents,
       tar_parsed = syms(sprintf("%s_%s", name_parsed, game_id)),
       tar_indices = syms(sprintf("%s_%s", name_indices, game_id))
     )
-  c(
-    if ("parse" %in% action_raw_data) {
+  list(
+    raw_data_parsed = if ("parse" %in% action_raw_data) {
       tarchetypes::tar_eval(
         targets::tar_target(
           tar_parsed,
@@ -234,7 +234,7 @@ tar_action_raw_data <- function(contents,
         contents
       )
     },
-    if ("preproc" %in% action_raw_data) {
+    indices = if ("preproc" %in% action_raw_data) {
       tarchetypes::tar_eval(
         targets::tar_target(
           tar_indices,
