@@ -103,6 +103,7 @@ test_that("`combine` work properly", {
 })
 
 test_that("Serialize check (no roundtrip error)", {
+  withr::local_envvar(c(TARFLOW_CACHE = "memory"))
   targets::tar_dir({
     targets::tar_script({
       library(targets)
