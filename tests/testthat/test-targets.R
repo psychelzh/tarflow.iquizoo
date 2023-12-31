@@ -5,8 +5,7 @@ test_that("Default templates work", {
     "北京师范大学", "认知测评预实验"
   )
   tar_prep_iquizoo(params) |>
-    expect_targets_list() |>
-    expect_silent()
+    expect_targets_list()
 })
 
 test_that("Signal error if templates not created correctly", {
@@ -22,8 +21,7 @@ test_that("Custom templates work", {
       contents = "sql/contents.sql"
     )
   ) |>
-    expect_targets_list() |>
-    expect_silent()
+    expect_targets_list()
 })
 
 test_that("Support `data.frame` contents", {
@@ -33,8 +31,7 @@ test_that("Support `data.frame` contents", {
       game_id = bit64::as.integer64(581943246745925)
     )
   ) |>
-    expect_targets_list() |>
-    expect_silent()
+    expect_targets_list()
 })
 
 test_that("Signal error if `contents` contains no data", {
