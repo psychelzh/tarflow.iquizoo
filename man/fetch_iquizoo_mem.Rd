@@ -10,8 +10,8 @@ fetch_iquizoo_mem(cache = NULL)
 \item{cache}{The cache to be used. Default cache could be configured by
 setting the environment variable \code{TARFLOW_CACHE} to \code{"disk"} or \code{"memory"}.
 If set \code{TARFLOW_CACHE} to \code{"disk"}, the cache will be stored in disk at
-\verb{~/.tarflow.cache}. If set \code{TARFLOW_CACHE} to \code{"memory"}, the cache will be
-stored in memory. You can also set \code{cache} to a custom cache, see
+\verb{~/.cache/tarflow.iquizoo}. If set \code{TARFLOW_CACHE} to \code{"memory"}, the cache
+will be stored in memory. You can also set \code{cache} to a custom cache, see
 \code{\link[memoise:memoise]{memoise::memoise()}} for more details.}
 }
 \value{

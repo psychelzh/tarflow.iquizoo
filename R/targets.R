@@ -217,42 +217,32 @@ tar_action_raw_data <- function(contents,
                                 name_parsed = "raw_data_parsed",
                                 name_indices = "indices") {
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
-  contents <- distinct(contents, .data$game_id)
-  c(
-    if ("parse" %in% action_raw_data) {
-      tarchetypes::tar_map(
-        values = contents |>
-          mutate(
-            game_id = as.character(.data$game_id),
-            tar_data = syms(stringr::str_glue("{name_data}_{game_id}"))
-          ),
-        names = game_id,
-        targets::tar_target_raw(
-          name_parsed,
-          expr(wrangle_data(tar_data)),
+  contents <- distinct(contents, .data$game_id) |>
+    mutate(
+      tar_data = syms(sprintf("%s_%s", name_data, game_id)),
+      tar_parsed = syms(sprintf("%s_%s", name_parsed, game_id)),
+      tar_indices = syms(sprintf("%s_%s", name_indices, game_id))
+    )
+  list(
+    raw_data_parsed = if ("parse" %in% action_raw_data) {
+      tarchetypes::tar_eval(
+        targets::tar_target(
+          tar_parsed,
+          wrangle_data(tar_data),
           packages = "preproc.iquizoo"
-        )
+        ),
+        contents
       )
     },
-    if ("preproc" %in% action_raw_data) {
-      tarchetypes::tar_map(
-        values = contents |>
-          data.iquizoo::match_preproc(type = "inner") |>
-          mutate(
-            game_id = as.character(.data$game_id),
-            tar_parsed = syms(stringr::str_glue("{name_parsed}_{game_id}"))
-          ),
-        names = game_id,
-        targets::tar_target_raw(
-          name_indices,
-          expr(
-            preproc_data(
-              tar_parsed, prep_fun,
-              .input = input, .extra = extra
-            )
-          ),
+    indices = if ("preproc" %in% action_raw_data) {
+      tarchetypes::tar_eval(
+        targets::tar_target(
+          tar_indices,
+          preproc_data(tar_parsed, prep_fun, .input = input, .extra = extra),
           packages = "preproc.iquizoo"
-        )
+        ),
+        contents |>
+          data.iquizoo::match_preproc(type = "inner")
       )
     }
   )
@@ -265,7 +255,7 @@ objects <- function() {
 utils::globalVariables(
   c(
     "progress_hash", "project_id", "game_id",
-    "tar_data", "tar_parsed",
+    "tar_data", "tar_parsed", "tar_indices",
     "wrangle_data", "preproc_data",
     "prep_fun", "input", "extra"
   )

@@ -1,3 +1,9 @@
+# tarflow.iquizoo 3.9.3
+
+## Breaking Changes
+
+* Make the default cache location more intuitive as `~/.cache/tarflow.iquizoo`. This will unavoidably invalidate existing caches for old pipelines, but the pipeline targets will not be affected.
+
 # tarflow.iquizoo 3.9.2
 
 ## Breaking Changes
