@@ -1,11 +1,14 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Make the default cache location more intuitive as `~/.cache/tarflow.iquizoo`. This will unavoidably invalidate existing caches for old pipelines, but the pipeline targets will not be affected.
+
 # tarflow.iquizoo 3.9.2
 
 ## Breaking Changes
 
 * Convert `fetch_iquizoo_mem()` as a function factory to avoid cache location error.
-* Changed the default cache location to `~/.cache/tarflow.iquizoo` to avoid cache location error.
 
 # tarflow.iquizoo 3.9.1
 
