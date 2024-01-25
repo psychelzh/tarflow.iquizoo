@@ -5,6 +5,7 @@
 ## Breaking Changes
 
 * Convert `fetch_iquizoo_mem()` as a function factory to avoid cache location error.
+* Changed the default cache location to `~/.cache/tarflow.iquizoo` to avoid cache location error.
 
 # tarflow.iquizoo 3.9.1
 
