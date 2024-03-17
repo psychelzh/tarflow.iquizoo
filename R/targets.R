@@ -158,10 +158,10 @@ tar_fetch_data <- function(contents, templates, what) {
         progress_hash
         purrr::pmap(
           list(
-            query = !!read_file(templates[[what]]),
             project_id = project_id,
             game_id = game_id,
-            what = !!what
+            what = !!what,
+            query = !!read_file(templates[[what]])
           ),
           fetch_data
         ) |>

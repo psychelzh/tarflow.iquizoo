@@ -70,25 +70,46 @@ fetch_iquizoo_mem <- function(cache = NULL) {
 
 #' Fetch data from iQuizoo database
 #'
-#' @param query A parameterized SQL query. Note the query should also contain
-#'   a `glue` expression to inject the table name, i.e., `"{ table_name }"`.
+#' This function is a wrapper of [fetch_iquizoo()], which is used as a helper
+#' function to fetch data from the iQuizoo database.
+#'
+#' The data essentially means one of the two types of data: raw data or scores.
+#' The raw data is the original data collected from the game, while the scores
+#' are the scores calculated by the iQuizoo system. While scores can also be
+#' calculated from the raw data, the pre-calculated scores are used to for some
+#' quick analysis.
+#'
+#' The data is separated by project date, so the table name is suffixed by the
+#' project date, which is automatically fetched from the database by this
+#' function. You could set the format of the date suffix by `suffix_format`,
+#' although currently you should not need to change it because it probably will
+#' not change in the future. Finally, this suffix should be substituted into the
+#' query, which should contain an expression to inject the table name, i.e.,
+#' `"{table_name}"`.
+#'
 #' @param project_id The project id to be bound to the query.
 #' @param game_id The game id to be bound to the query.
 #' @param ... Further arguments passed to [fetch_iquizoo()].
 #' @param what What to fetch. Can be either "raw_data" or "scores".
+#' @param query A parameterized SQL query. A default query file is stored in the
+#'   package, which is often enough for most cases. You can also specify your
+#'   own query file by this argument. See details for more information.
+#' @param suffix_format The format of the date suffix. See details for more
+#'   information.
 #' @return A [data.frame] contains the fetched data.
 #' @export
-fetch_data <- function(query, project_id, game_id, ...,
-                       what = c("raw_data", "scores")) {
+fetch_data <- function(project_id, game_id, ...,
+                       what = c("raw_data", "scores"),
+                       query = NULL,
+                       suffix_format = "%Y0101") {
   check_dots_used()
   what <- match.arg(what)
-  # the database stores data from each year into a separate table with the
-  # suffix of course date with the format "<year>0101"
+  # data separated by project date, so we need to get the project date first
   suffix <- package_file("sql", "project_date.sql") |>
     read_file() |>
     fetch_iquizoo(params = project_id) |>
     .subset2("project_date") |>
-    format("%Y0101")
+    format(suffix_format)
   table_name <- paste0(
     switch(what,
       raw_data = "content_orginal_data_",
@@ -96,6 +117,7 @@ fetch_data <- function(query, project_id, game_id, ...,
     ),
     suffix
   )
+  query <- query %||% read_file(package_file("sql", paste0(what, ".sql")))
   fetch_iquizoo(
     stringr::str_glue(
       query,
