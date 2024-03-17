@@ -102,45 +102,6 @@ tar_prep_iquizoo <- function(params, ...,
   )
 }
 
-#' Set up templates used to fetch data
-#'
-#' If you want to extract data based on your own parameters, you should use this
-#' function to set up your own SQL templates. Note that the SQL queries should
-#' be parameterized.
-#'
-#' @param contents The SQL template file used to fetch contents. At least
-#'   `project_id` and `game_id` columns should be included in the fetched data
-#'   based on the template. `project_id` will be used as the only parameter in
-#'   `users` and `project` templates, while all three will be used in `raw_data`
-#'   and `scores` templates.
-#' @param users The SQL template file used to fetch users. Usually you don't
-#'   need to change this.
-#' @param raw_data The SQL template file used to fetch raw data. See
-#'   [fetch_data()] for details. Usually you don't need to change this.
-#' @param scores The SQL template file used to fetch scores. See [fetch_data()]
-#'   for details. Usually you don't need to change this.
-#' @param progress_hash The SQL template file used to fetch progress hash.
-#'   Usually you don't need to change this.
-#' @return A S3 object of class `tarflow.template` with the options.
-#' @export
-setup_templates <- function(contents = NULL,
-                            users = NULL,
-                            raw_data = NULL,
-                            scores = NULL,
-                            progress_hash = NULL) {
-  structure(
-    list(
-      contents = contents %||% package_file("sql", "contents.sql"),
-      users = users %||% package_file("sql", "users.sql"),
-      raw_data = raw_data %||% package_file("sql", "raw_data.sql"),
-      scores = scores %||% package_file("sql", "scores.sql"),
-      progress_hash = progress_hash %||%
-        package_file("sql", "progress_hash.sql")
-    ),
-    class = "tarflow.template"
-  )
-}
-
 # helper functions
 tar_projects_info <- function(contents, templates, check_progress) {
   c(
