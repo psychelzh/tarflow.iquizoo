@@ -1,5 +1,14 @@
 # tarflow.iquizoo (development version)
 
+## Breaking Changes
+
+* Now `query` argument of `fetch_data()` is optional. If not specified, the default query stored in the package will be used.
+
+## Enhancements
+
+* Added `suffix_format` argument to `fetch_data()` to specify the format of suffix in the query file. This is useful when you want to use a different format of suffix in the query file.
+* Enhanced the documentation of `fetch_data()`.
+
 # tarflow.iquizoo 3.9.3
 
 ## Breaking Changes
