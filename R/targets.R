@@ -145,16 +145,15 @@ tar_fetch_data <- function(contents, templates, what) {
         .(create_hash_deps(project_ids))
         do.call(
           rbind,
-          lapply(
+          mapply(
+            fetch_data,
             .(project_ids),
-            \(project_id) {
-              fetch_data(
-                project_id,
-                .(game_id),
-                what = .(what),
-                query = .(read_file(templates[[what]]))
-              )
-            }
+            .(game_id),
+            MoreArgs = list(
+              what = .(what),
+              query = .(read_file(templates[[what]]))
+            ),
+            SIMPLIFY = FALSE
           )
         )
       }),
