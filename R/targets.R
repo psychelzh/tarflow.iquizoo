@@ -79,11 +79,11 @@ tar_prep_iquizoo <- function(params, ...,
       expr(unserialize(!!serialize(contents, NULL)))
     ),
     tar_projects_info(contents, templates, check_progress),
-    purrr::map(
+    lapply(
       what,
       \(what) tar_fetch_data(contents, templates, what)
     ) |>
-      purrr::list_flatten(),
+      unlist(recursive = FALSE),
     if ("raw_data" %in% what && action_raw_data != "none") {
       tar_action_raw_data(contents, action_raw_data)
     }
@@ -106,14 +106,12 @@ tar_prep_iquizoo <- function(params, ...,
 tar_projects_info <- function(contents, templates, check_progress) {
   c(
     tarchetypes::tar_map(
-      contents |>
-        distinct(.data$project_id) |>
-        mutate(project_id = as.character(.data$project_id)),
+      data.frame(project_id = as.character(unique(contents$project_id))),
       targets::tar_target_raw(
         "progress_hash",
-        expr(
+        bquote(
           fetch_iquizoo(
-            !!read_file(templates[["progress_hash"]]),
+            .(read_file(templates[["progress_hash"]])),
             params = list(project_id)
           )
         ),
@@ -123,10 +121,10 @@ tar_projects_info <- function(contents, templates, check_progress) {
     ),
     targets::tar_target_raw(
       "users",
-      expr(
+      bquote(
         fetch_iquizoo(
-          !!read_file(templates[["users"]]),
-          params = list(!!unique(contents$project_id))
+          .(read_file(templates[["users"]])),
+          params = list(.(unique(contents$project_id)))
         ) |>
           unique()
       ),
@@ -136,40 +134,36 @@ tar_projects_info <- function(contents, templates, check_progress) {
 }
 
 tar_fetch_data <- function(contents, templates, what) {
-  tarchetypes::tar_map(
-    contents |>
-      distinct(.data$project_id, .data$game_id) |>
-      mutate(
-        across(c("project_id", "game_id"), as.character)
-      ) |>
-      summarise(
-        progress_hash = list(
-          syms(
-            stringr::str_glue("progress_hash_{project_id}")
+  game_ids <- unique(as.character(contents$game_id))
+  targets <- vector("list", length(game_ids))
+  names(targets) <- game_ids
+  for (game_id in game_ids) {
+    project_ids <- with(contents, as.character(project_id[game_id == game_id]))
+    targets[[game_id]] <- targets::tar_target_raw(
+      paste0(what, "_", game_id),
+      bquote({
+        .(create_hash_deps(project_ids))
+        do.call(
+          rbind,
+          lapply(
+            .(project_ids),
+            \(project_id) {
+              fetch_data(
+                project_id,
+                .(game_id),
+                what = .(what),
+                query = .(read_file(templates[[what]]))
+              )
+            }
           )
-        ),
-        project_id = list(.data$project_id),
-        .by = "game_id"
-      ),
-    names = "game_id",
-    targets::tar_target_raw(
-      what,
-      expr({
-        progress_hash
-        purrr::pmap(
-          list(
-            project_id = project_id,
-            game_id = game_id,
-            what = !!what,
-            query = !!read_file(templates[[what]])
-          ),
-          fetch_data
-        ) |>
-          purrr::list_rbind()
+        )
       }),
       packages = "tarflow.iquizoo"
     )
-  )
+  }
+  out <- list(targets)
+  names(out) <- what
+  out
 }
 
 tar_action_raw_data <- function(contents,
@@ -178,12 +172,14 @@ tar_action_raw_data <- function(contents,
                                 name_parsed = "raw_data_parsed",
                                 name_indices = "indices") {
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
-  contents <- distinct(contents, .data$game_id) |>
-    mutate(
-      tar_data = syms(sprintf("%s_%s", name_data, game_id)),
-      tar_parsed = syms(sprintf("%s_%s", name_parsed, game_id)),
-      tar_indices = syms(sprintf("%s_%s", name_indices, game_id))
-    )
+  contents <- within(
+    unique(contents["game_id"]),
+    {
+      tar_data <- syms(sprintf("%s_%s", name_data, game_id))
+      tar_parsed <- syms(sprintf("%s_%s", name_parsed, game_id))
+      tar_indices <- syms(sprintf("%s_%s", name_indices, game_id))
+    }
+  )
   list(
     raw_data_parsed = if ("parse" %in% action_raw_data) {
       tarchetypes::tar_eval(
@@ -202,8 +198,7 @@ tar_action_raw_data <- function(contents,
           preproc_data(tar_parsed, prep_fun, .input = input, .extra = extra),
           packages = "preproc.iquizoo"
         ),
-        contents |>
-          data.iquizoo::match_preproc(type = "inner")
+        data.iquizoo::match_preproc(contents, type = "inner")
       )
     }
   )
