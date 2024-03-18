@@ -156,7 +156,8 @@ tar_fetch_data <- function(contents, templates, what) {
                 what = .(what),
                 query = .(read_file(templates[[what]]))
               ),
-              SIMPLIFY = FALSE
+              SIMPLIFY = FALSE,
+              USE.NAMES = FALSE
             )
           )
         },
