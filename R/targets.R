@@ -141,22 +141,25 @@ tar_fetch_data <- function(contents, templates, what) {
     project_ids <- with(contents, as.character(project_id[game_id == game_id]))
     targets[[game_id]] <- targets::tar_target_raw(
       paste0(what, "_", game_id),
-      bquote({
-        .(create_hash_deps(project_ids))
-        do.call(
-          rbind,
-          mapply(
-            fetch_data,
-            .(project_ids),
-            .(game_id),
-            MoreArgs = list(
-              what = .(what),
-              query = .(read_file(templates[[what]]))
-            ),
-            SIMPLIFY = FALSE
+      bquote(
+        {
+          list(..(syms(paste0("progress_hash_", project_ids))))
+          do.call(
+            rbind,
+            mapply(
+              fetch_data,
+              .(project_ids),
+              .(game_id),
+              MoreArgs = list(
+                what = .(what),
+                query = .(read_file(templates[[what]]))
+              ),
+              SIMPLIFY = FALSE
+            )
           )
-        )
-      }),
+        },
+        splice = TRUE
+      ),
       packages = "tarflow.iquizoo"
     )
   }
