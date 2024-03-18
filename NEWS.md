@@ -8,6 +8,7 @@
 
 * Added `suffix_format` argument to `fetch_data()` to specify the format of suffix in the query file. This is useful when you want to use a different format of suffix in the query file.
 * Enhanced the documentation of `fetch_data()`.
+* Let package not depend on dplyr, tidyr and purrr packages (#84).
 
 # tarflow.iquizoo 3.9.3
 
