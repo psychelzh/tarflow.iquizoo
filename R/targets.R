@@ -138,7 +138,9 @@ tar_fetch_data <- function(contents, templates, what) {
   targets <- vector("list", length(game_ids))
   names(targets) <- game_ids
   for (game_id in game_ids) {
-    project_ids <- with(contents, as.character(project_id[game_id == game_id]))
+    project_ids <- as.character(
+      contents$project_id[contents$game_id == game_id]
+    )
     targets[[game_id]] <- targets::tar_target_raw(
       paste0(what, "_", game_id),
       bquote(
