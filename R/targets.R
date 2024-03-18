@@ -79,11 +79,11 @@ tar_prep_iquizoo <- function(params, ...,
       expr(unserialize(!!serialize(contents, NULL)))
     ),
     tar_projects_info(contents, templates, check_progress),
-    lapply(
+    sapply(
       what,
-      \(what) tar_fetch_data(contents, templates, what)
-    ) |>
-      unlist(recursive = FALSE),
+      \(what) tar_fetch_data(contents, templates, what),
+      simplify = FALSE
+    ),
     if ("raw_data" %in% what && action_raw_data != "none") {
       tar_action_raw_data(contents, action_raw_data)
     }
@@ -160,9 +160,7 @@ tar_fetch_data <- function(contents, templates, what) {
       packages = "tarflow.iquizoo"
     )
   }
-  out <- list(targets)
-  names(out) <- what
-  out
+  targets
 }
 
 tar_action_raw_data <- function(contents,
