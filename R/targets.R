@@ -148,16 +148,13 @@ tar_fetch_data <- function(contents, templates, what) {
           list(..(syms(paste0("progress_hash_", project_ids))))
           do.call(
             rbind,
-            mapply(
+            .mapply(
               fetch_data,
-              .(project_ids),
-              .(game_id),
+              list(.(project_ids), .(game_id)),
               MoreArgs = list(
                 what = .(what),
                 query = .(read_file(templates[[what]]))
-              ),
-              SIMPLIFY = FALSE,
-              USE.NAMES = FALSE
+              )
             )
           )
         },
