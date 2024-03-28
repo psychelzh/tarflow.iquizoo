@@ -7,6 +7,9 @@ reference:
   contents:
   - use_targets_pipeline
   - tar_prep_iquizoo
+  - tar_prep_proj
+  - tar_fetch_data
+  - tar_prep_raw
 - title: "Low-level Database operations"
   desc: Functions to help you interact with database.
   contents:
