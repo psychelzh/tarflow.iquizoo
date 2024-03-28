@@ -4,12 +4,16 @@
 \alias{fetch_data}
 \title{Fetch data from iQuizoo database}
 \usage{
-fetch_data(query, project_id, game_id, ..., what = c("raw_data", "scores"))
+fetch_data(
+  project_id,
+  game_id,
+  ...,
+  what = c("raw_data", "scores"),
+  query = NULL,
+  suffix_format = "\%Y0101"
+)
 }
 \arguments{
-\item{query}{A parameterized SQL query. Note the query should also contain
-a \code{glue} expression to inject the table name, i.e., \code{"{ table_name }"}.}
-
 \item{project_id}{The project id to be bound to the query.}
 
 \item{game_id}{The game id to be bound to the query.}
@@ -17,10 +21,33 @@ a \code{glue} expression to inject the table name, i.e., \code{"{ table_name }"}
 \item{...}{Further arguments passed to \code{\link[=fetch_iquizoo]{fetch_iquizoo()}}.}
 
 \item{what}{What to fetch. Can be either "raw_data" or "scores".}
+
+\item{query}{A parameterized SQL query. A default query file is stored in the
+package, which is often enough for most cases. You can also specify your
+own query file by this argument. See details for more information.}
+
+\item{suffix_format}{The format of the date suffix. See details for more
+information.}
 }
 \value{
 A \link{data.frame} contains the fetched data.
 }
 \description{
-Fetch data from iQuizoo database
+This function is a wrapper of \code{\link[=fetch_iquizoo]{fetch_iquizoo()}}, which is used as a helper
+function to fetch data from the iQuizoo database.
+}
+\details{
+The data essentially means one of the two types of data: raw data or scores.
+The raw data is the original data collected from the game, while the scores
+are the scores calculated by the iQuizoo system. While scores can also be
+calculated from the raw data, the pre-calculated scores are used to for some
+quick analysis.
+
+The data is separated by project date, so the table name is suffixed by the
+project date, which is automatically fetched from the database by this
+function. You could set the format of the date suffix by \code{suffix_format},
+although currently you should not need to change it because it probably will
+not change in the future. Finally, this suffix should be substituted into the
+query, which should contain an expression to inject the table name, i.e.,
+\code{"{table_name}"}.
 }
