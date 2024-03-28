@@ -78,14 +78,14 @@ tar_prep_iquizoo <- function(params, ...,
       "contents_origin",
       expr(unserialize(!!serialize(contents, NULL)))
     ),
-    tar_projects_info(contents, templates, check_progress),
+    tar_prep_proj(contents, templates, check_progress),
     sapply(
       what,
       \(what) tar_fetch_data(contents, templates, what),
       simplify = FALSE
     ),
     if ("raw_data" %in% what && action_raw_data != "none") {
-      tar_action_raw_data(contents, action_raw_data)
+      tar_prep_raw(contents, action_raw_data)
     }
   )
   c(
@@ -102,8 +102,24 @@ tar_prep_iquizoo <- function(params, ...,
   )
 }
 
-# helper functions
-tar_projects_info <- function(contents, templates, check_progress) {
+#' Generate a set of targets for preparing project-level data
+#'
+#' There are mainly two types of data to be fetched, i.e., the progress hash and
+#' the user information. The former is used to check the progress of the
+#' project, while the latter is used to identify the users involved in the
+#' project.
+#'
+#' @param contents The contents structure used as the configuration of data
+#'   fetching.
+#' @param templates The SQL template files used to fetch data. See
+#'   [setup_templates()] for details.
+#' @param check_progress Whether to check the progress hash. Set it as `FALSE`
+#'   if the project is finalized.
+#' @return A list of target objects.
+#' @export
+tar_prep_proj <- function(contents,
+                          templates = setup_templates(),
+                          check_progress = TRUE) {
   c(
     tarchetypes::tar_map(
       data.frame(project_id = as.character(unique(contents$project_id))),
@@ -133,7 +149,22 @@ tar_projects_info <- function(contents, templates, check_progress) {
   )
 }
 
-tar_fetch_data <- function(contents, templates, what) {
+#' Generate a set of targets for fetching data
+#'
+#' This target factory is the main part of the `tar_prep_iquizoo` function. It
+#' fetches the raw data and scores for each project and task/game combination.
+#'
+#' @param contents The contents structure used as the configuration of data
+#'   fetching.
+#' @param templates The SQL template files used to fetch data. See
+#'   [setup_templates()] for details.
+#' @param what What to fetch.
+#' @return A list of target objects.
+#' @export
+tar_fetch_data <- function(contents,
+                           templates = setup_templates(),
+                           what = c("raw_data", "scores")) {
+  what <- match.arg(what)
   game_ids <- unique(as.character(contents$game_id))
   targets <- vector("list", length(game_ids))
   names(targets) <- game_ids
@@ -166,11 +197,26 @@ tar_fetch_data <- function(contents, templates, what) {
   targets
 }
 
-tar_action_raw_data <- function(contents,
-                                action_raw_data,
-                                name_data = "raw_data",
-                                name_parsed = "raw_data_parsed",
-                                name_indices = "indices") {
+#' Generate a set of targets for wrangling and pre-processing raw data
+#'
+#' This target factory is the main part of the `tar_prep_iquizoo` function. It
+#' wrangles the raw data into a tidy format and calculates indices based on the
+#' parsed data.
+#'
+#' @param contents The contents structure used as the configuration of data
+#'   fetching.
+#' @param action_raw_data The action to be taken on the fetched raw data.
+#' @param name_data The name of the raw data target.
+#' @param name_parsed The name of the parsed data target.
+#' @param name_indices The name of the indices target.
+#' @return A list of target objects.
+#' @export
+tar_prep_raw <- function(contents,
+                         action_raw_data = c("all", "parse", "none"),
+                         name_data = "raw_data",
+                         name_parsed = "raw_data_parsed",
+                         name_indices = "indices") {
+  action_raw_data <- match.arg(action_raw_data)
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
   contents <- within(
     unique(contents["game_id"]),
