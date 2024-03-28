@@ -13,10 +13,10 @@ reference:
   - fetch_iquizoo
   - fetch_iquizoo_mem
   - fetch_data
-  - check_source
-  - setup_option_file
 - title: "Miscellaneous Option Functions"
   desc: Functions to help you set up options.
   contents:
   - setup_templates
   - setup_source
+  - setup_option_file
+  - check_source
