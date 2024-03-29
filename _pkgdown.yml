@@ -7,16 +7,19 @@ reference:
   contents:
   - use_targets_pipeline
   - tar_prep_iquizoo
+  - tar_prep_proj
+  - tar_fetch_data
+  - tar_prep_raw
 - title: "Low-level Database operations"
   desc: Functions to help you interact with database.
   contents:
   - fetch_iquizoo
   - fetch_iquizoo_mem
   - fetch_data
-  - check_source
-  - setup_option_file
 - title: "Miscellaneous Option Functions"
   desc: Functions to help you set up options.
   contents:
   - setup_templates
   - setup_source
+  - setup_option_file
+  - check_source

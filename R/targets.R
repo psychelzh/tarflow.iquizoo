@@ -78,14 +78,14 @@ tar_prep_iquizoo <- function(params, ...,
       "contents_origin",
       expr(unserialize(!!serialize(contents, NULL)))
     ),
-    tar_projects_info(contents, templates, check_progress),
-    purrr::map(
+    tar_prep_proj(contents, templates, check_progress),
+    sapply(
       what,
-      \(what) tar_fetch_data(contents, templates, what)
-    ) |>
-      purrr::list_flatten(),
+      \(what) tar_fetch_data(contents, templates, what, check_progress),
+      simplify = FALSE
+    ),
     if ("raw_data" %in% what && action_raw_data != "none") {
-      tar_action_raw_data(contents, action_raw_data)
+      tar_prep_raw(contents, action_raw_data)
     }
   )
   c(
@@ -102,70 +102,49 @@ tar_prep_iquizoo <- function(params, ...,
   )
 }
 
-#' Set up templates used to fetch data
+#' Generate a set of targets for preparing project-level data
 #'
-#' If you want to extract data based on your own parameters, you should use this
-#' function to set up your own SQL templates. Note that the SQL queries should
-#' be parameterized.
+#' There are mainly two types of data to be fetched, i.e., the progress hash and
+#' the user information. The former is used to check the progress of the
+#' project, while the latter is used to identify the users involved in the
+#' project.
 #'
-#' @param contents The SQL template file used to fetch contents. At least
-#'   `project_id` and `game_id` columns should be included in the fetched data
-#'   based on the template. `project_id` will be used as the only parameter in
-#'   `users` and `project` templates, while all three will be used in `raw_data`
-#'   and `scores` templates.
-#' @param users The SQL template file used to fetch users. Usually you don't
-#'   need to change this.
-#' @param raw_data The SQL template file used to fetch raw data. See
-#'   [fetch_data()] for details. Usually you don't need to change this.
-#' @param scores The SQL template file used to fetch scores. See [fetch_data()]
-#'   for details. Usually you don't need to change this.
-#' @param progress_hash The SQL template file used to fetch progress hash.
-#'   Usually you don't need to change this.
-#' @return A S3 object of class `tarflow.template` with the options.
+#' @param contents The contents structure used as the configuration of data
+#'   fetching.
+#' @param templates The SQL template files used to fetch data. See
+#'   [setup_templates()] for details.
+#' @param check_progress Whether to check the progress hash. When set as `TRUE`,
+#'   a progress hash objects named as `progress_hash_{project_id}` for each
+#'   project will be added into the target list. Set it as `FALSE` if the
+#'   projects are finalized.
+#' @return A list of target objects.
 #' @export
-setup_templates <- function(contents = NULL,
-                            users = NULL,
-                            raw_data = NULL,
-                            scores = NULL,
-                            progress_hash = NULL) {
-  structure(
-    list(
-      contents = contents %||% package_file("sql", "contents.sql"),
-      users = users %||% package_file("sql", "users.sql"),
-      raw_data = raw_data %||% package_file("sql", "raw_data.sql"),
-      scores = scores %||% package_file("sql", "scores.sql"),
-      progress_hash = progress_hash %||%
-        package_file("sql", "progress_hash.sql")
-    ),
-    class = "tarflow.template"
-  )
-}
-
-# helper functions
-tar_projects_info <- function(contents, templates, check_progress) {
+tar_prep_proj <- function(contents,
+                          templates = setup_templates(),
+                          check_progress = TRUE) {
   c(
-    tarchetypes::tar_map(
-      contents |>
-        distinct(.data$project_id) |>
-        mutate(project_id = as.character(.data$project_id)),
-      targets::tar_target_raw(
-        "progress_hash",
-        expr(
-          fetch_iquizoo(
-            !!read_file(templates[["progress_hash"]]),
-            params = list(project_id)
-          )
-        ),
-        packages = "tarflow.iquizoo",
-        cue = targets::tar_cue(if (check_progress) "always")
+    if (check_progress) {
+      tarchetypes::tar_map(
+        data.frame(project_id = as.character(unique(contents$project_id))),
+        targets::tar_target_raw(
+          "progress_hash",
+          bquote(
+            fetch_iquizoo(
+              .(read_file(templates[["progress_hash"]])),
+              params = list(project_id)
+            )
+          ),
+          packages = "tarflow.iquizoo",
+          cue = targets::tar_cue("always")
+        )
       )
-    ),
+    },
     targets::tar_target_raw(
       "users",
-      expr(
+      bquote(
         fetch_iquizoo(
-          !!read_file(templates[["users"]]),
-          params = list(!!unique(contents$project_id))
+          .(read_file(templates[["users"]])),
+          params = list(.(unique(contents$project_id)))
         ) |>
           unique()
       ),
@@ -174,57 +153,92 @@ tar_projects_info <- function(contents, templates, check_progress) {
   )
 }
 
-tar_fetch_data <- function(contents, templates, what) {
-  tarchetypes::tar_map(
-    contents |>
-      distinct(.data$project_id, .data$game_id) |>
-      mutate(
-        across(c("project_id", "game_id"), as.character)
-      ) |>
-      summarise(
-        progress_hash = list(
-          syms(
-            stringr::str_glue("progress_hash_{project_id}")
+#' Generate a set of targets for fetching data
+#'
+#' This target factory is the main part of the `tar_prep_iquizoo` function. It
+#' fetches the raw data and scores for each project and task/game combination.
+#'
+#' @param contents The contents structure used as the configuration of data
+#'   fetching.
+#' @param templates The SQL template files used to fetch data. See
+#'   [setup_templates()] for details.
+#' @param what What to fetch.
+#' @param check_progress Whether to check the progress hash. If set as `TRUE`,
+#'   Before fetching the data, the progress hash objects named as
+#'   `progress_hash_{project_id}` will be depended on, which are typically
+#'   generated by [tar_prep_proj()]. If the projects are finalized, set this
+#'   argument as `FALSE`.
+#' @return A list of target objects.
+#' @export
+tar_fetch_data <- function(contents,
+                           templates = setup_templates(),
+                           what = c("raw_data", "scores"),
+                           check_progress = TRUE) {
+  what <- match.arg(what)
+  by(
+    contents,
+    contents$game_id,
+    \(contents) {
+      project_ids <- as.character(unique(contents$project_id))
+      game_id <- as.character(unique(contents$game_id))
+      targets::tar_target_raw(
+        paste0(what, "_", game_id),
+        as.call(c(
+          quote(`{`),
+          if (check_progress) {
+            bquote(
+              list(..(syms(paste0("progress_hash_", project_ids)))),
+              splice = TRUE
+            )
+          },
+          bquote(
+            do.call(
+              rbind,
+              .mapply(
+                fetch_data,
+                list(.(project_ids), .(game_id)),
+                MoreArgs = list(
+                  what = .(what),
+                  query = .(read_file(templates[[what]]))
+                )
+              )
+            )
           )
-        ),
-        project_id = list(.data$project_id),
-        .by = "game_id"
-      ),
-    names = "game_id",
-    targets::tar_target_raw(
-      what,
-      expr({
-        progress_hash
-        purrr::pmap(
-          list(
-            query = !!read_file(templates[[what]]),
-            project_id = project_id,
-            game_id = game_id,
-            what = !!what
-          ),
-          fetch_data
-        ) |>
-          purrr::list_rbind()
-      }),
-      packages = "tarflow.iquizoo"
-    )
+        )),
+        packages = "tarflow.iquizoo"
+      )
+    }
   )
 }
 
-tar_action_raw_data <- function(contents,
-                                action_raw_data,
-                                name_data = "raw_data",
-                                name_parsed = "raw_data_parsed",
-                                name_indices = "indices") {
+#' Generate a set of targets for wrangling and pre-processing raw data
+#'
+#' This target factory is the main part of the `tar_prep_iquizoo` function. It
+#' wrangles the raw data into a tidy format and calculates indices based on the
+#' parsed data.
+#'
+#' @param contents The contents structure used as the configuration of data
+#'   fetching.
+#' @param action_raw_data The action to be taken on the fetched raw data.
+#' @param name_data The name of the raw data target.
+#' @param name_parsed The name of the parsed data target.
+#' @param name_indices The name of the indices target.
+#' @return A list of target objects.
+#' @export
+tar_prep_raw <- function(contents,
+                         action_raw_data = c("all", "parse", "none"),
+                         name_data = "raw_data",
+                         name_parsed = "raw_data_parsed",
+                         name_indices = "indices") {
+  action_raw_data <- match.arg(action_raw_data)
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
-  contents <- distinct(contents, .data$game_id) |>
-    mutate(
-      tar_data = syms(sprintf("%s_%s", name_data, game_id)),
-      tar_parsed = syms(sprintf("%s_%s", name_parsed, game_id)),
-      tar_indices = syms(sprintf("%s_%s", name_indices, game_id))
-    )
+  contents <- unique(contents["game_id"])
+  contents$tar_data <- syms(sprintf("%s_%s", name_data, contents$game_id))
+  contents$tar_parsed <- syms(sprintf("%s_%s", name_parsed, contents$game_id))
+  contents$tar_indices <- syms(sprintf("%s_%s", name_indices, contents$game_id))
   list(
     raw_data_parsed = if ("parse" %in% action_raw_data) {
+      check_installed("preproc.iquizoo", "becasue required in wrangling.")
       tarchetypes::tar_eval(
         targets::tar_target(
           tar_parsed,
@@ -235,14 +249,14 @@ tar_action_raw_data <- function(contents,
       )
     },
     indices = if ("preproc" %in% action_raw_data) {
+      check_installed("preproc.iquizoo", "becasue required in pre-processing.")
       tarchetypes::tar_eval(
         targets::tar_target(
           tar_indices,
           preproc_data(tar_parsed, prep_fun, .input = input, .extra = extra),
           packages = "preproc.iquizoo"
         ),
-        contents |>
-          data.iquizoo::match_preproc(type = "inner")
+        data.iquizoo::match_preproc(contents, type = "inner")
       )
     }
   )
@@ -254,7 +268,6 @@ objects <- function() {
 
 utils::globalVariables(
   c(
-    "progress_hash", "project_id", "game_id",
     "tar_data", "tar_parsed", "tar_indices",
     "wrangle_data", "preproc_data",
     "prep_fun", "input", "extra"
