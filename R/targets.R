@@ -175,41 +175,40 @@ tar_fetch_data <- function(contents,
                            what = c("raw_data", "scores"),
                            check_progress = TRUE) {
   what <- match.arg(what)
-  game_ids <- unique(as.character(contents$game_id))
-  targets <- vector("list", length(game_ids))
-  names(targets) <- game_ids
-  for (game_id in game_ids) {
-    project_ids <- as.character(
-      contents$project_id[contents$game_id == game_id]
-    )
-    targets[[game_id]] <- targets::tar_target_raw(
-      paste0(what, "_", game_id),
-      as.call(c(
-        quote(`{`),
-        if (check_progress) {
+  tapply(
+    contents,
+    contents$game_id,
+    \(contents) {
+      project_ids <- as.character(unique(contents$project_id))
+      game_id <- as.character(unique(contents$game_id))
+      targets::tar_target_raw(
+        paste0(what, "_", game_id),
+        as.call(c(
+          quote(`{`),
+          if (check_progress) {
+            bquote(
+              list(..(syms(paste0("progress_hash_", project_ids)))),
+              splice = TRUE
+            )
+          },
           bquote(
-            list(..(syms(paste0("progress_hash_", project_ids)))),
-            splice = TRUE
-          )
-        },
-        bquote(
-          do.call(
-            rbind,
-            .mapply(
-              fetch_data,
-              list(.(project_ids), .(game_id)),
-              MoreArgs = list(
-                what = .(what),
-                query = .(read_file(templates[[what]]))
+            do.call(
+              rbind,
+              .mapply(
+                fetch_data,
+                list(.(project_ids), .(game_id)),
+                MoreArgs = list(
+                  what = .(what),
+                  query = .(read_file(templates[[what]]))
+                )
               )
             )
           )
-        )
-      )),
-      packages = "tarflow.iquizoo"
-    )
-  }
-  targets
+        )),
+        packages = "tarflow.iquizoo"
+      )
+    }
+  )
 }
 
 #' Generate a set of targets for wrangling and pre-processing raw data
@@ -233,14 +232,10 @@ tar_prep_raw <- function(contents,
                          name_indices = "indices") {
   action_raw_data <- match.arg(action_raw_data)
   if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
-  contents <- within(
-    unique(contents["game_id"]),
-    {
-      tar_data <- syms(sprintf("%s_%s", name_data, game_id))
-      tar_parsed <- syms(sprintf("%s_%s", name_parsed, game_id))
-      tar_indices <- syms(sprintf("%s_%s", name_indices, game_id))
-    }
-  )
+  contents <- unique(contents["game_id"])
+  contents$tar_data <- syms(sprintf("%s_%s", name_data, contents$game_id))
+  contents$tar_parsed <- syms(sprintf("%s_%s", name_parsed, contents$game_id))
+  contents$tar_indices <- syms(sprintf("%s_%s", name_indices, contents$game_id))
   list(
     raw_data_parsed = if ("parse" %in% action_raw_data) {
       check_installed("preproc.iquizoo", "becasue required in wrangling.")
@@ -273,7 +268,6 @@ objects <- function() {
 
 utils::globalVariables(
   c(
-    "project_id", "game_id",
     "tar_data", "tar_parsed", "tar_indices",
     "wrangle_data", "preproc_data",
     "prep_fun", "input", "extra"
