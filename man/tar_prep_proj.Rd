@@ -13,8 +13,10 @@ fetching.}
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}
 
-\item{check_progress}{Whether to check the progress hash. Set it as \code{FALSE}
-if the project is finalized.}
+\item{check_progress}{Whether to check the progress hash. When set as \code{TRUE},
+a progress hash objects named as \verb{progress_hash_\{project_id\}} for each
+project will be added into the target list. Set it as \code{FALSE} if the
+projects are finalized.}
 }
 \value{
 A list of target objects.
