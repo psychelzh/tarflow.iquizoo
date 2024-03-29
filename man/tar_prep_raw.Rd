@@ -6,7 +6,7 @@
 \usage{
 tar_prep_raw(
   contents,
-  action_raw_data = c("all", "parse", "none"),
+  action_raw_data = c("parse", "preproc"),
   name_data = "raw_data",
   name_parsed = "raw_data_parsed",
   name_indices = "indices"

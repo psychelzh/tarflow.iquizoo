@@ -85,6 +85,9 @@ tar_prep_iquizoo <- function(params, ...,
       simplify = FALSE
     ),
     if ("raw_data" %in% what && action_raw_data != "none") {
+      if (action_raw_data == "all") {
+        action_raw_data <- c("parse", "preproc")
+      }
       tar_prep_raw(contents, action_raw_data)
     }
   )
@@ -226,12 +229,11 @@ tar_fetch_data <- function(contents,
 #' @return A list of target objects.
 #' @export
 tar_prep_raw <- function(contents,
-                         action_raw_data = c("all", "parse", "none"),
+                         action_raw_data = c("parse", "preproc"),
                          name_data = "raw_data",
                          name_parsed = "raw_data_parsed",
                          name_indices = "indices") {
-  action_raw_data <- match.arg(action_raw_data)
-  if (action_raw_data == "all") action_raw_data <- c("parse", "preproc")
+  action_raw_data <- match.arg(action_raw_data, several.ok = TRUE)
   contents <- unique(contents["game_id"])
   contents$tar_data <- syms(sprintf("%s_%s", name_data, contents$game_id))
   contents$tar_parsed <- syms(sprintf("%s_%s", name_parsed, contents$game_id))
