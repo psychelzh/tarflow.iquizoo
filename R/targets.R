@@ -81,7 +81,7 @@ tar_prep_iquizoo <- function(params, ...,
     tar_prep_proj(contents, templates, check_progress),
     sapply(
       what,
-      \(what) tar_fetch_data(contents, templates, what),
+      \(what) tar_fetch_data(contents, templates, what, check_progress),
       simplify = FALSE
     ),
     if ("raw_data" %in% what && action_raw_data != "none") {
@@ -121,20 +121,22 @@ tar_prep_proj <- function(contents,
                           templates = setup_templates(),
                           check_progress = TRUE) {
   c(
-    tarchetypes::tar_map(
-      data.frame(project_id = as.character(unique(contents$project_id))),
-      targets::tar_target_raw(
-        "progress_hash",
-        bquote(
-          fetch_iquizoo(
-            .(read_file(templates[["progress_hash"]])),
-            params = list(project_id)
-          )
-        ),
-        packages = "tarflow.iquizoo",
-        cue = targets::tar_cue(if (check_progress) "always")
+    if (check_progress) {
+      tarchetypes::tar_map(
+        data.frame(project_id = as.character(unique(contents$project_id))),
+        targets::tar_target_raw(
+          "progress_hash",
+          bquote(
+            fetch_iquizoo(
+              .(read_file(templates[["progress_hash"]])),
+              params = list(project_id)
+            )
+          ),
+          packages = "tarflow.iquizoo",
+          cue = targets::tar_cue("always")
+        )
       )
-    ),
+    },
     targets::tar_target_raw(
       "users",
       bquote(
@@ -159,11 +161,15 @@ tar_prep_proj <- function(contents,
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
 #' @param what What to fetch.
+#' @param check_progress Whether to check the progress hash. If set as `TRUE`,
+#'   targets objects names as `progress_hash_{project_id}` will be checked. Set
+#'   it as `FALSE` if the project is finalized.
 #' @return A list of target objects.
 #' @export
 tar_fetch_data <- function(contents,
                            templates = setup_templates(),
-                           what = c("raw_data", "scores")) {
+                           what = c("raw_data", "scores"),
+                           check_progress = TRUE) {
   what <- match.arg(what)
   game_ids <- unique(as.character(contents$game_id))
   targets <- vector("list", length(game_ids))
@@ -174,9 +180,15 @@ tar_fetch_data <- function(contents,
     )
     targets[[game_id]] <- targets::tar_target_raw(
       paste0(what, "_", game_id),
-      bquote(
-        {
-          list(..(syms(paste0("progress_hash_", project_ids))))
+      as.call(c(
+        quote(`{`),
+        if (check_progress) {
+          bquote(
+            list(..(syms(paste0("progress_hash_", project_ids)))),
+            splice = TRUE
+          )
+        },
+        bquote(
           do.call(
             rbind,
             .mapply(
@@ -188,9 +200,8 @@ tar_fetch_data <- function(contents,
               )
             )
           )
-        },
-        splice = TRUE
-      ),
+        )
+      )),
       packages = "tarflow.iquizoo"
     )
   }

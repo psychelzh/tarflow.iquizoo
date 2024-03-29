@@ -7,7 +7,8 @@
 tar_fetch_data(
   contents,
   templates = setup_templates(),
-  what = c("raw_data", "scores")
+  what = c("raw_data", "scores"),
+  check_progress = TRUE
 )
 }
 \arguments{
@@ -18,6 +19,10 @@ fetching.}
 \code{\link[=setup_templates]{setup_templates()}} for details.}
 
 \item{what}{What to fetch.}
+
+\item{check_progress}{Whether to check the progress hash. If set as \code{TRUE},
+targets objects names as \verb{progress_hash_\{project_id\}} will be checked. Set
+it as \code{FALSE} if the project is finalized.}
 }
 \value{
 A list of target objects.
