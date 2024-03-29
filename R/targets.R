@@ -175,7 +175,7 @@ tar_fetch_data <- function(contents,
                            what = c("raw_data", "scores"),
                            check_progress = TRUE) {
   what <- match.arg(what)
-  tapply(
+  by(
     contents,
     contents$game_id,
     \(contents) {
