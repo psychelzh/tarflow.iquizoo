@@ -243,6 +243,7 @@ tar_prep_raw <- function(contents,
   )
   list(
     raw_data_parsed = if ("parse" %in% action_raw_data) {
+      check_installed("preproc.iquizoo", "becasue required in wrangling.")
       tarchetypes::tar_eval(
         targets::tar_target(
           tar_parsed,
@@ -253,6 +254,7 @@ tar_prep_raw <- function(contents,
       )
     },
     indices = if ("preproc" %in% action_raw_data) {
+      check_installed("preproc.iquizoo", "becasue required in pre-processing.")
       tarchetypes::tar_eval(
         targets::tar_target(
           tar_indices,
