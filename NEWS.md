@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## New Features
+
+* Added `"preproc"` option in `action_raw_data` argument of `tar_prep_raw()`.
+
 # tarflow.iquizoo 3.10.0
 
 ## Breaking Changes
