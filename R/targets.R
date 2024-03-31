@@ -258,7 +258,7 @@ tar_prep_raw <- function(contents,
           preproc_data(tar_parsed, prep_fun, .input = input, .extra = extra),
           packages = "preproc.iquizoo"
         ),
-        data.iquizoo::match_preproc(contents, type = "inner")
+        data.iquizoo::merge_preproc(contents)
       )
     }
   )

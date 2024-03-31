@@ -1,3 +1,8 @@
+# tarflow.iquizoo 3.10.2
+
+* Fixed compatibility issue with 'data.iquizoo' 2024.03.31-2.
+* Bumped minimum version of 'data.iquizoo' to 2024.03.31-2.
+
 # tarflow.iquizoo 3.10.1
 
 ## New Features
