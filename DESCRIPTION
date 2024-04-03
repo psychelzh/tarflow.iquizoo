@@ -22,6 +22,7 @@ Imports:
     cli,
     data.iquizoo (>= 2024.3.31.2),
     DBI,
+    jsonlite,
     memoise,
     rlang (>= 1.0.0),
     stringr,

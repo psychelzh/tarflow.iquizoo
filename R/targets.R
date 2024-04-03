@@ -240,12 +240,11 @@ tar_prep_raw <- function(contents,
   contents$tar_indices <- syms(sprintf("%s_%s", name_indices, contents$game_id))
   list(
     raw_data_parsed = if ("parse" %in% action_raw_data) {
-      check_installed("preproc.iquizoo", "becasue required in wrangling.")
       tarchetypes::tar_eval(
         targets::tar_target(
           tar_parsed,
-          wrangle_data(tar_data),
-          packages = "preproc.iquizoo"
+          parse_data(tar_data),
+          packages = "tarflow.iquizoo"
         ),
         contents
       )
@@ -255,7 +254,12 @@ tar_prep_raw <- function(contents,
       tarchetypes::tar_eval(
         targets::tar_target(
           tar_indices,
-          preproc_data(tar_parsed, prep_fun, .input = input, .extra = extra),
+          preproc.iquizoo::preproc_data(
+            tar_parsed,
+            prep_fun,
+            .input = input,
+            .extra = extra
+          ),
           packages = "preproc.iquizoo"
         ),
         data.iquizoo::merge_preproc(contents)
@@ -271,7 +275,6 @@ objects <- function() {
 utils::globalVariables(
   c(
     "tar_data", "tar_parsed", "tar_indices",
-    "wrangle_data", "preproc_data",
     "prep_fun", "input", "extra"
   )
 )
