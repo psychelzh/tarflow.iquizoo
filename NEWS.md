@@ -1,3 +1,9 @@
+# tarflow.iquizoo 3.11.0
+
+## Breaking Changes
+
+* Added `parse_data()`, previously named as `wrangle_data()`. See <https://github.com/psychelzh/preproc.iquizoo/issues/86>.
+
 # tarflow.iquizoo 3.10.2
 
 * Fixed compatibility issue with 'data.iquizoo' 2024.03.31-2.

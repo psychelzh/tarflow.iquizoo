@@ -127,3 +127,41 @@ fetch_data <- function(project_id, game_id, ...,
     params = list(project_id, game_id)
   )
 }
+
+#' Parse Raw Data
+#'
+#' Raw data fetched from iQuizoo database is stored in json string format. This
+#' function is used to parse raw json string data as [data.frame()] and store
+#' them in a list column.
+#'
+#' @param data The raw data.
+#' @param col_raw_json The column name storing raw json string data.
+#' @param name_raw_parsed The name used to store parsed data.
+#' @return A [data.frame] contains the parsed data.
+#' @export
+parse_data <- function(data,
+                       col_raw_json = "game_data",
+                       name_raw_parsed = "raw_parsed") {
+  data[[name_raw_parsed]] <- lapply(
+    data[[col_raw_json]],
+    parse_raw_json
+  )
+  data[, names(data) != col_raw_json, drop = FALSE]
+}
+
+# helper functions
+parse_raw_json <- function(jstr) {
+  tryCatch(
+    jsonlite::fromJSON(jstr),
+    error = function(cnd) {
+      warn(
+        c(
+          "Failed to parse json string:",
+          conditionMessage(cnd),
+          i = "Will parse it as `NULL` instead."
+        )
+      )
+      return()
+    }
+  )
+}
