@@ -16,6 +16,7 @@ reference:
   - fetch_iquizoo
   - fetch_iquizoo_mem
   - fetch_data
+  - parse_data
 - title: "Miscellaneous Option Functions"
   desc: Functions to help you set up options.
   contents:
