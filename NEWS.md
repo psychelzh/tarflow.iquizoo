@@ -1,5 +1,7 @@
 # tarflow.iquizoo (development version)
 
+* Separate `tar_prep_proj()` into `tar_prep_hash()` and `tar_fetch_users()`.
+
 # tarflow.iquizoo 3.11.0
 
 ## Breaking Changes
