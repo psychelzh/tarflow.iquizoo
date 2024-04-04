@@ -123,19 +123,21 @@ tar_prep_iquizoo <- function(params, ...,
 #' @return A list of target objects.
 #' @export
 tar_prep_hash <- function(contents, templates = setup_templates()) {
-  tarchetypes::tar_map(
-    data.frame(project_id = as.character(unique(contents$project_id))),
-    targets::tar_target_raw(
-      "progress_hash",
-      bquote(
-        fetch_iquizoo(
-          .(read_file(templates[["progress_hash"]])),
-          params = list(project_id)
-        )
-      ),
-      packages = "tarflow.iquizoo",
-      cue = targets::tar_cue("always")
-    )
+  lapply(
+    as.character(unique(contents$project_id)),
+    \(project_id) {
+      targets::tar_target_raw(
+        paste0("progress_hash_", project_id),
+        bquote(
+          fetch_iquizoo(
+            .(read_file(templates[["progress_hash"]])),
+            params = list(.(project_id))
+          )
+        ),
+        packages = "tarflow.iquizoo",
+        cue = targets::tar_cue("always")
+      )
+    }
   )
 }
 
