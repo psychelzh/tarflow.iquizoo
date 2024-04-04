@@ -6,8 +6,8 @@
 \usage{
 tar_fetch_data(
   contents,
-  templates = setup_templates(),
   what = c("raw_data", "scores"),
+  templates = setup_templates(),
   check_progress = TRUE
 )
 }
@@ -15,10 +15,10 @@ tar_fetch_data(
 \item{contents}{The contents structure used as the configuration of data
 fetching.}
 
+\item{what}{What to fetch.}
+
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}
-
-\item{what}{What to fetch.}
 
 \item{check_progress}{Whether to check the progress hash. If set as \code{TRUE},
 Before fetching the data, the progress hash objects named as

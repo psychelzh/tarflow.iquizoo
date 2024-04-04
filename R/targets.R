@@ -45,12 +45,7 @@ tar_prep_iquizoo <- function(params, ...,
                              templates = setup_templates(),
                              check_progress = TRUE) {
   check_dots_empty()
-  if (!inherits(templates, "tarflow.template")) {
-    cli::cli_abort(
-      "{.arg templates} must be created by {.fun setup_templates}.",
-      class = "tarflow_bad_templates"
-    )
-  }
+  check_templates(templates)
   what <- match.arg(what, several.ok = TRUE)
   action_raw_data <- match.arg(action_raw_data)
   if (!is.null(combine) && !all(combine %in% objects())) {
@@ -123,6 +118,7 @@ tar_prep_iquizoo <- function(params, ...,
 #' @return A list of target objects.
 #' @export
 tar_prep_hash <- function(contents, templates = setup_templates()) {
+  check_templates(templates)
   lapply(
     as.character(unique(contents$project_id)),
     \(project_id) {
@@ -152,6 +148,7 @@ tar_prep_hash <- function(contents, templates = setup_templates()) {
 #' @return A list of target objects.
 #' @export
 tar_fetch_users <- function(contents, templates = setup_templates()) {
+  check_templates(templates)
   targets::tar_target_raw(
     "users",
     bquote(
@@ -172,9 +169,9 @@ tar_fetch_users <- function(contents, templates = setup_templates()) {
 #'
 #' @param contents The contents structure used as the configuration of data
 #'   fetching.
+#' @param what What to fetch.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
-#' @param what What to fetch.
 #' @param check_progress Whether to check the progress hash. If set as `TRUE`,
 #'   Before fetching the data, the progress hash objects named as
 #'   `progress_hash_{project_id}` will be depended on, which are typically
@@ -183,10 +180,11 @@ tar_fetch_users <- function(contents, templates = setup_templates()) {
 #' @return A list of target objects.
 #' @export
 tar_fetch_data <- function(contents,
-                           templates = setup_templates(),
                            what = c("raw_data", "scores"),
+                           templates = setup_templates(),
                            check_progress = TRUE) {
   what <- match.arg(what)
+  check_templates(templates)
   by(
     contents,
     contents$game_id,
