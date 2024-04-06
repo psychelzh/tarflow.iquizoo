@@ -45,12 +45,7 @@ tar_prep_iquizoo <- function(params, ...,
                              templates = setup_templates(),
                              check_progress = TRUE) {
   check_dots_empty()
-  if (!inherits(templates, "tarflow.template")) {
-    cli::cli_abort(
-      "{.arg templates} must be created by {.fun setup_templates}.",
-      class = "tarflow_bad_templates"
-    )
-  }
+  check_templates(templates)
   what <- match.arg(what, several.ok = TRUE)
   action_raw_data <- match.arg(action_raw_data)
   if (!is.null(combine) && !all(combine %in% objects())) {
@@ -78,10 +73,14 @@ tar_prep_iquizoo <- function(params, ...,
       "contents_origin",
       expr(unserialize(!!serialize(contents, NULL)))
     ),
-    tar_prep_proj(contents, templates, check_progress),
+    if (check_progress) tar_prep_hash(contents, templates),
+    tar_fetch_users(contents, templates),
     sapply(
       what,
-      \(what) tar_fetch_data(contents, templates, what, check_progress),
+      tar_fetch_data,
+      contents = contents,
+      templates = templates,
+      check_progress = check_progress,
       simplify = FALSE
     ),
     if ("raw_data" %in% what && action_raw_data != "none") {
@@ -105,54 +104,61 @@ tar_prep_iquizoo <- function(params, ...,
   )
 }
 
-#' Generate a set of targets for preparing project-level data
+#' Generate a set of targets for fetching progress hash
 #'
-#' There are mainly two types of data to be fetched, i.e., the progress hash and
-#' the user information. The former is used to check the progress of the
-#' project, while the latter is used to identify the users involved in the
-#' project.
+#' The progress hash stores the progress of the project, which is used to check
+#' whether the project is updated.
+#'
+#' These objects are named as `progress_hash_{project_id}` for each project.
 #'
 #' @param contents The contents structure used as the configuration of data
 #'   fetching.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
-#' @param check_progress Whether to check the progress hash. When set as `TRUE`,
-#'   a progress hash objects named as `progress_hash_{project_id}` for each
-#'   project will be added into the target list. Set it as `FALSE` if the
-#'   projects are finalized.
 #' @return A list of target objects.
 #' @export
-tar_prep_proj <- function(contents,
-                          templates = setup_templates(),
-                          check_progress = TRUE) {
-  c(
-    if (check_progress) {
-      tarchetypes::tar_map(
-        data.frame(project_id = as.character(unique(contents$project_id))),
-        targets::tar_target_raw(
-          "progress_hash",
-          bquote(
-            fetch_iquizoo(
-              .(read_file(templates[["progress_hash"]])),
-              params = list(project_id)
-            )
-          ),
-          packages = "tarflow.iquizoo",
-          cue = targets::tar_cue("always")
-        )
+tar_prep_hash <- function(contents, templates = setup_templates()) {
+  check_templates(templates)
+  lapply(
+    as.character(unique(contents$project_id)),
+    \(project_id) {
+      targets::tar_target_raw(
+        paste0("progress_hash_", project_id),
+        bquote(
+          fetch_iquizoo(
+            .(read_file(templates[["progress_hash"]])),
+            params = list(.(project_id))
+          )
+        ),
+        packages = "tarflow.iquizoo",
+        cue = targets::tar_cue("always")
       )
-    },
-    targets::tar_target_raw(
-      "users",
-      bquote(
-        fetch_iquizoo(
-          .(read_file(templates[["users"]])),
-          params = list(.(unique(contents$project_id)))
-        ) |>
-          unique()
-      ),
-      packages = "tarflow.iquizoo"
-    )
+    }
+  )
+}
+
+#' Generate a set of targets for fetching user information
+#'
+#' The user information is used to identify the users involved in the project.
+#'
+#' @param contents The contents structure used as the configuration of data
+#'   fetching.
+#' @param templates The SQL template files used to fetch data. See
+#'   [setup_templates()] for details.
+#' @return A list of target objects.
+#' @export
+tar_fetch_users <- function(contents, templates = setup_templates()) {
+  check_templates(templates)
+  targets::tar_target_raw(
+    "users",
+    bquote(
+      fetch_iquizoo(
+        .(read_file(templates[["users"]])),
+        params = list(.(unique(contents$project_id)))
+      ) |>
+        unique()
+    ),
+    packages = "tarflow.iquizoo"
   )
 }
 
@@ -163,21 +169,22 @@ tar_prep_proj <- function(contents,
 #'
 #' @param contents The contents structure used as the configuration of data
 #'   fetching.
+#' @param what What to fetch.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
-#' @param what What to fetch.
 #' @param check_progress Whether to check the progress hash. If set as `TRUE`,
 #'   Before fetching the data, the progress hash objects named as
 #'   `progress_hash_{project_id}` will be depended on, which are typically
-#'   generated by [tar_prep_proj()]. If the projects are finalized, set this
+#'   generated by [tar_prep_hash()]. If the projects are finalized, set this
 #'   argument as `FALSE`.
 #' @return A list of target objects.
 #' @export
 tar_fetch_data <- function(contents,
-                           templates = setup_templates(),
                            what = c("raw_data", "scores"),
+                           templates = setup_templates(),
                            check_progress = TRUE) {
   what <- match.arg(what)
+  check_templates(templates)
   by(
     contents,
     contents$game_id,

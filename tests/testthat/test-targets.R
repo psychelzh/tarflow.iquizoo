@@ -52,9 +52,9 @@ test_that("Workflow works", {
         ~organization_name, ~project_name,
         "北京师范大学", "4.19-4.20夜晚睡眠test"
       )
-      tar_prep_iquizoo(params, combine = "scores")
+      tarflow.iquizoo::tar_prep_iquizoo(params, combine = "scores")
     })
-    targets::tar_make(reporter = "silent", callr_function = NULL)
+    expect_silent(targets::tar_make(reporter = "silent"))
     expect_snapshot_value(targets::tar_objects(), style = "json2")
     expect_snapshot_value(targets::tar_read(users), style = "json2")
     expect_snapshot_value(targets::tar_read(scores), style = "json2")

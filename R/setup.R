@@ -129,3 +129,12 @@ default_file <- function() {
 }
 
 # nocov end
+
+check_templates <- function(templates) {
+  if (!inherits(templates, "tarflow.template")) {
+    cli::cli_abort(
+      "{.arg templates} must be created by {.fun setup_templates}.",
+      class = "tarflow_bad_templates"
+    )
+  }
+}
