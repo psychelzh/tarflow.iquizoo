@@ -251,7 +251,7 @@ tar_prep_raw <- function(contents,
         targets::tar_target(
           tar_parsed,
           parse_data(tar_data),
-          packages = "tarflow.iquizoo"
+          packages = c("tarflow.iquizoo", "bit64")
         ),
         contents
       )
@@ -262,7 +262,7 @@ tar_prep_raw <- function(contents,
         targets::tar_target(
           tar_indices,
           preproc_data(tar_parsed, prep_fun, .input = input, .extra = extra),
-          packages = "preproc.iquizoo"
+          packages = c("preproc.iquizoo", "bit64")
         ),
         data.iquizoo::merge_preproc(contents)
       )
