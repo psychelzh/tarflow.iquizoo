@@ -1,4 +1,4 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.11.2
 
 * Fixed a regression issue of `tar_prep_raw()` that `preproc_data()` is not correctly tracked by targets pipeline.
 
