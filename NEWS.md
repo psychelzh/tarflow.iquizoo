@@ -1,5 +1,7 @@
 # tarflow.iquizoo (development version)
 
+* Added `"bit64"` to packages option of targets in order to keep the integer64 class in the output data.
+
 # tarflow.iquizoo 3.11.2
 
 * Fixed a regression issue of `tar_prep_raw()` that `preproc_data()` is not correctly tracked by targets pipeline.
