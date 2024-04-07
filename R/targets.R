@@ -261,12 +261,7 @@ tar_prep_raw <- function(contents,
       tarchetypes::tar_eval(
         targets::tar_target(
           tar_indices,
-          preproc.iquizoo::preproc_data(
-            tar_parsed,
-            prep_fun,
-            .input = input,
-            .extra = extra
-          ),
+          preproc_data(tar_parsed, prep_fun, .input = input, .extra = extra),
           packages = "preproc.iquizoo"
         ),
         data.iquizoo::merge_preproc(contents)
@@ -282,6 +277,6 @@ objects <- function() {
 utils::globalVariables(
   c(
     "tar_data", "tar_parsed", "tar_indices",
-    "prep_fun", "input", "extra"
+    "preproc_data", "prep_fun", "input", "extra"
   )
 )
