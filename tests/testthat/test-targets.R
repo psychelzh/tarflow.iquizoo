@@ -10,7 +10,7 @@ test_that("Default templates work", {
 
 test_that("Signal error if templates not created correctly", {
   templates <- list(contents = "myfile")
-  tar_prep_iquizoo(templates = templates) |>
+  tar_prep_iquizoo(NULL, templates = templates) |>
     expect_error(class = "tarflow_bad_templates")
 })
 
