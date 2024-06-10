@@ -1,8 +1,8 @@
 pandoc: 3.1.11
-pkgdown: 2.0.7
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-04-07T08:18Z
+last_built: 2024-06-10T14:41Z
 urls:
   reference: https://psychelzh.github.io/tarflow.iquizoo/reference
   article: https://psychelzh.github.io/tarflow.iquizoo/articles
