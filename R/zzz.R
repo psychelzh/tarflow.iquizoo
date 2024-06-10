@@ -10,7 +10,7 @@ NULL
   if (requireNamespace("RMariaDB", quietly = TRUE)) {
     op_tarflow <- list(
       tarflow.driver = RMariaDB::MariaDB(),
-      tarflow.groups = name_db_src_default
+      tarflow.group = name_db_src_default
     )
   } else if (requireNamespace("odbc", quietly = TRUE)) {
     op_tarflow <- list(

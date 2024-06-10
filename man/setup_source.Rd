@@ -7,7 +7,7 @@
 setup_source(
   driver = getOption("tarflow.driver"),
   dsn = getOption("tarflow.dsn"),
-  groups = getOption("tarflow.groups")
+  group = getOption("tarflow.group")
 )
 }
 \arguments{
@@ -19,7 +19,7 @@ pre-configurations. Default to first available one.}
 \code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::dbConnect()}} for more information. Used when \code{driver} is set as
 \code{\link[odbc:dbConnect-OdbcDriver-method]{odbc::odbc()}}.}
 
-\item{groups}{Section identifier in the \code{default.file}. See
+\item{group}{Section identifier in the \code{default.file}. See
 \code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}} for more information. Used when \code{driver} is set as
 \code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}}.}
 }
