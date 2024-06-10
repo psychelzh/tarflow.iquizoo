@@ -5,17 +5,15 @@
 #' specific project and task/game combination. Further pre-processing on the
 #' fetched data can also be added if requested.
 #'
-#' @param params A [data.frame] or [list] contains the parameters to be bound to
-#'   the query. Default templates require specifying `organization_name` and
-#'   `project_name`, in that order. If `contents` template is specified without
-#'   any parameters, set it as empty vector or `NULL`. If `contents` argument is
-#'   specified, this argument is omitted.
+#' @param params,contents Used as the configuration of data fetching. These two
+#'   arguments are mutually exclusive. If `params` is specified, it will be used
+#'   as parameters to be bound to the query, see [DBI::dbBind()] for more
+#'   details. The default template requires specifying `organization_name` and
+#'   `project_name`, in that order. If `contents` is specified, it should be a
+#'   [data.frame] and will be used directly as the configuration of data
+#'   fetching. Note `contents` should at least contain `project_id` and
+#'   `game_id` names.
 #' @param ... For future usage. Should be empty.
-#' @param contents The contents structure used as the configuration of data
-#'   fetching. It is typically automatically fetched from database based on the
-#'   `contents` template in `templates`. If not `NULL`, it will be used directly
-#'   and ignore that specified in `templates`. Note `contents` should at least
-#'   contains `project_id` and `game_id` names.
 #' @param what What to fetch. There are basically two types of data, i.e., raw
 #'   data and scores. The former is the logged raw data for each trial of the
 #'   tasks/games, while the latter is the scores calculated by iQuizoo server.
@@ -29,16 +27,15 @@
 #'   done. If set as "none", neither will be done. If `what` is "scores", this
 #'   argument will be ignored.
 #' @param combine Specify which targets to be combined. Note you should only
-#'   specify names from `c("scores", "raw_data", "raw_data_parsed",
-#'   "indices")`. If `NULL`, none will be combined.
+#'   specify names from `c("scores", "raw_data", "raw_data_parsed", "indices")`.
+#'   If `NULL`, none will be combined.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
 #' @param check_progress Whether to check the progress hash. Set it as `FALSE`
 #'   if the project is finalized.
 #' @return A list of target objects.
 #' @export
-tar_prep_iquizoo <- function(params, ...,
-                             contents = NULL,
+tar_prep_iquizoo <- function(params, contents, ...,
                              what = c("raw_data", "scores"),
                              action_raw_data = c("all", "parse", "none"),
                              combine = NULL,
@@ -46,20 +43,27 @@ tar_prep_iquizoo <- function(params, ...,
                              check_progress = TRUE) {
   check_dots_empty()
   check_templates(templates)
+  contents <- switch(check_exclusive(params, contents),
+    params = fetch_iquizoo_mem()(
+      read_file(templates$contents),
+      params = unname(
+        if (!is_empty(params)) as.list(params)
+      )
+    ),
+    contents = {
+      stopifnot(
+        "`content` must be a `data.frame`." =
+          is.data.frame(contents)
+      )
+      contents
+    }
+  )
   what <- match.arg(what, several.ok = TRUE)
   action_raw_data <- match.arg(action_raw_data)
   if (!is.null(combine) && !all(combine %in% objects())) {
     cli::cli_abort(
       "{.arg combine} must be a subset of {vctrs::vec_c({objects()})}.",
       class = "tarflow_bad_combine"
-    )
-  }
-  if (is.null(contents)) {
-    contents <- fetch_iquizoo_mem()(
-      read_file(templates$contents),
-      params = unname(
-        if (!is_empty(params)) as.list(params)
-      )
     )
   }
   if (nrow(contents) == 0) {

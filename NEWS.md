@@ -1,3 +1,13 @@
+# tarflow.iquizoo 3.11.4
+
+## Breaking Changes
+
+* Let `params` and `contents` arguments be mutually exclusive in `tar_prep_iquizoo()`.
+
+## Upkeep
+
+* Fixed deprecation of `groups` argument in favor of `group`.
+
 # tarflow.iquizoo 3.11.3
 
 * Added `"bit64"` to packages option of targets in order to keep the integer64 class in the output data.

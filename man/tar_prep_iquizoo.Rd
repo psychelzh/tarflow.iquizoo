@@ -6,8 +6,8 @@
 \usage{
 tar_prep_iquizoo(
   params,
+  contents,
   ...,
-  contents = NULL,
   what = c("raw_data", "scores"),
   action_raw_data = c("all", "parse", "none"),
   combine = NULL,
@@ -16,19 +16,16 @@ tar_prep_iquizoo(
 )
 }
 \arguments{
-\item{params}{A \link{data.frame} or \link{list} contains the parameters to be bound to
-the query. Default templates require specifying \code{organization_name} and
-\code{project_name}, in that order. If \code{contents} template is specified without
-any parameters, set it as empty vector or \code{NULL}. If \code{contents} argument is
-specified, this argument is omitted.}
+\item{params, contents}{Used as the configuration of data fetching. These two
+arguments are mutually exclusive. If \code{params} is specified, it will be used
+as parameters to be bound to the query, see \code{\link[DBI:dbBind]{DBI::dbBind()}} for more
+details. The default template requires specifying \code{organization_name} and
+\code{project_name}, in that order. If \code{contents} is specified, it should be a
+\link{data.frame} and will be used directly as the configuration of data
+fetching. Note \code{contents} should at least contain \code{project_id} and
+\code{game_id} names.}
 
 \item{...}{For future usage. Should be empty.}
-
-\item{contents}{The contents structure used as the configuration of data
-fetching. It is typically automatically fetched from database based on the
-\code{contents} template in \code{templates}. If not \code{NULL}, it will be used directly
-and ignore that specified in \code{templates}. Note \code{contents} should at least
-contains \code{project_id} and \code{game_id} names.}
 
 \item{what}{What to fetch. There are basically two types of data, i.e., raw
 data and scores. The former is the logged raw data for each trial of the
@@ -45,7 +42,8 @@ done. If set as "none", neither will be done. If \code{what} is "scores", this
 argument will be ignored.}
 
 \item{combine}{Specify which targets to be combined. Note you should only
-specify names from \code{c("scores", "raw_data", "raw_data_parsed", "indices")}. If \code{NULL}, none will be combined.}
+specify names from \code{c("scores", "raw_data", "raw_data_parsed", "indices")}.
+If \code{NULL}, none will be combined.}
 
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}

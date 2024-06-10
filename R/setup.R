@@ -45,19 +45,19 @@ setup_templates <- function(contents = NULL,
 #' @param dsn The data source name of an **ODBC** database connector. See
 #'   [odbc::dbConnect()] for more information. Used when `driver` is set as
 #'   [odbc::odbc()].
-#' @param groups Section identifier in the `default.file`. See
+#' @param group Section identifier in the `default.file`. See
 #'   [RMariaDB::MariaDB()] for more information. Used when `driver` is set as
 #'   [RMariaDB::MariaDB()].
 #' @return An S3 class of `tarflow.source` with the options.
 #' @export
 setup_source <- function(driver = getOption("tarflow.driver"),
                          dsn = getOption("tarflow.dsn"),
-                         groups = getOption("tarflow.groups")) {
+                         group = getOption("tarflow.group")) {
   structure(
     list(
       driver = driver,
       dsn = dsn,
-      groups = groups
+      group = group
     ),
     class = "tarflow.source"
   )
@@ -82,7 +82,7 @@ check_source <- function(source = setup_source()) {
   }
   # nocov end
   if (inherits(source$driver, "MariaDBDriver")) {
-    return(DBI::dbCanConnect(source$driver, groups = source$groups))
+    return(DBI::dbCanConnect(source$driver, group = source$group))
   }
   return(FALSE)
 }

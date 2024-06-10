@@ -32,7 +32,7 @@ fetch_iquizoo <- function(query, ...,
   }
   # nocov end
   if (inherits(source$driver, "MariaDBDriver")) {
-    con <- DBI::dbConnect(source$driver, groups = source$groups, ...)
+    con <- DBI::dbConnect(source$driver, group = source$group, ...)
   }
   on.exit(DBI::dbDisconnect(con))
   DBI::dbGetQuery(con, query, params = params)
