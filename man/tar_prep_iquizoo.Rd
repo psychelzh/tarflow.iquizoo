@@ -29,9 +29,9 @@ fetching. Note \code{contents} should at least contain \code{project_id} and
 
 \item{what}{What to fetch. There are basically two types of data, i.e., raw
 data and scores. The former is the logged raw data for each trial of the
-tasks/games, while the latter is the scores calculated by iQuizoo server.
-If set as "all", both raw data and scores will be fetched. Further actions
-on the fetched raw data can be specified by \code{action_raw_data}.}
+tasks/games, and further actions on the fetched raw data can be specified
+by \code{action_raw_data}. The latter is the scores calculated by iQuizoo
+server.}
 
 \item{action_raw_data}{The action to be taken on the fetched raw data. There
 are two consecutive actions, i.e., wrangling and pre-processing. The former

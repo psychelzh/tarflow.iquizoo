@@ -16,9 +16,9 @@
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. There are basically two types of data, i.e., raw
 #'   data and scores. The former is the logged raw data for each trial of the
-#'   tasks/games, while the latter is the scores calculated by iQuizoo server.
-#'   If set as "all", both raw data and scores will be fetched. Further actions
-#'   on the fetched raw data can be specified by `action_raw_data`.
+#'   tasks/games, and further actions on the fetched raw data can be specified
+#'   by `action_raw_data`. The latter is the scores calculated by iQuizoo
+#'   server.
 #' @param action_raw_data The action to be taken on the fetched raw data. There
 #'   are two consecutive actions, i.e., wrangling and pre-processing. The former
 #'   will parse the raw data into a tidy format, while the latter will calculate
