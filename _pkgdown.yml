@@ -1,6 +1,7 @@
 url: https://psychelzh.github.io/tarflow.iquizoo
 template:
   bootstrap: 5
+  light-switch: true
 reference:
 - title: "Targets Factory Related Functions"
   desc: "A collection of functions to help you build targets."

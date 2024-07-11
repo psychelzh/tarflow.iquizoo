@@ -29,17 +29,19 @@ fetching. Note \code{contents} should at least contain \code{project_id} and
 
 \item{what}{What to fetch. There are basically two types of data, i.e., raw
 data and scores. The former is the logged raw data for each trial of the
-tasks/games, while the latter is the scores calculated by iQuizoo server.
-If set as "all", both raw data and scores will be fetched. Further actions
-on the fetched raw data can be specified by \code{action_raw_data}.}
+tasks/games, and further actions on the fetched raw data can be specified
+by \code{action_raw_data}. The latter is the scores calculated by iQuizoo
+server.}
 
 \item{action_raw_data}{The action to be taken on the fetched raw data. There
-are two consecutive actions, i.e., wrangling and pre-processing. The former
-will parse the raw data into a tidy format, while the latter will calculate
-indices based on the parsed data. If set as "all", both wrangling and
-pre-processing will be done. If set as "parse", only wrangling will be
-done. If set as "none", neither will be done. If \code{what} is "scores", this
-argument will be ignored.}
+are two consecutive actions, i.e., raw data parsing and pre-processing. The
+former will parse the \code{json} formatted raw data into \code{\link[=data.frame]{data.frame()}}s and
+wrap them into one list column, see \code{\link[=parse_data]{parse_data()}} for more details. The
+latter will calculate indices based on the parsed data, see
+\code{\link[preproc.iquizoo:preproc_data]{preproc.iquizoo::preproc_data()}} for more details. If set as \code{"none"},
+neither will be done. If set as \code{"parse"}, only raw data parsing will be
+done. If set as \code{"all"}, both parsing and pre-processing will be done. If
+\code{what} is set as \code{"scores"}, this argument will be ignored.}
 
 \item{combine}{Specify which targets to be combined. Note you should only
 specify names from \code{c("scores", "raw_data", "raw_data_parsed", "indices")}.

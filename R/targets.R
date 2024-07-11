@@ -16,16 +16,18 @@
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. There are basically two types of data, i.e., raw
 #'   data and scores. The former is the logged raw data for each trial of the
-#'   tasks/games, while the latter is the scores calculated by iQuizoo server.
-#'   If set as "all", both raw data and scores will be fetched. Further actions
-#'   on the fetched raw data can be specified by `action_raw_data`.
+#'   tasks/games, and further actions on the fetched raw data can be specified
+#'   by `action_raw_data`. The latter is the scores calculated by iQuizoo
+#'   server.
 #' @param action_raw_data The action to be taken on the fetched raw data. There
-#'   are two consecutive actions, i.e., wrangling and pre-processing. The former
-#'   will parse the raw data into a tidy format, while the latter will calculate
-#'   indices based on the parsed data. If set as "all", both wrangling and
-#'   pre-processing will be done. If set as "parse", only wrangling will be
-#'   done. If set as "none", neither will be done. If `what` is "scores", this
-#'   argument will be ignored.
+#'   are two consecutive actions, i.e., raw data parsing and pre-processing. The
+#'   former will parse the `json` formatted raw data into [data.frame()]s and
+#'   wrap them into one list column, see [parse_data()] for more details. The
+#'   latter will calculate indices based on the parsed data, see
+#'   [preproc.iquizoo::preproc_data()] for more details. If set as `"none"`,
+#'   neither will be done. If set as `"parse"`, only raw data parsing will be
+#'   done. If set as `"all"`, both parsing and pre-processing will be done. If
+#'   `what` is set as `"scores"`, this argument will be ignored.
 #' @param combine Specify which targets to be combined. Note you should only
 #'   specify names from `c("scores", "raw_data", "raw_data_parsed", "indices")`.
 #'   If `NULL`, none will be combined.
