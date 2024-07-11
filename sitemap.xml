@@ -1,63 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/404.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/index.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/check_source.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_data.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_iquizoo.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_iquizoo_mem.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/parse_data.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/setup_option_file.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/setup_source.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/setup_templates.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_fetch_data.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_fetch_users.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_hash.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_iquizoo.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_raw.html</loc>
-  </url>
-  <url>
-    <loc>https://psychelzh.github.io/tarflow.iquizoo/reference/use_targets_pipeline.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/404.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/LICENSE.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/authors.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/index.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/news/index.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/check_source.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_data.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_iquizoo.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/fetch_iquizoo_mem.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/index.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/parse_data.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/setup_option_file.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/setup_source.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/setup_templates.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_fetch_data.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_fetch_users.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_hash.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_iquizoo.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_raw.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/use_targets_pipeline.html</loc></url>
 </urlset>
+
