@@ -1,4 +1,9 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.11.5
+
+## Enhancements
+
+* Enhance documentation of `tar_prep_iquizoo()`.
+* Support new dark theme of pkgdown.
 
 # tarflow.iquizoo 3.11.4
 
