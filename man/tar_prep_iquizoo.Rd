@@ -12,7 +12,8 @@ tar_prep_iquizoo(
   action_raw_data = c("all", "parse", "none"),
   combine = NULL,
   templates = setup_templates(),
-  check_progress = TRUE
+  check_progress = TRUE,
+  cache = NULL
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ If \code{NULL}, none will be combined.}
 
 \item{check_progress}{Whether to check the progress hash. Set it as \code{FALSE}
 if the project is finalized.}
+
+\item{cache}{The cache to be used in \code{\link[=fetch_iquizoo_mem]{fetch_iquizoo_mem()}}.}
 }
 \value{
 A list of target objects.

@@ -35,6 +35,7 @@
 #'   [setup_templates()] for details.
 #' @param check_progress Whether to check the progress hash. Set it as `FALSE`
 #'   if the project is finalized.
+#' @param cache The cache to be used in [fetch_iquizoo_mem()].
 #' @return A list of target objects.
 #' @export
 tar_prep_iquizoo <- function(params, contents, ...,
@@ -42,11 +43,12 @@ tar_prep_iquizoo <- function(params, contents, ...,
                              action_raw_data = c("all", "parse", "none"),
                              combine = NULL,
                              templates = setup_templates(),
-                             check_progress = TRUE) {
+                             check_progress = TRUE,
+                             cache = NULL) {
   check_dots_empty()
   check_templates(templates)
   contents <- switch(check_exclusive(params, contents),
-    params = fetch_iquizoo_mem()(
+    params = fetch_iquizoo_mem(cache)(
       read_file(templates$contents),
       params = unname(
         if (!is_empty(params)) as.list(params)

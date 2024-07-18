@@ -1,5 +1,9 @@
 # tarflow.iquizoo (development version)
 
+## New Features
+
+* Added `cache` argument to `tar_prep_iquizoo()` to optionally specify how to cache the fetched configuration data.
+
 # tarflow.iquizoo 3.11.5
 
 ## Enhancements
