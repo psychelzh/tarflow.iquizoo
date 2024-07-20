@@ -11,18 +11,21 @@ tar_prep_iquizoo(
   what = c("raw_data", "scores"),
   action_raw_data = c("all", "parse", "none"),
   combine = NULL,
+  subset_users_props = NULL,
   templates = setup_templates(),
-  check_progress = TRUE
+  check_progress = TRUE,
+  cache = NULL
 )
 }
 \arguments{
 \item{params, contents}{Used as the configuration of data fetching. These two
 arguments are mutually exclusive. If \code{params} is specified, it will be used
 as parameters to be bound to the query, see \code{\link[DBI:dbBind]{DBI::dbBind()}} for more
-details. The default template requires specifying \code{organization_name} and
-\code{project_name}, in that order. If \code{contents} is specified, it should be a
-\link{data.frame} and will be used directly as the configuration of data
-fetching. Note \code{contents} should at least contain \code{project_id} and
+details. The default template requires specifying \code{organization_name},
+\code{project_name}, \code{course_name} and \code{game_name}, in that order. Set the
+column as \code{NA} to skip that parameter. If \code{contents} is specified, it
+should be a \link{data.frame} and will be used directly as the configuration of
+data fetching. Note \code{contents} should at least contain \code{project_id} and
 \code{game_id} names.}
 
 \item{...}{For future usage. Should be empty.}
@@ -47,11 +50,17 @@ done. If set as \code{"all"}, both parsing and pre-processing will be done. If
 specify names from \code{c("scores", "raw_data", "raw_data_parsed", "indices")}.
 If \code{NULL}, none will be combined.}
 
+\item{subset_users_props}{The subset of user properties to be fetched. See
+\code{\link[=get_users_props_names]{get_users_props_names()}} for all the available properties. If \code{NULL}, all
+properties will be fetched.}
+
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}
 
 \item{check_progress}{Whether to check the progress hash. Set it as \code{FALSE}
 if the project is finalized.}
+
+\item{cache}{The cache to be used in \code{\link[=fetch_iquizoo_mem]{fetch_iquizoo_mem()}}.}
 }
 \value{
 A list of target objects.

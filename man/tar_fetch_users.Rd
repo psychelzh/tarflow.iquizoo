@@ -4,14 +4,26 @@
 \alias{tar_fetch_users}
 \title{Generate a set of targets for fetching user information}
 \usage{
-tar_fetch_users(contents, templates = setup_templates())
+tar_fetch_users(
+  contents,
+  subset_users_props = NULL,
+  templates = setup_templates(),
+  check_progress = TRUE
+)
 }
 \arguments{
 \item{contents}{The contents structure used as the configuration of data
 fetching.}
 
+\item{subset_users_props}{The subset of user properties to be fetched. See
+\code{\link[=get_users_props_names]{get_users_props_names()}} for all the available properties. If \code{NULL}, all
+properties will be fetched.}
+
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}
+
+\item{check_progress}{Whether to check the progress hash. Set it as \code{FALSE}
+if the project is finalized.}
 }
 \value{
 A list of target objects.

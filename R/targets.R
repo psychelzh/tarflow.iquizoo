@@ -8,10 +8,11 @@
 #' @param params,contents Used as the configuration of data fetching. These two
 #'   arguments are mutually exclusive. If `params` is specified, it will be used
 #'   as parameters to be bound to the query, see [DBI::dbBind()] for more
-#'   details. The default template requires specifying `organization_name` and
-#'   `project_name`, in that order. If `contents` is specified, it should be a
-#'   [data.frame] and will be used directly as the configuration of data
-#'   fetching. Note `contents` should at least contain `project_id` and
+#'   details. The default template requires specifying `organization_name`,
+#'   `project_name`, `course_name` and `game_name`, in that order. Set the
+#'   column as `NA` to skip that parameter. If `contents` is specified, it
+#'   should be a [data.frame] and will be used directly as the configuration of
+#'   data fetching. Note `contents` should at least contain `project_id` and
 #'   `game_id` names.
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. There are basically two types of data, i.e., raw
@@ -31,22 +32,28 @@
 #' @param combine Specify which targets to be combined. Note you should only
 #'   specify names from `c("scores", "raw_data", "raw_data_parsed", "indices")`.
 #'   If `NULL`, none will be combined.
+#' @param subset_users_props The subset of user properties to be fetched. See
+#'   [get_users_props_names()] for all the available properties. If `NULL`, all
+#'   properties will be fetched.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
 #' @param check_progress Whether to check the progress hash. Set it as `FALSE`
 #'   if the project is finalized.
+#' @param cache The cache to be used in [fetch_iquizoo_mem()].
 #' @return A list of target objects.
 #' @export
 tar_prep_iquizoo <- function(params, contents, ...,
                              what = c("raw_data", "scores"),
                              action_raw_data = c("all", "parse", "none"),
                              combine = NULL,
+                             subset_users_props = NULL,
                              templates = setup_templates(),
-                             check_progress = TRUE) {
+                             check_progress = TRUE,
+                             cache = NULL) {
   check_dots_empty()
   check_templates(templates)
   contents <- switch(check_exclusive(params, contents),
-    params = fetch_iquizoo_mem()(
+    params = fetch_iquizoo_mem(cache)(
       read_file(templates$contents),
       params = unname(
         if (!is_empty(params)) as.list(params)
@@ -80,7 +87,7 @@ tar_prep_iquizoo <- function(params, contents, ...,
       expr(unserialize(!!serialize(contents, NULL)))
     ),
     if (check_progress) tar_prep_hash(contents, templates),
-    tar_fetch_users(contents, templates),
+    tar_fetch_users(contents, subset_users_props, templates, check_progress),
     sapply(
       what,
       tar_fetch_data,
@@ -149,21 +156,47 @@ tar_prep_hash <- function(contents, templates = setup_templates()) {
 #'
 #' @param contents The contents structure used as the configuration of data
 #'   fetching.
+#' @param subset_users_props The subset of user properties to be fetched. See
+#'   [get_users_props_names()] for all the available properties. If `NULL`, all
+#'   properties will be fetched.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
+#' @param check_progress Whether to check the progress hash. Set it as `FALSE`
+#'   if the project is finalized.
 #' @return A list of target objects.
 #' @export
-tar_fetch_users <- function(contents, templates = setup_templates()) {
+tar_fetch_users <- function(contents, subset_users_props = NULL,
+                            templates = setup_templates(),
+                            check_progress = TRUE) {
   check_templates(templates)
+  if (!is.null(subset_users_props)) {
+    users_props <- users_props[users_props$alias %in% subset_users_props, ]
+  }
+  columns <- paste0(glue::glue_data(
+    users_props,
+    ", {table}.{column} AS {alias}"
+  ), collapse = "")
+  project_ids <- as.character(unique(contents$project_id))
   targets::tar_target_raw(
     "users",
-    bquote(
-      fetch_iquizoo(
-        .(read_file(templates[["users"]])),
-        params = list(.(unique(contents$project_id)))
-      ) |>
-        unique()
-    ),
+    as.call(c(
+      quote(`{`),
+      if (check_progress) {
+        bquote(
+          list(..(syms(paste0("progress_hash_", project_ids)))),
+          splice = TRUE
+        )
+      },
+      bquote(
+        fetch_iquizoo(
+          .(glue::glue(read_file(templates[["users"]]),
+            .envir = list(columns = columns)
+          )),
+          params = list(.(unique(contents$project_id)))
+        ) |>
+          unique()
+      )
+    )),
     packages = "tarflow.iquizoo"
   )
 }

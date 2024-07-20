@@ -116,7 +116,7 @@ setup_option_file <- function(path = NULL, overwrite = FALSE, quietly = FALSE) {
     }
     return(invisible())
   }
-  writeLines(stringr::str_glue(my_cnf_tmpl), path)
+  writeLines(glue::glue(my_cnf_tmpl), path)
 }
 
 # helper functions

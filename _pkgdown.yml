@@ -26,3 +26,4 @@ reference:
   - setup_source
   - setup_option_file
   - check_source
+  - get_users_props_names

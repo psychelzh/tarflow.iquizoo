@@ -119,7 +119,7 @@ fetch_data <- function(project_id, game_id, ...,
   )
   query <- query %||% read_file(package_file("sql", paste0(what, ".sql")))
   fetch_iquizoo(
-    stringr::str_glue(
+    glue::glue(
       query,
       .envir = env(table_name = table_name)
     ),

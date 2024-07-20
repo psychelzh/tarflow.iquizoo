@@ -1,6 +1,6 @@
 Package: tarflow.iquizoo
 Title: Setup "targets" Workflows for "iquizoo" Data Processing
-Version: 3.11.5
+Version: 3.12.0
 Authors@R: c(
     person("Liang", "Zhang", , "psychelzh@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9041-1150")),
@@ -22,10 +22,10 @@ Imports:
     cli,
     data.iquizoo (>= 2024.3.31.2),
     DBI,
+    glue,
     jsonlite,
     memoise,
     rlang (>= 1.0.0),
-    stringr,
     tarchetypes,
     targets
 Suggests:
