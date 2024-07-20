@@ -86,7 +86,7 @@ tar_prep_iquizoo <- function(params, contents, ...,
       expr(unserialize(!!serialize(contents, NULL)))
     ),
     if (check_progress) tar_prep_hash(contents, templates),
-    tar_fetch_users(contents, subset_users_props, templates),
+    tar_fetch_users(contents, subset_users_props, templates, check_progress),
     sapply(
       what,
       tar_fetch_data,
@@ -160,10 +160,13 @@ tar_prep_hash <- function(contents, templates = setup_templates()) {
 #'   properties will be fetched.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
+#' @param check_progress Whether to check the progress hash. Set it as `FALSE`
+#'   if the project is finalized.
 #' @return A list of target objects.
 #' @export
 tar_fetch_users <- function(contents, subset_users_props = NULL,
-                            templates = setup_templates()) {
+                            templates = setup_templates(),
+                            check_progress = TRUE) {
   check_templates(templates)
   if (!is.null(subset_users_props)) {
     users_props <- users_props[users_props$alias %in% subset_users_props, ]
@@ -172,15 +175,25 @@ tar_fetch_users <- function(contents, subset_users_props = NULL,
     users_props,
     ", {table}.{column} AS {alias}"
   ), collapse = "")
+  project_ids <- as.character(unique(contents$project_id))
   targets::tar_target_raw(
     "users",
-    bquote(
-      fetch_iquizoo(
-        .(glue::glue(read_file(templates[["users"]]))),
-        params = list(.(unique(contents$project_id)))
-      ) |>
-        unique()
-    ),
+    as.call(c(
+      quote(`{`),
+      if (check_progress) {
+        bquote(
+          list(..(syms(paste0("progress_hash_", project_ids)))),
+          splice = TRUE
+        )
+      },
+      bquote(
+        fetch_iquizoo(
+          .(glue::glue(read_file(templates[["users"]]))),
+          params = list(.(unique(contents$project_id)))
+        ) |>
+          unique()
+      )
+    )),
     packages = "tarflow.iquizoo"
   )
 }

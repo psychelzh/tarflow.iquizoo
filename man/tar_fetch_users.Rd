@@ -7,7 +7,8 @@
 tar_fetch_users(
   contents,
   subset_users_props = NULL,
-  templates = setup_templates()
+  templates = setup_templates(),
+  check_progress = TRUE
 )
 }
 \arguments{
@@ -20,6 +21,9 @@ properties will be fetched.}
 
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}
+
+\item{check_progress}{Whether to check the progress hash. Set it as \code{FALSE}
+if the project is finalized.}
 }
 \value{
 A list of target objects.
