@@ -1,3 +1,11 @@
+#' Get the names of the user properties.
+#'
+#' @return A character vector of the names.
+#' @export
+get_users_props_names <- function() {
+  users_props$alias
+}
+
 package_file <- function(type, file) {
   system.file(
     type, file,

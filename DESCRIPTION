@@ -22,10 +22,10 @@ Imports:
     cli,
     data.iquizoo (>= 2024.3.31.2),
     DBI,
+    glue,
     jsonlite,
     memoise,
     rlang (>= 1.0.0),
-    stringr,
     tarchetypes,
     targets
 Suggests:

@@ -31,6 +31,9 @@
 #' @param combine Specify which targets to be combined. Note you should only
 #'   specify names from `c("scores", "raw_data", "raw_data_parsed", "indices")`.
 #'   If `NULL`, none will be combined.
+#' @param subset_users_props The subset of user properties to be fetched. See
+#'   [get_users_props_names()] for all the available properties. If `NULL`, all
+#'   properties will be fetched.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
 #' @param check_progress Whether to check the progress hash. Set it as `FALSE`
@@ -42,6 +45,7 @@ tar_prep_iquizoo <- function(params, contents, ...,
                              what = c("raw_data", "scores"),
                              action_raw_data = c("all", "parse", "none"),
                              combine = NULL,
+                             subset_users_props = NULL,
                              templates = setup_templates(),
                              check_progress = TRUE,
                              cache = NULL) {
@@ -82,7 +86,7 @@ tar_prep_iquizoo <- function(params, contents, ...,
       expr(unserialize(!!serialize(contents, NULL)))
     ),
     if (check_progress) tar_prep_hash(contents, templates),
-    tar_fetch_users(contents, templates),
+    tar_fetch_users(contents, subset_users_props, templates),
     sapply(
       what,
       tar_fetch_data,
@@ -151,17 +155,25 @@ tar_prep_hash <- function(contents, templates = setup_templates()) {
 #'
 #' @param contents The contents structure used as the configuration of data
 #'   fetching.
+#' @param subset_users_props The subset of user properties to be fetched. See
+#'   [get_users_props_names()] for all the available properties. If `NULL`, all
+#'   properties will be fetched.
 #' @param templates The SQL template files used to fetch data. See
 #'   [setup_templates()] for details.
 #' @return A list of target objects.
 #' @export
-tar_fetch_users <- function(contents, templates = setup_templates()) {
+tar_fetch_users <- function(contents, subset_users_props = NULL,
+                            templates = setup_templates()) {
   check_templates(templates)
+  columns <- paste0(glue::glue_data(
+    users_props[users_props$alias %in% subset_users_props, ],
+    ", {table}.{column} AS {alias}"
+  ), collapse = "")
   targets::tar_target_raw(
     "users",
     bquote(
       fetch_iquizoo(
-        .(read_file(templates[["users"]])),
+        .(glue::glue(read_file(templates[["users"]]))),
         params = list(.(unique(contents$project_id)))
       ) |>
         unique()

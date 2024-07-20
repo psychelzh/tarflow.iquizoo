@@ -11,6 +11,7 @@ tar_prep_iquizoo(
   what = c("raw_data", "scores"),
   action_raw_data = c("all", "parse", "none"),
   combine = NULL,
+  subset_users_props = NULL,
   templates = setup_templates(),
   check_progress = TRUE,
   cache = NULL
@@ -47,6 +48,10 @@ done. If set as \code{"all"}, both parsing and pre-processing will be done. If
 \item{combine}{Specify which targets to be combined. Note you should only
 specify names from \code{c("scores", "raw_data", "raw_data_parsed", "indices")}.
 If \code{NULL}, none will be combined.}
+
+\item{subset_users_props}{The subset of user properties to be fetched. See
+\code{\link[=get_users_props_names]{get_users_props_names()}} for all the available properties. If \code{NULL}, all
+properties will be fetched.}
 
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}
