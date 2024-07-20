@@ -10,7 +10,7 @@ test_that("Workflow works", {
       )
       tarflow.iquizoo::tar_prep_iquizoo(params, combine = "scores")
     })
-    expect_silent(targets::tar_make(reporter = "silent"))
+    expect_silent(targets::tar_make(reporter = "silent", callr_function = NULL))
     expect_snapshot_value(targets::tar_objects(), style = "json2")
     expect_snapshot_value(targets::tar_read(users), style = "json2")
     expect_snapshot_value(targets::tar_read(scores), style = "json2")
