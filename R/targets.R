@@ -165,8 +165,11 @@ tar_prep_hash <- function(contents, templates = setup_templates()) {
 tar_fetch_users <- function(contents, subset_users_props = NULL,
                             templates = setup_templates()) {
   check_templates(templates)
+  if (!is.null(subset_users_props)) {
+    users_props <- users_props[users_props$alias %in% subset_users_props, ]
+  }
   columns <- paste0(glue::glue_data(
-    users_props[users_props$alias %in% subset_users_props, ],
+    users_props,
     ", {table}.{column} AS {alias}"
   ), collapse = "")
   targets::tar_target_raw(
