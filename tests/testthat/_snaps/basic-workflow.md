@@ -14,7 +14,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["user_id", "project_name", "user_name", "user_sex", "user_dob", "user_id_card", "user_id_student", "user_phone", "organization_name", "organization_country", "organization_province", "organization_city", "organization_district"]
+          "value": ["user_id", "user_name", "user_sex", "user_dob", "user_id_card", "user_id_student", "user_phone", "organization_name", "organization_country", "organization_province", "organization_city", "organization_district"]
         },
         "row.names": {
           "type": "integer",
@@ -38,11 +38,6 @@
             }
           },
           "value": [2.0185087e-309, 2.0185087e-309, 2.0185087e-309, 2.0185087e-309, 2.0185087e-309, 2.0185087e-309, 2.0185087e-309]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["4.19-4.20夜晚睡眠test", "4.19-4.20夜晚睡眠test", "4.19-4.20夜晚睡眠test", "4.19-4.20夜晚睡眠test", "4.19-4.20夜晚睡眠test", "4.19-4.20夜晚睡眠test", "4.19-4.20夜晚睡眠test"]
         },
         {
           "type": "character",
