@@ -3,7 +3,7 @@
 #' @return A character vector of the names.
 #' @export
 get_users_props_names <- function() {
-  users_props$alias
+  users_props$alias # nolint
 }
 
 package_file <- function(type, file) {
