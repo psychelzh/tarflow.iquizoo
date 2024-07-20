@@ -1,5 +1,4 @@
 ﻿table,column,alias
-project_course_config,Name,project_name
 organization_user,RealName,user_name
 organization_user,Gender,user_sex
 organization_user,Birthday,user_dob

@@ -1,4 +1,8 @@
-# tarflow.iquizoo (development version)
+# tarflow.iquizoo 3.12.1
+
+## Enhancements
+
+* Remove `project_name` column from `users` data.
 
 # tarflow.iquizoo 3.12.0
 
