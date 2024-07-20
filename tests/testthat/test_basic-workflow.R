@@ -2,7 +2,6 @@ skip_if_not(check_source())
 targets::tar_test("Workflow works", {
   skip_if_not_installed("preproc.iquizoo")
   targets::tar_script({
-    library(targets)
     params <- tibble::tribble(
       ~organization_name, ~project_name,
       "北京师范大学", "4.19-4.20夜晚睡眠test"
