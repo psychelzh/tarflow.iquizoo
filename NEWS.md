@@ -4,6 +4,7 @@
 
 * Added `cache` argument to `tar_prep_iquizoo()` to optionally specify how to cache the fetched configuration data.
 * Support to customize the columns to be kept in the output of `users`. See [get_users_props_names()] for all available columns, and customize it by setting `subset_users_props` argument in `tar_prep_iquizoo()`.
+* Update contents sql template to support setting course name and game name ([#90](https://github.com/psychelzh/tarflow.iquizoo/issues/90)).
 
 ## Bug Fixes
 
