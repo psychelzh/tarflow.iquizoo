@@ -21,10 +21,11 @@ tar_prep_iquizoo(
 \item{params, contents}{Used as the configuration of data fetching. These two
 arguments are mutually exclusive. If \code{params} is specified, it will be used
 as parameters to be bound to the query, see \code{\link[DBI:dbBind]{DBI::dbBind()}} for more
-details. The default template requires specifying \code{organization_name} and
-\code{project_name}, in that order. If \code{contents} is specified, it should be a
-\link{data.frame} and will be used directly as the configuration of data
-fetching. Note \code{contents} should at least contain \code{project_id} and
+details. The default template requires specifying \code{organization_name},
+\code{project_name}, \code{course_name} and \code{game_name}, in that order. Set the
+column as \code{NA} to skip that parameter. If \code{contents} is specified, it
+should be a \link{data.frame} and will be used directly as the configuration of
+data fetching. Note \code{contents} should at least contain \code{project_id} and
 \code{game_id} names.}
 
 \item{...}{For future usage. Should be empty.}

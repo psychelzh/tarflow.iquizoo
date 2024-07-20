@@ -27,10 +27,10 @@ tar_source()
 # source("other_functions.R") # Source other scripts as needed.
 
 params <- tibble::tribble(
-  ~organization_name, ~project_name,
+  ~organization_name, ~project_name, ~course_name, ~game_name,
   # TODO: replace these with your own
-  "Organization1", "Project1",
-  "Organization2", NA # set as NA if you want to fetch all projects
+  "Organization1", "Project1", NA, NA,
+  "Organization2", NA, NA, NA # set as NA to skip that column
 )
 
 # Replace the target list below with your own:

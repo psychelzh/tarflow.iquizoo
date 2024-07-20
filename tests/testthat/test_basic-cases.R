@@ -19,8 +19,8 @@ targets::tar_test("Works when single game on different projects", {
 targets::tar_test("`combine` work properly", {
   targets::tar_script({
     params <- tibble::tribble(
-      ~organization_name, ~project_name,
-      "北京师范大学（测试）", "元认知测试"
+      ~organization_name, ~project_name, ~course_name, ~game_name,
+      "北京师范大学（测试）", "元认知测试", NA, NA
     )
     tar_prep_iquizoo(
       params,
@@ -33,8 +33,8 @@ targets::tar_test("`combine` work properly", {
     objects()
   )
   params <- tibble::tribble(
-    ~organization_name, ~project_name,
-    "北京师范大学（测试）", "元认知测试"
+    ~organization_name, ~project_name, ~course_name, ~game_name,
+    "北京师范大学（测试）", "元认知测试", NA, NA
   )
   tar_prep_iquizoo(params, combine = "bad") |>
     expect_error(class = "tarflow_bad_combine")
@@ -44,8 +44,8 @@ targets::tar_test("Serialize check (no roundtrip error)", {
   withr::local_envvar(c(TARFLOW_CACHE = "memory"))
   targets::tar_script({
     params <- tibble::tribble(
-      ~organization_name, ~project_name,
-      "四川省双流棠湖中学高中部", "棠湖中学英才计划测训体验账号"
+      ~organization_name, ~project_name, ~course_name, ~game_name,
+      "四川省双流棠湖中学高中部", "棠湖中学英才计划测训体验账号", NA, NA
     )
     tar_prep_iquizoo(params)[1]
   })
@@ -56,8 +56,8 @@ targets::tar_test("Serialize check (no roundtrip error)", {
       read_file(setup_templates()$contents),
       params = unname(as.list(
         tibble::tribble(
-          ~organization_name, ~project_name,
-          "四川省双流棠湖中学高中部", "棠湖中学英才计划测训体验账号"
+          ~organization_name, ~project_name, ~course_name, ~game_name,
+          "四川省双流棠湖中学高中部", "棠湖中学英才计划测训体验账号", NA, NA
         )
       ))
     )

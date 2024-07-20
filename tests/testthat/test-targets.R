@@ -1,8 +1,8 @@
 skip_if_not(check_source())
 test_that("Default templates work", {
   params <- tibble::tribble(
-    ~organization_name, ~project_name,
-    "北京师范大学", "认知测评预实验"
+    ~organization_name, ~project_name, ~course_name, ~game_name,
+    "北京师范大学", "认知测评预实验", NA, NA
   )
   tar_prep_iquizoo(params) |>
     expect_targets_list()
@@ -36,8 +36,8 @@ test_that("Support `data.frame` contents", {
 
 test_that("Signal error if `contents` contains no data", {
   params_bad <- tibble::tribble(
-    ~organization_name, ~project_name,
-    "Unexisted", "Malvalue"
+    ~organization_name, ~project_name, ~course_name, ~game_name,
+    "Unexisted", "Malvalue", NA, NA
   )
   tar_prep_iquizoo(params_bad) |>
     expect_error(class = "tarflow_bad_contents")

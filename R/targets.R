@@ -8,10 +8,11 @@
 #' @param params,contents Used as the configuration of data fetching. These two
 #'   arguments are mutually exclusive. If `params` is specified, it will be used
 #'   as parameters to be bound to the query, see [DBI::dbBind()] for more
-#'   details. The default template requires specifying `organization_name` and
-#'   `project_name`, in that order. If `contents` is specified, it should be a
-#'   [data.frame] and will be used directly as the configuration of data
-#'   fetching. Note `contents` should at least contain `project_id` and
+#'   details. The default template requires specifying `organization_name`,
+#'   `project_name`, `course_name` and `game_name`, in that order. Set the
+#'   column as `NA` to skip that parameter. If `contents` is specified, it
+#'   should be a [data.frame] and will be used directly as the configuration of
+#'   data fetching. Note `contents` should at least contain `project_id` and
 #'   `game_id` names.
 #' @param ... For future usage. Should be empty.
 #' @param what What to fetch. There are basically two types of data, i.e., raw
