@@ -1,9 +1,11 @@
+# nocov start
+
 #' Get the names of the user properties.
 #'
 #' @return A character vector of the names.
 #' @export
 get_users_props_names <- function() {
-  users_props$alias # nolint nocov
+  users_props$alias # nolint
 }
 
 package_file <- function(type, file) {
@@ -16,3 +18,5 @@ package_file <- function(type, file) {
 read_file <- function(file) {
   paste0(readLines(file), collapse = "\n")
 }
+
+# nocov end
