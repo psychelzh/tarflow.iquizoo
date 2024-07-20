@@ -13,7 +13,7 @@ fetched data can also be added if requested."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.11.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.12.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,8 +61,10 @@ fetched data can also be added if requested.</p>
 <span>  what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"raw_data"</span>, <span class="st">"scores"</span><span class="op">)</span>,</span>
 <span>  action_raw_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"parse"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  combine <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subset_users_props <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  templates <span class="op">=</span> <span class="fu"><a href="setup_templates.html">setup_templates</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  check_progress <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  check_progress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cache <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -74,10 +76,11 @@ fetched data can also be added if requested.</p>
 <dd><p>Used as the configuration of data fetching. These two
 arguments are mutually exclusive. If <code>params</code> is specified, it will be used
 as parameters to be bound to the query, see <code><a href="https://dbi.r-dbi.org/reference/dbBind.html" class="external-link">DBI::dbBind()</a></code> for more
-details. The default template requires specifying <code>organization_name</code> and
-<code>project_name</code>, in that order. If <code>contents</code> is specified, it should be a
-<a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> and will be used directly as the configuration of data
-fetching. Note <code>contents</code> should at least contain <code>project_id</code> and
+details. The default template requires specifying <code>organization_name</code>,
+<code>project_name</code>, <code>course_name</code> and <code>game_name</code>, in that order. Set the
+column as <code>NA</code> to skip that parameter. If <code>contents</code> is specified, it
+should be a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> and will be used directly as the configuration of
+data fetching. Note <code>contents</code> should at least contain <code>project_id</code> and
 <code>game_id</code> names.</p></dd>
 
 
@@ -111,6 +114,12 @@ specify names from <code>c("scores", "raw_data", "raw_data_parsed", "indices")</
 If <code>NULL</code>, none will be combined.</p></dd>
 
 
+<dt id="arg-subset-users-props">subset_users_props<a class="anchor" aria-label="anchor" href="#arg-subset-users-props"></a></dt>
+<dd><p>The subset of user properties to be fetched. See
+<code><a href="get_users_props_names.html">get_users_props_names()</a></code> for all the available properties. If <code>NULL</code>, all
+properties will be fetched.</p></dd>
+
+
 <dt id="arg-templates">templates<a class="anchor" aria-label="anchor" href="#arg-templates"></a></dt>
 <dd><p>The SQL template files used to fetch data. See
 <code><a href="setup_templates.html">setup_templates()</a></code> for details.</p></dd>
@@ -119,6 +128,10 @@ If <code>NULL</code>, none will be combined.</p></dd>
 <dt id="arg-check-progress">check_progress<a class="anchor" aria-label="anchor" href="#arg-check-progress"></a></dt>
 <dd><p>Whether to check the progress hash. Set it as <code>FALSE</code>
 if the project is finalized.</p></dd>
+
+
+<dt id="arg-cache">cache<a class="anchor" aria-label="anchor" href="#arg-cache"></a></dt>
+<dd><p>The cache to be used in <code><a href="fetch_iquizoo_mem.html">fetch_iquizoo_mem()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

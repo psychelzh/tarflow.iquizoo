@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.11.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.12.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,19 @@
       <small>Source: <a href="https://github.com/psychelzh/tarflow.iquizoo/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.12.0" id="tarflowiquizoo-3120">tarflow.iquizoo 3.12.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-3120"></a></h2>
+<div class="section level3">
+<h3 id="new-features-3-12-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-3-12-0"></a></h3>
+<ul><li>Added <code>cache</code> argument to <code><a href="../reference/tar_prep_iquizoo.html">tar_prep_iquizoo()</a></code> to optionally specify how to cache the fetched configuration data.</li>
+<li>Support to customize the columns to be kept in the output of <code>users</code>. See [get_users_props_names()] for all available columns, and customize it by setting <code>subset_users_props</code> argument in <code><a href="../reference/tar_prep_iquizoo.html">tar_prep_iquizoo()</a></code>.</li>
+<li>Update contents sql template to support setting course name and game name (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/90" class="external-link">#90</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-3-12-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-12-0"></a></h3>
+<ul><li>Let <code>users</code> update based on progress hashes. This is important when more users are added in projects.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.11.5" id="tarflowiquizoo-3115">tarflow.iquizoo 3.11.5<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-3115"></a></h2>
 <div class="section level3">
