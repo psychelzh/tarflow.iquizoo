@@ -49,9 +49,10 @@ fetch_iquizoo <- function(query, ...,
 #' @param cache The cache to be used. Default cache could be configured by
 #'   setting the environment variable `TARFLOW_CACHE` to `"disk"` or `"memory"`.
 #'   If set `TARFLOW_CACHE` to `"disk"`, the cache will be stored in disk at
-#'   `~/.cache/tarflow.iquizoo`. If set `TARFLOW_CACHE` to `"memory"`, the cache
-#'   will be stored in memory. You can also set `cache` to a custom cache, see
-#'   [memoise::memoise()] for more details.
+#'   `~/.cache/tarflow.iquizoo` with a maximal age of 7 days. If set
+#'   `TARFLOW_CACHE` to `"memory"`, the cache will be stored in memory. You can
+#'   also set `cache` to a custom cache, see [memoise::memoise()] for more
+#'   details.
 #' @return A memoised version of [fetch_iquizoo()].
 #' @seealso [fetch_iquizoo()] for the original function.
 #' @export
@@ -59,7 +60,10 @@ fetch_iquizoo_mem <- function(cache = NULL) {
   requireNamespace("digest", quietly = TRUE)
   if (is.null(cache)) {
     cache <- switch(Sys.getenv("TARFLOW_CACHE", "disk"),
-      disk = cachem::cache_disk("~/.cache/tarflow.iquizoo"),
+      disk = cachem::cache_disk(
+        "~/.cache/tarflow.iquizoo",
+        max_age = 3600 * 24 * 7 # 7 days
+      ),
       memory = cachem::cache_mem()
     )
   }
