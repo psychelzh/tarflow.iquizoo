@@ -11,7 +11,7 @@ memoise::memoise() and fetch_iquizoo() for more details."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.12.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.12.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,9 +62,10 @@ the same query is called multiple times or you want to cache the result. See
 <dd><p>The cache to be used. Default cache could be configured by
 setting the environment variable <code>TARFLOW_CACHE</code> to <code>"disk"</code> or <code>"memory"</code>.
 If set <code>TARFLOW_CACHE</code> to <code>"disk"</code>, the cache will be stored in disk at
-<code>~/.cache/tarflow.iquizoo</code>. If set <code>TARFLOW_CACHE</code> to <code>"memory"</code>, the cache
-will be stored in memory. You can also set <code>cache</code> to a custom cache, see
-<code><a href="https://memoise.r-lib.org/reference/memoise.html" class="external-link">memoise::memoise()</a></code> for more details.</p></dd>
+<code>~/.cache/tarflow.iquizoo</code> with a maximal age of 7 days. If set
+<code>TARFLOW_CACHE</code> to <code>"memory"</code>, the cache will be stored in memory. You can
+also set <code>cache</code> to a custom cache, see <code><a href="https://memoise.r-lib.org/reference/memoise.html" class="external-link">memoise::memoise()</a></code> for more
+details.</p></dd>
 
 </dl></div>
     <div class="section level2">
