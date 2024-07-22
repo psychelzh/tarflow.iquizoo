@@ -107,12 +107,7 @@ tar_prep_iquizoo <- function(params, contents, ...,
     targets,
     lapply(
       intersect(combine, names(targets)),
-      \(name) {
-        tarchetypes::tar_combine_raw(
-          name,
-          targets[[name]]
-        )
-      }
+      \(name) tarchetypes::tar_combine_raw(name, targets[[name]])
     )
   )
 }
@@ -296,7 +291,10 @@ tar_prep_raw <- function(contents,
       )
     },
     indices = if ("preproc" %in% action_raw_data) {
-      check_installed("preproc.iquizoo", "becasue required in pre-processing.")
+      check_installed(
+        c("preproc.iquizoo", "data.iquizoo"),
+        "becasue required in pre-processing."
+      )
       tarchetypes::tar_eval(
         targets::tar_target(
           tar_indices,

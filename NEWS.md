@@ -1,3 +1,13 @@
+# tarflow.iquizoo 3.12.2
+
+## Enhancements
+
+* Added a default expiration time for disk cache in `fetch_iquizoo_mem()` of 7 days.
+
+## Misc
+
+* Moved data.iquizoo to Suggests. The logic behind is the same as that of preproc.iquizoo.
+
 # tarflow.iquizoo 3.12.1
 
 ## Enhancements

@@ -5,10 +5,12 @@ expect_targets_list <- function(targets) {
       sprintf("%s should be a list, not a %s.", act$lab, typeof(act$val))
     )
   }
-  if (!all(purrr::map_lgl(unlist(act$val), \(x) inherits(x, "tar_target")))) {
-    testthat::fail(
-      sprintf("All elements of %s should be valid target objects.", act$lab)
-    )
+  for (val in unlist(act$val)) {
+    if (!inherits(val, "tar_target")) {
+      testthat::fail(
+        sprintf("All elements of %s should be valid target objects.", act$lab)
+      )
+    }
   }
   testthat::succeed()
   invisible(act$val)

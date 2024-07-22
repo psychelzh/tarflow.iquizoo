@@ -12,5 +12,6 @@ FROM
         AND organization_user.Deleted <> 1
     INNER JOIN iquizoo_user_db.base_organization
     ON base_organization.Id = organization_user.OrganizationId
+        AND base_organization.Deleted <> 1
 WHERE
     project_course_config.Id = ?;
