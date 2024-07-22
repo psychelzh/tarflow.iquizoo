@@ -20,7 +20,6 @@ Depends:
 Imports:
     cachem,
     cli,
-    data.iquizoo (>= 2024.3.31.2),
     DBI,
     glue,
     jsonlite,
@@ -31,6 +30,7 @@ Imports:
 Suggests:
     bit64,
     covr,
+    data.iquizoo (>= 2024.7.14),
     digest,
     lifecycle,
     odbc,
@@ -41,9 +41,9 @@ Suggests:
     testthat (>= 3.0.0),
     tibble,
     withr
-Remotes:
-    psychelzh/data.iquizoo,
-    psychelzh/preproc.iquizoo
+Remotes: 
+    psychelzh/preproc.iquizoo,
+    psychelzh/data.iquizoo
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/testthat/start-first: targets
