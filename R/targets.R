@@ -107,12 +107,7 @@ tar_prep_iquizoo <- function(params, contents, ...,
     targets,
     lapply(
       intersect(combine, names(targets)),
-      \(name) {
-        tarchetypes::tar_combine_raw(
-          name,
-          targets[[name]]
-        )
-      }
+      \(name) tarchetypes::tar_combine_raw(name, targets[[name]])
     )
   )
 }

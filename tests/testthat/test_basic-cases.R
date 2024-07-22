@@ -41,13 +41,12 @@ targets::tar_test("`combine` work properly", {
 })
 
 targets::tar_test("Serialize check (no roundtrip error)", {
-  withr::local_envvar(c(TARFLOW_CACHE = "memory"))
   targets::tar_script({
     params <- tibble::tribble(
       ~organization_name, ~project_name, ~course_name, ~game_name,
       "四川省双流棠湖中学高中部", "棠湖中学英才计划测训体验账号", NA, NA
     )
-    tar_prep_iquizoo(params)[1]
+    tar_prep_iquizoo(params, cache = cachem::cache_mem())[1]
   })
   targets::tar_make(reporter = "silent", callr_function = NULL)
   expect_identical(
