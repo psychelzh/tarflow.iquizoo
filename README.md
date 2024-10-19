@@ -11,7 +11,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 badge](https://psychelzh.r-universe.dev/badges/tarflow.iquizoo)](https://psychelzh.r-universe.dev/tarflow.iquizoo)
 [![R-CMD-check](https://github.com/psychelzh/tarflow.iquizoo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/psychelzh/tarflow.iquizoo/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/psychelzh/tarflow.iquizoo/branch/main/graph/badge.svg)](https://app.codecov.io/gh/psychelzh/tarflow.iquizoo?branch=main)
+coverage](https://codecov.io/gh/psychelzh/tarflow.iquizoo/graph/badge.svg)](https://app.codecov.io/gh/psychelzh/tarflow.iquizoo)
 <!-- badges: end -->
 
 The goal of tarflow.iquizoo is to provide workflow auto-generation for
@@ -56,3 +56,10 @@ This simplest way to use this package is to call
 basic parameters edit (follow the generated script), then you can run
 the pipeline by executing `targets::tar_make()` in R console. The
 pipeline will be executed in parallel by default.
+
+## Code of Conduct
+
+Please note that the tarflow.iquizoo project is released with a
+[Contributor Code of
+Conduct](https://psychelzh.github.io/tarflow.iquizoo/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms
