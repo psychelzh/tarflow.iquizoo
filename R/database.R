@@ -4,36 +4,16 @@
 #' @param ... Further arguments passed to [DBI::dbConnect()].
 #' @param params The parameters to be bound to the query. Default to `NULL`, see
 #'   [DBI::dbGetQuery()] for more details.
-#' @param source The data source from which data is fetched. See
-#'   [setup_source()] for details.
+#' @param group Section identifier in the `default.file`. See
+#'   [RMariaDB::MariaDB()] for more information.
 #' @return A [data.frame] contains the fetched data.
 #' @seealso [fetch_iquizoo_mem()] for a memoised version of this function.
 #' @export
 fetch_iquizoo <- function(query, ...,
                           params = NULL,
-                          source = setup_source()) {
+                          group = getOption("tarflow.group")) {
   check_dots_used()
-  if (!inherits(source, "tarflow.source")) {
-    cli::cli_abort(
-      "{.arg source} must be created by {.fun setup_source}.",
-      class = "tarflow_bad_source"
-    )
-  }
-  # connect to given database which is pre-configured
-  if (!inherits_any(source$driver, c("OdbcDriver", "MariaDBDriver"))) {
-    cli::cli_abort(
-      "Driver must be either OdbcDriver or MariaDBDriver.",
-      class = "tarflow_bad_driver"
-    )
-  }
-  # nocov start
-  if (inherits(source$driver, "OdbcDriver")) {
-    con <- DBI::dbConnect(source$driver, dsn = source$dsn, ...)
-  }
-  # nocov end
-  if (inherits(source$driver, "MariaDBDriver")) {
-    con <- DBI::dbConnect(source$driver, group = source$group, ...)
-  }
+  con <- DBI::dbConnect(RMariaDB::MariaDB(), group = group, ...)
   on.exit(DBI::dbDisconnect(con))
   DBI::dbGetQuery(con, query, params = params)
 }
