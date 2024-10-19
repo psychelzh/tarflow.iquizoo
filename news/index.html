@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tarflow.iquizoo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.12.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.12.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,14 @@
       <small>Source: <a href="https://github.com/psychelzh/tarflow.iquizoo/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.12.3" id="tarflowiquizoo-3123">tarflow.iquizoo 3.12.3<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-3123"></a></h2>
+<div class="section level3">
+<h3 id="upkeep-3-12-3">Upkeep<a class="anchor" aria-label="anchor" href="#upkeep-3-12-3"></a></h3>
+<ul><li>Dropped support for odbc driver, and only RMariaDB driver is supported now (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/93" class="external-link">#93</a>).</li>
+<li>Removed <code>setup_source()</code> for there is no need for database source option setup when only <code><a href="https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html" class="external-link">RMariaDB::MariaDB()</a></code> is supported.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.12.2" id="tarflowiquizoo-3122">tarflow.iquizoo 3.12.2<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-3122"></a></h2>
 <div class="section level3">
@@ -295,7 +303,7 @@
 <h2 class="pkg-version" data-toc-text="3.3.0" id="tarflowiquizoo-330">tarflow.iquizoo 3.3.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-330"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-3-3-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-3-0"></a></h3>
-<ul><li>The <code><a href="https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html" class="external-link">RMariaDB::MariaDB()</a></code> database driver is detected with higher priority, and <code><a href="https://odbc.r-dbi.org/reference/dbConnect-OdbcDriver-method.html" class="external-link">odbc::odbc()</a></code> is technically deprecated, although still supported (not sure for working) for now (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/68" class="external-link">#68</a>).</li>
+<ul><li>The <code><a href="https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html" class="external-link">RMariaDB::MariaDB()</a></code> database driver is detected with higher priority, and <code>odbc::odbc()</code> is technically deprecated, although still supported (not sure for working) for now (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/68" class="external-link">#68</a>).</li>
 <li>Renamed <code>fetch_parameterized()</code> as <code><a href="../reference/fetch_iquizoo.html">fetch_iquizoo()</a></code>. The latter is shorter and echoes with the package name.</li>
 <li>Removed <code>fetch_batch()</code> as vector parameters are supported by <code><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html" class="external-link">DBI::dbGetQuery()</a></code>. <code><a href="../reference/fetch_iquizoo.html">fetch_iquizoo()</a></code> handles both vector and scalar parameters.</li>
 </ul></div>
@@ -309,7 +317,7 @@
 <h2 class="pkg-version" data-toc-text="3.2.0" id="tarflowiquizoo-320">tarflow.iquizoo 3.2.0<a class="anchor" aria-label="anchor" href="#tarflowiquizoo-320"></a></h2>
 <div class="section level3">
 <h3 id="new-features-3-2-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-3-2-0"></a></h3>
-<ul><li>Added <code><a href="../reference/setup_source.html">setup_source()</a></code> to specify the data source. Arguments <code>driver</code>, <code>dsn</code> and <code>groups</code> of <code>fetch_parameterized()</code> now live in this function.</li>
+<ul><li>Added <code>setup_source()</code> to specify the data source. Arguments <code>driver</code>, <code>dsn</code> and <code>groups</code> of <code>fetch_parameterized()</code> now live in this function.</li>
 <li>Let <code>params</code> argument of <code>fetch_parameterized()</code> be optional (but not after <code>...</code>) when no parameters in <code>query</code>. Note this is not checked beforehand, so you should take care of whether there are parameters.</li>
 <li>Supported custom SQL templates. When users want to use different parameter names other than the default one, they could support their own paired with SQL templates. See <code><a href="../reference/setup_templates.html">setup_templates()</a></code> for details (<a href="https://github.com/psychelzh/tarflow.iquizoo/issues/66" class="external-link">#66</a>).</li>
 </ul></div>
@@ -684,7 +692,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>
