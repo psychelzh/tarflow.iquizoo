@@ -1,5 +1,10 @@
 # tarflow.iquizoo (development version)
 
+## Upkeep
+
+* Dropped support for odbc driver, and only RMariaDB driver is supported now (#93).
+* Removed `setup_source()` for there is no need for database source option setup when only `RMariaDB::MariaDB()` is supported.
+
 # tarflow.iquizoo 3.12.2
 
 ## Enhancements
