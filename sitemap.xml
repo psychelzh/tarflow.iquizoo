@@ -1,5 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://psychelzh.github.io/tarflow.iquizoo/404.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/CODE_OF_CONDUCT.html</loc></url>
 <url><loc>https://psychelzh.github.io/tarflow.iquizoo/LICENSE.html</loc></url>
 <url><loc>https://psychelzh.github.io/tarflow.iquizoo/authors.html</loc></url>
 <url><loc>https://psychelzh.github.io/tarflow.iquizoo/index.html</loc></url>
@@ -18,6 +19,7 @@
 <url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_hash.html</loc></url>
 <url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_iquizoo.html</loc></url>
 <url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tar_prep_raw.html</loc></url>
+<url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/tarflow.iquizoo-package.html</loc></url>
 <url><loc>https://psychelzh.github.io/tarflow.iquizoo/reference/use_targets_pipeline.html</loc></url>
 </urlset>
 
