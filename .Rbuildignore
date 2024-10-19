@@ -11,3 +11,4 @@
 ^codecov\.yml$
 ^data-raw$
 ^\.lintr$
+^CODE_OF_CONDUCT\.md$
