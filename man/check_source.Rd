@@ -4,11 +4,11 @@
 \alias{check_source}
 \title{Check if the database based on the given data source is ready}
 \usage{
-check_source(source = setup_source())
+check_source(group = getOption("tarflow.group"))
 }
 \arguments{
-\item{source}{The data source from which data is fetched. See
-\code{\link[=setup_source]{setup_source()}} for details.}
+\item{group}{Section identifier in the \code{default.file}. See
+\code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}} for more information.}
 }
 \value{
 TRUE if the database is ready, FALSE otherwise.

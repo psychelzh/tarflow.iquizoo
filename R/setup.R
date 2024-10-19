@@ -37,54 +37,14 @@ setup_templates <- function(contents = NULL,
   )
 }
 
-#' Set data source
-#'
-#' @param driver The driver used. Set as an option of `"tarflow.driver"`.
-#'   Options are [odbc::odbc()] and [RMariaDB::MariaDB()], both of which need
-#'   pre-configurations. Default to first available one.
-#' @param dsn The data source name of an **ODBC** database connector. See
-#'   [odbc::dbConnect()] for more information. Used when `driver` is set as
-#'   [odbc::odbc()].
-#' @param group Section identifier in the `default.file`. See
-#'   [RMariaDB::MariaDB()] for more information. Used when `driver` is set as
-#'   [RMariaDB::MariaDB()].
-#' @return An S3 class of `tarflow.source` with the options.
-#' @export
-setup_source <- function(driver = getOption("tarflow.driver"),
-                         dsn = getOption("tarflow.dsn"),
-                         group = getOption("tarflow.group")) {
-  structure(
-    list(
-      driver = driver,
-      dsn = dsn,
-      group = group
-    ),
-    class = "tarflow.source"
-  )
-}
-
 #' Check if the database based on the given data source is ready
 #'
-#' @param source The data source from which data is fetched. See
-#'    [setup_source()] for details.
+#' @param group Section identifier in the `default.file`. See
+#'   [RMariaDB::MariaDB()] for more information.
 #' @return TRUE if the database is ready, FALSE otherwise.
 #' @export
-check_source <- function(source = setup_source()) {
-  if (!inherits(source, "tarflow.source")) {
-    cli::cli_abort(
-      "{.arg source} must be created by {.fun setup_source}.",
-      class = "tarflow_bad_source"
-    )
-  }
-  # nocov start
-  if (inherits(source$driver, "OdbcDriver")) {
-    return(DBI::dbCanConnect(source$driver, dsn = source$dsn))
-  }
-  # nocov end
-  if (inherits(source$driver, "MariaDBDriver")) {
-    return(DBI::dbCanConnect(source$driver, group = source$group))
-  }
-  return(FALSE)
+check_source <- function(group = getOption("tarflow.group")) {
+  return(DBI::dbCanConnect(RMariaDB::MariaDB(), group = group))
 }
 
 # nocov start

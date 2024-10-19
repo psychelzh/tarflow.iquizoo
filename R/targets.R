@@ -185,7 +185,7 @@ tar_fetch_users <- function(contents, subset_users_props = NULL,
       bquote(
         fetch_iquizoo(
           .(glue::glue(read_file(templates[["users"]]),
-            .envir = list(columns = columns)
+            .envir = env(columns = columns)
           )),
           params = list(.(unique(contents$project_id)))
         ) |>

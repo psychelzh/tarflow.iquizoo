@@ -4,7 +4,7 @@
 \alias{fetch_iquizoo}
 \title{Fetch result of query from iQuizoo database}
 \usage{
-fetch_iquizoo(query, ..., params = NULL, source = setup_source())
+fetch_iquizoo(query, ..., params = NULL, group = getOption("tarflow.group"))
 }
 \arguments{
 \item{query}{A character string containing SQL.}
@@ -14,8 +14,8 @@ fetch_iquizoo(query, ..., params = NULL, source = setup_source())
 \item{params}{The parameters to be bound to the query. Default to \code{NULL}, see
 \code{\link[DBI:dbGetQuery]{DBI::dbGetQuery()}} for more details.}
 
-\item{source}{The data source from which data is fetched. See
-\code{\link[=setup_source]{setup_source()}} for details.}
+\item{group}{Section identifier in the \code{default.file}. See
+\code{\link[RMariaDB:dbConnect-MariaDBDriver-method]{RMariaDB::MariaDB()}} for more information.}
 }
 \value{
 A \link{data.frame} contains the fetched data.

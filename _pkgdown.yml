@@ -23,7 +23,6 @@ reference:
   desc: Functions to help you set up options.
   contents:
   - setup_templates
-  - setup_source
   - setup_option_file
   - check_source
   - get_users_props_names
