@@ -31,8 +31,8 @@ FROM
     INNER JOIN iquizoo_user_db.base_organization_structure structure_classes
     ON structure_classes.Id = organization_structure_user.StructureId
         AND structure_classes.Deleted <> 1
-	INNER JOIN iquizoo_user_db.base_organization_structure structure_grades
-	ON structure_grades.Id = structure_classes.SuperiorId
+    INNER JOIN iquizoo_user_db.base_organization_structure structure_grades
+    ON structure_grades.Id = structure_classes.SuperiorId
         AND structure_grades.Deleted <> 1
 WHERE
     project_course_config.Id = ?
