@@ -179,7 +179,7 @@ tar_fetch_users <- function(contents,
           .(read_file(templates[["users"]])),
           params = list(.(unique(contents$project_id)))
         ) |>
-          clean_user_info(.(subset_users_props))
+          clean_users_props(.(subset_users_props))
       )
     )),
     packages = "tarflow.iquizoo"

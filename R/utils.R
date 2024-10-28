@@ -23,13 +23,13 @@ get_users_props_names <- function() {
   )
 }
 
-#' Clean user information
+#' Clean users properties
 #'
-#' @param users A [data.frame] contains the user information.
-#' @param props A character vector of the user properties to keep.
-#' @return A [data.frame] contains the cleaned user information.
+#' @param users A [data.frame] contains the users properties.
+#' @param props A character vector of the users properties to keep.
+#' @return A [data.frame] contains the cleaned users properties.
 #' @export
-clean_user_info <- function(users, props) {
+clean_users_props <- function(users, props) {
   users |>
     dplyr::mutate(
       class_type = factor(
