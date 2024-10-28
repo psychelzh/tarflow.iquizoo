@@ -1,5 +1,10 @@
 # tarflow.iquizoo (development version)
 
+## Enhancements
+
+* Added support for fetching `grade_name` and `class_name` (both `class_name_admin` and `class_name_teach`) for users properties (#97).
+* Enhanced internal structure for users properties cleanup and exported `clean_users_props()`.
+
 # tarflow.iquizoo 3.12.4
 
 * Internal upkeeps.
