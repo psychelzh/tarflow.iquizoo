@@ -21,13 +21,16 @@ Imports:
     cachem,
     cli,
     DBI,
+    dplyr,
     glue,
     jsonlite,
     memoise,
     rlang (>= 1.0.0),
     RMariaDB,
     tarchetypes,
-    targets
+    targets,
+    tidyr,
+    tidyselect
 Suggests:
     bit64,
     covr,

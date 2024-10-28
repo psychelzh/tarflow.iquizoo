@@ -14,7 +14,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["user_id", "user_name", "user_sex", "user_dob", "user_id_card", "user_id_student", "user_phone", "organization_name", "organization_country", "organization_province", "organization_city", "organization_district"]
+          "value": ["user_id", "user_name", "user_sex", "user_dob", "user_id_card", "user_id_student", "user_phone", "organization_name", "organization_country", "organization_province", "organization_city", "organization_district", "grade_name", "class_name_admin", "class_name_teach"]
         },
         "row.names": {
           "type": "integer",
@@ -24,7 +24,7 @@
         "class": {
           "type": "character",
           "attributes": {},
-          "value": ["data.frame"]
+          "value": ["tbl_df", "tbl", "data.frame"]
         }
       },
       "value": [
@@ -42,7 +42,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["徐小琳", "连宗鸿", "张忱涵", "李荟镕", "于胜蓝", "茹祎", "陈佳洋"]
+          "value": ["陈佳洋", "茹祎", "于胜蓝", "李荟镕", "张忱涵", "连宗鸿", "徐小琳"]
         },
         {
           "type": "integer",
@@ -58,7 +58,7 @@
               "value": ["Date"]
             }
           },
-          "value": [-25196, -25197, -25198, -25199, -25200, -25201, -25202]
+          "value": [-25202, -25201, -25200, -25199, -25198, -25197, -25196]
         },
         {
           "type": "character",
@@ -99,6 +99,21 @@
           "type": "character",
           "attributes": {},
           "value": ["海淀区", "海淀区", "海淀区", "海淀区", "海淀区", "海淀区", "海淀区"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["睡眠实验", "睡眠实验", "睡眠实验", "睡眠实验", "睡眠实验", "睡眠实验", "睡眠实验"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["行为实验1April", "行为实验1April", "行为实验1April", "行为实验1April", "行为实验1April", "行为实验1April", "行为实验1April"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null, null, null, null, null]
         }
       ]
     }
