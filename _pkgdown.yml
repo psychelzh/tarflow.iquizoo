@@ -19,6 +19,7 @@ reference:
   - fetch_iquizoo_mem
   - fetch_data
   - parse_data
+  - clean_users_props
 - title: "Miscellaneous Option Functions"
   desc: Functions to help you set up options.
   contents:

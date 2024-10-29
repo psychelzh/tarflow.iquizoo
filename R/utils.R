@@ -5,7 +5,45 @@
 #' @return A character vector of the names.
 #' @export
 get_users_props_names <- function() {
-  users_props$alias # nolint
+  c(
+    "user_name",
+    "user_sex",
+    "user_dob",
+    "user_id_card",
+    "user_id_student",
+    "user_phone",
+    "organization_name",
+    "organization_country",
+    "organization_province",
+    "organization_city",
+    "organization_district",
+    "grade_name",
+    "class_name_admin",
+    "class_name_teach"
+  )
+}
+
+#' Clean users properties
+#'
+#' @param users A [data.frame] contains the users properties.
+#' @param props A character vector of the users properties to keep.
+#' @return A [data.frame] contains the cleaned users properties.
+#' @export
+clean_users_props <- function(users, props) {
+  users |>
+    dplyr::mutate(
+      class_type = factor(
+        .data$class_type,
+        1:2,
+        c("class_name_admin", "class_name_teach")
+      )
+    ) |>
+    tidyr::pivot_wider(
+      names_from = "class_type",
+      values_from = "class_name",
+      names_expand = TRUE
+    ) |>
+    dplyr::select(tidyselect::all_of(c("user_id", props)))
 }
 
 package_file <- function(type, file) {

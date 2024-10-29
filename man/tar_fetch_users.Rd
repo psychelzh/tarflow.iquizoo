@@ -6,7 +6,7 @@
 \usage{
 tar_fetch_users(
   contents,
-  subset_users_props = NULL,
+  subset_users_props = get_users_props_names(),
   templates = setup_templates(),
   check_progress = TRUE
 )
@@ -16,8 +16,7 @@ tar_fetch_users(
 fetching.}
 
 \item{subset_users_props}{The subset of user properties to be fetched. See
-\code{\link[=get_users_props_names]{get_users_props_names()}} for all the available properties. If \code{NULL}, all
-properties will be fetched.}
+\code{\link[=get_users_props_names]{get_users_props_names()}} for all the available properties.}
 
 \item{templates}{The SQL template files used to fetch data. See
 \code{\link[=setup_templates]{setup_templates()}} for details.}
