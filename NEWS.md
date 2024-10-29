@@ -1,3 +1,9 @@
+# tarflow.iquizoo 3.12.6
+
+## Bug Fixes
+
+* Fixed a regression bug introduced in 3.12.5 that users do not contain unique rows.
+
 # tarflow.iquizoo 3.12.5
 
 ## Enhancements
