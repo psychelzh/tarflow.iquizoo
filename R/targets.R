@@ -179,6 +179,7 @@ tar_fetch_users <- function(contents,
           .(read_file(templates[["users"]])),
           params = list(.(unique(contents$project_id)))
         ) |>
+          unique() |>
           clean_users_props(.(subset_users_props))
       )
     )),
